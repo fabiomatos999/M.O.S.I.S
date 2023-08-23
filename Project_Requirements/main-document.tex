@@ -36,11 +36,50 @@
 \section{Proposed Solution}
 \subsection{Ideas}
 \subsubsection{Web Server on Host}
-In this implementation, the media captured by the Raspberry pi is transferred to the host machine then a website is generated from the data copied from the Raspberry Pi. The following enumerates the high level steps of this implementation:
+In this implementation, the media captured by the Raspberry Pi is transferred to the host machine then a website is generated from the data copied from the Raspberry Pi. The following enumerates the high level steps of this implementation:
 \begin{enumerate}
 	\item The Raspberry Pi captures the data from the camera and the sensors and saves them into a folder (created for that unique entry), that contains the left and right images and the sensor data in the form of a JSON file.
+	\item The Raspberry Pi maintains a local database with the original file paths and data.
 	\item When the host computer wants to view the images, it copies the data onto the host machine.
 	\item Then the host machine creates/updates a local database based on the folder structure copied from the Pi analyzing the data on the host machine.
 	\item A website is served on the host machine.
 \end{enumerate}
+Pros
+\begin{itemize}
+	\item Minimizes the processing power needed on the Raspberry Pi to present the data.
+	\item The data is backed up the moment when the user wants to the data.
+	\item Analysis of the data is sped up due to it happening on the host system rather than the pi
+	\item The host software can still function even in the event of the Raspberry Pi being damaged/destroyed.
+	\item The database can be backed up automatically and consistently.
+	\item Allows the host software to be more platform agnostic.
+	\item The images can be analyzed at the point where the web server starts up.
+	\item Web Server responsiveness is substantially increased.
+\end{itemize}
+Cons
+\begin{itemize}
+	\item The need to maintain two separate databases on the Pi and the host machine.
+	\item Potentially long startup times for the host software since the data has to be uploaded first before usage.
+\end{itemize}
+\subsubsection{Web Server on the Raspberry Pi}
+In this implementation, the media is captured by the Pi and a website is hosted on the Pi where the host system can view the data from the website. The following enumerates the high level steps of this implementation:
+\begin{enumerate}
+	\item The Raspberry Pi captures the images and sensor data.
+	\item The Pi stores creates a folder structure for an individual entry.
+	\item The Pi stores the image paths and the sensor data into a database.
+	\item The Pi creates a website using the data from the database.
+	\item The analysis of the images is done when the user selects an entry from the website.
+\end{enumerate}
+Pros
+\begin{itemize}
+	\item The viewing of the data can be done on any platform with a web browser.
+	\item Completely eliminates the need for any software to be installed on the host machine.
+	\item Eliminates start up times for the data to be viewed by the user.
+	\item Abstracts away implementation details from the user.
+\end{itemize}
+Cons
+\begin{itemize}
+	\item The backup of the Pi data and operating system proves to be more difficult.
+	\item The host software cannot function without the Raspberry Pi being operational.
+	\item The analysis of the data has to be delayed since the Pi does not have the processing power to analyze the data in real time.
+\end{itemize}
 \end{document}
