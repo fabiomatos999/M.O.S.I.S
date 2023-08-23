@@ -24,7 +24,6 @@
 	      \begin{itemize}
 		      \item Left Camera Image
 		      \item Right Camera Image
-		      \item Stereoscopic Image
 		      \item Time Stamp
 		      \item Temperature
 		      \item Ph
@@ -34,4 +33,14 @@
 	\item The system-to-be must have a home page where there is a preview of all images currently within the database.
 	\item The system-to-be must create an individual page for each entry within the database.
 \end{itemize}
+\section{Proposed Solution}
+\subsection{Ideas}
+\subsubsection{Web Server on Host}
+In this implementation, the media captured by the Raspberry pi is transferred to the host machine then a website is generated from the data copied from the Raspberry Pi. The following enumerates the high level steps of this implementation:
+\begin{enumerate}
+	\item The Raspberry Pi captures the data from the camera and the sensors and saves them into a folder (created for that unique entry), that contains the left and right images and the sensor data in the form of a JSON file.
+	\item When the host computer wants to view the images, it copies the data onto the host machine.
+	\item Then the host machine creates/updates a local database based on the folder structure copied from the Pi analyzing the data on the host machine.
+	\item A website is served on the host machine.
+\end{enumerate}
 \end{document}
