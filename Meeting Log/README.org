@@ -1,0 +1,4 @@
+
+
+** 30/Aug/2023
+1. Discussed how to setup LaTeX environment on Eduardo's computer.
