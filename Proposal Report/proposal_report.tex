@@ -3,33 +3,34 @@
 \usepackage[hidelinks]{hyperref}
 \usepackage{setspace}
 \hypersetup{ colorlinks, citecolor=black,
-  filecolor=black,
-  linkcolor=black,
-  urlcolor=blue,
-  pdftitle={M.O.S.I.S Proposal Report},
-  pdfpagemode=FullScreen,
+	filecolor=black,
+	linkcolor=black,
+	urlcolor=blue,
+	pdftitle={M.O.S.I.S Proposal Report},
+	pdfpagemode=FullScreen,
 }
 \usepackage{bookmark}
 \bookmarksetup{
-  numbered,
-  open,
+	numbered,
+	open,
 }
 
 \begin{document}
- \input{./Title Page/Title Page}
- \pagenumbering{gobble}
- \input{./Executive Summary/Executive Summary.tex}
- \pagenumbering{roman}
- \tableofcontents
- \newpage
- \linespread{2.0}
- \pagenumbering{arabic}
- \input{./Problem Statement/Problem Statement}
- \input{./Objectives/Objectives}
- \input{./Outcomes/Outcomes}
- \input{./Methodology and Team Orginization/Methodology and Team Orginization}
- \input{./Budget/Budget}
- \input{./Project Schedule/Project Schedule}
- \input{./Bibliographic References/Bibliographic References}
- \input{./Appendices/Appendices.tex}
+\input{./Title Page/Title Page}
+\pagenumbering{gobble}
+\input{./Executive Summary/Executive Summary.tex}
+\pagenumbering{roman}
+\tableofcontents
+\newpage
+\pagenumbering{arabic}
+\begin{doublespace}
+	\input{./Problem Statement/Problem Statement}
+	\input{./Objectives/Objectives}
+	\input{./Outcomes/Outcomes}
+	\input{./Methodology and Team Orginization/Methodology and Team Orginization}
+	\input{./Budget/Budget}
+	\input{./Project Schedule/Project Schedule}
+\end{doublespace}
+\input{./Bibliographic References/Bibliographic References}
+\input{./Appendices/Appendices.tex}
 \end{document}
