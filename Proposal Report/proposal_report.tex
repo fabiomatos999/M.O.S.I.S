@@ -1,6 +1,7 @@
-\documentclass{article}
+\documentclass[12pt]{article}
 \usepackage{graphicx}
 \usepackage[hidelinks]{hyperref}
+\usepackage{setspace}
 \hypersetup{ colorlinks, citecolor=black,
   filecolor=black,
   linkcolor=black,
@@ -15,12 +16,13 @@
 }
 
 \begin{document}
- \include{./Title Page/Title Page}
+ \input{./Title Page/Title Page}
  \pagenumbering{gobble}
  \input{./Executive Summary/Executive Summary.tex}
  \pagenumbering{roman}
  \tableofcontents
  \newpage
+ \linespread{2.0}
  \pagenumbering{arabic}
  \input{./Problem Statement/Problem Statement}
  \input{./Objectives/Objectives}
@@ -31,8 +33,3 @@
  \input{./Bibliographic References/Bibliographic References}
  \input{./Appendices/Appendices.tex}
 \end{document}
-
-%%% Local Variables:
-%%% mode: latex
-%%% TeX-master: t
-%%% End:
