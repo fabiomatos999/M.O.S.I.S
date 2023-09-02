@@ -1,4 +1,17 @@
-
+* M.O.S.I.S Meeting Log                                                 :TOC:
+  - [[#30aug2023][30/Aug/2023]]
+  - [[#31aug2023][31/Aug/2023]]
+  - [[#1sep2023][1/Sep/2023]]
 
 ** 30/Aug/2023
 1. Discussed how to setup LaTeX environment on Eduardo's computer.
+
+** 31/Aug/2023
+1. Created Add team name/members document.
+2. Created team name and pirate rules document.
+3. Started project schedule.
+
+
+** 1/Sep/2023
+1. Divided proposal body equally.
+2. Progressed on Project schedule.
