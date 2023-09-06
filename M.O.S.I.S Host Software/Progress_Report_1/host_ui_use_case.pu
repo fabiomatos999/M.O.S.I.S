@@ -1,0 +1,4 @@
+@startuml
+(Another usecase) as (UC2)
+
+@enduml

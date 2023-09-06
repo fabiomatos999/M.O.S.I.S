@@ -1,0 +1,58 @@
+\documentclass[12pt]{article}
+\usepackage{graphicx}
+
+
+\begin{document}
+\input{../Title_Page/Title Page.tex}
+\tableofcontents
+\newpage
+\section{Introduction}
+The M.O.S.I.S microscope captures \textit{in situ} metadata and stereoscopic images for marine specimens. This tool is invaluable to study marine life in a wildlife setting where the conditions in the lab cannot be replicated accurately. It stores the captured media on its on board solid state memory along. This arrangement raises the following question: ``How will the data be viewed by a researcher after capture''. One answer to that question would be to review the data on the microscope itself and in a perfect world this would be the most straightforward solution. But alas, we do not live in a perfect world and reviewing the data on the microscope itself would be inadvisable for the following reasons:
+\begin{itemize}
+\item What if the microscope gets damaged during use in the field?
+\item Would a researcher know how to retrieve/export the data captured by this device?
+\end{itemize}
+To answer the first question, in the best case scenario, the data would be temporarily insensible until repairs are completed. In the worst case, the data would be permanently lost due to the device being irreparably damaged. This leads to the second question where even if the solid state drive is still functioning in the case of hardware failure of the microscope, the data would require somebody experienced enough with the architecture of the device and the operating system that it runs on in order to retrieve the data safely. In addition, with the current arrangement, there is one, and only one copy of the data, meaning if the solid state drive fails, all of the data is gone. Finally, the microscope needs to be configured for the type of study being done before hand by a researcher. Given that the microscope only has 8 buttons and a 4 inch display, configuring the type of study on the device would be extremely cumbersome not just on land but even more so in the field. Thus, a piece of software is needed that addresses all of these concerns, in a package that a researcher can easily use, which we will call the ``Host Software''.
+\section{What will the host software do?}
+The host software will need to accomplish at a minimum 3 tasks:
+\begin{enumerate}
+\item Enforce and streamline the process of backing up the data captured by the microscope and to backup the microscope's operating system.
+\item Display the data captured by the M.O.S.I.S microscope and do simple analysis on the data.
+  \item Configure the type of study to be performed on the microscope remotely.
+\end{enumerate}
+\section{What are the client requirements for the host software?}
+\subsection{Domain Requirements}
+\begin{itemize}
+	\item The system-to-be must allow the backup of the M.O.S.I.S project Raspberry Pi's operating system.
+	\item The system-to-be must allow the backup of the images captured by the M.O.S.I.S project Raspberry Pi.
+	\item The system-to-be must have a database that stores the media captured by the M.O.S.I.S project Raspberry Pi.
+	\item The system-to-be must have a database that stores the sensor captured by the M.O.S.I.S project Raspberry Pi.
+	\item The system-to-be must create a stereoscopic image from the media captured by the M.O.S.I.S project Raspberry Pi.
+	\item The system-to-be must have the means to pre-configured the type of media capture before and after deployment in the field.
+	\item The system-to-be must tag the media captured the M.O.S.I.S Raspberry Pi with the information stored in the database.
+	\item The system-to-be must analyze the captured media for bleaching estimates.
+	\item The system-to-be must analyze the captured media for area coverage by color.
+\end{itemize}
+\subsection{Interface Requirements}
+\begin{itemize}
+	\item The system-to-be's database must contain image information that includes:
+	      \begin{itemize}
+		      \item Left Camera Image
+		      \item Right Camera Image
+		      \item Time Stamp
+		      \item Temperature
+		      \item Ph
+		      \item Pressure
+		      \item Dissolved Oxygen (DO) Content
+	      \end{itemize}
+	\item The system-to-be must have a home page where there is a preview of all images currently within the database.
+	\item The system-to-be must create an individual page for each entry within the database.
+\end{itemize}
+\section{What channels of communication are involved for the host software to function?}
+There two main communication channels: ``microscope to host computer'', ``host computer to microscope'' and ``host computer and host computer web browser''. The main reason why the microscope will communicate to the host computer, i.e the computer running the host software, will be to send a copy of all of the data stored on the solid state drive to the host computer in order to have a backup of the data. Vice versa, the host computer will communicate with the microscope to send the studies to be performed on the microscope. Lastly, the host computer will communicate to a web browser the local website where the analyzed data will be presented and where the microscope can be configured from.
+\section{UML Diagrams}
+\end{document}
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
