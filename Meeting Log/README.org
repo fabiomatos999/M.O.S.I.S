@@ -2,6 +2,8 @@
   - [[#30aug2023][30/Aug/2023]]
   - [[#31aug2023][31/Aug/2023]]
   - [[#1sep2023][1/Sep/2023]]
+  - [[#4sep2023][4/Sep/2023]]
+  - [[#7sep2023][7/Sep/2023]]
 
 ** 30/Aug/2023
 1. Discussed how to setup LaTeX environment on Eduardo's computer.
@@ -15,3 +17,12 @@
 ** 1/Sep/2023
 1. Divided proposal body equally.
 2. Progressed on Project schedule.
+
+** 4/Sep/2023
+1. Fleshed out project division with Dr. Manuel Jiménez
+
+** 7/Sep/2023
+1. Discarded current project schedule.
+2. Fixed proposal objectives.
+3. Fixed problem statement.
+4. Started presentation.
