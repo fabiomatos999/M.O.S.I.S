@@ -1,7 +1,32 @@
 \section{Objectives (Eduardo)}
 %%Que vas hacer, como lo vas a medir y para cuando SER ESPECIFICO
 \begin{enumerate}
-    \item Design an UI for the M.O.S.I.S project Raspberry Pi to control the functions of the microscope and utilizes the onboard buttons for November 27, 2023. 
-    \item Have a tenfold increase in performance in comparison to the existing user interface when switching through different windows in the user interface by November 27, 2023.
-    \item Create an ACID compliant database schema to store the data and metadata captured by the microscope by November 27, 2023. %% medible
+    \item Design an UI for the M.O.S.I.S project Raspberry Pi by November 27, 2023 to:
+    \begin{itemize}
+        \item control the functions of the microscope, utilizes the onboard buttons, shows a live preview at 15 fps at a downscale resolution of 1920 X 1080
+        \item display temperature sensors with an accuracy of 3 significant digits
+        \item display Ph sensors with an accuracy of 2 significant digits
+        \item display pressure sensor with an accuracy of n significant digits.
+        \item display dissolved oxygen sensor data with an accuracy of 2 significant digits
+        \item choose the configuration file for the specific study to be done
+        \item achieving a tenfold increase in responsiveness in comparison to the existing user interface when switching through different windows in the user interface
+    \end{itemize} 
+    \item Adapt the currently existing hardware API, by November 27, 2023 to:
+    \begin{itemize}
+        \item Display the live feed from the cameras to the U.I 
+        \item Parse the temperature, Ph, pressure and dissolved oxygen data string from the UART port
+        \item run diagnostic sub-routines at application start
+    \end{itemize}
+    \item Store data and metadata that include:
+    \begin{itemize}
+        \item left camera media
+        \item right camera media
+        \item shot type
+        \item time stamp
+        \item temperature
+        \item Ph
+        \item pressure
+        \item dissolved oxygen
+    \end{itemize}
+    in a format that a researcher can browse in a file browser, by November 27, 2023.
 \end{enumerate}
