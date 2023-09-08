@@ -4,6 +4,7 @@
   - [[#1sep2023][1/Sep/2023]]
   - [[#4sep2023][4/Sep/2023]]
   - [[#7sep2023][7/Sep/2023]]
+  - [[#8sep2023][8/Sep/2023]]
 
 ** 30/Aug/2023
 1. Discussed how to setup LaTeX environment on Eduardo's computer.
@@ -26,3 +27,8 @@
 2. Fixed proposal objectives.
 3. Fixed problem statement.
 4. Started presentation.
+
+** 8/Sep/2023
+1. Fixed project management file
+2. Fixed milestone
+3. Add Gantt chart PDFs
