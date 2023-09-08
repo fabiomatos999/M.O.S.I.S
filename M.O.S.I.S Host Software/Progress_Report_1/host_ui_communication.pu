@@ -1,0 +1,14 @@
+@startuml
+[Rasberry Pi] as RPI
+[Host Computer] as HS
+[Web Browser] as WB
+() "SSH"
+() "Web Server" as WS
+RPI --> SSH
+SSH --> HS
+HS --> WS
+WS --> WB 
+WB --> WS
+WS --> SSH
+SSH --> RPI
+@enduml

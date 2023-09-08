@@ -1,4 +1,19 @@
 @startuml
-(Another usecase) as (UC2)
+skinparam actorStyle awesome
+left to right direction
+actor User as Use
+rectangle Host-Software {
+	usecase "Backup RPI" as UC1
+	usecase "Configure Study" as UC2
+	usecase "Upload Study" as  UC3
+	usecase "Preview All Media" as UC4
+	usecase "Examine Specific entry" as UC5
+}
+
+Use --> UC1
+Use --> UC2
+Use --> UC3
+Use --> UC4
+Use --> UC5
 
 @enduml
