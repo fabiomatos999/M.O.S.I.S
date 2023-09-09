@@ -67,13 +67,60 @@
 \end{frame}
 \begin{frame}{Users}
 	\begin{itemize}
-	\item Marine Biology Graduate Student David M. Repollet Otero
-	\item Marine biologist researchers
+		\item Marine Biology Graduate Student David M. Repollet Otero
+		\item Marine biologist researchers
 	\end{itemize}
 \end{frame}
 \subsection{Objectives}
-\begin{frame}{Objectives}
-
+\begin{frame}{Objectives: UI}
+	\begin{itemize}
+		\item Control the microscope
+		\item Utilize onboard buttons
+		\item Shows a preview of the cameras
+		      \begin{itemize}
+			      \item 15 FPS
+			      \item Downscaled 1920x1080
+		      \end{itemize}
+	\end{itemize}
+\end{frame}
+\begin{frame}{Objectives: UI}
+	\begin{itemize}
+		\item Display:
+		      \begin{itemize}
+			      \item Temperature
+			      \item Ph
+			      \item Pressure Sensor
+			      \item Dissolved Oxygen
+		      \end{itemize}
+	\end{itemize}
+\end{frame}
+\begin{frame}{Objectives: Hardware API}
+	\begin{itemize}
+		\item Display camera feed to U.I
+		\item Parse sensor data string from UART
+		      \begin{itemize}
+			      \item Temperature
+			      \item Ph
+			      \item Pressure Sensor
+			      \item Dissolved Oxygen
+		      \end{itemize}
+		\item Run diagnostics at application start.
+	\end{itemize}
+\end{frame}
+\begin{frame}{Objectives: Data Storage}
+	\begin{itemize}
+		\item Store data and metadata in a browsable format.
+		      \begin{itemize}
+			      \item Left camera media
+			      \item Right camera media
+			      \item Shot Type
+			      \item Time Stamp
+			      \item Temperature
+			      \item Ph
+			      \item Pressure
+			      \item Dissolved Oxygen
+		      \end{itemize}
+	\end{itemize}
 \end{frame}
 \subsection{Milestones}
 \begin{frame}{Milestones}
@@ -89,9 +136,9 @@
 \begin{frame}{Most Significant Budget Items}
 	\begin{itemize}
 		\item M.O.S.I.S Microscope - \$6,172.01
-		\item Acer Nitro 5 Laptop - \$739.99 
-		\item LG Laptop Gram - \$1020.00 
-        \item Udemy "Python GUI Development with PyQt6 \& Qt Designer" Class - \$14.99 
+		\item Acer Nitro 5 Laptop - \$739.99
+		\item LG Laptop Gram - \$1020.00
+		\item Udemy "Python GUI Development with PyQt6 \& Qt Designer" Class - \$14.99
 	\end{itemize}
 \end{frame}
 \section{Conclusion}
