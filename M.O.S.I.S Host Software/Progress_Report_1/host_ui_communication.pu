@@ -4,11 +4,11 @@
 [Web Browser] as WB
 () "SSH"
 () "Web Server" as WS
-RPI --> SSH
-SSH --> HS
-HS --> WS
-WS --> WB 
-WB --> WS
-WS --> SSH
-SSH --> RPI
+RPI --> SSH : "Clone Data"
+SSH --> HS : "Clone Data"
+HS --> WS : "HTTP Response"
+WS --> WB : "HTTP Response"
+WB --> WS : "Study Config"
+WS --> SSH : "Study Config"
+SSH --> RPI : "Study Config"
 @enduml
