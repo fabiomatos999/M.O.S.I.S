@@ -26,6 +26,7 @@
 	\tableofcontents
 \end{frame}
 \section{Introduction}
+\subsection{Problem Background}
 \begin{frame}{Project Background}
 	\begin{description}
 		\item[M.O.S.I.S] Marine Operated Stereoscopic Imaging System
@@ -42,6 +43,11 @@
 		\item Utilizes two cameras: left and right
 	\end{itemize}
 \end{frame}
+\subsection{Market Analysis}
+\begin{itemize}
+	\item The only device that is similar is the underwater microscope in Andrew D. Mullen et. all.
+	\item There is no commercial device for underwater on site microscopy
+\end{itemize}
 \section{Body}
 \subsection{Problem Statement}
 \begin{frame}{Problem Statement}
@@ -51,6 +57,14 @@
 		\item lacks support for the on board buttons
 		\item crashes frequently
 		\item lacks a formal way to store the data captured by the microscope
+	\end{itemize}
+\end{frame}
+\subsection{Deliverables}
+\begin{frame}{Deliverables}
+	\begin{itemize}
+		\item A user interface for the M.O.S.I.S microscope
+		\item Adaptation of the existing hardware API
+		\item Browsable, automatically generated folder structure for the data and metadata captured by the microscope.
 	\end{itemize}
 \end{frame}
 \begin{frame}{Client and Stakeholders}
@@ -76,6 +90,11 @@
 	\end{itemize}
 \end{frame}
 \subsection{Objectives}
+\begin{frame}
+	\begin{itemize}
+		\item By November 27, 2023 we will be delivering:
+	\end{itemize}
+\end{frame}
 \begin{frame}{Objectives: UI}
 	\begin{itemize}
 		\item Control the microscope
@@ -86,12 +105,15 @@
 			      \item Downscaled 1920x1080 Resolution
 		      \end{itemize}
 		\item Display:
-		      \begin{itemize}
-			      \item Temperature
-			      \item Ph
-			      \item Pressure
-			      \item Dissolved Oxygen
-		      \end{itemize}
+		      \begin{table}[h!]
+			      \begin{tabular}{|l|l|}
+				      \hline
+				      Temperature      & 3 significant digits \\ \hline
+				      Ph               & 2 significant digits \\ \hline
+				      Pressure         & n significant digits \\ \hline
+				      Dissolved Oxygen & 2 significant digits \\ \hline
+			      \end{tabular}
+		      \end{table}
 	\end{itemize}
 \end{frame}
 \begin{frame}{Objectives: Hardware API}
@@ -109,7 +131,8 @@
 \end{frame}
 \begin{frame}{Objectives: Data Storage}
 	\begin{itemize}
-		\item Store data and metadata in a browsable format.
+		\item Store data and metadata in a browsable format
+		\item Format: (Shot Id-Shot Type-Time Stamp).
 		      \begin{itemize}
 			      \item Left camera media
 			      \item Right camera media
@@ -122,28 +145,14 @@
 		      \end{itemize}
 	\end{itemize}
 \end{frame}
-\subsection{Outcomes}
-\begin{frame}{Outcomes}
-	\begin{itemize}
-		\item U.I that utilizes the onboard buttons using PyQt
-		      \begin{itemize}
-			      \item Start capture with a single button
-		      \end{itemize}
-		\item Live preview of both cameras
-		\item Live temperature, Ph, pressure and dissolved oxygen readings
-		\item Separate menu for study selection
-		\item Specific button for emergency shutdown.
-	\end{itemize}
-\end{frame}
 \subsection{Milestones}
 \begin{frame}{Milestones}
 	\begin{itemize}
-		\item Design Schema
-		\item The front end markup.
-		\item The hardware API.
-		\item The back end API.
-		\item The folder structure generator.
-		\item Connecting the front end with the back end.
+		\item The front end by October 15, 2023.
+		\item The hardware API by October 30, 2023.
+		\item The back end API by November 5, 2023.
+		\item The folder structure generator by November 12, 2023.
+		\item Connecting the front end with the back end by November 26, 2023.
 	\end{itemize}
 \end{frame}
 \subsection{Budget}
@@ -156,12 +165,17 @@
 	\end{itemize}
 \end{frame}
 \section{Conclusion}
-\subsection{Deliverables}
-\begin{frame}{Deliverables}
+\subsection{Outcomes}
+\begin{frame}{Outcomes}
 	\begin{itemize}
-		\item A user interface for the M.O.S.I.S microscope
-		\item Adaptation of the existing hardware API
-		\item Browsable, automatically generated folder structure for the data and metadata captured by the microscope.
+		\item U.I that utilizes the onboard buttons
+		      \begin{itemize}
+			      \item Start capture with a single button
+		      \end{itemize}
+		\item Live preview of both cameras
+		\item Live temperature, Ph, pressure and dissolved oxygen readings
+		\item Separate menu for study selection
+		\item Specific button for emergency shutdown.
 	\end{itemize}
 \end{frame}
 \subsection{Project Impact}
@@ -171,6 +185,12 @@
 		\item Streamlines the process of data capture while in the field.
 		\item Allows for the data to be in an browsable format.
 		\item Facilitates the later analysis of the data.
+	\end{itemize}
+\end{frame}
+\subsection{Questions}
+\begin{frame}
+	\begin{itemize}
+		\item Questions?
 	\end{itemize}
 \end{frame}
 \end{document}
