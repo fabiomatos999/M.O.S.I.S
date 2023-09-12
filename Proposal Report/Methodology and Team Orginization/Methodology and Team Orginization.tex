@@ -1,4 +1,5 @@
  \section{Methodology and Team Organization (Fabio)}
+ \subsection{Managerial Methodology}
  The Scrum methodology was chosen because U.I design necessitates constant feedback from the client, which benefits the scrum development cycle in the following ways:\cite{scrumallianceWhatScrum2015}
  \begin{itemize}
  \item Presents a potentially deliverable build of the U.I to the client after each sprint.
@@ -17,7 +18,7 @@
  For testing and quality assurance for the U.I, we will be meeting with the client on a weekly basis to assure that the U.I meets their standards and have the client test the U.I in meeting. To supplement this, during development, pair programming will be employed in order to reduce bugs and to test software by a different person that is not the developer. For the back-end elements, unit and integration tests will be extensively used to ensure that the expected output is correct, for both single modules and the interface between modules. This strategy reduces the time for successful module integration.\\
  The work will be broken down as follows:
  \begin{enumerate}
- \item The client creates a sprint backlog.
+ \item The team creates a sprint backlog from the project objectives.
  \item A sprint is planned with the Scrum master helping in deciding if the tasks within the sprint are feasible.
  \item At the beginning of the day during the sprint, a stand up meeting is held with the team and the Scrum master focuses the team along with mediating and resolving problems that impede progress.
  \item A potentially deliverable build of the U.I is shown to the client during the weekly meeting.
@@ -26,3 +27,17 @@
  \item Repeat steps 2-6 until all items from the sprint backlog have been completed.
  \end{enumerate}
  For team organization, Fabio J. Matos Nieves will be both Scrum master, project manager and lead hardware API developer while Eduardo S. Miranda Figueroa will be the lead back-end developer.
+ \subsection{Technical Methodology}
+ Firstly, we need to analyze the details of how the microscope interfaces with its on board peripherals, such as:
+ \begin{enumerate}
+ \item How the Raspberry Pi interfaces with the screen
+ \item How the Raspberry Pi receives the camera feed
+ \item How the Raspberry Pi receives the sensor data
+ \item What format is the sensor data in
+ \item How the buttons interface with the Raspberry Pi
+ \item How are diagnostic sub-routines run
+ \item How to make the UI initialize with the operating system starts
+ \end{enumerate}
+ Secondly, in order to implement the UI, we need to learn how to implement a user interface in Python. Thirdly, we need to scour the existing code base to then later adapt the existing hardware API to function with the new UI. Lastly, usability testing will be conducted with the client and the research team.
+ \subsection{Testing Methodology}
+ For the front end elements, usability tests will be conducted to ensure that not only that the user interface is intuitive to use by a researcher but also can operated in harsh and unstable conditions such as murky water and generally low visibility. To test the hardware API, unit and integration tests will be conducted so that a feature produces the expected output and that the interface between features accept input as expected. For the back end elements, unit tests will be employed to make sure that that the data is properly stored within the database. To test the storage solution, unit tests will be employed to make sure that the data is properly being written to disk in the correct format and structure.
