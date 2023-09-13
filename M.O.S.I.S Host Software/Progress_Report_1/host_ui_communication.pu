@@ -1,14 +1,4 @@
 @startuml
-[Rasberry Pi] as RPI
-[Host Computer] as HS
-[Web Browser] as WB
-() "SSH"
-() "Web Server" as WS
-RPI --> SSH : "Clone Data"
-SSH --> HS : "Clone Data"
-HS --> WS : "HTTP Response"
-WS --> WB : "HTTP Response"
-WB --> WS : "Study Config"
-WS --> SSH : "Study Config"
-SSH --> RPI : "Study Config"
+skinparam linestyle ortho
+rectangle ""
 @enduml

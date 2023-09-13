@@ -2,6 +2,7 @@
 \usepackage{graphicx}
 \usepackage{tikz}
 \usepackage{aeguill}
+\usepackage{pdflscape}
 
 \begin{document}
 \input{../Title_Page/Title Page.tex}
@@ -54,8 +55,12 @@ The host software will need to accomplish at a minimum 3 tasks:
 There two main communication channels: ``microscope to host computer'', ``host computer to microscope'' and ``host computer and host computer web browser''. The main reason why the microscope will communicate to the host computer, i.e the computer running the host software, will be to send a copy of all of the data stored on the solid state drive to the host computer in order to have a backup of the data. Vice versa, the host computer will communicate with the microscope to send the studies to be performed on the microscope. Lastly, the host computer will communicate to a web browser the local website where the analyzed data will be presented and where the microscope can be configured from.
 \section{UML Diagrams}
 \input{../host_ui_use_case.tex}
-\newpage
-\input{../host_ui_communication.tex}
+\input{../host_ui_communication_uc1.tex}
+\input{../host_ui_communication_uc2.tex}
+\input{../host_ui_communication_uc3.tex}
+\input{../host_ui_communication_uc4.tex}
+\input{../host_ui_communication_uc5.tex}
+\input{../host_ui_communication_uc6.tex}
 \end{document}
 %%% Local Variables:
 %%% mode: latex
