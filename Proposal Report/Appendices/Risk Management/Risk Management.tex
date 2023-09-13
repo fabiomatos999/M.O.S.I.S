@@ -1,3 +1,4 @@
+\newpage
 \section{Risk Management (Fabio)}
 \rowcolors{2}{black!20}{black!10}
 \begin{longtable}{|m{0.2\textwidth}|m{0.2\textwidth}|m{0.5\textwidth}|}
@@ -7,11 +8,11 @@
 	The Tiva microcontroller UART fails                            & Low                 & Prevent U.I startup if failure is detected and log error to console and log file.                                                                                        \\ \hline
 	The microscope casing is leaking                               & High                & Detect the leak using the onboard sensor, log to a log file and initiate a graceful shutdown.                                                                            \\ \hline
 	The database becomes corrupted.                                & Low                 & Reconstruct database from folder structure.                                                                                                                              \\ \hline
-	The screen malfunctions                                        & Low                 & Unrecoverable                                                                                                                                                            \\ \hline
+	The screen malfunctions                                        & Low                 & Unrecoverable under water, on land the data can be extracted via the solid state drive                                                                                                                                                            \\ \hline
 	The on board buttons fail                                      & Medium              & In the field it is unrecoverable but can be operated via a wireless mouse on land.                                                                                       \\ \hline
 	The RTOS becomes corrupted                                     & Low                 & The data is stored in a waterproof and shockproof solid state disk, thus the data is unaffected and the microscope will be periodically backed up via the Host Software. \\ \hline
 	There is a worker strike on campus                             & High                & Complete hardware API at an expedited pace                                                                                                                               \\ \hline
-	There is a hurricane that immobilizes action in the university & High                & Unrecoverable                                                                                                                                                            \\ \hline
+	There is a hurricane that immobilizes action in the university & High                & Unrecoverable                                                                                                                                                           \\ \hline
 	One of the team members becomes ill or drops the course        & Low                 & Discuss with the client workload adjustment measures                                                                                                                     \\ \hline
 	\caption{Risk Table}
 	\label{tab:RiskTable}
