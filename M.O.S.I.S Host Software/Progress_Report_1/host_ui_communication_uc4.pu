@@ -5,7 +5,7 @@ rectangle "Host Computer Software" as HSC
 rectangle "Database" as DB
 rectangle "Web Browser" as WB
 DB -right-> HSC : "Select all entries"
-HC -> DB : "Provide the file to be viewed and analyzed"
+HC -down-> DB : "Provide the file to be viewed and analyzed"
 HSC -> HSC : "Analyze data from disk"
 HSC -down-> WB : "Serve homepage from data"
 @enduml
