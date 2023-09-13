@@ -6,6 +6,8 @@
   - [[#7sep2023][7/Sep/2023]]
   - [[#8sep2023][8/Sep/2023]]
   - [[#9sep2023][9/Sep/2023]]
+  - [[#11sep2023][11/Sep/2023]]
+  - [[#12sep2023][12/Sep/2023]]
 
 ** 30/Aug/2023
 1. Discussed how to setup LaTeX environment on Eduardo's computer.
@@ -39,3 +41,19 @@
 2. Redid objectives
 3. Proofread presentation
 4. Created client project objectives document
+
+** 11/Sep/2023
+1. Added outcomes to presentation
+2. Fixed overhead cost in presentation
+3. Did a once over on presentation
+4. Got client to sign project objectives
+5. Added IP Address objective to presentation and document
+
+** 12/Sep/2023
+1. Presented M.O.S.I.S Proposal
+2. Added technical and testing methodologies to proposal document
+3. Added more risks to risk management
+4. Fixed overhead costs in document
+5. Revised proposal
+6. Added list of tables to proposal
+7. Converted ProjectLibre project file to Microsoft project xml
