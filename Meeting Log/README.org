@@ -8,6 +8,7 @@
   - [[#9sep2023][9/Sep/2023]]
   - [[#11sep2023][11/Sep/2023]]
   - [[#12sep2023][12/Sep/2023]]
+  - [[#15sep2023][15/Sep/2023]]
 
 ** 30/Aug/2023
 1. Discussed how to setup LaTeX environment on Eduardo's computer.
@@ -57,3 +58,8 @@
 5. Revised proposal
 6. Added list of tables to proposal
 7. Converted ProjectLibre project file to Microsoft project xml
+
+** 15/Sep/2023
+1. Created draft requirements
+2. Distributed work
+3. Discussed what to work on before requirements have been signed
