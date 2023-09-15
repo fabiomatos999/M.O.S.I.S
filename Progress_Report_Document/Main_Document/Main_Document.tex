@@ -1,9 +1,13 @@
 \documentclass[12pt]{article}
 
 \begin{document}
+\pagenumbering{gobble}
 \input{../Title_Page/Title_Page.tex}
 \input{../Executive_Summary/Executive_Summary.tex}
+\pagenumbering{roman}
 \input{../Table_of_Contents/Table_of_Contents.tex}
+\newpage
+\pagenumbering{arabic}
 \input{../Introduction/Introduction.tex}
 \input{../Technical_Progress/Technical_Progress.tex}
 \input{../Task_Progress/Task_Progress.tex}
