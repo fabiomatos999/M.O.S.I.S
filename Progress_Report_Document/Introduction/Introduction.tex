@@ -1,1 +1,51 @@
 \section{Introduction (Fabio)}
+The fundamental problem with the UI currently employed on the M.O.S.I.S is a lack of design cohesion, missing and redundant features, constant crashing and lacks a formal way to store the data on the microscope. This problem has not fundamentally changed since the proposal. However, there has been one major objective change since then, that being that no longer will the preview of the cameras be at 1920x1080 resolution. Since reviewing the data sheet of the LCD display on the microscope, we have determined to have resolution 400x200 would be more appropriate since the resolution of the display is 800x480.\cite{5inchResistiveTouch} This allows the preview feed to be at the native aspect ratio of the display while allowing space for the sensor data. The following are the updated project objectives:
+\begin{enumerate}
+	\item Design a UI for the M.O.S.I.S project Raspberry Pi by November 27, 2023 to:
+	      \begin{itemize}
+		      \item Control the functions of the microscope, utilizes the onboard buttons, shows a live preview at 15 FPS at a downscaled resolution of 400x200
+		      \item Display temperature sensors data with an accuracy of 3 significant digits
+		      \item Display Ph sensor data with an accuracy of 3 significant digits
+		      \item Display pressure sensor data with an accuracy of 3 significant digits.
+		      \item Display dissolved oxygen sensor data with an accuracy of 3 significant digits
+		      \item Display current local IP address
+		      \item Choose the configuration file for the specific study to be done
+		      \item Achieving a tenfold decrease in transition time in comparison to the existing user interface when switching through different windows in the user interface
+	      \end{itemize}
+	\item Adapt the currently existing hardware API, by November 27, 2023 to:
+	      \begin{itemize}
+		      \item Display the live feed from the cameras to the U.I
+		      \item Parse the temperature, Ph, pressure and dissolved oxygen data string from the UART port
+		      \item Run diagnostic sub-routines at application start
+	      \end{itemize}
+	\item By November 27, 2023, store data and metadata in a format that a researcher can browse through in a file browser, of which include:
+	      \begin{itemize}
+		      \item Left camera media
+		      \item Right camera media
+		      \item Shot type
+		      \item Time stamp
+		      \item Temperature
+		      \item Ph
+		      \item Pressure
+		      \item Dissolved oxygen
+	      \end{itemize}
+\end{enumerate}
+This progress report is organized as into the following parts:
+% \begin{enumerate}
+% 	\item Technical Progress:
+% 	      \begin{enumerate}
+% 		      \item Describes design alternatives
+% 		      \item Analysis criteria for the design alternatives
+% 		      \item Justifies choices made for the project
+% 		      \item Presents and describes the system architecture
+% 		      \item Design progress describing system components
+% 		      \item Present basic technical diagrams (Detailed descriptions, calculations and diagrams will be in the appendix)
+% 	      \end{enumerate}
+% \end{enumerate}
+\begin{enumerate}
+	\item Technical Progress: Describes at a high level the design process for this project.
+	\item Task Progress: Analyzes the current project state with projected schedule and update it accordingly
+	\item Expenditure Analysis: Analyses current expenditures on components and personnel and summarizes expected remaining costs.
+	\item Next Steps: Describes upcoming tasks
+	\item Appendix: Contains detailed descriptions, calculations and diagrams of the design process
+\end{enumerate}

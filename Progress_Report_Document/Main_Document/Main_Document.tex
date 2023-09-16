@@ -1,5 +1,18 @@
 \documentclass[12pt]{article}
 \usepackage{graphicx}
+\usepackage[hidelinks]{hyperref}
+\usepackage[numbers]{natbib}
+\usepackage{etoolbox}
+\apptocmd{\thebibliography}{\raggedright}{}{}
+\usepackage{setspace}
+\usepackage{pdfpages}
+\hypersetup{ colorlinks, citecolor=black,
+	filecolor=black,
+	linkcolor=black,
+	urlcolor=blue,
+	pdftitle={M.O.S.I.S Progress Report},
+	pdfpagemode=FullScreen,
+}
 
 \begin{document}
 \pagenumbering{gobble}
@@ -9,12 +22,14 @@
 \input{../Table_of_Contents/Table_of_Contents.tex}
 \newpage
 \pagenumbering{arabic}
-\input{../Introduction/Introduction.tex}
-\input{../Technical_Progress/Technical_Progress.tex}
-\input{../Task_Progress/Task_Progress.tex}
-\input{../Expenditure_Analysis/Expenditure_Analysis.tex}
-\input{../Next_Steps/Next_Steps.tex}
-\input{../Future_Work/Future_Work.tex}
+\begin{spacing}{1.2}
+	\input{../Introduction/Introduction.tex}
+	\input{../Technical_Progress/Technical_Progress.tex}
+	\input{../Task_Progress/Task_Progress.tex}
+	\input{../Expenditure_Analysis/Expenditure_Analysis.tex}
+	\input{../Next_Steps/Next_Steps.tex}
+	\input{../Future_Work/Future_Work.tex}
+\end{spacing}
 \input{../Bibliographic_References/Bibliographic_References.tex}
 \input{../Appendix/Appendix.tex}
 \input{../Appendix/Glossary/Glossary.tex}
