@@ -1,6 +1,0 @@
-@startuml
-skinparam linestyle ortho
-rectangle "Host Computer" as HC
-rectangle "Raspberry Pi" as RPi
-HC -right-> RPi : "Transfer Study Configuration via SSH"
-@enduml

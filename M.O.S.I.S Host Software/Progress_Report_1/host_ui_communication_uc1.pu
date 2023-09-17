@@ -1,6 +1,0 @@
-@startuml
-skinparam linestyle ortho
-rectangle "Raspberry Pi" as RPi
-rectangle "Host Computer" as HC
-RPi -right-> HC : "Update Media Folder Structure"
-@enduml

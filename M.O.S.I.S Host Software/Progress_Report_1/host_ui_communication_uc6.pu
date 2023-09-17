@@ -1,9 +1,0 @@
-@startuml
-skinparam linestyle ortho
-rectangle "Database" as DB
-rectangle "Host Computer Software" as HCS
-rectangle "Web Browser" as WB
-HCS -> DB : "Send filter select statement"
-DB -> HCS : "Receive filtered entries"
-HCS -up-> WB : "View filtered results"
-@enduml

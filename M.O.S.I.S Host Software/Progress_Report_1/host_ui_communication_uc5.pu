@@ -1,8 +1,0 @@
-@startuml
-skinparam linestyle ortho
-rectangle "Host Computer Software" as HCS
-rectangle "Database" as DB
-rectangle "Web Browser" as WB
-DB -> HCS : "Select specific entry by ID"
-HCS -down-> WB : "Display analysis of a specific entry"
-@enduml
