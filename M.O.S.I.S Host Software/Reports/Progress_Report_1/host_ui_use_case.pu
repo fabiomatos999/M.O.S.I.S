@@ -1,0 +1,33 @@
+@startuml
+skinparam actorStyle awesome
+left to right direction
+actor User as Use
+rectangle Host-Software {
+	usecase "Download RPi" as UC1
+	usecase "Configure Study" as UC2
+	usecase "Upload Study" as  UC3
+	usecase "Preview All Media" as UC4
+	usecase "Export Selected Entries" as UC4.1
+	usecase "Examine Specific entry" as UC5
+	usecase "View Automatically Generated Analysis" as UC5.1
+	usecase "Export Specific Entry" as UC5.2
+	usecase "Filter Entries" as UC6
+	usecase "Filter Entries by Date" as UC6.1
+	usecase "Filter Entries by ID" as UC6.2
+	usecase "Filter Entries by Shot Type" as UC6.3
+}
+
+Use --> UC1
+Use --> UC2
+Use --> UC3
+Use --> UC4
+Use --> UC5
+Use --> UC6
+UC4 <|-- UC4.1
+UC5 <|-- UC5.1
+UC5 <|-- UC5.2
+UC6 <|-- UC6.1
+UC6 <|-- UC6.2
+UC6 <|-- UC6.3
+
+@enduml

@@ -1,0 +1,4 @@
+@startuml
+skinparam linestyle ortho
+rectangle ""
+@enduml

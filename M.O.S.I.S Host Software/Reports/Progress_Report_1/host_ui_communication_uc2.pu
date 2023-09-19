@@ -1,0 +1,8 @@
+@startuml
+skinparam linestyle ortho
+rectangle "Host Computer" as HC
+rectangle "Host Computer Software" as HCS
+HCS -> HCS : "Write Study Profiles via a form"
+HCS -up-> HC : "Write Study Configuration to Disk"
+HC -down-> HCS : "Reconfigure existing Study"
+@enduml
