@@ -1,5 +1,5 @@
 \section{System Specifications (Fabio \& Eduardo)}
-Front End:
+Front End (Fabio \& Eduardo):
 \begin{itemize}
 	\item 400x200 resolution, 15 FPS preview of left and right cameras
 	\item Left and right camera preview on main menu
@@ -14,8 +14,14 @@ Front End:
 	\item Stop currently executing study using a single button
 	\item View study list menu using one button
 \end{itemize}
-Back End:
-Hardware API:
+Back End (Eduardo):
+\begin{itemize}
+	\item Store shot id and shot type in one table
+	\item Store media id, shot id, left media path, right media path, ISO 8601 timestamp, illumination type, temperature, dissolved oxygen, Ph and pressure in one table
+	\item Relate shot id to all media with that specific shot id
+	\item Select all table related to a study using shot id
+\end{itemize}
+Hardware API (Fabio):
 \begin{itemize}
 	\item Document existing, transferable camera library functions
 	\item Adapt camera functions to utilize database and folder structure schema
@@ -23,4 +29,10 @@ Hardware API:
 	\item Split data string at the ampersand character
 	\item Create a JSON object from the data and metadata
 \end{itemize}
-Folder Structure Generator:
+Folder Structure Generator (Eduardo):
+\begin{itemize}
+	\item Create folder based Id, shot type, ISO 8601 timestamp and illumination type
+	\item Store all media files within the created folder 
+	\item Store JSON file with all data and metadata associated with the study in the same folder as the media files
+	\item Identify media entry using shot id, ISO 8601 timestamp and illumination
+\end{itemize}
