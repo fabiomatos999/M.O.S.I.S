@@ -9,6 +9,7 @@
   - [[#11sep2023][11/Sep/2023]]
   - [[#12sep2023][12/Sep/2023]]
   - [[#15sep2023][15/Sep/2023]]
+  - [[#20sep2023][20/Sep/2023]]
 
 ** 30/Aug/2023
 1. Discussed how to setup LaTeX environment on Eduardo's computer.
@@ -63,3 +64,9 @@
 1. Created draft requirements
 2. Distributed work
 3. Discussed what to work on before requirements have been signed
+
+** 20/Sep/2023
+1. Finished system specifications
+2. Created user interface mockup
+3. Mixed minor errors in requirements, specifications and introduction
+4. Created and requirements form to stakeholders
