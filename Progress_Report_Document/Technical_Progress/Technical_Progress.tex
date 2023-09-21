@@ -1,1 +1,48 @@
 \section{Technical Progress (Fabio \& Eduardo)}
+\subsection{Design Alternatives}
+Since we are designing a user interface 3 main design platforms arise:
+\begin{enumerate}
+	\item Web-based
+	\item Web-Native
+	\item Native
+\end{enumerate}
+Web-based mean having a client server relationship within the system and having all interacting occurring within the browser.
+Native is writing a user interface from scratch that executes on the native operating system.
+Web-native is a hybrid approach that uses web technologies in a web platform.
+\subsection{Analysis Criteria}
+Since at its core, the M.O.S.I.S microscope is an embedded system the following limitations need to be taken into consideration:
+\begin{itemize}
+	\item Single Core
+	\item Low CPU clock frequency
+	\item ARM Architecture
+	\item Limited system memory
+	\item Raspberry Pi official library compatibility
+\end{itemize}
+With these restrictions in mind, the criteria used in our analysis are as follows:
+\begin{itemize}
+	\item Has to utilize Python
+	\item Minimize CPU load
+	\item Minimize Memory Usage
+	\item Easily interface-able with existing hardware API functions
+	\item Easily interface with on-board buttons
+	\item Easily interface with the file system
+	\item Can easily be backed up and be restored from a backup
+\end{itemize}
+\subsection{Design Justifications}
+Based on the analysis criteria, we have chosen to create a native user interface in Python using PyQt6, a SQLite database and specific folder specific format. The reason why Python was chosen was simple, the official Raspberry Pi library that is used to access embedded peripherals only officially supports Python. There are bindings for other languages like Rust but they are not officially supported by the Raspberry Pi developers. In addition the existing camera API  is already written in Python. Secondly, the reasons why PyQt6 was chosen for our graphical user interface library were:
+\begin{itemize}
+	\item Qt is an established, open source, GUI library used across Linux
+	\item Qt is much easier to modify the look and feel compared to other open source libraries such GTK
+	\item Qt has a much more stable development cycle compared to GTK
+	\item PyQt6 are open source Python binding for the Qt6 library that is originally written in C++
+\end{itemize}
+Thirdly, SQLite was chosen as our database engine because:
+\begin{itemize}
+	\item Due to the database being in a file rather than a server facilitates the process of backing up the database
+	\item It is much less resource intensive than server based alternatives such as MongoDB and MariaDB.
+	\item The reduction in types simplifies and hastens query execution on embedded systems
+	\item The reduction in types allows for the database to the compressed much more efficiently
+\end{itemize}
+\subsection{System Architecture}
+\subsection{System Modules}
+\subsection{Technical Diagrams}
