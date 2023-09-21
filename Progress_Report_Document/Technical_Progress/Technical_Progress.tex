@@ -44,5 +44,22 @@ Thirdly, SQLite was chosen as our database engine because:
 	\item The reduction in types allows for the database to the compressed much more efficiently
 \end{itemize}
 \subsection{System Architecture}
+The M.O.S.I.S microscope itself has 5 fundamental parts:
+\begin{enumerate}
+	\item Raspberry Pi
+	\item Cameras
+	\item Sensors
+	\item Display
+	\item Buttons
+\end{enumerate}
+The Raspberry Pi serves as main microcontroller that receives input from the cameras, sensors and buttons and presents it on the display.
+The cameras are connected to the Pi via USB and have basic functionality a webcams. The sensors are configured and utilized by the onboard Tiva microcontroller and the Pi received the captured data via a UART port. The buttons utilize the GPIO interface on the Pi and are operated via interrupts. The display uses a HDMI interface to present the desktop environment of the Raspberry Pi real time operating system.\\
+As for the UI, it is comprised of:
+\begin{itemize}
+	\item Front End User Interface
+	\item Database
+	\item Hardware API
+	\item Folder Structure Generator
+\end{itemize}
 \subsection{System Modules}
 \subsection{Technical Diagrams}
