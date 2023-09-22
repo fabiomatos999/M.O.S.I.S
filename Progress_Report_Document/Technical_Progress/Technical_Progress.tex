@@ -39,11 +39,11 @@ Based on the analysis criteria, we have chosen to create a native user interface
 Thirdly, SQLite was chosen as our database engine because:
 \begin{itemize}
 	\item Due to the database being in a file rather than a server facilitates the process of backing up the database
-	\item It is much less resource intensive than server based alternatives such as MongoDB and MariaDB.
+	\item It is much less resource intensive than server based alternatives such as MongoDB and MariaDB
 	\item The reduction in types simplifies and hastens query execution on embedded systems
 	\item The reduction in types allows for the database to the compressed much more efficiently
 \end{itemize}
-\subsection{System Architecture}
+\subsection{System Architecture and Interfaces}
 The M.O.S.I.S microscope itself has 5 fundamental parts:
 \begin{enumerate}
 	\item Raspberry Pi
@@ -61,5 +61,6 @@ As for the UI, it is comprised of:
 	\item Hardware API
 	\item Folder Structure Generator
 \end{itemize}
+The front end user interface is presented on the Raspberry Pi display via the Raspberry Pi OS desktop environment. The database is the storage medium for all of the metadata captured by the microscope. Camera image paths, date and time stamp, shot type, illumination type and sensor data will all be placed in the database and will serve as the permanent record for the microscope. The hardware API will serve as the interface between the sensors, the cameras and the solid state disk on the microscope to communicate with the operating system to control the camera functions, interacting with the sensors and writing media files to disk. The sensors will be interacted with via UART, the cameras will be manipulated using the library functions provided by the manufacturer, via the USB interface. The sensor and image data will manipulated in software and written to disk using operating system calls.
 \subsection{System Modules}
 \subsection{Technical Diagrams}
