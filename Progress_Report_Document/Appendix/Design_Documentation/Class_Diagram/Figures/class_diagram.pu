@@ -1,0 +1,113 @@
+@startuml
+abstract class "UI" {
+	 # layout: layout
+	 + void hide()
+	 + void show()
+	 # addWidget()
+}
+class "Application" {
+      - resolutionX: int
+      - resolutionY: int
+      - layouts: layout[]
+      + runApplication()
+      + runDiagnostics()
+}
+class "Layout" {
+      # widgets: widget[]
+      + getLayout()
+}
+class mainMenuUI {
+      - leftCameraWidget: widget
+      - rightCameraWidget: widget
+      - temperature: widget
+      - ph: widget
+      - absolutePressure: widget
+      - dissolvedOxygen: widget
+      - iso: widget
+      - apertureSize: widget
+      - shutterSpeed: widget
+      - ipAddress: widget
+      - whiteBalanced: widget
+      - studyStatus: widget
+      + executeStudy()
+      + getStudyStatus()
+      + shutdownMicroscope()
+}
+class studyProfileUI {
+      - studyProfiles: studyProfiles[]
+      - selected: studyProfile
+      + getSelected()
+}
+class isoUI {
+      - iso: int
+      + getISO()
+      + setISO()
+}
+class apertureSizeUI {
+      - apertureSize: float
+      + getApertureSize()
+      + setApertureSize()
+}
+class shutterSpeedUI {
+      - shutterSpeed: float
+      + getShutterSpeed()
+      + setShutterSpeed()
+}
+class whiteBalanceUI {
+      - whiteBalance: int
+      + getWhiteBalance()
+      + setWhiteBalance()
+}
+class studyProfile {
+     - shotType: shotType
+     - illuminationType: shotType
+     - iso: int
+     - shutterSpeed: float
+     - whiteBalance: int
+     - apertureSize: float
+     + getStudyProfile()
+     - setCameraParameters()
+}
+abstract class Sensor {
+     # callCommand: String
+     + call()
+     + exit()
+}
+class SensorData {
+     + getSensorsData()
+}
+class Ph {
+      + phCalHigh()
+      + phCalMid()
+      + phCalLow()
+}
+class DissolvedOxygen {
+      + doZeroCal()
+      + doAtmoCal()
+      + doCalClear()
+}
+enum shotType {
+     SINGLE
+     BURST
+     TELESCOPIC
+     TIMELAPSE
+     VIDEO
+}
+enum illuminationType {
+     NONE
+     VISIBLESPECTRUM
+     INFRARED
+     ULTRAVIOLET
+}
+Application *-- Layout
+Layout <|-- UI
+UI "1" <|-- mainMenuUI
+UI "1" <|-- isoUI
+UI "1" <|-- whiteBalanceUI
+UI "1" <|-- studyProfileUI
+UI "1" <|-- apertureSizeUI
+UI "1" <|-- shutterSpeedUI
+Sensor <|-- SensorData
+Sensor <|-- DissolvedOxygen
+Sensor <|-- Ph
+@enduml
