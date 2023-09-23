@@ -1,16 +1,17 @@
-\documentclass[14pt, aspectratio=169]{beamer}
+\documentclass[17pt, aspectratio=169]{beamer}
 
 \usetheme{CambridgeUS}
 \usecolortheme{dolphin}
 \useinnertheme{rectangles}
 \usepackage{svg}
+\usepackage{setspace}
 
 \usepackage{multicol}
 \usepackage[subpreambles=true]{standalone}
 \usepackage{import}
 
 \title{M.O.S.I.S Progress Report Presentation}
-\author{Fabio J. Matos Nieves \& Eduardo S. Miranda Figueroa }
+\author{Fabio J. Matos Nieves \& Eduardo S. Miranda Figueroa}
 \institute{University of Puerto Rico Mayagüez Campus}
 \date{September 28, 2023}
 
@@ -20,13 +21,23 @@
 \end{frame}
 \begin{frame}{Table of Contents}
 	\begin{multicols}{2}
-		\tableofcontents
+		\begin{spacing}{0.8}
+			\tableofcontents
+		\end{spacing}
 	\end{multicols}
 \end{frame}
 \section{Introduction}
 \subsection{Problem Statement}
 \begin{frame}{Problem Statement}
-
+	\begin{itemize}
+		\item The M.O.S.I.S microscope already has a user interface \textbf{but}:
+		      \begin{itemize}
+			      \item Lacks design cohesion
+			      \item Missing and redundant features
+			      \item Constantly crashes
+			      \item Lacks a formal way to store data
+		      \end{itemize}
+	\end{itemize}
 \end{frame}
 \subsection{Changes and Updates}
 \begin{frame}{Changes and Updates}
@@ -44,7 +55,7 @@
 \subsubsection{M.O.S.I.S Microscope}
 \begin{frame}{Microscope Block Diagram}
 	\begin{figure}
-		\includesvg[inkscapelatex=false,height=0.7\textheight]{../../Progress_Report_Document/Appendix/System_Architecture_and_Interfaces/Hardware_Block_Diagram/Figures/hardware_block_diagram.svg}
+		\includesvg[inkscapelatex=false,height=0.65\textheight]{../../Progress_Report_Document/Appendix/System_Architecture_and_Interfaces/Hardware_Block_Diagram/Figures/hardware_block_diagram.svg}
 		\caption{Microscope Block Diagram}
 	\end{figure}
 
@@ -52,19 +63,19 @@
 \subsubsection{M.O.S.I.S UI 2.0}
 \begin{frame}{M.O.S.I.S UI 2.0: Mock-ups (Main Menu)}
 	\begin{figure}
-		\includegraphics[page=1,height=0.7\textheight]{../../Progress_Report_Document/Appendix/Design_Documentation/User_Interface/Figures/M.O.S.I.S_UI_Design.pdf}
+		\includegraphics[page=1,height=0.65\textheight]{../../Progress_Report_Document/Appendix/Design_Documentation/User_Interface/Figures/M.O.S.I.S_UI_Design.pdf}
 		\caption{Main Menu Mock-Up}
 	\end{figure}
 \end{frame}
 \begin{frame}{M.O.S.I.S UI 2.0: Mock-ups (Study Select)}
 	\begin{figure}
-		\includegraphics[page=2,height=0.7\textheight]{../../Progress_Report_Document/Appendix/Design_Documentation/User_Interface/Figures/M.O.S.I.S_UI_Design.pdf}
+		\includegraphics[page=2,height=0.65\textheight]{../../Progress_Report_Document/Appendix/Design_Documentation/User_Interface/Figures/M.O.S.I.S_UI_Design.pdf}
 		\caption{Main Menu Mock-Up}
 	\end{figure}
 \end{frame}
 \begin{frame}{M.O.S.I.S UI 2.0: Class Diagram}
 	\begin{figure}
-		\resizebox{!}{0.7\textheight}{
+		\resizebox{!}{0.65\textheight}{
 			\import{../../Progress_Report_Document/Appendix/Design_Documentation/Class_Diagram/Figures/}{class_diagram}
 		}
 		\caption{Class Diagram}
@@ -73,7 +84,7 @@
 \begin{frame}{M.O.S.I.S UI 2.0: Use Case Diagram}
 
 	\begin{figure}
-		\resizebox{!}{0.7\textheight}{
+		\resizebox{!}{0.65\textheight}{
 			\import{../../Progress_Report_Document/Appendix/Design_Documentation/Use_Case_Diagram/Figures/}{use_case}
 		}
 		\caption{Use Case Diagram}
@@ -81,14 +92,14 @@
 \end{frame}
 \begin{frame}{M.O.S.I.S UI 2.0: Activity Diagram}
 	\begin{figure}[H]
-		\includegraphics[page=1,height=0.7\textheight]{../../Progress_Report_Document/Appendix/Design_Documentation/Activity_Diagram/Figures/activity.pdf}
+		\includegraphics[page=1,height=0.65\textheight]{../../Progress_Report_Document/Appendix/Design_Documentation/Activity_Diagram/Figures/activity.pdf}
 		\caption{M.O.S.I.S UI 2.0 Activity Diagram}
 	\end{figure}
 
 \end{frame}
 \begin{frame}{M.O.S.I.S UI 2.0: Entity Relationship Diagram}
 	\begin{figure}
-		\includegraphics[page=1,height=0.7\textheight]{../../Progress_Report_Document/Appendix/Design_Documentation/ER_Diagram/Figures/ER_Diagram_MOSIS.pdf}
+		\includegraphics[page=1,height=0.65\textheight]{../../Progress_Report_Document/Appendix/Design_Documentation/ER_Diagram/Figures/ER_Diagram_MOSIS.pdf}
 		\caption{ER Diagram}
 	\end{figure}
 \end{frame}
@@ -96,9 +107,11 @@
 \begin{frame}{Cameras: Get Snapshot}
 	\begin{figure}[H]
 		\begin{center}
-			\resizebox{!}{0.7\textheight}{
-				\import{../../Progress_Report_Document/Appendix/Design_Documentation/Firmware_Flowcharts/Figures/}{get_snapshot_flowchart}
-			}
+			\begin{small}
+				\resizebox{!}{0.65\textheight}{
+					\import{../../Progress_Report_Document/Appendix/Design_Documentation/Firmware_Flowcharts/Figures/}{get_snapshot_flowchart}
+				}
+			\end{small}
 		\end{center}
 		\caption{Get Snapshot Flowchart}
 	\end{figure}
