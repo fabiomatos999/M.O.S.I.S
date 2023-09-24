@@ -3,6 +3,7 @@
 from flask import Flask, render_template, url_for
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects.sqlite import TEXT, REAL, INTEGER
+from sqlalchemy import select
 import os
 from datetime import datetime
 from enum import Enum
@@ -64,6 +65,12 @@ def insertMediaEntry(db, shotType, iluminationType, iso, apertureSize,
                            whiteBalance=whiteBalance)
     db.session.add(new_entry)
     db.session.commit()
+
+
+def getAllMediaEntryIDs(db):
+    """Get all entryId from database."""
+    dbReturn = list(db.session.execute(select(MediaEntry.entryId)))
+    return list(map(lambda x: x[0], dbReturn))
 
 
 class MediaMetadata(db.Model):

@@ -4,7 +4,7 @@
 import os
 import random
 from app import shotType, iluminationType
-from app import insertMediaEntry, insertMediaMetadata
+from app import insertMediaEntry, insertMediaMetadata, getAllMediaEntryIDs
 from enum import Enum
 import math
 
@@ -82,11 +82,12 @@ def insertRandomMediaEntry(db):
                      randWhiteBalance())
 
 
-#def getRandomMediaEntryEntryId(db) -> int:
+def getRandomMediaEntryEntryId(db) -> int:
+    return random.choice(getAllMediaEntryIDs(db))
 
 
 def insertRandomMediaMetadata(db):
     """Insert a MediaMedata entry into a database with random valid data."""
     randImages = randImage()
-    insertMediaMetadata(db, 1, randImages[0], randImages[1], randTemp(),
+    insertMediaMetadata(db, getRandomMediaEntryEntryId(db), randImages[0], randImages[1], randTemp(),
                         randPressure(), randPh(), randDissolvedOxygen())
