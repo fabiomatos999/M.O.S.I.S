@@ -44,12 +44,12 @@ def randDissolvedOxygen() -> float:
 
 def randShotType() -> Enum:
     """Return a random shotType."""
-    return random.choice(list(shotType))
+    return random.choice(list(shotType)).name
 
 
 def randIluminationType() -> Enum:
     """Return a random iluminationType."""
-    return random.choice(list(illuminationType))
+    return random.choice(list(illuminationType)).name
 
 
 def randISO() -> int:
