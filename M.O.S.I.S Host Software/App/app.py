@@ -3,8 +3,9 @@
 from flask import Flask, render_template, url_for
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects.sqlite import TEXT, REAL, INTEGER
-from testDataGenerator import *
 import os
+from datetime import datetime
+from enum import Enum
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -24,7 +25,7 @@ class MediaEntry(db.Model):
     illumination_type (TEXT NOT NULLABLE) an enum,
     iso (INTEGER NOT NULLABLE),
     apertureSize (REAL NOT NULLABLE),
-    shutterSpeed (INTEGER NOT NULLABLE),
+    shutterSpeed (REAL NOT NULLABLE),
     whiteBalance (INTEGER NOT NULLABLE)
     """
 
@@ -38,12 +39,31 @@ class MediaEntry(db.Model):
     illuminationType = db.Column(TEXT, nullable=False)
     iso = db.Column(INTEGER, nullable=False)
     apertureSize = db.Column(REAL, nullable=False)
-    shutterSpeed = db.Column(INTEGER, nullable=False)
+    shutterSpeed = db.Column(REAL, nullable=False)
     whiteBalance = db.Column(INTEGER, nullable=False)
 
     def __repr__(self):
         """Return MediaEntry.entryId when inserting into database."""
         return '<Task %r>' % self.entryId
+
+
+def getCurrentTime() -> str:
+    """Return current time in 'yyyy-MM-ddTHH:mm:ss.zzz' format."""
+    return datetime.now().strftime('yyyy-MM-ddTHH:mm:ss.zzz')
+
+
+def insertMediaEntry(db, shotType, iluminationType, iso, apertureSize,
+                     shutterSpeed, whiteBalance):
+    """Insert a MediaEntry into the database."""
+    new_entry = MediaEntry(shotType=str(shotType),
+                           time=getCurrentTime(),
+                           illuminationType=str(iluminationType),
+                           iso=iso,
+                           apertureSize=apertureSize,
+                           shutterSpeed=shutterSpeed,
+                           whiteBalance=whiteBalance)
+    db.session.add(new_entry)
+    db.session.commit()
 
 
 class MediaMetadata(db.Model):
@@ -54,7 +74,7 @@ class MediaMetadata(db.Model):
     entryId (INTEGER, FOREIGN KEY (MediaEntry.entryId)),
     leftCameraMedia (TEXT NOT NULLABLE),
     rightCameraMedia (TEXT NOT NULLABLE),
-    time (TEXT NOT NULLABLE) format (yyyy-MM-ddTHH:mm:ss.zzz),
+    time (TEXT NOT NULLABLE) format (yyyy-MM-ddTHH:mm:ss.zzzzzz),
     temperature (REAL NOT NULLABLE),
     pressure (REAL NOT NULLABLE),
     ph (REAL NOT NULLABLE),
@@ -78,6 +98,27 @@ class MediaMetadata(db.Model):
     def __repr__(self):
         """Return MediaMetadata.metadataId when inserting into database."""
         return '<Task %r>' % self.metadataId
+
+
+def insertMediaMetadata(db, entryId, leftCameraMedia, rightCameraMedia,
+                        temperature, pressure, ph, dissolvedOxygen):
+    """Insert MediaMetadata entry into database."""
+    new_metadata = MediaMetadata(entryId=entryId,
+                                 leftCameraMedia=leftCameraMedia,
+                                 rightCameraMedia=rightCameraMedia,
+                                 time=getCurrentTime(),
+                                 temperature=temperature,
+                                 pressure=pressure,
+                                 ph=ph,
+                                 dissolvedOxygen=dissolvedOxygen)
+    db.session.add(new_metadata)
+    db.session.commit()
+
+
+shotType = Enum('shotType',
+                ['SINGLE', 'BURST', 'TELESCOPIC', 'TIMELAPSE', 'VIDEO'])
+iluminationType = Enum('iluminationType',
+                       ['NONE', 'VISIBLESPECTRUM', 'INFRARED', 'ULTRAVIOLET'])
 
 
 @app.route("/")
