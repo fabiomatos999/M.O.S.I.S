@@ -37,7 +37,7 @@ class MediaEntry(db.Model):
                         nullable=False)
     shotType = db.Column(TEXT, nullable=False)
     time = db.Column(TEXT, nullable=False)
-    illuminationType = db.Column(TEXT, nullable=False)
+    iluminationType = db.Column(TEXT, nullable=False)
     iso = db.Column(INTEGER, nullable=False)
     apertureSize = db.Column(REAL, nullable=False)
     shutterSpeed = db.Column(REAL, nullable=False)
@@ -48,9 +48,36 @@ class MediaEntry(db.Model):
         return '<Task %r>' % self.entryId
 
 
+class MediaEntryStruct():
+    """Internal representation for MediaEntry."""
+
+    entryId = int()
+    shotType = None
+    time = str()
+    iluminationType = None
+    iso = int()
+    apertureSize = float()
+    shutterSpeed = float()
+    whiteBalance = float()
+
+    def __init__(self, entryId: int, shotType: shotType, time: str,
+                 iluminationType: iluminationType, iso: int,
+                 apertureSize: float, shutterSpeed: float, whiteBalance: int):
+        """Construct MediaEntryStruct."""
+        self.entryId = entryId
+        self.shotType = shotType
+        self.time = time
+        self.iluminationType = iluminationType
+        self.iso = iso
+        self.apertureSize = apertureSize
+        self.shutterSpeed = shutterSpeed
+        self.whiteBalance = whiteBalance
+
+
 def getCurrentTime() -> str:
     """Return current time in 'yyyy-MM-ddTHH:mm:ss.zzz' format."""
-    return datetime.now().strftime('yyyy-MM-ddTHH:mm:ss.zzz')
+    date = datetime.now()
+    return date.strftime('%Y-%m-%-dT%H:%M:%S.%f')
 
 
 def insertMediaEntry(db, shotType, iluminationType, iso, apertureSize,
@@ -107,6 +134,33 @@ class MediaMetadata(db.Model):
         return '<Task %r>' % self.metadataId
 
 
+class MediaMetadataStruct:
+    """Internal representation for a MediaMetadata entry."""
+
+    metadataId = int()
+    entryId = int()
+    leftCameraMedia = str()
+    rightCameraMedia = str()
+    time = str()
+    temperature = float()
+    pressure = float()
+    ph = float()
+    dissolvedOxygen = float()
+
+    def __init__(self, metadataId: int, entryId: int, leftCameraMedia: str,
+                 rightCameraMedia: str, time: str, temperature: float,
+                 ph: float, dissolvedOxygen: float):
+        """Construct MediaMetadataStruct."""
+        self.metadataId = metadataId
+        self.entryId = entryId
+        self.leftCameraMedia = leftCameraMedia
+        self.rightCameraMedia = rightCameraMedia
+        self.time = time
+        self.temperature = temperature
+        self.ph = ph
+        self.dissolvedOxygen = dissolvedOxygen
+
+
 def insertMediaMetadata(db, entryId, leftCameraMedia, rightCameraMedia,
                         temperature, pressure, ph, dissolvedOxygen):
     """Insert MediaMetadata entry into database."""
@@ -122,10 +176,19 @@ def insertMediaMetadata(db, entryId, leftCameraMedia, rightCameraMedia,
     db.session.commit()
 
 
-shotType = Enum('shotType',
-                ['SINGLE', 'BURST', 'TELESCOPIC', 'TIMELAPSE', 'VIDEO'])
-iluminationType = Enum('iluminationType',
-                       ['NONE', 'VISIBLESPECTRUM', 'INFRARED', 'ULTRAVIOLET'])
+class shotType(Enum):
+    SINGLE = 1
+    BURST = 2
+    TELESCOPIC = 3
+    TIMELAPSE = 4
+    VIDEO = 5
+
+
+class iluminationType(Enum):
+    NONE = 1
+    VISIBLESPECTRUM = 2
+    INFRARED = 3
+    ULTRAVIOLET = 4
 
 
 @app.route("/")

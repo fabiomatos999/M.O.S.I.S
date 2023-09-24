@@ -83,11 +83,13 @@ def insertRandomMediaEntry(db):
 
 
 def getRandomMediaEntryEntryId(db) -> int:
+    "Return a random entryId from MediaEntry table."
     return random.choice(getAllMediaEntryIDs(db))
 
 
 def insertRandomMediaMetadata(db):
     """Insert a MediaMedata entry into a database with random valid data."""
     randImages = randImage()
-    insertMediaMetadata(db, getRandomMediaEntryEntryId(db), randImages[0], randImages[1], randTemp(),
-                        randPressure(), randPh(), randDissolvedOxygen())
+    insertMediaMetadata(db, getRandomMediaEntryEntryId(db), randImages[0],
+                        randImages[1], randTemp(), randPressure(), randPh(),
+                        randDissolvedOxygen())
