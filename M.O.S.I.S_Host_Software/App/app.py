@@ -202,6 +202,17 @@ def getAllMediaMetadataId(
     return ret
 
 
+def getAllMediaMetadata(db) -> list[MediaMetadataInternalRepresentation]:
+    ret = list(db.session.execute(select(MediaMetadata)))
+    ret = list(
+        map(
+            lambda x: MediaMetadataInternalRepresentation(
+                x[0].metadataId, x[0].entryId, x[0].leftCameraMedia, x[0].
+                rightCameraMedia, x[0].time, x[0].temperature, x[0].ph, x[
+                    0].dissolvedOxygen), ret))
+    return ret
+
+
 @verify(UNIQUE, CONTINUOUS)
 class shotType(Enum):
     """Shot Type for the type of study to be performed."""
@@ -226,7 +237,11 @@ class illuminationType(Enum):
 @app.route("/")
 def index():
     """Return index.html to the / route."""
-    return render_template("index.html")
+    return render_template("index.html",
+                           MediaEntries=getAllMediaEntry(db),
+                           db=db,
+                           getAllMediaMetadataId=getAllMediaMetadataId,
+                           enumerate=enumerate)
 
 
 if __name__ == "__main__":
