@@ -23,12 +23,9 @@ class mainMenuUI {
       - ph: widget
       - absolutePressure: widget
       - dissolvedOxygen: widget
-      - iso: widget
-      - apertureSize: widget
-      - shutterSpeed: widget
       - ipAddress: widget
-      - whiteBalanced: widget
       - studyStatus: widget
+      - sensorData: SensorData
       + executeStudy()
       + getStudyStatus()
       + shutdownMicroscope()
@@ -58,7 +55,16 @@ class whiteBalanceUI {
       + getWhiteBalance()
       + setWhiteBalance()
 }
-class studyProfile {
+class phCalibrationUI {
+	- ph: Ph
+        + getPhHighRange()	
+        + getPhMidRange()	
+        + getPhLowRange()	
+}
+class doCalibrationUI {
+	- do: DissolvedOxygen
+}
+Class studyProfile {
      - shotType: shotType
      - illuminationType: shotType
      - iso: int
@@ -107,6 +113,8 @@ UI "1" <|-- whiteBalanceUI
 UI "1" <|-- studyProfileUI
 UI "1" <|-- apertureSizeUI
 UI "1" <|-- shutterSpeedUI
+UI "1" <|-- phCalibrationUI
+UI "1" <|-- doCalibrationUI
 Sensor <|-- SensorData
 Sensor <|-- DissolvedOxygen
 Sensor <|-- Ph
