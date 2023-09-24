@@ -6,7 +6,7 @@ from sqlalchemy.dialects.sqlite import TEXT, REAL, INTEGER
 from sqlalchemy import select
 import os
 from datetime import datetime
-from enum import Enum
+from enum import Enum, verify, UNIQUE, CONTINUOUS
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -37,7 +37,7 @@ class MediaEntry(db.Model):
                         nullable=False)
     shotType = db.Column(TEXT, nullable=False)
     time = db.Column(TEXT, nullable=False)
-    iluminationType = db.Column(TEXT, nullable=False)
+    illuminationType = db.Column(TEXT, nullable=False)
     iso = db.Column(INTEGER, nullable=False)
     apertureSize = db.Column(REAL, nullable=False)
     shutterSpeed = db.Column(REAL, nullable=False)
@@ -48,26 +48,26 @@ class MediaEntry(db.Model):
         return '<Task %r>' % self.entryId
 
 
-class MediaEntryStruct():
+class MediaEntryInternalRepresentation():
     """Internal representation for MediaEntry."""
 
     entryId = int()
     shotType = None
     time = str()
-    iluminationType = None
+    illuminationType = None
     iso = int()
     apertureSize = float()
     shutterSpeed = float()
     whiteBalance = float()
 
     def __init__(self, entryId: int, shotType: shotType, time: str,
-                 iluminationType: iluminationType, iso: int,
+                 illuminationType: illuminationType, iso: int,
                  apertureSize: float, shutterSpeed: float, whiteBalance: int):
-        """Construct MediaEntryStruct."""
+        """Construct MediaEntryInternalRepesentation."""
         self.entryId = entryId
         self.shotType = shotType
         self.time = time
-        self.iluminationType = iluminationType
+        self.illuminationType = illuminationType
         self.iso = iso
         self.apertureSize = apertureSize
         self.shutterSpeed = shutterSpeed
@@ -80,12 +80,12 @@ def getCurrentTime() -> str:
     return date.strftime('%Y-%m-%-dT%H:%M:%S.%f')
 
 
-def insertMediaEntry(db, shotType, iluminationType, iso, apertureSize,
+def insertMediaEntry(db, shotType, illuminationType, iso, apertureSize,
                      shutterSpeed, whiteBalance):
     """Insert a MediaEntry into the database."""
     new_entry = MediaEntry(shotType=str(shotType),
                            time=getCurrentTime(),
-                           illuminationType=str(iluminationType),
+                           illuminationType=str(illuminationType),
                            iso=iso,
                            apertureSize=apertureSize,
                            shutterSpeed=shutterSpeed,
@@ -98,6 +98,18 @@ def getAllMediaEntryIDs(db):
     """Get all entryId from database."""
     dbReturn = list(db.session.execute(select(MediaEntry.entryId)))
     return list(map(lambda x: x[0], dbReturn))
+
+
+def getAllMediaEntry(db) -> list[MediaEntryInternalRepresentation]:
+    """Get all Media Entries from a database."""
+    ret = list(db.session.execute(select(MediaEntry)))
+    ret = list(
+        map(
+            lambda x: MediaEntryInternalRepresentation(x[0].entryId, x[
+                0].shotType, x[0].time, x[0].illuminationType, x[0].iso, x[
+                    0].apertureSize, x[0].shutterSpeed, x[0].whiteBalance),
+            ret))
+    return ret
 
 
 class MediaMetadata(db.Model):
@@ -134,7 +146,7 @@ class MediaMetadata(db.Model):
         return '<Task %r>' % self.metadataId
 
 
-class MediaMetadataStruct:
+class MediaMetadataInternalRepresentation:
     """Internal representation for a MediaMetadata entry."""
 
     metadataId = int()
@@ -150,7 +162,7 @@ class MediaMetadataStruct:
     def __init__(self, metadataId: int, entryId: int, leftCameraMedia: str,
                  rightCameraMedia: str, time: str, temperature: float,
                  ph: float, dissolvedOxygen: float):
-        """Construct MediaMetadataStruct."""
+        """Construct MediaMetadataInternalRepresentation."""
         self.metadataId = metadataId
         self.entryId = entryId
         self.leftCameraMedia = leftCameraMedia
@@ -176,7 +188,24 @@ def insertMediaMetadata(db, entryId, leftCameraMedia, rightCameraMedia,
     db.session.commit()
 
 
+def getAllMediaMetadataId(
+        db, entryId: int) -> list[MediaMetadataInternalRepresentation]:
+    ret = list(
+        db.session.execute(
+            select(MediaMetadata).where(MediaMetadata.entryId == entryId)))
+    ret = list(
+        map(
+            lambda x: MediaMetadataInternalRepresentation(
+                x[0].metadataId, x[0].entryId, x[0].leftCameraMedia, x[0].
+                rightCameraMedia, x[0].time, x[0].temperature, x[0].ph, x[
+                    0].dissolvedOxygen), ret))
+    return ret
+
+
+@verify(UNIQUE, CONTINUOUS)
 class shotType(Enum):
+    """Shot Type for the type of study to be performed."""
+
     SINGLE = 1
     BURST = 2
     TELESCOPIC = 3
@@ -184,7 +213,10 @@ class shotType(Enum):
     VIDEO = 5
 
 
-class iluminationType(Enum):
+@verify(UNIQUE, CONTINUOUS)
+class illuminationType(Enum):
+    """Illumination Type."""
+
     NONE = 1
     VISIBLESPECTRUM = 2
     INFRARED = 3

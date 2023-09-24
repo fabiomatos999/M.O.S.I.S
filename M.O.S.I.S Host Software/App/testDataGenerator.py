@@ -3,7 +3,7 @@
 
 import os
 import random
-from app import shotType, iluminationType
+from app import shotType, illuminationType
 from app import insertMediaEntry, insertMediaMetadata, getAllMediaEntryIDs
 from enum import Enum
 import math
@@ -49,7 +49,7 @@ def randShotType() -> Enum:
 
 def randIluminationType() -> Enum:
     """Return a random iluminationType."""
-    return random.choice(list(iluminationType))
+    return random.choice(list(illuminationType))
 
 
 def randISO() -> int:
