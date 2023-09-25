@@ -3,7 +3,18 @@ from time import sleep
 
 
 class ReadResult:
-    def __init__(self, parsedSensorHubResponse: list[str]):
+    """
+    class for handling readings from sensorHub.Read()
+    parses the incoming message string
+    """
+
+    def __init__(self, incomingMessage: str):
+        """
+
+        Args:
+            incomingMessage (str): incoming decoded string message from sensor hub
+        """
+        parsedSensorHubResponse = incomingMessage.split(sep="&")
         self.phReading = float(parsedSensorHubResponse[0])
         self.tempReading = float(parsedSensorHubResponse[1])
         self.DOreading = float(parsedSensorHubResponse[2])
@@ -96,9 +107,8 @@ class sensorHub:
         # debug this value
         received = received.decode(encoding="utf-8")
         # parse the string and store values in result variable
-        parsed = received.split(sep="&")
 
-        result = ReadResult(parsed)
+        result = ReadResult(received)
 
         return result
 
