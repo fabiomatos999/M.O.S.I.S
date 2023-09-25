@@ -1,7 +1,7 @@
 \section{System Specifications (Fabio \& Eduardo)}
 Front End (Fabio \& Eduardo):
 \begin{itemize}
-	\item 400x400 resolution, 15 FPS preview of left and right cameras
+	\item 400x400 resolution, 24 FPS preview of left and right cameras
 	\item Left and right camera preview on main menu
 	\item Display Temperature (Celsius), Ph, Absolute Pressure (mbar) and Dissolved Oxygen (mg/L), current IP address and study status at the bottom of the main menu
 	\item Study status indicates if a study is in progress
@@ -13,11 +13,12 @@ Front End (Fabio \& Eduardo):
 	\item Start study capture using a single button
 	\item Stop currently executing study using a single button
 	\item View study list menu using one button
+	\item Cycle through ISO control, shutter speed control, aperture size control, white balance control, Ph sensor calibration and dissolved oxygen sensor calibration menus with a single button
 \end{itemize}
 Back End (Eduardo):
 \begin{itemize}
-	\item Store shot id and shot type in one table
-	\item Store media id, shot id, left media path, right media path, ISO 8601 timestamp, illumination type, temperature, dissolved oxygen, Ph and pressure in one table
+	\item Store shot id , shot type, ISO, shutter speed, white balance and white balance in one table
+	\item Store media id, shot id, left media path, right media path, ISO 8601 date stamp, illumination type, temperature, dissolved oxygen, Ph and pressure in one table
 	\item Relate shot id to all media with that specific shot id
 	\item Select all table related to a study using shot id
 \end{itemize}
@@ -26,13 +27,13 @@ Hardware API (Fabio):
 	\item Document existing, transferable camera library functions
 	\item Adapt camera functions to utilize database and folder structure schema
 	\item Receive sensor data from UART port with a baud rate of 115200, 8 data bits and 1 stop bit
-	\item Split data string at the ampersand character
-	\item Create a JSON object from the data and metadata
+	\item Split sensor data string at the ampersand character
+	\item Create a JSON file from the data and metadata
 \end{itemize}
 Folder Structure Generator (Eduardo):
 \begin{itemize}
-	\item Create folder based Id, shot type, ISO 8601 timestamp and illumination type
-	\item Store all media files within the created folder 
+	\item Create folder based Id, shot type, ISO 8601 date stamp and illumination type
+	\item Store all media files within the created folder
 	\item Store JSON file with all data and metadata associated with the study in the same folder as the media files
-	\item Identify media entry using shot id, ISO 8601 timestamp and illumination
+	\item Identify media entry using shot id, ISO 8601 date stamp, illumination, ISO, shutter speed, aperture size and white balance
 \end{itemize}
