@@ -2,6 +2,59 @@ import serial
 from time import sleep
 
 
+class ReadResult:
+    def __init__(self, parsedSensorHubResponse: list[str]):
+        self.phReading = float(parsedSensorHubResponse[0])
+        self.tempReading = float(parsedSensorHubResponse[1])
+        self.DOreading = float(parsedSensorHubResponse[2])
+        self.baroReading = float(parsedSensorHubResponse[3])
+
+    def __repr__(self) -> str:
+        return f"""
+        Reading Result:
+        
+        Ph: {self.phReading} 
+        Temperature : {self.tempReading} celcius
+        Dissolved Oxygen: {self.DOreading}
+        Pressure (barometric sensor): {self.baroReading} mbar"""
+
+    def getPh(self) -> float:
+        """
+        Get Ph reading from sensor result message
+
+        Returns:
+            float: Ph level measured by hub
+        """
+        return self.phReading
+
+    def tempReading(self) -> float:
+        """
+        Get temperature reading from sensor hub message
+
+        Returns:
+            float: temperature reading in Celcius from sensor hub
+        """
+        return self.tempReading
+
+    def getDOreading(self) -> float:
+        """
+        Get Dissolved Oxygen reading from sensor hub message
+
+        Returns:
+            float: Dissolved Oxygen (0-100)
+        """
+        return self.DOreading
+
+    def getBaroReading(self) -> float:
+        """
+        Get Barometric Reading from sensor hub message
+
+        Returns:
+            float: barometric reading in mbars
+        """
+        return self.baroReading
+
+
 class sensorHub:
     """This class is an abstraction of the TIs MCU TM4C1294XL
     that is connected to the raspberry pi. This class serves as
@@ -18,16 +71,12 @@ class sensorHub:
 
         print("created sensor hub object")
 
-    def Read(self) -> dict:
+    def Read(self) -> ReadResult:
         """
-        reads all sensor data
-        returns the values in a dictionary with the following keys:
+        Reads all sensor data
+        returns =ReadResult object with all sensor readings
 
-        keys:
-        -phReading
-        -tempReading
-        -DOreading
-        -baroReading
+
 
         TODO:
             -determine units of all readings
@@ -49,12 +98,7 @@ class sensorHub:
         # parse the string and store values in result variable
         parsed = received.split(sep="&")
 
-        result = {}
-
-        result["phReading"] = parsed[0]
-        result["tempReading"] = parsed[1]
-        result["DOreading"] = parsed[2]
-        result["baroReading"] = parsed[3]
+        result = ReadResult(parsed)
 
         return result
 
