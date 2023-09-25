@@ -11,8 +11,8 @@
 \usepackage{import}
 
 \title{M.O.S.I.S Progress Report Presentation}
-\author{Fabio J. Matos Nieves \& Eduardo S. Miranda Figueroa}
-\institute{University of Puerto Rico Mayagüez Campus}
+\author[Fabio J. \& Eduardo S.]{Fabio J. Matos Nieves \& Eduardo S. Miranda Figueroa}
+\institute[UPRM]{University of Puerto Rico Mayagüez Campus}
 \date{September 28, 2023}
 
 \begin{document}
@@ -41,25 +41,35 @@
 \end{frame}
 \subsection{Changes and Updates}
 \begin{frame}{Changes and Updates}
-
+	\begin{itemize}
+		\item Client added camera control requirement to the project
+		\item Client increased camera frame rate requirement to 24 frames per second
+		\item Stakeholder clarified time stamp requirement
+	\end{itemize}
 \end{frame}
 \section{Body}
 \subsection{Design Alternatives}
 \begin{frame}{Design Alternatives}
+	\begin{itemize}
+		\item Browser Based
+		\item Native
+		\item Native Browser
+	\end{itemize}
 \end{frame}
 \subsection{Analysis Criteria}
 \begin{frame}{Analysis Criteria}
-
+	\begin{itemize}
+		\item Minimized computing resource consumption
+		      \begin{itemize}
+			      \item CPU Cycles
+			      \item System Memory Usage
+			      \item Total System Power Draw
+		      \end{itemize}
+		\item Python Based
+		\item Can easily be backed up and restored from a backup
+	\end{itemize}
 \end{frame}
 \subsection{System Architecture}
-\subsubsection{M.O.S.I.S Microscope}
-\begin{frame}{Microscope Block Diagram}
-	\begin{figure}
-		\includesvg[inkscapelatex=false,height=0.65\textheight]{../../Progress_Report_Document/Appendix/System_Architecture_and_Interfaces/Hardware_Block_Diagram/Figures/hardware_block_diagram.svg}
-		\caption{Microscope Block Diagram}
-	\end{figure}
-
-\end{frame}
 \subsubsection{M.O.S.I.S UI 2.0}
 \begin{frame}{M.O.S.I.S UI 2.0: Mock-ups (Main Menu)}
 	\begin{figure}
@@ -80,22 +90,6 @@
 		}
 		\caption{Class Diagram}
 	\end{figure}
-\end{frame}
-\begin{frame}{M.O.S.I.S UI 2.0: Use Case Diagram}
-
-	\begin{figure}
-		\resizebox{!}{0.65\textheight}{
-			\import{../../Progress_Report_Document/Appendix/Design_Documentation/Use_Case_Diagram/Figures/}{use_case}
-		}
-		\caption{Use Case Diagram}
-	\end{figure}
-\end{frame}
-\begin{frame}{M.O.S.I.S UI 2.0: Activity Diagram}
-	\begin{figure}[H]
-		\includegraphics[page=1,height=0.65\textheight]{../../Progress_Report_Document/Appendix/Design_Documentation/Activity_Diagram/Figures/activity.pdf}
-		\caption{M.O.S.I.S UI 2.0 Activity Diagram}
-	\end{figure}
-
 \end{frame}
 \begin{frame}{M.O.S.I.S UI 2.0: Entity Relationship Diagram}
 	\begin{figure}
@@ -118,11 +112,33 @@
 \end{frame}
 \subsection{Project Status}
 \begin{frame}{Project Status}
-
+	\begin{itemize}
+		\item M.O.S.I.S microscope unavailable from October 15 to October 21.
+		      \begin{itemize}
+			      \item Hardware API was originally going to be implemented from October 15 to October 30.
+			      \item Now have to reassess the milestone timeline:
+		      \end{itemize}
+		      \begin{center}
+			      \begin{tabular}{||c | c||}
+				      \hline
+				      Hardware API & Oct 15, 2023 \\
+				      \hline
+				      Back end API & Oct 15, 2023 \\
+				      \hline
+				      Front end    & Oct 30, 2023 \\
+				      \hline
+			      \end{tabular}
+		      \end{center}
+	\end{itemize}
 \end{frame}
 \subsection{Deliverables}
 \begin{frame}{Deliverables}
-
+	\begin{itemize}
+		\item Implementing deliverables before design is complete is ill advised.
+		      \begin{itemize}
+			      \item No milestones nor deliverables have been achieved.
+		      \end{itemize}
+	\end{itemize}
 \end{frame}
 \subsection{Current Budget}
 \begin{frame}{Current Budget}
