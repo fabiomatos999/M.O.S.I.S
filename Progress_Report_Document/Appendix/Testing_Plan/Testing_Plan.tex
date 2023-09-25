@@ -1,1 +1,69 @@
 \section{Testing Plan (Eduardo)}
+The Requirements to be tested are:
+\begin{itemize}
+    \item The system-to-be must present the left and right camera feeds to the user.
+\end{itemize}
+To test this requirement we will make sure that both feed are refreshing at 24 FPS and that the feed are at the specified 400 X 400 resolution.
+\begin{itemize}
+    \item The system-to-be must present temperature, Ph, dissolved oxygen, pressure, study status, and local IP address to the user.
+\end{itemize}
+To test this requirement we will verify that the sensors data presented are the same as the data received by the sensors and are updated every 2 seconds.
+\begin{itemize}
+    \item The system-to-be must have the means to switch between different study profiles
+\end{itemize}
+To test this requirement we will add functionality to the on board buttons that allows the user to switch between different study profiles.
+\begin{itemize}
+    \item The system-to-be must control the lighting on the microscope cameras according to the study profile.
+\end{itemize}
+To test this requirement we will verify that the lighting on the study data is the one according to the study profile.
+\begin{itemize}
+    \item The system-to-be must control the shot type on the microscope cameras according to the study profile.
+\end{itemize}
+To test this requirement we will verify that the shot type on the study data is the one according to the study profile.
+\begin{itemize}
+    \item The system-to-be must control the ISO of the microscope cameras.
+\end{itemize}
+To test this requirement we will verify that the ISO on the study data is the one according to the study profile.
+\begin{itemize}
+    \item The system-to-be must control the aperture size of the microscope cameras.
+\end{itemize}
+To test this requirement we will verify that the aperture size on the study data is the one according to the study profile.
+\begin{itemize}
+    \item The system-to-be must control the shutter speed of the microscope cameras.
+\end{itemize}
+To test this requirement we will verify that the shutter speed on the study data is the one according to the study profile.
+\begin{itemize}
+    \item The system-to-be must control the white balance of the microscope cameras.
+\end{itemize}
+To test this requirement we will verify that the white balance on the study data is the one according to the study profile.
+\begin{itemize}
+    \item The system-to-be must call the calibration functions of the microscope sensors.
+\end{itemize}
+To test this requirement when calling the calibration functions of the microscope sensors we will check that the sensors are being calibrated as per the user.
+\begin{itemize}
+    \item The system-to-be must have a database that stores:
+    \begin{itemize}
+        \item Left Camera Media
+        \item Right Camera Media
+        \item Shot type
+        \item ISO 8601 Date Stamp (yyyy-MM-ddTHH:mm:ss.zzz)
+        \item Temperature
+        \item Ph
+        \item Pressure
+        \item Dissolved Oxygen
+        \item Illumination Type
+        \item ISO
+        \item Aperture Size
+        \item Shutter Speed
+        \item White Balance
+    \end{itemize}
+\end{itemize}
+To test this requirement we will check the data on the study completely matches the data on the database.
+\begin{itemize}
+    \item The system-to-be must store the captured data into a browsable format.
+\end{itemize}
+To test this requirement we will verify on the host computer that the data stored is able to be browsed without difficulty.
+\begin{itemize}
+    \item The system-to-be must use the on board buttons to control the functions of the microscope.
+\end{itemize}
+To test this requirement we will verify that each on board button is performing their intended function.
