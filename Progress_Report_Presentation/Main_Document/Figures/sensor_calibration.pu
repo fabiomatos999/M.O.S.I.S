@@ -1,0 +1,6 @@
+@startuml
+frame "Sensor Calibration" #SkyBlue {
+	[Ph Calibration Menu]
+	[Dissolved Oxygen Calibration Menu]
+}
+@enduml
