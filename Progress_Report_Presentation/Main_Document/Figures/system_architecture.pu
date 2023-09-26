@@ -1,0 +1,22 @@
+@startuml
+package "Solid State Drive" {
+database "SQLite" {
+}
+}
+package "User Interface" {
+	[Main Menu]
+	[Study Select Menu]
+	frame "Camera Control" {
+		}
+		frame "Sensor Calibration" {
+		}
+}
+package "Cameras" {
+	[Left Camera]
+	[Right Camera]	
+}
+[Sensor Hub]
+interface "File System"
+interface "Camera SDK"
+interface "UART"
+@enduml
