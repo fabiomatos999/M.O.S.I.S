@@ -194,7 +194,7 @@ class sensorHub:
         except (serial.SerialException, UnicodeDecodeError) as e:
             raise Exception("Error performing Ph Highpoint calibration: " + str(e))
 
-    def getDOreading(self) -> float:
+    def getDO(self) -> float:
         """
         Get D.O readings every second
         returns first DO reading but the MCU will continue to transmit readings
