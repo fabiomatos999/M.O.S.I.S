@@ -1,29 +1,29 @@
 @startuml
 abstract class "UI" {
-	# layout: layout
+	# layout
 	+ hide()
 	+ show()
 }
 class previewUI {
-	- leftCameraFeed: widget
-	- rightCameraFeed: widget
-	- sensorData: widget
-	- studyStatus: widget
+	- leftCameraFeed
+	- rightCameraFeed
+	- sensorData
+	- studyStatus
 }
 class studyProfileUI {
-	- studyProfileList: widget
+	- studyProfileList
 	+ setStudyProfile()
 }
 class cameraControlUI {
-	- iso: widget
-	- shutterSpeed: widget
-	- apertureSize: widget
-	- whiteBalance: widget
+	- iso
+	- shutterSpeed
+	- apertureSize
+	- whiteBalance
 	+ setCameraSettings()
 }
 class sensorCalibrationUI {
-	- doCalibration: widget
-	- phCalibration: widget
+	- doCalibration
+	- phCalibration
 	+ calibrateSensors()
 }
 UI <|-- previewUI
