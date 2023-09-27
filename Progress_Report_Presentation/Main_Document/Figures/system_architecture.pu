@@ -5,7 +5,7 @@ database "SQLite" {
 }
 }
 package "User Interface" {
-	[Main Menu] #Yellow
+	[Preview Screen] #Yellow
 	[Study Menu] #Orange
 	frame "Camera Control" #Pink {
 		}
