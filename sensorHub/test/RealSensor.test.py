@@ -1,4 +1,4 @@
-import src.sensor
+from sensorCopy import sensorHub
 
 
 def main():
