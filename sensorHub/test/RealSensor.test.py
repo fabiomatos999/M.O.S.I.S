@@ -5,11 +5,11 @@ def main():
     """
     Debugging file for when the sensor is actually connected
     """
-    sensor = sensor.sensorHub()
+    sensor = sensorHub()
 
-    sensor.calibrateAll()
+    # sensor.calibrateAll()
     sensor.getPh()
-    sensor.getDOreading()
+    sensor.getDO()
     sensor.getTemp()
 
     sensor.Read()
