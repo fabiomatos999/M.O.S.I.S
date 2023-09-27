@@ -109,7 +109,7 @@ class sensorHub:
         # sends command to MCU through UART port to fetch all sensor readings
         try:
             # sends command to MCU through UART port to fetch all sensor readings
-            command = r"\rRead"
+            command = r"\rRead".encode()
             self.uart.write(command)
 
             # read result from command
@@ -131,7 +131,7 @@ class sensorHub:
         """
 
         try:
-            command = r"\rPhCal"
+            command = r"\rPhCal".encode()
             self.uart.write(command)
 
             received = self.uart.read().decode(encoding="utf-8")
@@ -148,7 +148,7 @@ class sensorHub:
         """
 
         try:
-            command = r"\rPhLowCal"
+            command = r"\rPhLowCal".encode()
             self.uart.write(command)
 
             received = self.uart.read().decode(encoding="utf-8")
@@ -163,7 +163,7 @@ class sensorHub:
         TODO: determine return value type
         """
         try:
-            command = r"\rPhMidCal"
+            command = r"\rPhMidCal".encode()
             self.uart.write(command)
 
             # read result from command
@@ -182,7 +182,7 @@ class sensorHub:
         TODO: determine return value type
         """
         try:
-            command = r"\rPhHighCal"
+            command = r"\rPhHighCal".encode()
             self.uart.write(command)
 
             # read result from command
@@ -202,7 +202,7 @@ class sensorHub:
 
         """
         try:
-            command = r"\rDoCal"
+            command = r"\rDoCal".encode()
             self.uart.write(command)
 
             # read result from command
@@ -221,7 +221,7 @@ class sensorHub:
         TODO: determine return value type
         """
         try:
-            command = r"\rDoAtmoCal"
+            command = r"\rDoAtmoCal".encode()
             self.uart.write(command)
 
             # read result from command
@@ -241,7 +241,7 @@ class sensorHub:
         TODO: determine return value type
         """
         try:
-            command = r"\rDoZeroCal"
+            command = r"\rDoZeroCal".encode()
             self.uart.write(command)
 
             # read result from command
@@ -262,7 +262,7 @@ class sensorHub:
         Returns only first reading but MCU will continue to transmit
         """
         try:
-            command = r"\rTempCal"
+            command = r"\rTempCal".encode()
             self.uart.write(command)
 
             # read result from command
@@ -281,7 +281,7 @@ class sensorHub:
         TODO: determine return value type
         """
         try:
-            command = r"\rDoAtmoCal"
+            command = r"\rDoAtmoCal".encode()
             self.uart.write(command)
 
             # read result from command
@@ -315,7 +315,7 @@ class sensorHub:
         """
 
         try:
-            command = r"\rexit"
+            command = r"\rexit".encode()
             self.uart.write(command)
         except serial.SerialException as e:
             raise Exception("Error exiting callibration: " + str(e))
