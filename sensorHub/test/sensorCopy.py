@@ -86,7 +86,7 @@ class sensorHub:
 
     def __init__(self):
         try:
-            self.uart = serial.Serial("/dev/ttyS0", baudrate=115200)
+            self.uart = serial.Serial("/dev/ttyS0", baudrate=115200, timeout=8)
         except serial.SerialException as e:
             raise Exception("Error opening serial port: " + str(e))
 
