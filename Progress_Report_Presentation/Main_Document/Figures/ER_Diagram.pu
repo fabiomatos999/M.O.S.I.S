@@ -13,10 +13,7 @@ entity MediaMetadata {
 	leftCameraMedia
 	rightCameraMedia
 	time
-	temperature
-	ph
-	pressure
-	dissolvedOxygen
+	sensorData
 	--
 	entryId <<FK>>
 }
