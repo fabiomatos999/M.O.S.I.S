@@ -7,7 +7,7 @@ class TestSensorHub(unittest.TestCase):
     sensorHub = sensorHub()
 
     def testRead(self):
-        readResult = sensorHub.Read()
+        readResult = self.sensorHub.Read()
 
         self.assertIsInstance(readResult, ReadResult)
         self.assertTrue(0 <= readResult.getPh() <= 7)
