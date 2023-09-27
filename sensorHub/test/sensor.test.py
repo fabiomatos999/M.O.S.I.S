@@ -16,7 +16,7 @@ class TestSensorHub(unittest.TestCase):
         self.assertTrue(0 <= readResult.getPressure() <= 10000)
 
     def testGetPh(self):
-        ph = self.sensorHub.GetPh()
+        ph = self.sensorHub.getPh()
 
         self.assertIsInstance(ph, float)
         self.assertTrue(0 <= ph <= 7)
