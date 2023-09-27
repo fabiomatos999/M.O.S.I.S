@@ -118,7 +118,7 @@ class sensorHub:
             data_left = self.uart.inWaiting()  # check for remaining bytes
             received += self.uart.read(data_left)
 
-            received = received.decode(encoding="utf-8")
+            received = received.decode(encoding="ascii")
             result = ReadResult(received)
             print(result)
             return result
@@ -135,7 +135,7 @@ class sensorHub:
             command = r"\rPhCal".encode()
             self.uart.write(command)
 
-            received = self.uart.read(size=8).decode(encoding="utf-8")
+            received = self.uart.read(size=8).decode(encoding="ascii")
             print(f"Ph readings: {received}")
             return float(received)
 
@@ -152,7 +152,7 @@ class sensorHub:
             command = r"\rPhLowCal".encode()
             self.uart.write(command)
 
-            received = self.uart.read(size=8).decode(encoding="utf-8")
+            received = self.uart.read(size=8).decode(encoding="ascii")
             print(f" PhLowCal : {received}")
             return received
         except (serial.SerialException, UnicodeDecodeError) as e:
@@ -170,7 +170,7 @@ class sensorHub:
             # read result from command
             received = self.uart.read(size=8)
             # debug this value
-            received = received.decode(encoding="utf-8")
+            received = received.decode(encoding="ascii")
             print(f" PhMidCal : {received}")
             return received
 
@@ -189,7 +189,7 @@ class sensorHub:
             # read result from command
             received = self.uart.read(size=8)
             # debug this value
-            received = received.decode(encoding="utf-8")
+            received = received.decode(encoding="ascii")
             print(f" PhHighCal:  {received}")
             return received
         except (serial.SerialException, UnicodeDecodeError) as e:
@@ -209,7 +209,7 @@ class sensorHub:
             # read result from command
             received = self.uart.read(size=8)
             # debug this value
-            received = received.decode(encoding="utf-8")
+            received = received.decode(encoding="ascii")
             print(f" Dissolved Oxygen: {received}")
 
             return float(received)
@@ -228,7 +228,7 @@ class sensorHub:
             # read result from command
             received = self.uart.read(size=8)
             # debug this value
-            received = received.decode(encoding="utf-8")
+            received = received.decode(encoding="ascii")
             print(f"DoAtmoCal: {received}")
         except (serial.SerialException, UnicodeDecodeError) as e:
             raise Exception(
@@ -248,7 +248,7 @@ class sensorHub:
             # read result from command
             received = self.uart.read(size=8)
             # debug this value
-            received = received.decode(encoding="utf-8")
+            received = received.decode(encoding="ascii")
             print(f"DoZeroCal: {received}")
             return received
         except (serial.SerialException, UnicodeDecodeError) as e:
@@ -269,7 +269,7 @@ class sensorHub:
             # read result from command
             received = self.uart.read(size=8)
             # debug this value
-            received = received.decode(encoding="utf-8")
+            received = received.decode(encoding="ascii")
             print(f"TempCal: {received}")
 
             return received
@@ -288,7 +288,7 @@ class sensorHub:
             # read result from command
             received = self.uart.read(size=8)
             # debug this value
-            received = received.decode(encoding="utf-8")
+            received = received.decode(encoding="ascii")
             print(f"TempNewCal: {received}")
 
             return received
