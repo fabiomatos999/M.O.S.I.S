@@ -22,6 +22,7 @@ class ReadResult:
             Get methodss for all attributes of the reading and __repr__ to facilitate tesing
         """
         parsedSensorHubResponse = incomingMessage.split(sep="&")
+        print(parsedSensorHubResponse)
         self.phReading = float(parsedSensorHubResponse[0])
         self.tempReading = float(parsedSensorHubResponse[1])
         self.DOreading = float(parsedSensorHubResponse[2])
@@ -134,7 +135,7 @@ class sensorHub:
             command = r"\rPhCal".encode()
             self.uart.write(command)
 
-            received = self.uart.read().decode(encoding="utf-8")
+            received = self.uart.read(size=8).decode(encoding="utf-8")
             print(f"Ph readings: {received}")
             return float(received)
 
@@ -151,7 +152,7 @@ class sensorHub:
             command = r"\rPhLowCal".encode()
             self.uart.write(command)
 
-            received = self.uart.read().decode(encoding="utf-8")
+            received = self.uart.read(size=8).decode(encoding="utf-8")
             print(f" PhLowCal : {received}")
             return received
         except (serial.SerialException, UnicodeDecodeError) as e:
@@ -167,7 +168,7 @@ class sensorHub:
             self.uart.write(command)
 
             # read result from command
-            received = self.uart.read()
+            received = self.uart.read(size=8)
             # debug this value
             received = received.decode(encoding="utf-8")
             print(f" PhMidCal : {received}")
@@ -186,7 +187,7 @@ class sensorHub:
             self.uart.write(command)
 
             # read result from command
-            received = self.uart.read()
+            received = self.uart.read(size=8)
             # debug this value
             received = received.decode(encoding="utf-8")
             print(f" PhHighCal:  {received}")
@@ -206,7 +207,7 @@ class sensorHub:
             self.uart.write(command)
 
             # read result from command
-            received = self.uart.read()
+            received = self.uart.read(size=8)
             # debug this value
             received = received.decode(encoding="utf-8")
             print(f" Dissolved Oxygen: {received}")
@@ -225,7 +226,7 @@ class sensorHub:
             self.uart.write(command)
 
             # read result from command
-            received = self.uart.read()
+            received = self.uart.read(size=8)
             # debug this value
             received = received.decode(encoding="utf-8")
             print(f"DoAtmoCal: {received}")
@@ -245,7 +246,7 @@ class sensorHub:
             self.uart.write(command)
 
             # read result from command
-            received = self.uart.read()
+            received = self.uart.read(size=8)
             # debug this value
             received = received.decode(encoding="utf-8")
             print(f"DoZeroCal: {received}")
@@ -266,7 +267,7 @@ class sensorHub:
             self.uart.write(command)
 
             # read result from command
-            received = self.uart.read()
+            received = self.uart.read(size=8)
             # debug this value
             received = received.decode(encoding="utf-8")
             print(f"TempCal: {received}")
@@ -285,7 +286,7 @@ class sensorHub:
             self.uart.write(command)
 
             # read result from command
-            received = self.uart.read()
+            received = self.uart.read(size=8)
             # debug this value
             received = received.decode(encoding="utf-8")
             print(f"TempNewCal: {received}")
