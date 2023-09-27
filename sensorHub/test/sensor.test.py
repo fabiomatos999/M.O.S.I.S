@@ -28,7 +28,7 @@ class TestSensorHub(unittest.TestCase):
         self.assertTrue(0 <= do <= 100)
 
     def testGetTemp(self):
-        temp = self.sensorHub.GetTemp()
+        temp = self.sensorHub.getTemp()
 
         self.assertIsInstance(temp, float)
         self.assertTrue(-100 <= temp <= 150)
