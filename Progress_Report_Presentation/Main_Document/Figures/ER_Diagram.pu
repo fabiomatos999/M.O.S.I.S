@@ -12,6 +12,7 @@ entity MediaMetadata {
 	entryId
 	leftCameraMedia
 	rightCameraMedia
+	time
 	temperature
 	ph
 	pressure
