@@ -21,8 +21,8 @@ class TestSensorHub(unittest.TestCase):
         self.assertIsInstance(ph, float)
         self.assertTrue(0 <= ph <= 7)
 
-    def testGetDOreading(self):
-        do = self.sensorHub.getDOreading()
+    def testGetDO(self):
+        do = self.sensorHub.getDO()
 
         self.assertIsInstance(do, float)
         self.assertTrue(0 <= do <= 100)
