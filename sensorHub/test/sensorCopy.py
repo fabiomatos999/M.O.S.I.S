@@ -22,7 +22,7 @@ class ReadResult:
             Get methodss for all attributes of the reading and __repr__ to facilitate tesing
         """
         parsedSensorHubResponse = incomingMessage.split(sep="&")
-        print(parsedSensorHubResponse)
+        print(f" incoming message: {parsedSensorHubResponse}")
         self.phReading = float(parsedSensorHubResponse[0])
         self.tempReading = float(parsedSensorHubResponse[1])
         self.DOreading = float(parsedSensorHubResponse[2])
