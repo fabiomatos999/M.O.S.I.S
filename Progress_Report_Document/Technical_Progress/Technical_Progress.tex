@@ -63,19 +63,28 @@ As for the UI, it is comprised of:
 \end{itemize}
 The front end user interface is presented on the Raspberry Pi display via the Raspberry Pi OS desktop environment. The database is the storage medium for all of the metadata captured by the microscope. Camera image paths, date and time stamp, shot type, illumination type, sensor data, camera ISO, shutter speed,aperture size and white balance will all be placed in the database and will serve as the permanent record for the microscope. The hardware API will serve as the interface between the sensors, the cameras and the solid state disk on the microscope to communicate with the operating system to control the camera functions, interacting with the sensors and writing media files to disk. The sensors will be interacted with via UART, the cameras will be manipulated using the library functions provided by the manufacturer, via the USB interface. The sensor and image data will manipulated in software and written to disk using operating system calls.
 \subsection{System Modules}
+M.O.S.I.S UI 2.0 can be divided into 4 modules:
+\begin{itemize}
+	\item Front End
+	\item Database
+	\item Hardware API
+	\item Folder Structure Generator
+\end{itemize}
+The front end consists of all of the UI elements, i.e preview screen, study select, sensor calibration menus and camera control menus.
+The database module consists of the SQLite database and all statements to insert and select data. The hardware API is the camera control and sensor hub communication protocols. Finally, the folder structure generator is comprised of iterfaces between the database and file system to generate the browsable folder structure. 
 \subsection{Technical Diagrams}
 \begin{center}
-\begin{figure}[H]
-  \centering
-	\resizebox{!}{0.6\textheight}{
-		\import{../Appendix/Design_Documentation/Use_Case_Diagram/Figures/}{use_case}
-	}
-	\caption[]{M.O.S.I.S UI 2.0 Use Case Diagram}
-\end{figure}
-\begin{figure}[H]
-	\resizebox{\textwidth}{0.4\textheight}{
-		\import{../Appendix/System_Architecture_and_Interfaces/Software_Architecture/Figures}{system_architecture}
-	}
-	\caption[]{M.O.S.I.S UI 2.0 Software Architecture}
-\end{figure}
+	\begin{figure}[H]
+		\centering
+		\resizebox{!}{0.6\textheight}{
+			\import{../Appendix/Design_Documentation/Use_Case_Diagram/Figures/}{use_case}
+		}
+		\caption[]{M.O.S.I.S UI 2.0 Use Case Diagram}
+	\end{figure}
+	\begin{figure}[H]
+		\resizebox{\textwidth}{0.4\textheight}{
+			\import{../Appendix/System_Architecture_and_Interfaces/Software_Architecture/Figures}{system_architecture}
+		}
+		\caption[]{M.O.S.I.S UI 2.0 Software Architecture}
+	\end{figure}
 \end{center}
