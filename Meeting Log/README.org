@@ -10,6 +10,11 @@
   - [[#12sep2023][12/Sep/2023]]
   - [[#15sep2023][15/Sep/2023]]
   - [[#20sep2023][20/Sep/2023]]
+  - [[#21sep2023][21/Sep/2023]]
+  - [[#22sep2023][22/Sep/2023]]
+  - [[#23sep2023][23/Sep/2023]]
+  - [[#26sep2023][26/Sep/2023]]
+  - [[#29sep2023][29/Sep/2023]]
 
 ** 30/Aug/2023
 1. Discussed how to setup LaTeX environment on Eduardo's computer.
@@ -70,3 +75,35 @@
 2. Created user interface mockup
 3. Mixed minor errors in requirements, specifications and introduction
 4. Created and requirements form to stakeholders
+
+** 21/Sep/2023
+1. Added glossary terms
+2. Worked on technical progress in progress report document
+3. Worked on system architecture
+
+** 22/Sep/2023
+1. Finish hardware architecture and interfaces appendices
+2. Amended project requirements
+3. Added use case diagram
+4. Added ER diagram
+5. Add class and use case diagrams
+
+** 23/Sep/2023
+1. Added firmware flowchart
+2. Worked on progress report presentation
+3. Added more UI mock ups
+4. Added sequence diagram
+
+** 26/Sep/2023
+1. Fixed budget and deliverables in progress report presentation
+2. Added original requirements slide
+3. Added camera and sensor calibration slide
+4. Simplified class and system architecture and ER diagrams
+5. Fixed date on deliverables
+
+** 29/Sep/2023
+1. Added executive summary to progress report document
+2. Add software interfaces documentation
+3. Fixed table placement
+4. Assigned responsibility appendix sections
+
