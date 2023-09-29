@@ -1,1 +1,7 @@
 \subsection{Design Justification}
+\subsubsection{Use Case Diagram}
+Since this is a user facing application, the bulk of the use cases are attributed to the users. However, the reason why the application itself is responsible for performing diagnostics is to avoid an invalid state for the user interface to start. The use cases were derived from the requirements from the client and stakeholder.
+\subsubsection{Class Diagram}
+The U.I abstract class follows the PyQt6 module layout. The reason the U.I abstract class is dependent on application is that without an application there are no U.I elements to be rendered. The U.I abstract class having hide and show methods allows flexibility in designing the user interface, so that it allows all U.I menus and screens to be in a single PyQt6 widget window. Thus reducing the time between menus and screen spawning since they are already loaded into the application.
+\subsubsection{U.I Mockups}
+The color scheme that we chose for the background is black with neon orange text and gray background with neon green text. The reason why the background colors for the U.I mockups are gray and black are because we utilized studies that show that the color black and gray looks darker underwater.\cite{AquaticSafetyGroup2021}\cite{FluoGreenMost2018} Likewise the same studies show that bright colors such as neon orange and neon green looks equally as bright underwater.\cite{AquaticSafetyGroup2021}\cite{FluoGreenMost2018} This insures that the researchers and divers have high contrast in environments with poor visibility.
