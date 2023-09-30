@@ -11,13 +11,20 @@
 \usepackage{import}
 \usepackage{graphicx}
 \usepackage{float}
+\usepackage{hyperref}
+\hypersetup{ colorlinks, citecolor=black,
+	filecolor=black,
+	linkcolor=black,
+	urlcolor=blue,
+	pdftitle={M.O.S.I.S Host Software Progress Report 2},
+	pdfpagemode=FullScreen,
+}
 
 \begin{document}
 \input{../Title_Page/Title Page.tex}
 \tableofcontents
 \newpage
 \section{New Features}
-\subsection{App}
 \begin{itemize}
 \item Database schema representation in SQLAlchemy
 \item Insertion Statements for MediaEntry and MediaMetadata using SQLAlchemy ORM
@@ -26,10 +33,23 @@
 \item Automatic front page generation from database.
 \item Solidified MediaEntry title format
 \item Random: image, pH, temperature, pressure, dissolved oxygen, shot type, illumination type, ISO, aperture size, shutter speed, white balance, MediaEntry and MediaMetaData generators.
- \item  
 \end{itemize}
-\subsection{Test Data Generator}
 \section{Usage}
+\begin{enumerate}
+\item Download Python and install it to the system PATH.
+\item Download and install git to the system PATH.
+  \item Open PowerShell on Windows or a terminal on Mac or Linux.
+\item Clone the M.O.S.I.S repository using\\ ``git clone -b research https://github.com/fabiomatos999/M.O.S.I.S.git'' in the terminal.
+\item Change directory to the M.O.S.I.S repository by executing ``cd M.O.S.I.S'' in the terminal.
+\item Create virtual environment folder by executing ``mkdir venv'' in the terminal.
+\item Create virtual environment by executing ``python -m venv venv'' in the terminal.
+\item Activate virtual environment by executing the Activate.ps1 file inside the scripts directory on Windows or source the activate script based on your shell on Mac or Linux (for more details see \href{https://docs.python.org/3/library/venv.html#how-venvs-work}{here}.)
+\item Install project dependencies by executing\\ ``python3 -m pip install -r requirements.txt'' in the terminal.
+\item Run the host software web server by executing\\ ``python3 -m app'' in the terminal.
+\item Open a web browser
+\item Go to ``127.0.0.1:5000'' in the web browser address box.
+\item The home screen for the M.O.S.I.S host software will open.
+\end{enumerate}
 \appendix
 \section{Host Software Architecture}
 \begin{figure}[H]
