@@ -1,0 +1,37 @@
+\documentclass[12pt]{article}
+
+\usepackage{graphicx}
+\usepackage{pdfpages}
+
+\author{Fabio J. Matos Nieves}
+\date{October 20, 2023}
+\title{M.O.S.I.S Host Software\\Progress Report \#2}
+
+\usepackage[subpreambles=true]{standalone}
+\usepackage{import}
+\usepackage{graphicx}
+\usepackage{float}
+
+\begin{document}
+\input{../Title_Page/Title Page.tex}
+\tableofcontents
+\newpage
+\section{Host Software Architecture}
+\begin{figure}[H]
+  \resizebox{\textwidth}{!}{
+  \import{./Figures}{class_diagram}
+  }
+  \caption{M.O.S.I.S Host Software Class Diagram}
+\end{figure}
+\begin{figure}[H]
+  \resizebox{\textwidth}{!}{
+  \import{./Figures}{ER_diagram}
+  }
+  \caption{M.O.S.I.S Host Software Entity Relationship Diagram}
+\end{figure}
+\appendix
+\section{app.py Documentation}
+\includepdf[pages=-]{./Figures/app.py_documentation.pdf}
+\section{testDataGenerator.py Documenatation}
+\includepdf[pages=-]{./Figures/testDataGenerator.py_documentation.pdf}
+\end{document}

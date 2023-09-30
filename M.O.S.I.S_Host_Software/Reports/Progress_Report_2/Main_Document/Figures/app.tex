@@ -1,0 +1,847 @@
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule
+\endhead
+\begin{minipage}[t]{\linewidth}\raggedright
+~\\
+\textbf{app}\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\href{.}{index}\\
+\href{file:/home/uwu/Github_Repos/University/M.O.S.I.S/M.O.S.I.S_Host_Software/App/app.py}{/home/uwu/Github\_Repos/University/M.O.S.I.S/M.O.S.I.S\_Host\_Software/App/app.py}\strut
+\end{minipage} \\
+\bottomrule
+\end{longtable}
+
+{Launches~app.py~using~python3~without~calling~interpreter~explicitly.}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule
+\endhead
+\multicolumn{3}{l}{\begin{minipage}[t]{\linewidth}\raggedright
+~\\
+\textbf{Modules}\strut
+\end{minipage}} \\
+{~~~~~~} & ~ & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\toprule
+\endhead
+\begin{minipage}[t]{\linewidth}\raggedright
+\href{os.html}{os}\\
+\strut
+\end{minipage} & & & \\
+\bottomrule
+\end{longtable}\strut
+\end{minipage} \\
+\bottomrule
+\end{longtable}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule
+\endhead
+\multicolumn{3}{l}{\begin{minipage}[t]{\linewidth}\raggedright
+~\\
+\textbf{Classes}\strut
+\end{minipage}} \\
+{~~~~~~} & ~ & \begin{minipage}[t]{\linewidth}\raggedright
+\href{builtins.html\#object}{builtins.object}
+
+\href{app.html\#MediaEntryInternalRepresentation}{MediaEntryInternalRepresentation}
+
+\href{app.html\#MediaMetadataInternalRepresentation}{MediaMetadataInternalRepresentation}
+
+\href{enum.html\#Enum}{enum.Enum}(\href{builtins.html\#object}{builtins.object})
+
+\href{app.html\#illuminationType}{illuminationType}
+
+\href{app.html\#shotType}{shotType}
+
+sqlalchemy.orm.decl\_api.Model(\href{flask_sqlalchemy.model.html\#Model}{flask\_sqlalchemy.model.Model})
+
+\href{app.html\#MediaEntry}{MediaEntry}
+
+\href{app.html\#MediaMetadata}{MediaMetadata}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule
+\endhead
+\multicolumn{3}{l}{\begin{minipage}[t]{\linewidth}\raggedright
+~\\
+\protect\hypertarget{MediaEntry}{}{class
+\textbf{MediaEntry}}(sqlalchemy.orm.decl\_api.Model)\strut
+\end{minipage}} \\
+\multirow{2}{*}{{~~~}} &
+\multicolumn{2}{l}{\begin{minipage}[t]{\linewidth}\raggedright
+{\protect\hyperlink{MediaEntry-__tablename__}{MediaEntry}(**kwargs)\\
+\hspace*{0.333em}\\
+Create~media\_entry~database~table.\\
+\hspace*{0.333em}\\
+Contains:\\
+entryId~(PRIMARY~KEY~INTEGER),\\
+\protect\hyperlink{shotType}{shotType}~(TEXT~NOT~NULLABLE)~an~enum,\\
+time~(TEXT~NOT~NULLABLE)~format~(yyyy-MM-ddTHH:mm:ss.zzz),\\
+illumination\_type~(TEXT~NOT~NULLABLE)~an~enum,\\
+iso~(INTEGER~NOT~NULLABLE),\\
+apertureSize~(REAL~NOT~NULLABLE),\\
+shutterSpeed~(REAL~NOT~NULLABLE),\\
+whiteBalance~(INTEGER~NOT~NULLABLE)\\
+\hspace*{0.333em}}\strut
+\end{minipage}} \\
+& ~ & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{description}
+\tightlist
+\item[Method resolution order:]
+\href{app.html\#MediaEntry}{MediaEntry}
+
+sqlalchemy.orm.decl\_api.Model
+
+\href{flask_sqlalchemy.model.html\#Model}{flask\_sqlalchemy.model.Model}
+
+\href{builtins.html\#object}{builtins.object}
+\end{description}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+Methods defined here:\\
+
+\begin{description}
+\tightlist
+\item[\protect\hypertarget{MediaEntry-__init__}{}{\textbf{\_\_init\_\_}}(self,
+**kwargs)]
+{A~simple~constructor~that~allows~initialization~from~kwargs.\\
+\hspace*{0.333em}\\
+Sets~attributes~on~the~constructed~instance~using~the~names~and\\
+values~in~``kwargs``.\\
+\hspace*{0.333em}\\
+Only~keys~that~are~present~as\\
+attributes~of~the~instance's~class~are~allowed.~These~could~be,\\
+for~example,~any~mapped~columns~or~relationships.}
+\end{description}
+
+\begin{description}
+\tightlist
+\item[\protect\hypertarget{MediaEntry-__repr__}{}{\textbf{\_\_repr\_\_}}(self)]
+{Return~\protect\hyperlink{MediaEntry}{MediaEntry}.entryId~when~inserting~into~database.}
+\end{description}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+Data descriptors defined here:\\
+
+\textbf{apertureSize}
+
+\textbf{entryId}
+
+\textbf{illuminationType}
+
+\textbf{iso}
+
+\textbf{shotType}
+
+\textbf{shutterSpeed}
+
+\textbf{time}
+
+\textbf{whiteBalance}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+Data and other attributes defined here:\\
+
+\textbf{\_\_mapper\_\_} = \textless Mapper at 0x7f2b6551e510;
+MediaEntry\textgreater{}
+
+\textbf{\_\_table\_\_} = Table('MediaEntry', MetaData(),
+Column('entryId'...table=\textless MediaEntry\textgreater,
+nullable=False), schema=None)
+
+\textbf{\_\_tablename\_\_} = 'MediaEntry'
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+Methods inherited from sqlalchemy.orm.decl\_api.Model:\\
+
+\textbf{query}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+Data and other attributes inherited from
+sqlalchemy.orm.decl\_api.Model:\\
+
+\textbf{\_\_abstract\_\_} = True
+
+\textbf{\_\_fsa\_\_} = \textless SQLAlchemy\textgreater{}
+
+\textbf{metadata} = MetaData()
+
+\begin{description}
+\tightlist
+\item[\textbf{query\_class} = \textless class
+'flask\_sqlalchemy.query.Query'\textgreater{}]
+{SQLAlchemy~:class:`\textasciitilde sqlalchemy.orm.query.Query`~subclass~with~some~extra~methods\\
+useful~for~querying~in~a~web~application.\\
+\hspace*{0.333em}\\
+This~is~the~default~query~class~for~:attr:`.Model.query`.\\
+\hspace*{0.333em}\\
+..~versionchanged::~3.0\\
+\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}Renamed~to~``Query``~from~``BaseQuery``.}
+\end{description}
+
+\textbf{registry} = \textless sqlalchemy.orm.decl\_api.registry
+object\textgreater{}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+Data descriptors inherited from
+\href{flask_sqlalchemy.model.html\#Model}{flask\_sqlalchemy.model.Model}:\\
+
+\begin{description}
+\tightlist
+\item[\textbf{\_\_dict\_\_}]
+{dictionary~for~instance~variables~(if~defined)}
+\end{description}
+
+\begin{description}
+\tightlist
+\item[\textbf{\_\_weakref\_\_}]
+{list~of~weak~references~to~the~object~(if~defined)}
+\end{description}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+Data and other attributes inherited from
+\href{flask_sqlalchemy.model.html\#Model}{flask\_sqlalchemy.model.Model}:\\
+
+\textbf{\_\_annotations\_\_} = \{'\_\_fsa\_\_':
+'t.ClassVar{[}SQLAlchemy{]}', 'query': 't.ClassVar{[}Query{]}',
+'query\_class': 't.ClassVar{[}type{[}Query{]}{]}'\}\strut
+\end{minipage} \\
+\bottomrule
+\end{longtable}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule
+\endhead
+\multicolumn{3}{l}{\begin{minipage}[t]{\linewidth}\raggedright
+~\\
+\protect\hypertarget{MediaEntryInternalRepresentation}{}{class
+\textbf{MediaEntryInternalRepresentation}}(\href{builtins.html\#object}{builtins.object})\strut
+\end{minipage}} \\
+\multirow{2}{*}{{~~~}} &
+\multicolumn{2}{l}{\begin{minipage}[t]{\linewidth}\raggedright
+{\protect\hyperlink{MediaEntryInternalRepresentation}{MediaEntryInternalRepresentation}(entryId:~int,~\protect\hyperlink{shotType}{shotType}:~None,~time:~str,~\protect\hyperlink{illuminationType}{illuminationType}:~None,~iso:~int,~apertureSize:~float,~shutterSpeed:~float,~whiteBalance:~int)\\
+\hspace*{0.333em}\\
+Internal~representation~for~\protect\hyperlink{MediaEntry}{MediaEntry}.\\
+\hspace*{0.333em}}\strut
+\end{minipage}} \\
+& ~ & \begin{minipage}[t]{\linewidth}\raggedright
+Methods defined here:\\
+
+\begin{description}
+\tightlist
+\item[\protect\hypertarget{MediaEntryInternalRepresentation-__init__}{}{\textbf{\_\_init\_\_}}(self,
+entryId: int, shotType: None, time: str, illuminationType: None, iso:
+int, apertureSize: float, shutterSpeed: float, whiteBalance: int)]
+{Construct~MediaEntryInternalRepesentation.}
+\end{description}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+Data descriptors defined here:\\
+
+\begin{description}
+\tightlist
+\item[\textbf{\_\_dict\_\_}]
+{dictionary~for~instance~variables~(if~defined)}
+\end{description}
+
+\begin{description}
+\tightlist
+\item[\textbf{\_\_weakref\_\_}]
+{list~of~weak~references~to~the~object~(if~defined)}
+\end{description}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+Data and other attributes defined here:\\
+
+\textbf{apertureSize} = 0.0
+
+\textbf{entryId} = 0
+
+\textbf{illuminationType} = None
+
+\textbf{iso} = 0
+
+\textbf{shotType} = None
+
+\textbf{shutterSpeed} = 0.0
+
+\textbf{time} = ''
+
+\textbf{whiteBalance} = 0.0\strut
+\end{minipage} \\
+\bottomrule
+\end{longtable}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule
+\endhead
+\multicolumn{3}{l}{\begin{minipage}[t]{\linewidth}\raggedright
+~\\
+\protect\hypertarget{MediaMetadata}{}{class
+\textbf{MediaMetadata}}(sqlalchemy.orm.decl\_api.Model)\strut
+\end{minipage}} \\
+\multirow{2}{*}{{~~~}} &
+\multicolumn{2}{l}{\begin{minipage}[t]{\linewidth}\raggedright
+{\protect\hyperlink{MediaMetadata-__tablename__}{MediaMetadata}(**kwargs)\\
+\hspace*{0.333em}\\
+Create~\protect\hyperlink{MediaMetadata}{MediaMetadata}~database~table.\\
+\hspace*{0.333em}\\
+Contains:\\
+metadataId~(PRIMARY~KEY~INTEGER),\\
+entryId~(INTEGER,~FOREIGN~KEY~(\protect\hyperlink{MediaEntry}{MediaEntry}.entryId)),\\
+leftCameraMedia~(TEXT~NOT~NULLABLE),\\
+rightCameraMedia~(TEXT~NOT~NULLABLE),\\
+time~(TEXT~NOT~NULLABLE)~format~(yyyy-MM-ddTHH:mm:ss.zzzzzz),\\
+temperature~(REAL~NOT~NULLABLE),\\
+pressure~(REAL~NOT~NULLABLE),\\
+ph~(REAL~NOT~NULLABLE),\\
+dissolvedOxygen~(REAL~NOT~NULLABLE),\\
+\hspace*{0.333em}}\strut
+\end{minipage}} \\
+& ~ & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{description}
+\tightlist
+\item[Method resolution order:]
+\href{app.html\#MediaMetadata}{MediaMetadata}
+
+sqlalchemy.orm.decl\_api.Model
+
+\href{flask_sqlalchemy.model.html\#Model}{flask\_sqlalchemy.model.Model}
+
+\href{builtins.html\#object}{builtins.object}
+\end{description}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+Methods defined here:\\
+
+\begin{description}
+\tightlist
+\item[\protect\hypertarget{MediaMetadata-__init__}{}{\textbf{\_\_init\_\_}}(self,
+**kwargs)]
+{A~simple~constructor~that~allows~initialization~from~kwargs.\\
+\hspace*{0.333em}\\
+Sets~attributes~on~the~constructed~instance~using~the~names~and\\
+values~in~``kwargs``.\\
+\hspace*{0.333em}\\
+Only~keys~that~are~present~as\\
+attributes~of~the~instance's~class~are~allowed.~These~could~be,\\
+for~example,~any~mapped~columns~or~relationships.}
+\end{description}
+
+\begin{description}
+\tightlist
+\item[\protect\hypertarget{MediaMetadata-__repr__}{}{\textbf{\_\_repr\_\_}}(self)]
+{Return~\protect\hyperlink{MediaMetadata}{MediaMetadata}.metadataId~when~inserting~into~database.}
+\end{description}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+Data descriptors defined here:\\
+
+\textbf{dissolvedOxygen}
+
+\textbf{entryId}
+
+\textbf{leftCameraMedia}
+
+\textbf{metadataId}
+
+\textbf{ph}
+
+\textbf{pressure}
+
+\textbf{rightCameraMedia}
+
+\textbf{temperature}
+
+\textbf{time}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+Data and other attributes defined here:\\
+
+\textbf{\_\_mapper\_\_} = \textless Mapper at 0x7f2b63cba7d0;
+MediaMetadata\textgreater{}
+
+\textbf{\_\_table\_\_} = Table('MediaMetadata', MetaData(),
+Column('metad...le=\textless MediaMetadata\textgreater, nullable=False),
+schema=None)
+
+\textbf{\_\_tablename\_\_} = 'MediaMetadata'
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+Methods inherited from sqlalchemy.orm.decl\_api.Model:\\
+
+\textbf{query}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+Data and other attributes inherited from
+sqlalchemy.orm.decl\_api.Model:\\
+
+\textbf{\_\_abstract\_\_} = True
+
+\textbf{\_\_fsa\_\_} = \textless SQLAlchemy\textgreater{}
+
+\textbf{metadata} = MetaData()
+
+\begin{description}
+\tightlist
+\item[\textbf{query\_class} = \textless class
+'flask\_sqlalchemy.query.Query'\textgreater{}]
+{SQLAlchemy~:class:`\textasciitilde sqlalchemy.orm.query.Query`~subclass~with~some~extra~methods\\
+useful~for~querying~in~a~web~application.\\
+\hspace*{0.333em}\\
+This~is~the~default~query~class~for~:attr:`.Model.query`.\\
+\hspace*{0.333em}\\
+..~versionchanged::~3.0\\
+\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}\hspace*{0.333em}Renamed~to~``Query``~from~``BaseQuery``.}
+\end{description}
+
+\textbf{registry} = \textless sqlalchemy.orm.decl\_api.registry
+object\textgreater{}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+Data descriptors inherited from
+\href{flask_sqlalchemy.model.html\#Model}{flask\_sqlalchemy.model.Model}:\\
+
+\begin{description}
+\tightlist
+\item[\textbf{\_\_dict\_\_}]
+{dictionary~for~instance~variables~(if~defined)}
+\end{description}
+
+\begin{description}
+\tightlist
+\item[\textbf{\_\_weakref\_\_}]
+{list~of~weak~references~to~the~object~(if~defined)}
+\end{description}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+Data and other attributes inherited from
+\href{flask_sqlalchemy.model.html\#Model}{flask\_sqlalchemy.model.Model}:\\
+
+\textbf{\_\_annotations\_\_} = \{'\_\_fsa\_\_':
+'t.ClassVar{[}SQLAlchemy{]}', 'query': 't.ClassVar{[}Query{]}',
+'query\_class': 't.ClassVar{[}type{[}Query{]}{]}'\}\strut
+\end{minipage} \\
+\bottomrule
+\end{longtable}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule
+\endhead
+\multicolumn{3}{l}{\begin{minipage}[t]{\linewidth}\raggedright
+~\\
+\protect\hypertarget{MediaMetadataInternalRepresentation}{}{class
+\textbf{MediaMetadataInternalRepresentation}}(\href{builtins.html\#object}{builtins.object})\strut
+\end{minipage}} \\
+\multirow{2}{*}{{~~~}} &
+\multicolumn{2}{l}{\begin{minipage}[t]{\linewidth}\raggedright
+{\protect\hyperlink{MediaMetadataInternalRepresentation}{MediaMetadataInternalRepresentation}(metadataId:~int,~entryId:~int,~leftCameraMedia:~str,~rightCameraMedia:~str,~time:~str,~temperature:~float,~ph:~float,~dissolvedOxygen:~float)\\
+\hspace*{0.333em}\\
+Internal~representation~for~a~\protect\hyperlink{MediaMetadata}{MediaMetadata}~entry.\\
+\hspace*{0.333em}}\strut
+\end{minipage}} \\
+& ~ & \begin{minipage}[t]{\linewidth}\raggedright
+Methods defined here:\\
+
+\begin{description}
+\tightlist
+\item[\protect\hypertarget{MediaMetadataInternalRepresentation-__init__}{}{\textbf{\_\_init\_\_}}(self,
+metadataId: int, entryId: int, leftCameraMedia: str, rightCameraMedia:
+str, time: str, temperature: float, ph: float, dissolvedOxygen: float)]
+{Construct~\protect\hyperlink{MediaMetadataInternalRepresentation}{MediaMetadataInternalRepresentation}.}
+\end{description}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+Data descriptors defined here:\\
+
+\begin{description}
+\tightlist
+\item[\textbf{\_\_dict\_\_}]
+{dictionary~for~instance~variables~(if~defined)}
+\end{description}
+
+\begin{description}
+\tightlist
+\item[\textbf{\_\_weakref\_\_}]
+{list~of~weak~references~to~the~object~(if~defined)}
+\end{description}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+Data and other attributes defined here:\\
+
+\textbf{dissolvedOxygen} = 0.0
+
+\textbf{entryId} = 0
+
+\textbf{leftCameraMedia} = ''
+
+\textbf{metadataId} = 0
+
+\textbf{ph} = 0.0
+
+\textbf{pressure} = 0.0
+
+\textbf{rightCameraMedia} = ''
+
+\textbf{temperature} = 0.0
+
+\textbf{time} = ''\strut
+\end{minipage} \\
+\bottomrule
+\end{longtable}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule
+\endhead
+\multicolumn{3}{l}{\begin{minipage}[t]{\linewidth}\raggedright
+~\\
+\protect\hypertarget{illuminationType}{}{class
+\textbf{illuminationType}}(\href{enum.html\#Enum}{enum.Enum})\strut
+\end{minipage}} \\
+\multirow{2}{*}{{~~~}} &
+\multicolumn{2}{l}{\begin{minipage}[t]{\linewidth}\raggedright
+{\protect\hyperlink{illuminationType}{illuminationType}(value,~names=None,~*,~module=None,~qualname=None,~type=None,~start=1,~boundary=None)\\
+\hspace*{0.333em}\\
+Illumination~Type.\\
+\hspace*{0.333em}}\strut
+\end{minipage}} \\
+& ~ & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{description}
+\tightlist
+\item[Method resolution order:]
+\href{app.html\#illuminationType}{illuminationType}
+
+\href{enum.html\#Enum}{enum.Enum}
+
+\href{builtins.html\#object}{builtins.object}
+\end{description}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+Data and other attributes defined here:\\
+
+\textbf{INFRARED} = \textless illuminationType.INFRARED: 3\textgreater{}
+
+\textbf{NONE} = \textless illuminationType.NONE: 1\textgreater{}
+
+\textbf{ULTRAVIOLET} = \textless illuminationType.ULTRAVIOLET:
+4\textgreater{}
+
+\textbf{VISIBLESPECTRUM} = \textless illuminationType.VISIBLESPECTRUM:
+2\textgreater{}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+Data descriptors inherited from \href{enum.html\#Enum}{enum.Enum}:\\
+
+\begin{description}
+\tightlist
+\item[\textbf{name}]
+{The~name~of~the~Enum~member.}
+\end{description}
+
+\begin{description}
+\tightlist
+\item[\textbf{value}]
+{The~value~of~the~Enum~member.}
+\end{description}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+Methods inherited from \href{enum.html\#EnumType}{enum.EnumType}:\\
+
+\begin{description}
+\tightlist
+\item[\protect\hypertarget{illuminationType-__contains__}{}{\textbf{\_\_contains\_\_}}(member){{
+from \href{enum.html\#EnumType}{enum.EnumType}}}]
+{Return~True~if~member~is~a~member~of~this~enum\\
+raises~TypeError~if~member~is~not~an~enum~member\\
+\hspace*{0.333em}\\
+note:~in~3.12~TypeError~will~no~longer~be~raised,~and~True~will~also~be\\
+returned~if~member~is~the~value~of~a~member~in~this~enum}
+\end{description}
+
+\begin{description}
+\tightlist
+\item[\protect\hypertarget{illuminationType-__getitem__}{}{\textbf{\_\_getitem\_\_}}(name){{
+from \href{enum.html\#EnumType}{enum.EnumType}}}]
+{Return~the~member~matching~`name`.}
+\end{description}
+
+\begin{description}
+\tightlist
+\item[\protect\hypertarget{illuminationType-__iter__}{}{\textbf{\_\_iter\_\_}}(){{
+from \href{enum.html\#EnumType}{enum.EnumType}}}]
+{Return~members~in~definition~order.}
+\end{description}
+
+\begin{description}
+\tightlist
+\item[\protect\hypertarget{illuminationType-__len__}{}{\textbf{\_\_len\_\_}}(){{
+from \href{enum.html\#EnumType}{enum.EnumType}}}]
+{Return~the~number~of~members~(no~aliases)}
+\end{description}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+Readonly properties inherited from
+\href{enum.html\#EnumType}{enum.EnumType}:\\
+
+\begin{description}
+\tightlist
+\item[\textbf{\_\_members\_\_}]
+{Returns~a~mapping~of~member~name-\textgreater value.\\
+\hspace*{0.333em}\\
+This~mapping~lists~all~enum~members,~including~aliases.~Note~that~this\\
+is~a~read-only~view~of~the~internal~mapping.}
+\end{description}\strut
+\end{minipage} \\
+\bottomrule
+\end{longtable}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule
+\endhead
+\multicolumn{3}{l}{\begin{minipage}[t]{\linewidth}\raggedright
+~\\
+\protect\hypertarget{shotType}{}{class
+\textbf{shotType}}(\href{enum.html\#Enum}{enum.Enum})\strut
+\end{minipage}} \\
+\multirow{2}{*}{{~~~}} &
+\multicolumn{2}{l}{\begin{minipage}[t]{\linewidth}\raggedright
+{\protect\hyperlink{shotType}{shotType}(value,~names=None,~*,~module=None,~qualname=None,~type=None,~start=1,~boundary=None)\\
+\hspace*{0.333em}\\
+Shot~Type~for~the~type~of~study~to~be~performed.\\
+\hspace*{0.333em}}\strut
+\end{minipage}} \\
+& ~ & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{description}
+\tightlist
+\item[Method resolution order:]
+\href{app.html\#shotType}{shotType}
+
+\href{enum.html\#Enum}{enum.Enum}
+
+\href{builtins.html\#object}{builtins.object}
+\end{description}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+Data and other attributes defined here:\\
+
+\textbf{BURST} = \textless shotType.BURST: 2\textgreater{}
+
+\textbf{SINGLE} = \textless shotType.SINGLE: 1\textgreater{}
+
+\textbf{TELESCOPIC} = \textless shotType.TELESCOPIC: 3\textgreater{}
+
+\textbf{TIMELAPSE} = \textless shotType.TIMELAPSE: 4\textgreater{}
+
+\textbf{VIDEO} = \textless shotType.VIDEO: 5\textgreater{}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+Data descriptors inherited from \href{enum.html\#Enum}{enum.Enum}:\\
+
+\begin{description}
+\tightlist
+\item[\textbf{name}]
+{The~name~of~the~Enum~member.}
+\end{description}
+
+\begin{description}
+\tightlist
+\item[\textbf{value}]
+{The~value~of~the~Enum~member.}
+\end{description}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+Methods inherited from \href{enum.html\#EnumType}{enum.EnumType}:\\
+
+\begin{description}
+\tightlist
+\item[\protect\hypertarget{shotType-__contains__}{}{\textbf{\_\_contains\_\_}}(member){{
+from \href{enum.html\#EnumType}{enum.EnumType}}}]
+{Return~True~if~member~is~a~member~of~this~enum\\
+raises~TypeError~if~member~is~not~an~enum~member\\
+\hspace*{0.333em}\\
+note:~in~3.12~TypeError~will~no~longer~be~raised,~and~True~will~also~be\\
+returned~if~member~is~the~value~of~a~member~in~this~enum}
+\end{description}
+
+\begin{description}
+\tightlist
+\item[\protect\hypertarget{shotType-__getitem__}{}{\textbf{\_\_getitem\_\_}}(name){{
+from \href{enum.html\#EnumType}{enum.EnumType}}}]
+{Return~the~member~matching~`name`.}
+\end{description}
+
+\begin{description}
+\tightlist
+\item[\protect\hypertarget{shotType-__iter__}{}{\textbf{\_\_iter\_\_}}(){{
+from \href{enum.html\#EnumType}{enum.EnumType}}}]
+{Return~members~in~definition~order.}
+\end{description}
+
+\begin{description}
+\tightlist
+\item[\protect\hypertarget{shotType-__len__}{}{\textbf{\_\_len\_\_}}(){{
+from \href{enum.html\#EnumType}{enum.EnumType}}}]
+{Return~the~number~of~members~(no~aliases)}
+\end{description}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+Readonly properties inherited from
+\href{enum.html\#EnumType}{enum.EnumType}:\\
+
+\begin{description}
+\tightlist
+\item[\textbf{\_\_members\_\_}]
+{Returns~a~mapping~of~member~name-\textgreater value.\\
+\hspace*{0.333em}\\
+This~mapping~lists~all~enum~members,~including~aliases.~Note~that~this\\
+is~a~read-only~view~of~the~internal~mapping.}
+\end{description}\strut
+\end{minipage} \\
+\bottomrule
+\end{longtable}\strut
+\end{minipage} \\
+\bottomrule
+\end{longtable}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule
+\endhead
+\multicolumn{3}{l}{\begin{minipage}[t]{\linewidth}\raggedright
+~\\
+\textbf{Functions}\strut
+\end{minipage}} \\
+{~~~~~~} & ~ & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{description}
+\tightlist
+\item[\protect\hypertarget{-getAllMediaEntry}{}{\textbf{getAllMediaEntry}}(db)
+-\textgreater{} list{[}app.MediaEntryInternalRepresentation{]}]
+{Get~all~Media~Entries~from~a~database.}
+\end{description}
+
+\begin{description}
+\tightlist
+\item[\protect\hypertarget{-getAllMediaEntryIDs}{}{\textbf{getAllMediaEntryIDs}}(db)]
+{Get~all~entryId~from~database.}
+\end{description}
+
+\protect\hypertarget{-getAllMediaMetadata}{}{\textbf{getAllMediaMetadata}}(db)
+-\textgreater{} list{[}app.MediaMetadataInternalRepresentation{]}
+
+\protect\hypertarget{-getAllMediaMetadataId}{}{\textbf{getAllMediaMetadataId}}(db,
+entryId: int) -\textgreater{}
+list{[}app.MediaMetadataInternalRepresentation{]}
+
+\begin{description}
+\tightlist
+\item[\protect\hypertarget{-getCurrentTime}{}{\textbf{getCurrentTime}}()
+-\textgreater{} str]
+{Return~current~time~in~'yyyy-MM-ddTHH:mm:ss.zzz'~format.}
+\end{description}
+
+\begin{description}
+\tightlist
+\item[\protect\hypertarget{-index}{}{\textbf{index}}()]
+{Return~index.html~to~the~/~route.}
+\end{description}
+
+\begin{description}
+\tightlist
+\item[\protect\hypertarget{-insertMediaEntry}{}{\textbf{insertMediaEntry}}(db,
+shotType, illuminationType, iso, apertureSize, shutterSpeed,
+whiteBalance)]
+{Insert~a~\protect\hyperlink{MediaEntry}{MediaEntry}~into~the~database.}
+\end{description}
+
+\begin{description}
+\tightlist
+\item[\protect\hypertarget{-insertMediaMetadata}{}{\textbf{insertMediaMetadata}}(db,
+entryId, leftCameraMedia, rightCameraMedia, temperature, pressure, ph,
+dissolvedOxygen)]
+{Insert~\protect\hyperlink{MediaMetadata}{MediaMetadata}~entry~into~database.}
+\end{description}
+\end{minipage} \\
+\bottomrule
+\end{longtable}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule
+\endhead
+\multicolumn{3}{l}{\begin{minipage}[t]{\linewidth}\raggedright
+~\\
+\textbf{Data}\strut
+\end{minipage}} \\
+{~~~~~~} & ~ & \begin{minipage}[t]{\linewidth}\raggedright
+\textbf{CONTINUOUS} = \textless EnumCheck.CONTINUOUS: 'no skipped
+integer values'\textgreater{}\\
+\textbf{UNIQUE} = \textless EnumCheck.UNIQUE: 'one name per
+value'\textgreater{}\\
+\textbf{app} = \textless Flask 'app'\textgreater{}\\
+\textbf{basedir} =
+'/home/uwu/Github\_Repos/University/M.O.S.I.S/M.O.S.I.S\_Host\_Software/App'\\
+\textbf{db} = \textless SQLAlchemy\textgreater{}\strut
+\end{minipage} \\
+\bottomrule
+\end{longtable}
