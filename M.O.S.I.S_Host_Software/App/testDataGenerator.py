@@ -83,7 +83,7 @@ def insertRandomMediaEntry(db):
 
 
 def getRandomMediaEntryEntryId(db) -> int:
-    "Return a random entryId from MediaEntry table."
+    """Return a random entryId from MediaEntry table."""
     return random.choice(getAllMediaEntryIDs(db))
 
 
