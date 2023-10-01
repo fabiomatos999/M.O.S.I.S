@@ -1,16 +1,17 @@
 \documentclass[12pt]{article}
 
-\usepackage{graphicx}
-\usepackage{pdfpages}
 
 \author{Fabio J. Matos Nieves}
 \date{October 20, 2023}
 \title{M.O.S.I.S Host Software\\Progress Report \#2}
 
+\usepackage{graphicx}
+\usepackage{pdfpages}
 \usepackage[subpreambles=true]{standalone}
 \usepackage{import}
 \usepackage{graphicx}
 \usepackage{float}
+\usepackage{minted}
 \usepackage{hyperref}
 \hypersetup{ colorlinks, citecolor=black,
 	filecolor=black,
@@ -59,6 +60,14 @@
 	\item The home screen for the M.O.S.I.S host software will open.
 \end{enumerate}
 \appendix
+\section{Technical Specifications}
+\begin{itemize}
+\item Python Version 3.11.2
+\item Bootstrap Version: 5.3.2
+\item Flask Version: 3.1.1
+\item SQLAlchemy Version: 2.0.20
+\item Flask-SQLAlchemy Version: 3.1.1
+\end{itemize}
 \section{Host Software Architecture}
 \begin{figure}[H]
 	\resizebox{\textwidth}{!}{
@@ -76,4 +85,9 @@
 \includepdf[pages=-]{./Figures/app.py_documentation.pdf}
 \section{testDataGenerator.py Documenatation}
 \includepdf[pages=-]{./Figures/testDataGenerator.py_documentation.pdf}
+\section{Source Code}
+\subsection{app.py}
+\inputminted{python}{../../../App/app.py}
+\subsection{testDataGenerator}
+\inputminted{python}{../../../App/testDataGenerator.py}
 \end{document}
