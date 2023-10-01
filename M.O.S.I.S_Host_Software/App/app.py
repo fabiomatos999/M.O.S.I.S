@@ -5,6 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects.sqlite import TEXT, REAL, INTEGER
 from sqlalchemy import select
 import os
+import json
 from datetime import datetime
 from enum import Enum, verify, UNIQUE, CONTINUOUS
 
@@ -225,6 +226,39 @@ def getAllMediaMetadata(db) -> list[MediaMetadataInternalRepresentation]:
                 x[0].metadataId, x[0].entryId, x[0].leftCameraMedia, x[0].
                 rightCameraMedia, x[0].time, x[0].temperature, x[0].ph, x[
                     0].dissolvedOxygen, x[0].pressure), ret))
+    return ret
+
+
+class MediaEntryJSONRepresentation():
+    """Class to convert MediaEntry with metadata to JSON."""
+
+    def __init__(self, id: int):
+        """Construct MediaEntry JSON representation."""
+        self.MediaEntry = getMediaEntry(db, id).__dict__
+        self.MediaMetadata = list(
+            map(lambda x: x.__dict__, getAllMediaMetadataId(db, id)))
+
+    def intoJSON(self) -> str:
+        """Return JSON representation of self."""
+        return json.dumps(self.__dict__)
+
+
+def fromJSON(path: str) -> MediaEntryJSONRepresentation:
+    jf = openMediaEntryJSON(path)
+    jf = json.loads(jf)
+    return MediaEntryJSONRepresentation(jf["MediaEntry"]["entryId"])
+
+
+def writeMediaEntryJSON(json: str, path: str):
+    f = open(path, "w")
+    f.write(json)
+    f.close()
+
+
+def openMediaEntryJSON(path: str) -> str:
+    f = open(path, "r")
+    ret = f.read()
+    f.close()
     return ret
 
 
