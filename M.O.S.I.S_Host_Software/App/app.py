@@ -94,6 +94,18 @@ def insertMediaEntry(db, shotType, illuminationType, iso, apertureSize,
     db.session.commit()
 
 
+def getMediaEntry(db, id: int) -> MediaEntryInternalRepresentation:
+    """Get MediaEntry where entryId == id."""
+    ret = db.session.execute(
+        select(MediaEntry).where(MediaEntry.entryId == id)).first()
+    return MediaEntryInternalRepresentation(ret[0].entryId, ret[0].shotType,
+                                            ret[0].time,
+                                            ret[0].illuminationType,
+                                            ret[0].iso, ret[0].apertureSize,
+                                            ret[0].shutterSpeed,
+                                            ret[0].whiteBalance)
+
+
 def getAllMediaEntryIDs(db):
     """Get all entryId from database."""
     dbReturn = list(db.session.execute(select(MediaEntry.entryId)))
@@ -161,7 +173,7 @@ class MediaMetadataInternalRepresentation:
 
     def __init__(self, metadataId: int, entryId: int, leftCameraMedia: str,
                  rightCameraMedia: str, time: str, temperature: float,
-                 ph: float, dissolvedOxygen: float):
+                 ph: float, dissolvedOxygen: float, pressure: float):
         """Construct MediaMetadataInternalRepresentation."""
         self.metadataId = metadataId
         self.entryId = entryId
@@ -171,6 +183,7 @@ class MediaMetadataInternalRepresentation:
         self.temperature = temperature
         self.ph = ph
         self.dissolvedOxygen = dissolvedOxygen
+        self.pressure = pressure
 
 
 def insertMediaMetadata(db, entryId, leftCameraMedia, rightCameraMedia,
@@ -190,6 +203,7 @@ def insertMediaMetadata(db, entryId, leftCameraMedia, rightCameraMedia,
 
 def getAllMediaMetadataId(
         db, entryId: int) -> list[MediaMetadataInternalRepresentation]:
+    """Get all MediaMetadata with a specific entry ID from a database."""
     ret = list(
         db.session.execute(
             select(MediaMetadata).where(MediaMetadata.entryId == entryId)))
@@ -198,18 +212,19 @@ def getAllMediaMetadataId(
             lambda x: MediaMetadataInternalRepresentation(
                 x[0].metadataId, x[0].entryId, x[0].leftCameraMedia, x[0].
                 rightCameraMedia, x[0].time, x[0].temperature, x[0].ph, x[
-                    0].dissolvedOxygen), ret))
+                    0].dissolvedOxygen, x[0].pressure), ret))
     return ret
 
 
 def getAllMediaMetadata(db) -> list[MediaMetadataInternalRepresentation]:
+    """Get all MediaMetadata entries from a database."""
     ret = list(db.session.execute(select(MediaMetadata)))
     ret = list(
         map(
             lambda x: MediaMetadataInternalRepresentation(
                 x[0].metadataId, x[0].entryId, x[0].leftCameraMedia, x[0].
                 rightCameraMedia, x[0].time, x[0].temperature, x[0].ph, x[
-                    0].dissolvedOxygen), ret))
+                    0].dissolvedOxygen, x[0].pressure), ret))
     return ret
 
 
@@ -241,7 +256,19 @@ def index():
                            MediaEntries=getAllMediaEntry(db),
                            db=db,
                            getAllMediaMetadataId=getAllMediaMetadataId,
-                           enumerate=enumerate)
+                           enumerate=enumerate,
+                           str=str)
+
+
+@app.route("/entry/<id>")
+def entry(id=0):
+    """Return render template for a specific entry."""
+    return render_template("entry.html",
+                           MediaEntry=getMediaEntry(db, id),
+                           MediaMetadata=getAllMediaMetadataId(db, id),
+                           enumerate=enumerate,
+                           str=str,
+                           round=round)
 
 
 if __name__ == "__main__":
