@@ -25,6 +25,19 @@
 \input{../Title_Page/Title Page.tex}
 \tableofcontents
 \newpage
+\section{Demonstrations}
+\begin{figure}[H]
+	\caption{M.O.S.I.S Host Software Front Page}
+	\includegraphics[width=\textwidth]{./Figures/demo_1.png}
+\end{figure}
+\begin{figure}[H]
+	\caption{M.O.S.I.S Host Software Scrolling Front Page}
+	\includegraphics[width=\textwidth]{./Figures/demo_2.png}
+\end{figure}
+\begin{figure}[H]
+	\caption{M.O.S.I.S Host Software Media Entry with Metadata}
+	\includegraphics[width=\textwidth]{./Figures/demo_2.png}
+\end{figure}
 \section{New Features}
 \begin{itemize}
 	\item Database schema representation in SQLAlchemy
@@ -34,6 +47,7 @@
 	\item Automatic front page generation from database.
 	\item Solidified MediaEntry title format
 	\item Random: image, pH, temperature, pressure, dissolved oxygen, shot type, illumination type, ISO, aperture size, shutter speed, white balance, MediaEntry and MediaMetaData generators.
+	\item Created BASH starup/initialize script for app.py.
 \end{itemize}
 \section{Usage}
 \begin{enumerate}
@@ -62,11 +76,12 @@
 \appendix
 \section{Technical Specifications}
 \begin{itemize}
-\item Python Version 3.11.2
-\item Bootstrap Version: 5.3.2
-\item Flask Version: 3.1.1
-\item SQLAlchemy Version: 2.0.20
-\item Flask-SQLAlchemy Version: 3.1.1
+	\item Python Version 3.11.2
+	\item Bootstrap Version: 5.3.2
+	\item Flask Version: 3.1.1
+	\item SQLAlchemy Version: 2.0.20
+	\item Flask-SQLAlchemy Version: 3.1.1
+	\item Media Entry Format: entryId-shotType-timeStamp-illuminationType-ISO-apertureSize-shutterSpeed-whiteBalance
 \end{itemize}
 \section{Host Software Architecture}
 \begin{figure}[H]
@@ -90,4 +105,11 @@
 \inputminted{python}{../../../App/app.py}
 \subsection{testDataGenerator}
 \inputminted{python}{../../../App/testDataGenerator.py}
+\subsection{HTML Templates}
+\subsubsection{base.html}
+\inputminted[breaklines]{htmldjango}{../../../App/templates/base.html}
+\subsubsection{index.html}
+\inputminted[breaklines]{htmldjango}{../../../App/templates/index.html}
+\subsubsection{entry.html}
+\inputminted[breaklines]{htmldjango}{../../../App/templates/entry.html}
 \end{document}
