@@ -240,7 +240,7 @@ class MediaEntryJSONRepresentation():
 
     def intoJSON(self) -> str:
         """Return JSON representation of self."""
-        return json.dumps(self.__dict__)
+        return json.dumps(self.__dict__, indent=4)
 
 
 def fromJSON(path: str) -> MediaEntryJSONRepresentation:
