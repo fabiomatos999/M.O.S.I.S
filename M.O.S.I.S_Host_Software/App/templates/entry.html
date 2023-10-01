@@ -1,113 +1,86 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html>
 
-{% block title %}
-M.O.S.I.S Host Software Media Entry
-{% endblock %}
+<head>
+  <title></title>
+</head>
 
-
-{% block body %}
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-          <img
-            alt=""
-            src="https://github.com/fabiomatos999/M.O.S.I.S/blob/research/M.O.S.I.S%20Logo/cover.png?raw=true"
-            height="75rem"
-          />
-        </a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#"
-                >All Images</a
-              >
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Configure</a>
-            </li>
-          </ul>
-          <form class="d-flex" role="search">
-            <input
-              class="form-control me-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
-            <button class="btn btn-outline-success" type="submit">
-              Search
-            </button>
-          </form>
-        </div>
-      </div>
-    </nav>
-    <div class="container">
-      <div class="row">
-        <div class="col-6">
-          <div class="card">
-            <img
-              class="card-img-top"
-              alt=""
-              src="https://github.com/fabiomatos999/M.O.S.I.S/blob/research/RPI_MOSIS_BACKUP/Documents/MosisUI/MosisUI-master/Media/Images/2021-03-24T23:28_0.jpg?raw=true"
-            />
-          </div>
-        </div>
-        <div class="col-6">
-          <div class="card">
-            <img
-              class="card-img-top"
-              alt=""
-              src="https://github.com/fabiomatos999/M.O.S.I.S/blob/research/RPI_MOSIS_BACKUP/Documents/MosisUI/MosisUI-master/Media/Images/2021-03-24T23:28_1.jpg?raw=true"
-            />
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <div class="card">
-            <div class="ratio ratio-16x9">
-              <iframe
-                src="https://www.youtube.com/embed/Wt58h0hGwWY?si=gshsPtOQkOCd54ay"
-                title="YouTube video player"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen
-              ></iframe>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <div class="card">
-            <div class="card-body">Temperature: 20 C</div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card">
-            <div class="card-body">Ph: 6.4</div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card">
-            <div class="card-body">Pressure: 101 kPa</div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card">
-            <div class="card-body">SO2: 95%</div>
+<body>
+  {% extends 'base.html' %}
+  {% block title %} M.O.S.I.S Host
+  Software Media Entry {% endblock %}
+  {% block body %}
+  <div class="container">
+    {% if MediaEntry.shotType == "VIDEO" %}
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div class="ratio ratio-16x9">
+            <iframe src="https://www.youtube.com/embed/Wt58h0hGwWY?si=gshsPtOQkOCd54ay" title="YouTube video player"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen></iframe>
           </div>
         </div>
       </div>
     </div>
-{% endblock %}
+    {% for md in MediaMetadata %}
+
+    {% endfor %}
+    {% else -%}
+    {% for md in MediaMetadata %}
+    <hr>
+    <div class="row d-flex justify-content-center">
+      <div class="col-6">
+        <div class="card">
+          <div class="card-body d-flex justify-content-center">
+            {{md.time}}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6 d-flex justify-content-center mt-1 mb-1">
+        <img src={{ url_for('static', filename=md.leftCameraMedia.split("/").pop()) }} alt="">
+      </div>
+      <div class="col-6 d-flex justify-content-center mt-1 mb-1">
+        <img src={{ url_for('static', filename=md.rightCameraMedia.split("/").pop()) }} alt="">
+      </div>
+    </div>
+    <div class="row pt-3">
+      <div class="col-3">
+        <div class="card">
+          <div class="card-body">
+            {{"Temperature: " + str(round(md.temperature,3)) + " C" + '°'}}
+          </div>
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="card">
+          <div class="card-body">
+            {{"pH: " + str(md.ph)}}
+          </div>
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="card">
+          <div class="card-body">
+            {{"Pressure: " + str(round(md.pressure,3)) + " mbar"}}
+          </div>
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="card">
+          <div class="card-body">
+            {{"Dissolved Oxygen: " + str(round(md.dissolvedOxygen,3)) + " mg/L"}}
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+  {% endblock %}
+</body>
+
+</html>
