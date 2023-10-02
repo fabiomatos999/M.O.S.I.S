@@ -9,7 +9,7 @@ rectangle "User Interface" {
 	  usecase "Preview Right Camera Feed" as PRCF
 	  usecase "View Temperature" as VT
 	  usecase "View pH" as VPh
-	  usecase "View Absolute Pressure" as VAP
+	  usecase "View Gauge Pressure" as VAP
 	  usecase "View Dissolved Oxygen" as VDO
 	  usecase "View Camera ISO" as VCI
 	  usecase "View Aperture Size" as VAS
