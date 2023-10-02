@@ -1,11 +1,11 @@
 \section{Introduction (Fabio)}
-The fundamental problem with the UI currently employed on the M.O.S.I.S is a lack of design cohesion, missing and redundant features, constant crashing and lacks a formal way to store the data on the microscope. This problem has not fundamentally changed since the proposal. However, there has been one major objective change since then, that being that no longer will the preview of the cameras be at 1920x1080 resolution. Since reviewing the data sheet of the LCD display on the microscope, we have determined to have resolution 400x400 would be more appropriate since the resolution of the display is 800x480.\cite{5inchResistiveTouch} This allows the preview feed to be at the native aspect ratio of the display while allowing space for the sensor data. The following are the updated project objectives:
+The fundamental problems with the U.I currently employed on the M.O.S.I.S microscope is a lack of design cohesion, missing and redundant features, constant crashing and lacks a formal way to store the data on the microscope. This problem has not fundamentally changed since the proposal. However, there has been two major objective change since then, those being that: no longer will the preview of the cameras be at 1920x1080 resolution and the microscope will have on board controls for the cameras and sensors. Since reviewing the data sheet of the LCD display on the microscope, we have determined that a resolution of 400x400 would be more appropriate since the resolution of the display is 800x480.\cite{5inchResistiveTouch} This allows the preview feed to be at the native aspect ratio of the display while allowing space for the sensor data. The following are the updated project objectives:
 \begin{enumerate}
 	\item Design a UI for the M.O.S.I.S project Raspberry Pi by November 27, 2023 to:
 	      \begin{itemize}
-		      \item Control the functions of the microscope, utilizes the onboard buttons, shows a live preview at 24 FPS at a downscaled resolution of 400x400
-		      \item Display temperature sensors data with an accuracy of 3 significant digits
-		      \item Display Ph sensor data with an accuracy of 3 significant digits
+		      \item Control the functions of the microscope, utilizes the onboard buttons, shows a live preview at 24 FPS at a downscaled resolution of 400x400 for each camera.
+		      \item Display temperature sensor data with an accuracy of 3 significant digits
+		      \item Display pH sensor data with an accuracy of 3 significant digits
 		      \item Display pressure sensor data with an accuracy of 3 significant digits.
 		      \item Display dissolved oxygen sensor data with an accuracy of 3 significant digits
 		      \item Display current local IP address
@@ -15,7 +15,7 @@ The fundamental problem with the UI currently employed on the M.O.S.I.S is a lac
 	\item Adapt the currently existing hardware API, by November 27, 2023 to:
 	      \begin{itemize}
 		      \item Display the live feed from the cameras to the U.I
-		      \item Parse the temperature, Ph, pressure and dissolved oxygen data string from the UART port
+		      \item Parse the temperature, pH, pressure and dissolved oxygen data string from the UART port
 		      \item Run diagnostic sub-routines at application start
 	      \end{itemize}
 	\item By November 27, 2023, store data and metadata in a format that a researcher can browse through in a file browser, of which include:
@@ -25,7 +25,7 @@ The fundamental problem with the UI currently employed on the M.O.S.I.S is a lac
 		      \item Shot type
 		      \item Time stamp
 		      \item Temperature
-		      \item Ph
+		      \item pH
 		      \item Pressure
 		      \item Dissolved oxygen
                       \item ISO
@@ -38,7 +38,7 @@ This progress report is organized as into the following parts:
 \begin{enumerate}
 	\item Technical Progress: Describes at a high level the design process for this project.
 	\item Task Progress: Analyzes the current project state with projected schedule and update it accordingly
-	\item Expenditure Analysis: Analyses current expenditures on components and personnel and summarizes expected remaining costs.
+	\item Expenditure Analysis: Analyzes current expenditures on components and personnel and summarizes expected remaining costs.
 	\item Next Steps: Describes upcoming tasks
 	\item Appendix: Contains detailed descriptions, calculations and diagrams of the design process
 \end{enumerate}

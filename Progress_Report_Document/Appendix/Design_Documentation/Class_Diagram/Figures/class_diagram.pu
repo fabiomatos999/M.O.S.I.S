@@ -57,9 +57,9 @@ class whiteBalanceUI {
 }
 class phCalibrationUI {
 	- ph: Ph
-        + getPhHighRange()	
-        + getPhMidRange()	
-        + getPhLowRange()	
+        + getpHHighRange()	
+        + getpHMidRange()	
+        + getpHLowRange()	
 }
 class doCalibrationUI {
 	- do: DissolvedOxygen
@@ -117,5 +117,5 @@ UI "1" <|-- phCalibrationUI
 UI "1" <|-- doCalibrationUI
 Sensor <|-- SensorData
 Sensor <|-- DissolvedOxygen
-Sensor <|-- Ph
+Sensor <|-- pH
 @enduml
