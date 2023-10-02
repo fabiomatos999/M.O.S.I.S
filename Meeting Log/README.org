@@ -15,6 +15,7 @@
   - [[#23sep2023][23/Sep/2023]]
   - [[#26sep2023][26/Sep/2023]]
   - [[#29sep2023][29/Sep/2023]]
+  - [[#2oct2023][2/Oct/2023]]
 
 ** 30/Aug/2023
 1. Discussed how to setup LaTeX environment on Eduardo's computer.
@@ -107,3 +108,10 @@
 3. Fixed table placement
 4. Assigned responsibility appendix sections
 
+** 2/Oct/2023
+1. Fixed pH typo across progress report document
+2. Fixed system specifications
+3. Amended glossary
+4. Fixed design justification
+5. Fixed table format
+6. Fixed module description and use case diagram
