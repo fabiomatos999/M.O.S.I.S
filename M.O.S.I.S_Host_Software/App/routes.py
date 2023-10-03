@@ -1,16 +1,6 @@
-#!/usr/bin/env python3
-"""Launches app.py using python3 without calling interpreter explicitly."""
-from flask import render_template, url_for, Flask
-from flask_sqlalchemy import SQLAlchemy
+from models import app, db
+from flask import render_template, url_for
 from query import getAllMediaEntry, getAllMediaMetadataId, getMediaEntry
-import os
-
-basedir = os.path.abspath(os.path.dirname(__file__))
-
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] =\
-           'sqlite:///' + os.path.join(basedir, 'test.db')
-db = SQLAlchemy(app)
 
 
 @app.route("/")
@@ -34,7 +24,3 @@ def entry(id=0):
                            str=str,
                            round=round,
                            url_for=url_for)
-
-
-if __name__ == "__main__":
-    app.run(debug=True)
