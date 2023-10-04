@@ -2,7 +2,7 @@
 database "SQLite" {
 }
 package "User Interface" {
-	[Main Menu]
+	[Preview Screen]
 	[Study Select Menu]
 	frame "Camera Control" {
 		        [ISO Control Menu]
@@ -27,7 +27,7 @@ interface "Camera SDK"
 interface "UART"
 "Camera Control" -up-> "Camera SDK"
 "Camera SDK" -up-> "Cameras"
-"Main Menu" <-down-- "UART"
+"Preview Screen" <-down-- "UART"
 "Sensor Calibration" --down-> "UART"
 "UART" -down-> "Sensor Hub"
 "Sensor Hub" -down-> "UART"
