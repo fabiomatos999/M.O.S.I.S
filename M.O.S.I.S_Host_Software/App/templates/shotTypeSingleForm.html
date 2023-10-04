@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}
+Configure Study
+{% endblock %}
+{% block body %}
+<h2>Configure Single Shot Type</h2>
+<form action="" method="post">
+    {{form.whiteBalance.label}}
+    {{form.whiteBalance()}}
+    {{form.shutterSpeed.label}}
+    {{form.shutterSpeed()}}
+    {{form.illuminationType.label}}
+    {{form.illuminationType()}}
+    {{form.submit()}}
+</form>
+{% endblock %}
