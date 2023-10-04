@@ -1,96 +1,96 @@
 \section{Testing Plan (Eduardo)}
 The Requirements to be tested are:
 \begin{itemize}
-    \item The system-to-be must present the left and right camera feeds to the user.
+	\item The system-to-be must present the left and right camera feeds to the user.
 \end{itemize}
 Given that the cameras are connected by USB to the Raspberry Pi when the cameras are turned on and pointed towards a subject then the camera feed are shown on the display.
 \begin{itemize}
-    \item The system-to-be must present temperature, pH, dissolved oxygen, pressure, study status, and local IP address to the user.
+	\item The system-to-be must present temperature, pH, dissolved oxygen, pressure, study status, and local IP address to the user.
 \end{itemize}
 Given the sensor hub is connected to the Raspberry Pi by UART on port ACA0 when the read command is sent to the sensor hub and we receive the data string then the parsed string appears on the user interface as it appears in the console.
 \begin{itemize}
-    \item The system-to-be must have the means to switch between different study profiles
+	\item The system-to-be must have the means to switch between different study profiles
 \end{itemize}
 Given that the user interface is running when the user presses the menu switch button and reaches the study menu then the study menu cycles through different loaded study profiles.
 \begin{itemize}
-    \item The system-to-be must control the lighting on the microscope cameras according to the study profile.
+	\item The system-to-be must control the lighting on the microscope cameras according to the study profile.
 \end{itemize}
 Given the user interface is running and is on the study select menu when the user selects a study then lighting changes according to the study profile.
 \begin{itemize}
-    \item The system-to-be must control the shot type on the microscope cameras according to the study profile.
+	\item The system-to-be must control the shot type on the microscope cameras according to the study profile.
 \end{itemize}
 Given the user interface is running and is on the study select menu when the user selects a study then  shot type changes according to the study profile.
 \begin{itemize}
-    \item The system-to-be must control the ISO of the microscope cameras.
+	\item The system-to-be must control the ISO of the microscope cameras.
 \end{itemize}
 Given the user interface is running and is on the ISO configuration menu when the user selects an ISO then the exposure of the camera feed will change accordingly.
 \begin{itemize}
-    \item The system-to-be must control the aperture size of the microscope cameras.
+	\item The system-to-be must control the aperture size of the microscope cameras.
 \end{itemize}
 Given the user interface is running and is on the aperture size configuration menu when the user selects an aperture size then the exposure of the camera feed will change accordingly.
 \begin{itemize}
-    \item The system-to-be must control the shutter speed of the microscope cameras.
+	\item The system-to-be must control the shutter speed of the microscope cameras.
 \end{itemize}
 Given the user interface is running and is on the shutter speed configuration menu when the user selects an shutter speed then the exposure of the camera feed will change accordingly.
 \begin{itemize}
-    \item The system-to-be must control the white balance of the microscope cameras.
+	\item The system-to-be must control the white balance of the microscope cameras.
 \end{itemize}
 Given the user interface is running and is on the white balance configuration menu when the user selects an white balance then the color temperature of the camera feed will change accordingly.
 \begin{itemize}
-    \item The system-to-be must call the calibration functions of the microscope sensors.
+	\item The system-to-be must call the calibration functions of the microscope sensors.
 \end{itemize}
 Given that the user interface is running and is on the sensor calibration menu when the user changes the calibration of the sensors then the sensors updates the calibration accordingly.
 \begin{itemize}
-    \item The system-to-be must have a database that stores:
-    \begin{itemize}
-        \item Left Camera Media
-        \item Right Camera Media
-        \item Shot type
-        \item ISO 8601 Date Stamp (yyyy-MM-ddTHH:mm:ss.zzz)
-        \item Temperature
-        \item pH
-        \item Pressure
-        \item Dissolved Oxygen
-        \item Illumination Type
-        \item ISO
-        \item Aperture Size
-        \item Shutter Speed
-        \item White Balance
-    \end{itemize}
+	\item The system-to-be must have a database that stores:
+	      \begin{itemize}
+		      \item Left Camera Media
+		      \item Right Camera Media
+		      \item Shot type
+		      \item ISO 8601 Date Stamp (yyyy-MM-ddTHH:mm:ss.zzz)
+		      \item Temperature
+		      \item pH
+		      \item Pressure
+		      \item Dissolved Oxygen
+		      \item Illumination Type
+		      \item ISO
+		      \item Aperture Size
+		      \item Shutter Speed
+		      \item White Balance
+	      \end{itemize}
 \end{itemize}
 Given that the user interface is running when the study is finished then the database will store all related media to the study entry.
 \begin{itemize}
-    \item The system-to-be must store the captured data into a browsable format.
+	\item The system-to-be must store the captured data into a browsable format.
 \end{itemize}
 Given that the study has finished when the data is backed up to the database then the data will be stored in a browsable format.
 \begin{itemize}
-    \item The system-to-be must use the on board buttons to control the functions of the microscope.
+	\item The system-to-be must use the on board buttons to control the functions of the microscope.
 \end{itemize}
 Given that the user interface is running when the user presses a button on board the microscope then the user interface will respond with an action accordingly to the pressed button.
 \begin{itemize}
-   \item The system-to-be must present the feed from left and right cameras, each at 24FPS and a downscaled 400x400 resolution.
+	\item The system-to-be must present the feed from left and right cameras, each at 24FPS and a downscaled 400x400 resolution.
 \end{itemize}
 Given that the cameras are connected by USB to the Raspberry Pi when the cameras are turned on and pointed towards a subject then the camera feed are shown on the display at 24 frames per second and at a downscaled 400x400 resolution.
 \begin{itemize}
-    \item The system-to-be must present: temperature, pH, pressure, dissolved oxygen, study status, ISO, aperture size and shutter speed, white balance and IP address.
+	\item The system-to-be must present: temperature, pH, pressure, dissolved oxygen, study status, ISO, aperture size and shutter speed, white balance and IP address.
 \end{itemize}
 Given the user interface is running when the user views the display screen then the user interface will present the corresponding data of the menu, such as temperature, pH, pressure, dissolved oxygen, study status, ISO, aperture size and shutter speed, white balance and IP address.
 \begin{itemize}
-    \item The system-to-be must update temperature, pH, pressure, dissolved oxygen and local IP address, study status, every two seconds due to the existing UART implementation.
+	\item The system-to-be must update temperature, pH, pressure, dissolved oxygen and local IP address, study status, every two seconds due to the existing UART implementation.
 \end{itemize}
 Given the sensor hub is connected to the Raspberry Pi by UART on port ACA0 when the read command is sent to the sensor hub and we receive the data string then the parsed string appears on the user interface as it appears in the console.
 \begin{itemize}
-    \item The system-to-be lighting enumeration contains:
-    \begin{itemize}
-        \item None
-        \item Infrared
-        \item Ultraviolet
-        \item Visible Spectrum
-    \end{itemize}
+	\item The system-to-be lighting enumeration contains:
+	      \begin{itemize}
+		      \item None
+		      \item Infrared
+		      \item Ultraviolet
+		      \item Visible Spectrum
+	      \end{itemize}
 \end{itemize}
-Given that the user interface is running and on the study select menu when the user is selecting a study profile then the lighting will change to: none, infrared, ultraviolet or visible spectrum accordingly to the study profile.
+Given that the user interface is running and on the study select menu when the user is selecting a study profile then the lighting will change to: none, infrared, ultraviolet or visible spectrum according to the study profile.
 \begin{itemize}
-    \item The system-to-be shot type enumeration contains:
+	\item The system-to-be shot type enumeration contains:
 	      \begin{itemize}
 		      \item Single
 		      \item Burst
@@ -99,68 +99,73 @@ Given that the user interface is running and on the study select menu when the u
 		      \item Video
 	      \end{itemize}
 \end{itemize}
-Given that the user interface is running and on the study select menu when the user is selecting a study profile then the shot type will change to: single, burst, telescopic, time lapse or video accordingly to the study profile.
+Given that the user interface is running and is loaded with study profiles that have each shot type, when the user selects a study with a specific shot type and the study is executed, then a folder is created that contains the specific media based on the study type.
 \begin{itemize}
-    \item The system-to-be must initiate a capture with a single button.
+	\item The system-to-be must initiate a capture with a single button.
 \end{itemize}
-Given that the user interface is running when the user presses the start capture button then the study profile selected will start capturing the data. 
+Given the user interface is running, when the user presses the button, then the currently selected study will be executed.
 \begin{itemize}
-    \item The system-to-be must shutdown the operating system safely with a single button.
+	\item The system-to-be must initiate a capture with a single button.
 \end{itemize}
-To test this requirement we will verify that the system-to-be starts shutdown procedure safely with the use of only one button.
+Given the user interface is running, when the user presses the button, then the currently selected study will be executed.
+>>>>>>> theirs
 \begin{itemize}
-    \item The system-to-be must stop capture with a single button.
+	\item The system-to-be must shutdown the operating system safely with a single button.
 \end{itemize}
-To test this requirement we will verify that the system-to-be stop capture with the use of only one button.
+Given the user interface is running, when the user presses the button, then operating system will shutdown.
 \begin{itemize}
-   \item The system-to-be must be able to navigate through the study profiles using only two buttons.
+	\item The system-to-be must stop capture with a single button.
 \end{itemize}
-To test this requirement we will verify that the system-to-be is able to navigate through the study profiles using only two buttons.
+Given the user interface is running and a video or time lapse study is in progress, when the user presses the button, then the whole study will be canceled and no data will be written to the database nor file system.
+\begin{itemize}
+	\item The system-to-be must be able to navigate through the study profiles using only two buttons.
+\end{itemize}
+Given the user the user interface is running and is on the study select menu, when the user presses the two buttons, then the selected study profile will change.
 \begin{itemize}
 	\item The system-to-be must show the currently loaded study profiles using a single button.
 \end{itemize}
-To test this requirement we will design and verify that the study menu is opened with a single button.
+Given the user profiles are loaded by the external software before the user interface starts up, when the user interface starts up and presses the menu cycle button enough times to reach the study select menu, all loaded study profiles will be presented.
 \begin{itemize}
-    \item The system-to-be must store all files related to a single study entry in a single directory.
+	\item The system-to-be must store all files related to a single study entry in a single directory.
 \end{itemize}
-To test this requirement we will verify on the host computer that tall files from a single entry is stored in a single directory.
+Given the user interface is running and the user pressed the study start button, when the study completes, then all captured media files will be stored in a file system folder
 \begin{itemize}
-    \item The system-to-be must store a JSON file with all data and metadata from the study entry along in the same directory as the study entry.
+	\item The system-to-be must store a JSON file with all data and metadata from the study entry along in the same directory as the study entry.
 \end{itemize}
-To test this requirement we will verify on the host computer that the backed up data from a study entry is stored in the same directory.
+Given the user interface is running and the user pressed the start study button, when the study completes, then a JSON file will appear along with the other media in a file system folder.
 \begin{itemize}
-    \item The system-to-be must control the focus of the cameras one stepper motor step at a time using two buttons.
+	\item The system-to-be must control the focus of the cameras one stepper motor step at a time using two buttons.
 \end{itemize}
-To test this requirement we will verify during the live preview when the button is pressed the focus of the cameras is changed.
+Given that the user interface is turned and is on the preview menu, when the user changes changes the focus of the cameras using the two buttons then the focus of the live feed of the cameras changes.
 \begin{itemize}
-    \item The system-to-be must control the ISO of the cameras using two buttons.
+	\item The system-to-be must control the ISO of the cameras using two buttons.
 \end{itemize}
-To test this requirement we will verify when the ISO configuration screen is shown that the ISO will be modified using two buttons.
+Given that the user interface is turned and is on the ISO control menu, when the user changes the selected ISO value using the two buttons then the exposure of the live feed of the camera changes.
 \begin{itemize}
-    \item The system-to-be must show all available camera ISO using a single button.
+	\item The system-to-be must show all available camera ISO using a single button.
 \end{itemize}
-To test this requirement when the ISO configuration screen is displayed so that all available camera ISO are available.
+Given the user interface is running, when the user presses the menu cycle button enough times then the ISO control menu will appear on the display.
 \begin{itemize}
-    \item The system-to-be must control the aperture size of the cameras using two buttons.
+	\item The system-to-be must control the aperture size of the cameras using two buttons.
 \end{itemize}
-To test this requirement we will verify when the aperture size configuration screen is shown that the ISO will be modified using two buttons.
+Given that the user interface is turned and is on the aperture size menu, when the user changes the selected aperture size value using the two buttons then the exposure of the live feed of the camera changes.
 \begin{itemize}
-    \item The system-to-be must show all available aperture sizes using a single button.
+	\item The system-to-be must show all available aperture sizes using a single button.
 \end{itemize}
-Given the user interface is turned on, when the user presses the menu cycle button enough times then the aperture size menu will appear on the display.
+Given the user interface is running, when the user presses the menu cycle button enough times then the aperture size menu will appear on the display.
 \begin{itemize}
-    \item The system-to-be must control the shutter speed of the cameras using two buttons.
+	\item The system-to-be must control the shutter speed of the cameras using two buttons.
 \end{itemize}
-Given that the user interface is turned and is on the shutter speed menu, when the user chooses a shutter speed from using the two buttons then the exposure of the live feed of the camera feed changes.
+Given that the user interface is turned and is on the shutter speed menu, when the user chooses a shutter speed from using the two buttons then the exposure of the live feed of the camera changes.
 \begin{itemize}
-    \item The system-to-be must show all available shutter speeds using a single button.
+	\item The system-to-be must show all available shutter speeds using a single button.
 \end{itemize}
-Given the user interface is turned on, when the user presses the menu cycle button enough times then the shutter speed menu will appear on the display.
+Given the user interface is running, when the user presses the menu cycle button enough times then the shutter speed menu will appear on the display.
 \begin{itemize}
-    \item The system-to-be must control the white balance of the cameras using two buttons.
+	\item The system-to-be must control the white balance of the cameras using two buttons.
 \end{itemize}
-Given that the user interface is turned and is on the white balance menu, when the user adjust the white balance slider using the two buttons then the color temperature of the live feed of the camera feed changes.
+Given that the user interface is turned and is on the white balance menu, when the user adjust the white balance slider using the two buttons then the color temperature of the live feed of the camera changes.
 \begin{itemize}
-    \item The system-to-be must show all available white balance using a single button.
+	\item The system-to-be must show all available white balance using a single button.
 \end{itemize}
-Given the user interface is turned on, when the user presses the menu cycle button enough times then the white balance menu will appear on the display.
+Given the user interface is running, when the user presses the menu cycle button enough times then the white balance menu will appear on the display.
