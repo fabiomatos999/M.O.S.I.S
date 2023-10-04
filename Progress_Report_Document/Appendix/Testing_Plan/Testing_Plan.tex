@@ -39,7 +39,7 @@ Given the user interface is running and is on the white balance configuration me
 \begin{itemize}
     \item The system-to-be must call the calibration functions of the microscope sensors.
 \end{itemize}
-Given that the application starts and when then
+Given that the user interface is running and is on the sensor calibration menu when the user changes the calibration of the sensors then the sensors updates the calibration accordingly.
 \begin{itemize}
     \item The system-to-be must have a database that stores:
     \begin{itemize}
@@ -58,19 +58,19 @@ Given that the application starts and when then
         \item White Balance
     \end{itemize}
 \end{itemize}
-To test this requirement we will check the data on the study completely matches the data on the database.
+Given that the user interface is running when the study is finished then the database will store all related media to the study entry.
 \begin{itemize}
     \item The system-to-be must store the captured data into a browsable format.
 \end{itemize}
-To test this requirement we will verify on the host computer that the data stored is able to be browsed without difficulty.
+Given that the study has finished when the data is backed up to the database then the data will be stored in a browsable format.
 \begin{itemize}
     \item The system-to-be must use the on board buttons to control the functions of the microscope.
 \end{itemize}
-To test this requirement we will verify that each on board button is performing their intended function.
+Given that the user interface is running when the user presses a button on board the microscope then the user interface will respond with an action accordingly to the pressed button.
 \begin{itemize}
    \item The system-to-be must present the feed from left and right cameras, each at 24FPS and a downscaled 400x400 resolution.
 \end{itemize}
-To test this requirement we will make sure that both feed are refreshing at 24 FPS and that the feed are at the specified 400 X 400 resolution.
+Given that the cameras are connected by USB to the Raspberry Pi when the cameras are turned on and pointed towards a subject then the camera feed are shown on the display at 24 frames per second and at a downscaled 400x400 resolution.
 \begin{itemize}
     \item The system-to-be must present: temperature, pH, pressure, dissolved oxygen, study status, ISO, aperture size and shutter speed, white balance and IP address.
 \end{itemize}
