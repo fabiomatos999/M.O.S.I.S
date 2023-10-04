@@ -3,14 +3,30 @@
 Configure Study
 {% endblock %}
 {% block body %}
-<h2>Configure Single Shot Type</h2>
-<form action="" method="post">
-    {{form.whiteBalance.label}}
-    {{form.whiteBalance()}}
-    {{form.shutterSpeed.label}}
-    {{form.shutterSpeed()}}
-    {{form.illuminationType.label}}
-    {{form.illuminationType()}}
-    {{form.submit()}}
-</form>
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <h2>Configure Single Shot Type</h2>
+        </div>
+    </div>
+    <div class="row">
+        <form action="" method="post" class="form-control">
+            <div class="form-group">
+                {{form.whiteBalance.label}}
+                {{form.whiteBalance()}}
+            </div>
+            <div class="form-group">
+                {{form.shutterSpeed.label}}
+                {{form.shutterSpeed()}}
+            </div>
+            <div class="form-group">
+                {{form.illuminationType.label}}
+                {{form.illuminationType()}}
+            </div>
+            <div class="form-group">
+                {{form.submit()}}
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock %}
