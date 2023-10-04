@@ -78,7 +78,7 @@ Given the user interface is running when the user views the display screen then 
 \begin{itemize}
 	\item The system-to-be must update temperature, pH, pressure, dissolved oxygen and local IP address, study status, every two seconds due to the existing UART implementation.
 \end{itemize}
-Given the sensor hub is connected to the Raspberry Pi by UART on port ACA0 when the read command is sent to the sensor hub and we receive the data string then the parsed string appears on the user interface as it appears in the console.
+Given the sensor hub is connected to the Raspberry Pi by UART on port ACA0 when the read command is sent to the sensor hub and we receive the data string then the parsed string appears on the user interface as it appears in the console and updates every two seconds.
 \begin{itemize}
 	\item The system-to-be lighting enumeration contains:
 	      \begin{itemize}
@@ -105,10 +105,6 @@ Given that the user interface is running and is loaded with study profiles that 
 \end{itemize}
 Given the user interface is running, when the user presses the button, then the currently selected study will be executed.
 \begin{itemize}
-	\item The system-to-be must initiate a capture with a single button.
-\end{itemize}
-Given the user interface is running, when the user presses the button, then the currently selected study will be executed.
-\begin{itemize}
 	\item The system-to-be must shutdown the operating system safely with a single button.
 \end{itemize}
 Given the user interface is running, when the user presses the button, then operating system will shutdown.
@@ -119,18 +115,6 @@ Given the user interface is running and a video or time lapse study is in progre
 \begin{itemize}
 	\item The system-to-be must be able to navigate through the study profiles using only two buttons.
 \end{itemize}
-\begin{itemize}
-	\item The system-to-be must shutdown the operating system safely with a single button.
-\end{itemize}
-Given the user interface is running, when the user presses the button, then operating system will shutdown.
-\begin{itemize}
-	\item The system-to-be must stop capture with a single button.
-\end{itemize}
-Given the user interface is running and a video or time lapse study is in progress, when the user presses the button, then the whole study will be canceled and no data will be written to the database nor file system.
-\begin{itemize}
-	\item The system-to-be must be able to navigate through the study profiles using only two buttons.
-\end{itemize}
->>>>>>> Stashed changes
 Given the user the user interface is running and is on the study select menu, when the user presses the two buttons, then the selected study profile will change.
 \begin{itemize}
 	\item The system-to-be must show the currently loaded study profiles using a single button.
