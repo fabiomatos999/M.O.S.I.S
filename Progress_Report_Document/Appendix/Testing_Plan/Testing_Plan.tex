@@ -74,11 +74,11 @@ Given that the cameras are connected by USB to the Raspberry Pi when the cameras
 \begin{itemize}
     \item The system-to-be must present: temperature, pH, pressure, dissolved oxygen, study status, ISO, aperture size and shutter speed, white balance and IP address.
 \end{itemize}
-To test this requirement we will verify that the sensors data presented are the same as the data received by the sensors and are updated every 2 seconds.
+Given the user interface is running when the user views the display screen then the user interface will present the corresponding data of the menu, such as temperature, pH, pressure, dissolved oxygen, study status, ISO, aperture size and shutter speed, white balance and IP address.
 \begin{itemize}
     \item The system-to-be must update temperature, pH, pressure, dissolved oxygen and local IP address, study status, every two seconds due to the existing UART implementation.
 \end{itemize}
-To test this requirement we will verify that the updated data shown are the correct data from the existing UART implementation.
+Given the sensor hub is connected to the Raspberry Pi by UART on port ACA0 when the read command is sent to the sensor hub and we receive the data string then the parsed string appears on the user interface as it appears in the console.
 \begin{itemize}
     \item The system-to-be lighting enumeration contains:
     \begin{itemize}
@@ -88,7 +88,7 @@ To test this requirement we will verify that the updated data shown are the corr
         \item Visible Spectrum
     \end{itemize}
 \end{itemize}
-To test this requirement we will verify that the function for lightning enumeration includes: none, infrared, ultraviolet and visible spectrum. The cameras will also have the capability to change the lighting as per the user.
+Given that the user interface is running and on the study select menu when the user is selecting a study profile then the lighting will change to: none, infrared, ultraviolet or visible spectrum accordingly to the study profile.
 \begin{itemize}
     \item The system-to-be shot type enumeration contains:
 	      \begin{itemize}
@@ -99,11 +99,11 @@ To test this requirement we will verify that the function for lightning enumerat
 		      \item Video
 	      \end{itemize}
 \end{itemize}
-To test this requirement we will verify that the function for lightning enumeration includes: single, burst, telescopic, time lapse and video. The cameras will also have the capability to change the shot type as per the user.
+Given that the user interface is running and on the study select menu when the user is selecting a study profile then the shot type will change to: single, burst, telescopic, time lapse or video accordingly to the study profile.
 \begin{itemize}
     \item The system-to-be must initiate a capture with a single button.
 \end{itemize}
-To test this requirement we will verify that the system-to-be starts capture with the use of only one button.
+Given that the user interface is running when the user presses the start capture button then the study profile selected will start capturing the data. 
 \begin{itemize}
     \item The system-to-be must shutdown the operating system safely with a single button.
 \end{itemize}
