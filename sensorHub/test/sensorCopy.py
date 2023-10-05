@@ -90,7 +90,7 @@ class sensorHub:
     def __init__(self):
         try:
             self.uart = serial.Serial(
-                self._UARTPort, baudrate=115200, timeout=8, write_timeout=5
+                self._UARTPort, baudrate=115200, timeout=8, write_timeout=0
             )
             print(self.uart)
         except serial.SerialException as e:
