@@ -48,7 +48,7 @@ def single():
     if form.is_submitted():
         studies.append(request.form)
         print(studies)
-    return render_template("shotTypeSingleForm.html", form=form, shotType=str())
+    return render_template("shotTypeSingleForm.html", form=form)
 
 
 if __name__ == "__main__":

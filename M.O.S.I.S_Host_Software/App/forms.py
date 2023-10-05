@@ -1,11 +1,10 @@
 from flask_wtf import FlaskForm
-from wtforms import FloatField, DecimalField, SubmitField, SelectField
+from wtforms import DecimalField, SubmitField, SelectField
 from wtforms.validators import InputRequired, NumberRange
-from wtforms import ValidationError
 import decimal
 
 
-class ShotTypeSingleForm(FlaskForm):
+class BaseShotTypeForm(FlaskForm):
     shotType = SelectField('Shot Type', choices=[("SINGLE", "Single")])
     whiteBalance = DecimalField(
         'White Balance',
@@ -26,3 +25,14 @@ class ShotTypeSingleForm(FlaskForm):
                                             ("INFRARED", "Infrared"),
                                             ("ULTRAVIOLET", "Ultraviolet")])
     submit = SubmitField('Download Study')
+
+
+class ShotTypeSingleForm(BaseShotTypeForm):
+    pass
+
+
+class ShotTypeBurstForm(BaseShotTypeForm):
+    shotCount = DecimalField('Shot Count',
+                             places=0,
+                             default=5,
+                             validators=[InputRequired(), NumberRange(2)])
