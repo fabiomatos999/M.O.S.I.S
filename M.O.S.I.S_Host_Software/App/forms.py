@@ -1,18 +1,28 @@
 from flask_wtf import FlaskForm
-from wtforms import FloatField, DecimalField, SubmitField, SelectField, StringField
+from wtforms import FloatField, DecimalField, SubmitField, SelectField
 from wtforms.validators import InputRequired, NumberRange
+from wtforms import ValidationError
+import decimal
 
 
 class ShotTypeSingleForm(FlaskForm):
     shotType = SelectField('Shot Type', choices=[("SINGLE", "Single")])
-    whiteBalance = DecimalField('White Balance', default=3200, validators=[InputRequired(), NumberRange(3200, 6500)])
-    shutterSpeed = FloatField('Shutter Speed', validators=[InputRequired(), validate_shutter()], default=0.0167)
+    whiteBalance = DecimalField(
+        'White Balance',
+        places=0,
+        rounding=decimal.ROUND_UP,
+        default=3200,
+        validators=[InputRequired(), NumberRange(3200, 6500)])
+    shutterSpeed = DecimalField(
+        'Shutter Speed',
+        places=5,
+        default=0.0167,
+        validators=[InputRequired(),
+                    NumberRange(0.00002, 120.0)])
     illuminationType = SelectField('Illumination Type',
-                                   choices=[("NONE", "None"), ("VISIBLESPECTRUM", "Visible Spectrum"),
-                                            ("INFRARED", "Infrared"), ("ULTRAVIOLET", "Ultraviolet")])
+                                   choices=[("NONE", "None"),
+                                            ("VISIBLESPECTRUM",
+                                             "Visible Spectrum"),
+                                            ("INFRARED", "Infrared"),
+                                            ("ULTRAVIOLET", "Ultraviolet")])
     submit = SubmitField('Download Study')
-
-
-def validate_shutter(form, field):
-    if not field.data >= 0.00002 and not field.data <= 120:
-        ValidationError("Please input a shutter speed from 0.00002 to 120.")
