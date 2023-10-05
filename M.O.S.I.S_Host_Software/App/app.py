@@ -5,6 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from query import getAllMediaEntry, getAllMediaMetadataId, getMediaEntry
 import os
 from forms import ShotTypeSingleForm
+from enums import shotType
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -43,10 +44,11 @@ def entry(id=0):
 @app.route("/study/single", methods=['GET', 'POST'])
 def single():
     form = ShotTypeSingleForm()
+
     if form.is_submitted():
         studies.append(request.form)
-        print(studies) 
-    return render_template("shotTypeSingleForm.html", form=form)
+        print(studies)
+    return render_template("shotTypeSingleForm.html", form=form, shotType=str())
 
 
 if __name__ == "__main__":
