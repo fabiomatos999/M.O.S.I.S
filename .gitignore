@@ -382,3 +382,4 @@ Cargo.lock
 # End of https://www.toptal.com/developers/gitignore/api/latex,emacs,rust
 .vscode/settings.json
 M.O.S.I.S_Host_Software/*
+*/venv/*
