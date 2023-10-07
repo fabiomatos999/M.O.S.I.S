@@ -42,7 +42,7 @@ class BaseShotTypeForm(FlaskForm):
         validators=[InputRequired(),
                     NumberRange(0.00002, 120.0)])
 
-    submit = SubmitField('Download Study')
+    submit = SubmitField('Submit Study')
 
 
 class ShotTypeSingleForm(BaseShotTypeForm):
