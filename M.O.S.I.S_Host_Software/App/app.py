@@ -5,7 +5,6 @@ from flask_sqlalchemy import SQLAlchemy
 from query import getAllMediaEntry, getAllMediaMetadataId, getMediaEntry
 import os
 from forms import return_form
-from enums import shotType
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
