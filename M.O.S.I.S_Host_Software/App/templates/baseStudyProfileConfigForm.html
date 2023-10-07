@@ -34,5 +34,27 @@ Configure Study
             </div>
         </form>
     </div>
+    <div class="row">
+      <div class="col-6">
+	<h2>Current Study Profile</h2>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+    {% for study in studies %}
+    <div class="row">
+	{% for key, value in study.items() %}
+      <div class="col-2">
+	<div class="card mt-3 mb-3">
+	  <div class="card-body">
+	    {{key + ": " + value}}
+	 </div>
+	</div>
+     </div>
+	{% endfor %}
+    </div>
+      {% endfor %}
+      </div>
+    </div>
 </div>
 {% endblock %}
