@@ -40,6 +40,17 @@ def entry(id=0):
                            url_for=url_for)
 
 
+def remove_submit(studies: list) -> list:
+    ret = list()
+    for study in studies:
+        filtered_keys = list(filter(lambda x: x != 'submit', study.keys()))
+        temp_dict = dict()
+        for key in filtered_keys:
+            temp_dict[key] = study[key]
+        ret.append(temp_dict)
+    return ret
+
+
 @app.route("/study/<st>", methods=['GET', 'POST'])
 def single(st="single"):
     """Serve shot type study profile template configuration page."""
@@ -47,8 +58,11 @@ def single(st="single"):
 
     if form.is_submitted():
         studies.append(request.form)
+        print(remove_submit(studies))
         return index()
-    return render_template(form.filename, form=form)
+    return render_template(form.filename,
+                           form=form,
+                           studies=remove_submit(studies))
 
 
 if __name__ == "__main__":
