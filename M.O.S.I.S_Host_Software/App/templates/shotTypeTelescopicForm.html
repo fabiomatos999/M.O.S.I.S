@@ -1,0 +1,10 @@
+{% extends 'baseStudyProfileConfigForm.html' %}
+{%  block shotType %}
+Telescopic
+{% endblock %}
+{% block form %}
+<div class="form-group">
+  {{form.zoomOutCount.label}}
+  {{form.zoomOutCount()}}
+</div>
+{% endblock %}

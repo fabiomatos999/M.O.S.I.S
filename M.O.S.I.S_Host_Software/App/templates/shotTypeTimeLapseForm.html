@@ -1,0 +1,14 @@
+{% extends 'baseStudyProfileConfigForm.html' %}
+{%  block shotType %}
+Time Lapse
+{% endblock %}
+{% block form %}
+<div class="form-group">
+  {{form.time.label}}
+  {{form.time()}}
+</div>
+<div class="form-group">
+  {{form.photoCount.label}}
+  {{form.photoCount()}}
+</div>
+{% endblock %}

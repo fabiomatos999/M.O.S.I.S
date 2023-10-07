@@ -66,15 +66,65 @@ class ShotTypeBurstForm(BaseShotTypeForm):
                                          NumberRange(2)])
 
 
-def return_form(class_string: str) -> Type[BaseShotTypeForm]:
-    """Return shot type based on string.
+class ShotTypeTelescopicForm(BaseShotTypeForm):
+    """Inherits from BaseShotTypeForm, specifies shot type and zoomOutCount."""
 
-    Warning: If a BaseShotTypeForm class is given as a parameter,
-    it will raise a ValueError exception..
+    filename = "shotTypeTelescopicForm.html"
+    shotType = SelectField('Shot Type',
+                           choices=[(shotType.TELESCOPIC.name, "Telescopic")])
+    zoomOutCount = DecimalField('Zoom Out Count',
+                                places=0,
+                                default=5,
+                                validators=[InputRequired(),
+                                            NumberRange(2)])
+
+
+class ShotTypeTimeLapseForm(BaseShotTypeForm):
+    """Inherits from BaseShotTypeForm, specifies shot type,time, photoCount."""
+
+    filename = "shotTypeTimeLapseForm.html"
+    shotType = SelectField('Shot Type',
+                           choices=[(shotType.TIMELAPSE.name, "Time Lapse")])
+    time = DecimalField('Time (m)',
+                        places=0,
+                        default=60,
+                        validators=[InputRequired(),
+                                    NumberRange(1)])
+    photoCount = DecimalField('Amount of Pictures',
+                              places=0,
+                              default=5,
+                              validators=[InputRequired(),
+                                          NumberRange(2)])
+
+
+class ShotTypeVideoForm(BaseShotTypeForm):
+    """Inherits from BaseShotTypeForm, specifies shot type and video length."""
+
+    filename = "shotTypeVideoForm.html"
+    shotType = SelectField('Shot Type',
+                           choices=[(shotType.VIDEO.name, "Video")])
+    videoLength = DecimalField('Video Length (s)',
+                               places=0,
+                               default=60,
+                               validators=[InputRequired(),
+                                           NumberRange(2)])
+
+
+def return_form(class_string: str) -> Type[BaseShotTypeForm]:
+    """Return shot type form based on string.
+
+    It will raise a ValueError exception if class_string is not either:
+    'single', 'burst', 'telescopic', 'timeLapse', 'video'
     """
     if (class_string == "single"):
         return ShotTypeSingleForm()
     elif (class_string == "burst"):
         return ShotTypeBurstForm()
+    elif (class_string == "telescopic"):
+        return ShotTypeTelescopicForm()
+    elif (class_string == "timeLapse"):
+        return ShotTypeTimeLapseForm()
+    elif (class_string == "video"):
+        return ShotTypeVideoForm()
     else:
-        raise ValueError("Cannot serve form from base class.")
+        raise ValueError("Cannot serve form.")
