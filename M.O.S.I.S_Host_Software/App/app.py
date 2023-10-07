@@ -4,7 +4,7 @@ from flask import render_template, url_for, Flask, request
 from flask_sqlalchemy import SQLAlchemy
 from query import getAllMediaEntry, getAllMediaMetadataId, getMediaEntry
 import os
-from forms import ShotTypeSingleForm
+from forms import return_form
 from enums import shotType
 
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -41,14 +41,15 @@ def entry(id=0):
                            url_for=url_for)
 
 
-@app.route("/study/single", methods=['GET', 'POST'])
-def single():
-    form = ShotTypeSingleForm()
+@app.route("/study/<st>", methods=['GET', 'POST'])
+def single(st="single"):
+    """Serve shot type study profile template configuration page."""
+    form = return_form(st)
 
     if form.is_submitted():
         studies.append(request.form)
-        print(studies)
-    return render_template("shotTypeSingleForm.html", form=form)
+        return index()
+    return render_template(form.filename, form=form)
 
 
 if __name__ == "__main__":
