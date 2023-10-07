@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}
+Configure Study
+{% endblock %}
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <h2>Configure {% block shotType %} {% endblock %} Shot Type</h2>
+        </div>
+    </div>
+    <div class="row">
+        <form action="" method="post" class="form-control">
+            <div class="form-group">
+                {{form.shotType.label}}
+                {{form.shotType()}}
+            </div>
+            <div class="form-group">
+                {{form.whiteBalance.label}}
+                {{form.whiteBalance()}}
+            </div>
+            <div class="form-group">
+                {{form.illuminationType.label}}
+                {{form.illuminationType()}}
+            </div>
+            <div class="form-group">
+                {{form.shutterSpeed.label}}
+                {{form.shutterSpeed()}}
+            </div>
+	    {% block form %}
+	    {% endblock %}
+            <div class="form-group">
+                {{form.submit()}}
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
