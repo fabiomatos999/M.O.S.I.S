@@ -5,6 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from query import getAllMediaEntry, getAllMediaMetadataId, getMediaEntry
 import os
 from forms import return_form
+import json
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -41,6 +42,7 @@ def entry(id=0):
 
 
 def remove_submit(studies: list) -> list:
+    """Remove submit form field from studies."""
     ret = list()
     for study in studies:
         filtered_keys = list(filter(lambda x: x != 'submit', study.keys()))
@@ -58,11 +60,29 @@ def single(st="single"):
 
     if form.is_submitted():
         studies.append(request.form)
-        print(remove_submit(studies))
         return index()
     return render_template(form.filename,
                            form=form,
                            studies=remove_submit(studies))
+
+
+@app.route("/save", methods=["GET", "POST"])
+def save():
+    """Serve study profile preview and save page."""
+    if request.method == "POST":
+        writeStudyProfilesToJSON(remove_submit(studies))
+        return index()
+    else:
+        return render_template("saveStudyProfile.html",
+                               studies=remove_submit(studies))
+
+
+def writeStudyProfilesToJSON(studies: [dict]):
+    """Write study profiles to JSON at app dir with name studyprofile.json."""
+    jsonObject = json.dumps(studies, indent=4)
+    jsonFile = open("studyProfile.json", "w")
+    jsonFile.write(jsonObject)
+    jsonFile.close()
 
 
 if __name__ == "__main__":

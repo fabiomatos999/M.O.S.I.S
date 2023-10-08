@@ -15,7 +15,7 @@
         <a class="navbar-brand" href="/">
           <img
             alt=""
-            src="https://github.com/fabiomatos999/M.O.S.I.S/blob/research/M.O.S.I.S%20Logo/cover.png?raw=true"
+            src={{ url_for('static', filename="default.png")}}
             height="75rem"
           />
         </a>
@@ -33,7 +33,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/"
+              <a class="nav-link" aria-current="page" href="/"
                 >All Images</a
               >
             </li>
@@ -49,6 +49,9 @@
             <li><a class="dropdown-item" href="/study/video">Video</a></li>
           </ul>
         </li>
+	    <li class="nav-item">
+	     <a class="nav-link" aria-current="page" href="/save">Save Study Profile</a> 
+	    </li>
           </ul>
           <form class="d-flex" role="search">
             <input
