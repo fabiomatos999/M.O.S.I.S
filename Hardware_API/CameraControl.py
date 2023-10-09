@@ -134,7 +134,7 @@ class CameraControl():
         main_hCameras = []
         "# First: Determine how many cameras are connected and are available"
         ret = PxLApi.getNumberCameras()
-        "print(ret)"
+        print(ret)
         if PxLApi.apiSuccess(ret[0]):
             cameraIdInfo = ret[1]
             numCameras = len(cameraIdInfo)
@@ -223,6 +223,24 @@ class CameraControl():
             # ret =\
             #     PxLApi.setPreviewState(hCamera[i], PxLApi.PreviewState.STOP)
             PxLApi.uninitialize(hCamera[i])
+
+    def setRegionOfInterest(self,
+                            hCamera,
+                            fleft: int = 0,
+                            ftop: int = 0,
+                            fwidth: int = 2592,
+                            fheight: int = 1944):
+        """Set the region of interest for a camera."""
+        if 0 < ftop < 1928 and\
+           0 < fleft < 2560 and\
+           0 < fwidth < 2592 and\
+           0 < fheight < 1944:
+            for cameraHandle in hCamera:
+                PxLApi.setFeature(cameraHandle, PxLApi.FeatureId.ROI,
+                                  PxLApi.FeatureFlags.MANUAL,
+                                  [fleft, ftop, fwidth, fheight])
+            else:
+                raise ValueError()
 
     def setFocus(self, hCamera, newfocusValue=2, mode="auto"):
         """
