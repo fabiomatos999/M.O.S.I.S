@@ -1,6 +1,7 @@
 """Camera control module for PixeLINK PL-D755 Camera."""
 from pixelinkWrapper import PxLApi
 import threading
+import time
 
 
 class CameraControl():
@@ -225,12 +226,23 @@ class CameraControl():
             PxLApi.uninitialize(hCamera[i])
 
     def setRegionOfInterest(self,
-                            hCamera,
+                            hCamera: [int],
                             fleft: int = 0,
                             ftop: int = 0,
                             fwidth: int = 2592,
                             fheight: int = 1944):
-        """Set the region of interest for a camera."""
+        """Set the region of interest for both cameras.
+
+        :param hCamera List of Camera handlers from the
+         PxLApi initialize function
+        :param fleft Has to be between 0 and 1928
+        :param ftop Has to be between 0 and 2560
+        :param fwidth Has to be between 0 and 2592
+        :param fheight Has to be between 0 and 1944
+        Note: If none if the optional parameters are passed in,
+        it will default to the maximum resolution of the
+        PL-D755 Camera.
+        """
         if 0 < ftop < 1928 and\
            0 < fleft < 2560 and\
            0 < fwidth < 2592 and\
@@ -241,6 +253,37 @@ class CameraControl():
                                   [fleft, ftop, fwidth, fheight])
             else:
                 raise ValueError()
+
+    def setWhiteBalance(self, hCamera: [int], temp: int = 3200):
+        """Set the color temperature for both cameras.
+
+        :param hCamera List of Camera handlers from the
+         PxLApi initialize function
+        :param temp Has to be between 3200 and 6500.
+        """
+        if 3200 < temp < 6500:
+
+            for camera in hCamera:
+                ret = PxLApi.setFeature(camera, PxLApi.FeatureId.WHITE_BALANCE,
+                                        PxLApi.FeatureFlags.MANUAL, [temp])
+                if (PxLApi.apiSuccess(ret[0])):
+                    print("UwU")
+                else:
+                    raise ValueError("Invalid Temperature Inputted.")
+
+    def autoWhiteBalance(self, hCamera: [int]):
+        """Auto white balance for both cameras."""
+        cameraColors = [0, 0, 0]
+
+        for camera in hCamera:
+            ret = PxLApi.setFeature(camera, PxLApi.FeatureId.WHITE_SHADING,
+                                    PxLApi.FeatureFlags.ONEPUSH, cameraColors)
+            for _ in range(10):
+                ret = PxLApi.getFeature(camera, PxLApi.FeatureId.WHITE_SHADING)
+                flags = ret[1]
+                if not (flags & PxLApi.FeatureFlags.ONEPUSH):
+                    break
+                time.sleep(1)
 
     def setFocus(self, hCamera, newfocusValue=2, mode="auto"):
         """
