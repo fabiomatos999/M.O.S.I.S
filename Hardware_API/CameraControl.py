@@ -150,8 +150,8 @@ class CameraControl():
                     if PxLApi.apiSuccess(ret[0]):
                         hCamera = ret[1]
                         main_hCameras.append(hCamera)
-                        if i == 0:
-                            params = [0, 1]
+                        if serialNumber == 775002722:
+                            params = [1, 1]
                             # params dictate that horizontal flip will be off
                             # (0) while vertical flip is on (1)
 
@@ -159,6 +159,7 @@ class CameraControl():
                             ret2 = PxLApi.setFeature(
                                 hCamera, PxLApi.FeatureId.FLIP,
                                 PxLApi.FeatureFlags.MANUAL, params)
+                            print("It Flipped")
                             if not PxLApi.apiSuccess(ret2[0]):
                                 print(
                                     "  Could not flip camera image, ret: %d!" %
