@@ -43,12 +43,13 @@ class CameraControl():
         self.stream_width = width
         self.stream_height = height
 
-    def setUpMaxMinFeatureValues(self, hCamera):
+    def setUpMaxMinFeatureValues(self, hCamera: int):
         """
         Set the camera features min and max values for automatic mode.
 
         Also make sure new values are within an acceptable range.
-        :param hCamera:
+        :param hCamera Camera handler from the
+         PxLApi initialize function
         :return:
         """
         # Get Focus Feature Min and Max values
@@ -130,8 +131,12 @@ class CameraControl():
                 print("min Gain value: ", self.minGainValue)
                 print("max Gain value: ", self.maxGainValue)
 
-    def setUpCamera(self, num_cameras=1):
-        """Initialize both cameras for M.O.S.I.S microscope."""
+    def setUpCamera(self, num_cameras: int = 1) -> [int]:
+        """Initialize both cameras for M.O.S.I.S microscope.
+
+        :return List of Camera handlers from the
+         PxLApi initialize function
+        """
         main_hCameras = []
         "# First: Determine how many cameras are connected and are available"
         ret = PxLApi.getNumberCameras()
@@ -152,14 +157,9 @@ class CameraControl():
                         main_hCameras.append(hCamera)
                         if serialNumber == 775002722:
                             params = [1, 1]
-                            # params dictate that horizontal flip will be off
-                            # (0) while vertical flip is on (1)
-
-                            # flips image of the left camera
                             ret2 = PxLApi.setFeature(
                                 hCamera, PxLApi.FeatureId.FLIP,
                                 PxLApi.FeatureFlags.MANUAL, params)
-                            print("It Flipped")
                             if not PxLApi.apiSuccess(ret2[0]):
                                 print(
                                     "  Could not flip camera image, ret: %d!" %
@@ -204,10 +204,17 @@ class CameraControl():
                                 args=(hCamera, topHwnd),
                                 daemon=True)
 
-    def start_preview(self, stream_width, stream_height, hCamera, topHwnd):
+    def start_preview(self, stream_width: int, stream_height: int,
+                      hCamera: int, topHwnd: int):
         """
         Start the preview (with message pump).
 
+        :param stream_width Preview window size in pixels
+        :param stream_height Preview window size in pixels
+        :param hCamera Camera handler from the
+         PxLApi initialize function
+        :param topHwnd: integer number that corresponds to the parent window
+        the stream will be showed in
         Preview gets stopped when the top level window is closed.
         """
         self.setUpStreamSize(stream_width, stream_height)
@@ -218,8 +225,12 @@ class CameraControl():
         previewThread = self.create_new_preview_thread(hCamera, topHwnd)
         previewThread.start()
 
-    def cleanUpCameras(self, hCamera):
-        """Set Preview State for both cameras to Stop."""
+    def cleanUpCameras(self, hCamera: [int]):
+        """Set Preview State for both cameras to Stop.
+
+        :param hCamera List of Camera handlers from the
+         PxLApi initialize function
+        """
         for i in range(len(hCamera)):
             PxLApi.setStreamState(hCamera[i], PxLApi.StreamState.STOP)
             # ret =\
@@ -273,7 +284,12 @@ class CameraControl():
                     raise ValueError("Invalid Temperature Inputted.")
 
     def autoWhiteBalance(self, hCamera: [int]):
-        """Auto white balance for both cameras."""
+        """Auto white balance for both cameras.
+
+
+        :param hCamera List of Camera handlers from the
+         PxLApi initialize function
+        """
         cameraColors = [0, 0, 0]
 
         for camera in hCamera:
@@ -286,14 +302,22 @@ class CameraControl():
                     break
                 time.sleep(1)
 
-    def setFocus(self, hCamera, newfocusValue=2, mode="auto"):
+    def setFocus(self,
+                 hCamera: int = 2,
+                 newfocusValue: float = 2,
+                 mode: str = "auto"):
         """
         Prompt the camera to perform autofocus.
 
-        :param hCamera: the camera to perform autofocus
-        :return:
+        :param hCamera List of Camera handlers from the
+         PxLApi initialize function
+        :param newFocusValue Has to be between 1 and 46,000
+        :param mode If "auto" then will perform autofocus, else
+        will use newFocusValue
+        :return
         """
         # params = []
+        print(self.maxFocusValue, self.minFocusValue)
         if mode == "auto":
             # params.insert(0, self.minFocusValue)
             #             params.insert(1, self.maxFocusValue)
@@ -325,12 +349,19 @@ class CameraControl():
                     return
             self.focusValue = newfocusValue
 
-    def setExposure(self, hCamera, newExposureValue, mode="auto"):
+    def setExposure(self,
+                    hCamera: [int],
+                    newExposureValue: float = 0.00010699999984353781,
+                    mode: str = "auto"):
         """
         Set exposure for a camera.
 
-        :param hCamera: the camera to change exposure
-        :return:
+        :param hCamera List of Camera handlers from the
+         PxLApi initialize function
+        :param newExposureValue Has to be between 0.00010699999984353781 and 2
+        :param mode If "auto" then will perform auto-exposure, else
+        will use newExposureValue
+        :return
         """
         if not\
            self.minExposureValue <= newExposureValue <= self.maxExposureValue:
@@ -364,12 +395,19 @@ class CameraControl():
                     return
             self.exposureValue = newExposureValue
 
-    def setSaturation(self, hCamera, newSaturationValue, mode="auto"):
+    def setSaturation(self,
+                      hCamera: [int],
+                      newSaturationValue: int = 100,
+                      mode: int = "auto"):
         """
         Set exposure value for a camera.
 
-        :param hCamera: the camera to change saturation
-        :return:
+        :param hCamera List of Camera handlers from the
+         PxLApi initialize function
+        :param newExposureValue Has to be between 0 and 200
+        :param mode If "auto" then will perform auto-exposure, else
+        will use newExposureValue
+        :return
         """
         if not self.minSaturationValue <=\
            newSaturationValue <= self.maxSaturationValue:
@@ -406,12 +444,19 @@ class CameraControl():
                     return
             self.saturationValue = newSaturationValue
 
-    def setGain(self, hCamera, newGainValue, mode="auto"):
+    def setGain(self,
+                hCamera: [int],
+                newGainValue: float = 0,
+                mode: str = "auto"):
         """
         Set the gain value for a camera.
 
-        :param hCamera: the camera to set gain
-        :return:
+        :param hCamera List of Camera handlers from the
+         PxLApi initialize function
+        :param newGainValue Has to be between 0 and 24
+        :param mode If "auto" then will perform auto-gain, else
+        will use newGainValue
+        :return
         """
         if not self.minGainValue <= newGainValue <= self.maxGainValue:
             print("focus value not in acceptable range", newGainValue)
