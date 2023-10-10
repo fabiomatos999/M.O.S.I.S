@@ -1,7 +1,7 @@
 class media_Entry():
     # Defines the media entry class for the Media Entry table
-    def __init__(self, entry_Id, shot_Type, time, illumination_Type, iso,
-                 aperture_Size, shutter_Speed, white_Balance):
+    def __init__(self, entry_Id:int, shot_Type:str, time:str, illumination_Type:str, iso:int,
+                 aperture_Size:float, shutter_Speed:float, white_Balance:int):
         self.entry_Id = entry_Id
         self.shot_Type = shot_Type
         self.time = time
@@ -13,8 +13,8 @@ class media_Entry():
 
     #Creates a new media entry
     @staticmethod
-    def create_new_media_entry(shot_Type, time, illumination_Type, iso,
-                 aperture_Size, shutter_Speed, white_Balance):
+    def create_new_media_entry(shot_Type:str, time:str, illumination_Type:str, iso:int,
+                 aperture_Size:float, shutter_Speed:float, white_Balance:int):
         shot_Type = shot_Type
         time = time
         illumination_Type = illumination_Type
@@ -22,11 +22,12 @@ class media_Entry():
         aperture_Size = aperture_Size
         shutter_Speed = shutter_Speed
         white_Balance = white_Balance
+        return shot_Type, time, illumination_Type, aperture_Size, iso, shutter_Speed, white_Balance
 
 class media_Metadata():
     # Defines the media metadata class for the Media Metadata table
-    def __init__(self, media_Id, entry_Id, left_Camera_Media, right_Camera_Media, time, temperature,
-                 pressure, ph, dissolved_Oxygen):
+    def __init__(self, media_Id:int, entry_Id:int, left_Camera_Media:str, right_Camera_Media:str, time:str, temperature:float,
+                 pressure:float, ph:float, dissolved_Oxygen:float):
         self.media_Id = media_Id
         self.entry_Id = entry_Id
         self.left_Camera_Media = left_Camera_Media
@@ -39,8 +40,8 @@ class media_Metadata():
 
     #Creates new mediadata entry
     @staticmethod
-    def create_new_mediadata( entry_Id, left_Camera_Media, right_Camera_Media, time, temperature,
-                 pressure, ph, dissolved_Oxygen):
+    def create_new_mediadata(entry_Id:int, left_Camera_Media:str, right_Camera_Media:str, time:str, temperature:float,
+                 pressure:float, ph:float, dissolved_Oxygen:float):
         entry_Id = entry_Id
         left_Camera_Media = left_Camera_Media
         right_Camera_Media = right_Camera_Media
@@ -49,3 +50,4 @@ class media_Metadata():
         pressure = pressure
         ph = ph
         dissolved_Oxygen = dissolved_Oxygen
+        return entry_Id, left_Camera_Media, right_Camera_Media, time, temperature, pressure, ph, dissolved_Oxygen
