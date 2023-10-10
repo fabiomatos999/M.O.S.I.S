@@ -1,5 +1,5 @@
 import sqlite3
-
+from jsonwrite import json_select_all
 # Connect to or create an SQLite database file. If it doesn't exist, a new database will be created.
 conn = sqlite3.connect('MOSIS.db')
 
@@ -33,7 +33,8 @@ cursor.execute('''
         FOREIGN KEY (entryId) REFERENCES media_entry(entryId)
     )
 ''')
-
+#Change in jsonwrite.py the database
+json_select_all
 # Commit the changes and close the database connection when done.
 conn.commit()
 conn.close()
