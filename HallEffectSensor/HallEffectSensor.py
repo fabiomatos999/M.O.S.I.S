@@ -24,7 +24,7 @@ class HallEffectSensor:
             self.pin, GPIO.FALLING, callback=self.callback, bouncetime=200
         )
 
-    def changeCallback(self, newCallback) -> None:
+    def changeCallback(self, newCallback: Callable) -> None:
         """Change callback function set for pin
 
         Args:
