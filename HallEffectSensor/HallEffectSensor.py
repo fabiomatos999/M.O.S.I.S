@@ -9,6 +9,13 @@ class HallEffectSensor:
     """
 
     def __init__(self, pin: int, callback: Callable):
+        """
+        Create a new Hall Effect Sensor object
+
+        Args:
+            pin (int): GPIO pin sensor is connected to
+            callback (Callable): function to be executed upon interrupt form pin
+        """
         self.pin = pin
         self.callback = callback
 
