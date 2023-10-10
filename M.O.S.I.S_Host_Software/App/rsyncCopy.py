@@ -11,7 +11,7 @@ def rsync_recursive_copy(source: str, destination: str):
     in system path.
     """
     try:
-        subprocess.check_call(["rsync", "-rv", source, destination],
-                              stdout=subprocess.DEVNULL)
+        subprocess.check_call(["rsync", "-r", source, destination],
+                              )
     except Exception as err:
         raise err

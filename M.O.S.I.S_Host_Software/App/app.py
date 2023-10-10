@@ -6,7 +6,25 @@ from query import getAllMediaEntry, getAllMediaMetadataId, getMediaEntry
 import os
 from forms import return_form
 import json
+import rsyncCopy
+import argparse
 
+parser = argparse.ArgumentParser(description='Start Host Software')
+group = parser.add_mutually_exclusive_group()
+group.add_argument("-n",
+                   "--nobackup",
+                   action="store_true",
+                   help="Start host software without backing up Raspberry Pi")
+group.add_argument("-i",
+                   "--ipaddres",
+                   type=str,
+                   help="Ip address of the Raspberry Pi",
+                   default="raspberrypi")
+
+args = parser.parse_args()
+if not args.nobackup:
+    rsyncCopy.rsync_recursive_copy("pi@{}:/home/pi/".format(args.ipaddres),
+                                   "/home/uwu/Downloads/")
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 studies = list()
@@ -86,4 +104,5 @@ def writeStudyProfilesToJSON(studies: [dict]):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    from waitress import serve
+    serve(app, host="0.0.0.0", port=5000)

@@ -9,4 +9,4 @@ if [ ! -d $(pwd)"/venv" ]; then
     pip install -r $(pwd)"/requirements.txt"
 fi
 source $(pwd)"/venv/bin/activate"
-./app.py
+./app.py $@
