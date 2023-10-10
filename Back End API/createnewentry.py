@@ -1,8 +1,7 @@
 import sqlite3
-
-import cursor as cursor
-
 from media import media_Entry, media_Metadata
+
+
 class create_new_entry():
     conn = sqlite3.connect('my_database.db')
     # Create a cursor object to interact with the database.
