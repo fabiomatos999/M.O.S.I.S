@@ -1,7 +1,7 @@
 import sqlite3
 
 # Connect to or create an SQLite database file. If it doesn't exist, a new database will be created.
-conn = sqlite3.connect('my_database.db')
+conn = sqlite3.connect('MOSIS.db')
 
 # Create a cursor object to interact with the database.
 cursor = conn.cursor()
@@ -10,7 +10,7 @@ cursor.execute('''
     CREATE TABLE IF NOT EXISTS media_entry (
         entryId INTEGER PRIMARY KEY,
         shotType TEXT NOT NULL,
-        time TEXT NOT NULL,
+        time TEXT NOT NULL ,
         illuminationType TEXT NOT NULL,
         iso INTEGER NOT NULL,
         apertureSize REAL NOT NULL,
@@ -33,6 +33,7 @@ cursor.execute('''
         FOREIGN KEY (entryId) REFERENCES media_entry(entryId)
     )
 ''')
+
 # Commit the changes and close the database connection when done.
 conn.commit()
 conn.close()
