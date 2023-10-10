@@ -82,12 +82,17 @@ class sensorHub:
     """
 
     # reference attribute
-    _UARTPort = 14
+    _UARTPort = "/dev/ttyAMA0"
     uart = None
+    encoding = "utf-8"
+    decoding = "ascii"
 
     def __init__(self):
         try:
-            self.uart = serial.Serial("/dev/ttyS0", baudrate=115200, timeout=8)
+            self.uart = serial.Serial(
+                self._UARTPort, baudrate=115200, timeout=8, write_timeout=0
+            )
+            print(self.uart)
         except serial.SerialException as e:
             raise Exception("Error opening serial port: " + str(e))
 
@@ -110,15 +115,15 @@ class sensorHub:
         # sends command to MCU through UART port to fetch all sensor readings
         try:
             # sends command to MCU through UART port to fetch all sensor readings
-            command = r"\rRead".encode()
+            command = "\rRead".encode(encoding=self.encoding)
             self.uart.write(command)
 
             # read result from command
-            received = self.uart.read(size=24)
+            received = self.uart.readline()
             data_left = self.uart.inWaiting()  # check for remaining bytes
             received += self.uart.read(data_left)
 
-            received = received.decode(encoding="ascii")
+            received = received.decode(encoding=self.decoding)
             result = ReadResult(received)
             print(result)
             return result
@@ -132,10 +137,10 @@ class sensorHub:
         """
 
         try:
-            command = r"\rPhCal".encode()
+            command = "\rPhCal".encode(encoding=self.encoding)
             self.uart.write(command)
 
-            received = self.uart.read(size=8).decode(encoding="ascii")
+            received = self.uart.readline().decode(encoding=self.decoding)
             print(f"Ph readings: {received}")
             return float(received)
 
@@ -149,10 +154,10 @@ class sensorHub:
         """
 
         try:
-            command = r"\rPhLowCal".encode()
+            command = "\rPhLowCal".encode(encoding=self.encoding)
             self.uart.write(command)
 
-            received = self.uart.read(size=8).decode(encoding="ascii")
+            received = self.uart.readline().decode(encoding=self.decoding)
             print(f" PhLowCal : {received}")
             return received
         except (serial.SerialException, UnicodeDecodeError) as e:
@@ -164,13 +169,13 @@ class sensorHub:
         TODO: determine return value type
         """
         try:
-            command = r"\rPhMidCal".encode()
+            command = "\rPhMidCal".encode(encoding=self.encoding)
             self.uart.write(command)
 
             # read result from command
-            received = self.uart.read(size=8)
+            received = self.uart.readline()
             # debug this value
-            received = received.decode(encoding="ascii")
+            received = received.decode(encoding=self.decoding)
             print(f" PhMidCal : {received}")
             return received
 
@@ -183,13 +188,13 @@ class sensorHub:
         TODO: determine return value type
         """
         try:
-            command = r"\rPhHighCal".encode()
+            command = "\rPhHighCal".encode(encoding=self.encoding)
             self.uart.write(command)
 
             # read result from command
-            received = self.uart.read(size=8)
+            received = self.uart.readline()
             # debug this value
-            received = received.decode(encoding="ascii")
+            received = received.decode(encoding=self.decoding)
             print(f" PhHighCal:  {received}")
             return received
         except (serial.SerialException, UnicodeDecodeError) as e:
@@ -203,13 +208,13 @@ class sensorHub:
 
         """
         try:
-            command = r"\rDoCal".encode()
+            command = "\rDoCal".encode(encoding=self.encoding)
             self.uart.write(command)
 
             # read result from command
-            received = self.uart.read(size=8)
+            received = self.uart.readline()
             # debug this value
-            received = received.decode(encoding="ascii")
+            received = received.decode(encoding=self.decoding)
             print(f" Dissolved Oxygen: {received}")
 
             return float(received)
@@ -222,13 +227,13 @@ class sensorHub:
         TODO: determine return value type
         """
         try:
-            command = r"\rDoAtmoCal".encode()
+            command = "\rDoAtmoCal".encode(encoding=self.encoding)
             self.uart.write(command)
 
             # read result from command
-            received = self.uart.read(size=8)
+            received = self.uart.readline()
             # debug this value
-            received = received.decode(encoding="ascii")
+            received = received.decode(encoding=self.decoding)
             print(f"DoAtmoCal: {received}")
         except (serial.SerialException, UnicodeDecodeError) as e:
             raise Exception(
@@ -242,13 +247,13 @@ class sensorHub:
         TODO: determine return value type
         """
         try:
-            command = r"\rDoZeroCal".encode()
+            command = "\rDoZeroCal".encode(encoding=self.encoding)
             self.uart.write(command)
 
             # read result from command
-            received = self.uart.read(size=8)
+            received = self.uart.readline()
             # debug this value
-            received = received.decode(encoding="ascii")
+            received = received.decode(encoding=self.decoding)
             print(f"DoZeroCal: {received}")
             return received
         except (serial.SerialException, UnicodeDecodeError) as e:
@@ -263,13 +268,13 @@ class sensorHub:
         Returns only first reading but MCU will continue to transmit
         """
         try:
-            command = r"\rTempCal".encode()
+            command = "\rTempCal".encode(encoding=self.encoding)
             self.uart.write(command)
 
             # read result from command
-            received = self.uart.read(size=8)
+            received = self.uart.readline()
             # debug this value
-            received = received.decode(encoding="ascii")
+            received = received.decode(encoding=self.decoding)
             print(f"TempCal: {received}")
 
             return received
@@ -282,13 +287,13 @@ class sensorHub:
         TODO: determine return value type
         """
         try:
-            command = r"\rDoAtmoCal".encode()
+            command = "\rDoAtmoCal".encode(encoding=self.encoding)
             self.uart.write(command)
 
             # read result from command
-            received = self.uart.read(size=8)
+            received = self.uart.readline()
             # debug this value
-            received = received.decode(encoding="ascii")
+            received = received.decode(encoding=self.decoding)
             print(f"TempNewCal: {received}")
 
             return received
@@ -316,7 +321,7 @@ class sensorHub:
         """
 
         try:
-            command = r"\rexit".encode()
+            command = "\rexit".encode(encoding=self.encoding)
             self.uart.write(command)
         except serial.SerialException as e:
             raise Exception("Error exiting callibration: " + str(e))

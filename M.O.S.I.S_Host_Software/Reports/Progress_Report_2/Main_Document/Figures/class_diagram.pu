@@ -1,0 +1,79 @@
+@startuml
+Class studyProfile {
+     - shotType: shotType
+     - illuminationType: shotType
+     - iso: int
+     - shutterSpeed: float
+     - whiteBalance: int
+     - apertureSize: float
+}
+class databaseModel {
+   dbModel: SQLAlchemy.Model	
+}
+class MediaEntry {
+# entryId: (PRIMARY KEY INTEGER),
+# shotType: (TEXT NOT NULLABLE)
+# time: (TEXT NOT NULLABLE),
+# illuminationType: (TEXT NOT NULLABLE),
+# iso: (INTEGER NOT NULLABLE),
+# apertureSize: (REAL NOT NULLABLE),
+# shutterSpeed: (REAL NOT NULLABLE),
+# whiteBalance: (INTEGER NOT NULLABLE)
+--
++ __init__()
++ __repr__()
+}
+class MediaEntryInternalRepresentation {
+	# entryId: int
+	# shotType: shotType
+	# time: str
+	# illuminationType: illuminationType
+	# iso: int
+	# apertureSize: float
+	# shutterSpeed: float
+	# whiteBalance: int
+	__
+	- __init__()
+}
+class MediaMetadata {
+# metadataId (PRIMARY KEY INTEGER),
+# entryId (INTEGER, FOREIGN KEY (MediaEntry.entryId)),
+# leftCameraMedia (TEXT NOT NULLABLE),
+# rightCameraMedia (TEXT NOT NULLABLE),
+# time (TEXT NOT NULLABLE)
+# temperature (REAL NOT NULLABLE),
+# pressure (REAL NOT NULLABLE),
+# ph (REAL NOT NULLABLE),
+# dissolvedOxygen (REAL NOT NULLABLE),
+--
++ __init__()
++ __repr__()
+}
+class MediaMetadataInternalRepresentation {
+	# metadataId: int
+	# entryId: int
+	# leftCameraMedia: str
+	# rightCameraMedia: str
+	# time: str
+	# temperature: float
+	# ph: float
+	# dissolvedOxygen: float
+	__
+	- __init__()
+}
+enum shotType {
+     SINGLE
+     BURST
+     TELESCOPIC
+     TIMELAPSE
+     VIDEO
+}
+enum illuminationType {
+     NONE
+     VISIBLESPECTRUM
+     INFRARED
+     ULTRAVIOLET
+}
+databaseModel <|-- MediaEntry
+databaseModel <|-- MediaMetadata
+@enduml

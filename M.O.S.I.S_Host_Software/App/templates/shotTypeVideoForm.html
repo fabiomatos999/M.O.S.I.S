@@ -1,0 +1,10 @@
+{% extends 'baseStudyProfileConfigForm.html' %}
+{%  block shotType %}
+Video
+{% endblock %}
+{% block form %}
+<div class="form-group">
+  {{form.videoLength.label}}
+  {{form.videoLength()}}
+</div>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'baseStudyProfileConfigForm.html' %}
+{%  block shotType %}
+Burst
+{% endblock %}
+{% block form %}
+<div class="form-group">
+  {{form.shotCount.label}}
+  {{form.shotCount()}}
+</div>
+{% endblock %}

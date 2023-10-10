@@ -1,237 +1,21 @@
 #!/usr/bin/env python3
 """Launches app.py using python3 without calling interpreter explicitly."""
-from flask import Flask, render_template, url_for
+from flask import render_template, url_for, Flask, request
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.dialects.sqlite import TEXT, REAL, INTEGER
-from sqlalchemy import select
+from query import getAllMediaEntry, getAllMediaMetadataId, getMediaEntry
 import os
-from datetime import datetime
-from enum import Enum, verify, UNIQUE, CONTINUOUS
+from forms import return_form
+import json
 
 basedir = os.path.abspath(os.path.dirname(__file__))
+
+studies = list()
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] =\
            'sqlite:///' + os.path.join(basedir, 'test.db')
+app.config['SECRET_KEY'] = "M.O.S.I.S"
 db = SQLAlchemy(app)
-
-
-class MediaEntry(db.Model):
-    """Create media_entry database table.
-
-    Contains:
-    entryId (PRIMARY KEY INTEGER),
-    shotType (TEXT NOT NULLABLE) an enum,
-    time (TEXT NOT NULLABLE) format (yyyy-MM-ddTHH:mm:ss.zzz),
-    illumination_type (TEXT NOT NULLABLE) an enum,
-    iso (INTEGER NOT NULLABLE),
-    apertureSize (REAL NOT NULLABLE),
-    shutterSpeed (REAL NOT NULLABLE),
-    whiteBalance (INTEGER NOT NULLABLE)
-    """
-
-    __tablename__ = "MediaEntry"
-    entryId = db.Column(INTEGER,
-                        primary_key=True,
-                        autoincrement=True,
-                        nullable=False)
-    shotType = db.Column(TEXT, nullable=False)
-    time = db.Column(TEXT, nullable=False)
-    illuminationType = db.Column(TEXT, nullable=False)
-    iso = db.Column(INTEGER, nullable=False)
-    apertureSize = db.Column(REAL, nullable=False)
-    shutterSpeed = db.Column(REAL, nullable=False)
-    whiteBalance = db.Column(INTEGER, nullable=False)
-
-    def __repr__(self):
-        """Return MediaEntry.entryId when inserting into database."""
-        return '<Task %r>' % self.entryId
-
-
-class MediaEntryInternalRepresentation():
-    """Internal representation for MediaEntry."""
-
-    entryId = int()
-    shotType = None
-    time = str()
-    illuminationType = None
-    iso = int()
-    apertureSize = float()
-    shutterSpeed = float()
-    whiteBalance = float()
-
-    def __init__(self, entryId: int, shotType: shotType, time: str,
-                 illuminationType: illuminationType, iso: int,
-                 apertureSize: float, shutterSpeed: float, whiteBalance: int):
-        """Construct MediaEntryInternalRepesentation."""
-        self.entryId = entryId
-        self.shotType = shotType
-        self.time = time
-        self.illuminationType = illuminationType
-        self.iso = iso
-        self.apertureSize = apertureSize
-        self.shutterSpeed = shutterSpeed
-        self.whiteBalance = whiteBalance
-
-
-def getCurrentTime() -> str:
-    """Return current time in 'yyyy-MM-ddTHH:mm:ss.zzz' format."""
-    date = datetime.now()
-    return date.strftime('%Y-%m-%-dT%H:%M:%S.%f')
-
-
-def insertMediaEntry(db, shotType, illuminationType, iso, apertureSize,
-                     shutterSpeed, whiteBalance):
-    """Insert a MediaEntry into the database."""
-    new_entry = MediaEntry(shotType=str(shotType),
-                           time=getCurrentTime(),
-                           illuminationType=str(illuminationType),
-                           iso=iso,
-                           apertureSize=apertureSize,
-                           shutterSpeed=shutterSpeed,
-                           whiteBalance=whiteBalance)
-    db.session.add(new_entry)
-    db.session.commit()
-
-
-def getAllMediaEntryIDs(db):
-    """Get all entryId from database."""
-    dbReturn = list(db.session.execute(select(MediaEntry.entryId)))
-    return list(map(lambda x: x[0], dbReturn))
-
-
-def getAllMediaEntry(db) -> list[MediaEntryInternalRepresentation]:
-    """Get all Media Entries from a database."""
-    ret = list(db.session.execute(select(MediaEntry)))
-    ret = list(
-        map(
-            lambda x: MediaEntryInternalRepresentation(x[0].entryId, x[
-                0].shotType, x[0].time, x[0].illuminationType, x[0].iso, x[
-                    0].apertureSize, x[0].shutterSpeed, x[0].whiteBalance),
-            ret))
-    return ret
-
-
-class MediaMetadata(db.Model):
-    """Create MediaMetadata database table.
-
-    Contains:
-    metadataId (PRIMARY KEY INTEGER),
-    entryId (INTEGER, FOREIGN KEY (MediaEntry.entryId)),
-    leftCameraMedia (TEXT NOT NULLABLE),
-    rightCameraMedia (TEXT NOT NULLABLE),
-    time (TEXT NOT NULLABLE) format (yyyy-MM-ddTHH:mm:ss.zzzzzz),
-    temperature (REAL NOT NULLABLE),
-    pressure (REAL NOT NULLABLE),
-    ph (REAL NOT NULLABLE),
-    dissolvedOxygen (REAL NOT NULLABLE),
-    """
-
-    __tablename__ = "MediaMetadata"
-    metadataId = db.Column(INTEGER,
-                           primary_key=True,
-                           autoincrement=True,
-                           nullable=False)
-    entryId = db.Column(INTEGER, db.ForeignKey(MediaEntry.entryId))
-    leftCameraMedia = db.Column(TEXT, nullable=False)
-    rightCameraMedia = db.Column(TEXT, nullable=False)
-    time = db.Column(TEXT, nullable=False)
-    temperature = db.Column(REAL, nullable=False)
-    pressure = db.Column(REAL, nullable=False)
-    ph = db.Column(REAL, nullable=False)
-    dissolvedOxygen = db.Column(REAL, nullable=False)
-
-    def __repr__(self):
-        """Return MediaMetadata.metadataId when inserting into database."""
-        return '<Task %r>' % self.metadataId
-
-
-class MediaMetadataInternalRepresentation:
-    """Internal representation for a MediaMetadata entry."""
-
-    metadataId = int()
-    entryId = int()
-    leftCameraMedia = str()
-    rightCameraMedia = str()
-    time = str()
-    temperature = float()
-    pressure = float()
-    ph = float()
-    dissolvedOxygen = float()
-
-    def __init__(self, metadataId: int, entryId: int, leftCameraMedia: str,
-                 rightCameraMedia: str, time: str, temperature: float,
-                 ph: float, dissolvedOxygen: float):
-        """Construct MediaMetadataInternalRepresentation."""
-        self.metadataId = metadataId
-        self.entryId = entryId
-        self.leftCameraMedia = leftCameraMedia
-        self.rightCameraMedia = rightCameraMedia
-        self.time = time
-        self.temperature = temperature
-        self.ph = ph
-        self.dissolvedOxygen = dissolvedOxygen
-
-
-def insertMediaMetadata(db, entryId, leftCameraMedia, rightCameraMedia,
-                        temperature, pressure, ph, dissolvedOxygen):
-    """Insert MediaMetadata entry into database."""
-    new_metadata = MediaMetadata(entryId=entryId,
-                                 leftCameraMedia=leftCameraMedia,
-                                 rightCameraMedia=rightCameraMedia,
-                                 time=getCurrentTime(),
-                                 temperature=temperature,
-                                 pressure=pressure,
-                                 ph=ph,
-                                 dissolvedOxygen=dissolvedOxygen)
-    db.session.add(new_metadata)
-    db.session.commit()
-
-
-def getAllMediaMetadataId(
-        db, entryId: int) -> list[MediaMetadataInternalRepresentation]:
-    ret = list(
-        db.session.execute(
-            select(MediaMetadata).where(MediaMetadata.entryId == entryId)))
-    ret = list(
-        map(
-            lambda x: MediaMetadataInternalRepresentation(
-                x[0].metadataId, x[0].entryId, x[0].leftCameraMedia, x[0].
-                rightCameraMedia, x[0].time, x[0].temperature, x[0].ph, x[
-                    0].dissolvedOxygen), ret))
-    return ret
-
-
-def getAllMediaMetadata(db) -> list[MediaMetadataInternalRepresentation]:
-    ret = list(db.session.execute(select(MediaMetadata)))
-    ret = list(
-        map(
-            lambda x: MediaMetadataInternalRepresentation(
-                x[0].metadataId, x[0].entryId, x[0].leftCameraMedia, x[0].
-                rightCameraMedia, x[0].time, x[0].temperature, x[0].ph, x[
-                    0].dissolvedOxygen), ret))
-    return ret
-
-
-@verify(UNIQUE, CONTINUOUS)
-class shotType(Enum):
-    """Shot Type for the type of study to be performed."""
-
-    SINGLE = 1
-    BURST = 2
-    TELESCOPIC = 3
-    TIMELAPSE = 4
-    VIDEO = 5
-
-
-@verify(UNIQUE, CONTINUOUS)
-class illuminationType(Enum):
-    """Illumination Type."""
-
-    NONE = 1
-    VISIBLESPECTRUM = 2
-    INFRARED = 3
-    ULTRAVIOLET = 4
 
 
 @app.route("/")
@@ -241,7 +25,64 @@ def index():
                            MediaEntries=getAllMediaEntry(db),
                            db=db,
                            getAllMediaMetadataId=getAllMediaMetadataId,
-                           enumerate=enumerate)
+                           enumerate=enumerate,
+                           str=str)
+
+
+@app.route("/entry/<id>")
+def entry(id=0):
+    """Return render template for a specific entry."""
+    return render_template("entry.html",
+                           MediaEntry=getMediaEntry(db, id),
+                           MediaMetadata=getAllMediaMetadataId(db, id),
+                           enumerate=enumerate,
+                           str=str,
+                           round=round,
+                           url_for=url_for)
+
+
+def remove_submit(studies: list) -> list:
+    """Remove submit form field from studies."""
+    ret = list()
+    for study in studies:
+        filtered_keys = list(filter(lambda x: x != 'submit', study.keys()))
+        temp_dict = dict()
+        for key in filtered_keys:
+            temp_dict[key] = study[key]
+        ret.append(temp_dict)
+    return ret
+
+
+@app.route("/study/<st>", methods=['GET', 'POST'])
+def single(st="single"):
+    """Serve shot type study profile template configuration page."""
+    form = return_form(st)
+
+    if form.is_submitted():
+        studies.append(request.form)
+        return index()
+    return render_template(form.filename,
+                           form=form,
+                           studies=remove_submit(studies))
+
+
+@app.route("/save", methods=["GET", "POST"])
+def save():
+    """Serve study profile preview and save page."""
+    if request.method == "POST":
+        writeStudyProfilesToJSON(remove_submit(studies))
+        return index()
+    else:
+        return render_template("saveStudyProfile.html",
+                               studies=remove_submit(studies))
+
+
+def writeStudyProfilesToJSON(studies: [dict]):
+    """Write study profiles to JSON at app dir with name studyprofile.json."""
+    jsonObject = json.dumps(studies, indent=4)
+    jsonFile = open("studyProfile.json", "w")
+    jsonFile.write(jsonObject)
+    jsonFile.close()
 
 
 if __name__ == "__main__":

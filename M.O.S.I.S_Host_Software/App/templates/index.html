@@ -3,51 +3,6 @@
 M.O.S.I.S Host Software Home Page
 {% endblock %}
 {% block body %}
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-          <img
-            alt=""
-            src="https://github.com/fabiomatos999/M.O.S.I.S/blob/research/M.O.S.I.S%20Logo/cover.png?raw=true"
-            height="75rem"
-          />
-        </a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#"
-                >All Images</a
-              >
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Configure</a>
-            </li>
-          </ul>
-          <form class="d-flex" role="search">
-            <input
-              class="form-control me-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
-            <button class="btn btn-outline-success" type="submit">
-              Search
-            </button>
-          </form>
-        </div>
-      </div>
-    </nav>
     <div class="container">
       {% for index, MediaEntry in enumerate(MediaEntries) %}
       {% if index%4 == 0 -%}
@@ -59,7 +14,11 @@ M.O.S.I.S Host Software Home Page
               alt=""
               class="card-img-top"
               src={{ url_for('static', filename=getAllMediaMetadataId(db,MediaEntry.entryId)[0].leftCameraMedia.split("/").pop()) }}/>
-            <div class="card-body">{{"{}-{}-{}-{}-{}-{}-{}-{}".format(MediaEntry.entryId,MediaEntry.shotType,MediaEntry.time,MediaEntry.illuminationType,MediaEntry.iso,MediaEntry.apertureSize,MediaEntry.shutterSpeed,MediaEntry.whiteBalance)}}</div>
+            <div class="card-body" >
+	      <a href={{"/entry/" + str(MediaEntry.entryId)}} class="streched-link">
+	      {{"{}-{}-{}-{}-{}-{}-{}-{}".format(MediaEntry.entryId,MediaEntry.shotType,MediaEntry.time,MediaEntry.illuminationType,MediaEntry.iso,MediaEntry.apertureSize,MediaEntry.shutterSpeed,MediaEntry.whiteBalance)}}
+</a>
+	    </div>
           </div>
         </div>
       {% if index%4 == 3 -%}

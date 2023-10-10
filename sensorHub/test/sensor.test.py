@@ -10,7 +10,7 @@ class TestSensorHub(unittest.TestCase):
         readResult = self.sensorHub.Read()
 
         self.assertIsInstance(readResult, ReadResult)
-        self.assertTrue(0 <= readResult.getPh() <= 7)
+        self.assertTrue(0 <= readResult.getPh() <= 14)
         self.assertTrue(-100 <= readResult.getTemp() <= 150)
         self.assertTrue(0 <= readResult.getDO() <= 100)
         self.assertTrue(0 <= readResult.getPressure() <= 10000)
@@ -19,7 +19,7 @@ class TestSensorHub(unittest.TestCase):
         ph = self.sensorHub.getPh()
 
         self.assertIsInstance(ph, float)
-        self.assertTrue(0 <= ph <= 7)
+        self.assertTrue(0 <= ph <= 14)
 
     def testGetDO(self):
         do = self.sensorHub.getDO()
