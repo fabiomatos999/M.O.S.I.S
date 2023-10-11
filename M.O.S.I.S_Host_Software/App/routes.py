@@ -2,7 +2,7 @@ from flask import render_template, url_for, Flask, request, Blueprint
 from flask_sqlalchemy import SQLAlchemy
 from query import getAllMediaEntry, getAllMediaMetadataId, getMediaEntry
 import os
-from forms import return_form
+from forms import return_form, searchForm
 import json
 import rsyncCopy
 from cliArgs import args
@@ -26,7 +26,8 @@ def index():
                            db=db,
                            getAllMediaMetadataId=getAllMediaMetadataId,
                            enumerate=enumerate,
-                           str=str)
+                           str=str,
+                           search=searchForm)
 
 
 @app.route("/entry/<id>")
