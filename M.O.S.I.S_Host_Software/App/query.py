@@ -136,3 +136,16 @@ def getMediaEntriesByShotType(
                     0].apertureSize, x[0].shutterSpeed, x[0].whiteBalance),
             ret))
     return ret
+
+
+def getMediaEntriesByTime(db, time: str) -> [MediaEntryInternalRepresentation]:
+    """Get a list of media entries by Time stamp."""
+    ret = db.session.execute(
+        select(MediaEntry).where(MediaEntry.time.like("%{}%".format(time))))
+    ret = list(
+        map(
+            lambda x: MediaEntryInternalRepresentation(x[0].entryId, x[
+                0].shotType, x[0].time, x[0].illuminationType, x[0].iso, x[
+                    0].apertureSize, x[0].shutterSpeed, x[0].whiteBalance),
+            ret))
+    return ret
