@@ -84,14 +84,12 @@ class sensorHub:
     # reference attribute
     _UARTPort = "/dev/ttyAMA0"
     uart = None
-    encoding = "utf-8"
+    encoding = "ascii"
     decoding = "ascii"
 
     def __init__(self):
         try:
-            self.uart = serial.Serial(
-                self._UARTPort, baudrate=115200, timeout=8, write_timeout=0
-            )
+            self.uart = serial.Serial(self._UARTPort, baudrate=115200, timeout=8)
             print(self.uart)
         except serial.SerialException as e:
             raise Exception("Error opening serial port: " + str(e))
@@ -147,7 +145,7 @@ class sensorHub:
         except (serial.SerialException, UnicodeDecodeError) as e:
             raise Exception("Error obtaining ph reading from sensor: " + str(e))
 
-    def PhLowCal(self):
+    def PhLowCal(self) -> float:
         """
         Performs low point callibration of ph sensor
         TODO: determine return value type
@@ -159,14 +157,13 @@ class sensorHub:
 
             received = self.uart.readline().decode(encoding=self.decoding)
             print(f" PhLowCal : {received}")
-            return received
+            return float(received)
         except (serial.SerialException, UnicodeDecodeError) as e:
             raise Exception("Error performing Ph lowpoint calibration: " + str(e))
 
-    def PhMidCal(self):
+    def PhMidCal(self) -> float:
         """
         Performs mid point calibration of Ph sensor
-        TODO: determine return value type
         """
         try:
             command = "\rPhMidCal".encode(encoding=self.encoding)
@@ -177,7 +174,7 @@ class sensorHub:
             # debug this value
             received = received.decode(encoding=self.decoding)
             print(f" PhMidCal : {received}")
-            return received
+            return float(received)
 
         except (serial.SerialException, UnicodeDecodeError) as e:
             raise Exception("Error performing Ph MidPoint calibration: " + str(e))
@@ -185,7 +182,6 @@ class sensorHub:
     def PhHighCal(self):
         """
         Performs high point callibration of ph sensor
-        TODO: determine return value type
         """
         try:
             command = "\rPhHighCal".encode(encoding=self.encoding)
@@ -277,7 +273,7 @@ class sensorHub:
             received = received.decode(encoding=self.decoding)
             print(f"TempCal: {received}")
 
-            return received
+            return float(received)
         except (serial.SerialException, UnicodeDecodeError) as e:
             raise Exception("Error getting Temperature Reading: " + str(e))
 

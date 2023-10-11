@@ -8,11 +8,10 @@ def main():
     sensor = sensorHub()
 
     # sensor.calibrateAll()
+    sensor.Read()
     sensor.getPh()
     sensor.getDO()
     sensor.getTemp()
-
-    sensor.Read()
 
 
 if __name__ == "__main__":
