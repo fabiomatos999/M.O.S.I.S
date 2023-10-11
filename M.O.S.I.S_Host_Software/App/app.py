@@ -16,15 +16,12 @@ group.add_argument("-n",
                    action="store_true",
                    help="Start host software without backing up Raspberry Pi")
 group.add_argument("-i",
-                   "--ipaddres",
+                   "--ipaddress",
                    type=str,
                    help="Ip address of the Raspberry Pi",
                    default="raspberrypi")
 
 args = parser.parse_args()
-if not args.nobackup:
-    rsyncCopy.rsync_recursive_copy("pi@{}:/home/pi/".format(args.ipaddres),
-                                   "/home/uwu/Downloads/")
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 studies = list()
@@ -89,6 +86,9 @@ def save():
     """Serve study profile preview and save page."""
     if request.method == "POST":
         writeStudyProfilesToJSON(remove_submit(studies))
+        rsyncCopy.rsync_recursive_copy(
+            os.path.realpath("studyProfile.json"),
+            "pi@{}:/home/pi/Documents/".format(args.ipaddress))
         return index()
     else:
         return render_template("saveStudyProfile.html",
@@ -104,5 +104,13 @@ def writeStudyProfilesToJSON(studies: [dict]):
 
 
 if __name__ == "__main__":
-    from waitress import serve
-    serve(app, host="0.0.0.0", port=5000)
+    if not args.nobackup:
+        try:
+            rsyncCopy.rsync_recursive_copy(
+                "pi@{}:/home/pi/".format(args.ipaddress),
+                "/home/uwu/Downloads/")
+        except Exception:
+            raise ValueError("Invalid IP Address or Hostname was inputted.")
+    # from waitress import serve
+    # serve(app, host="0.0.0.0", port=5000)
+    app.run(debug=True)
