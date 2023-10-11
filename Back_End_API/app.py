@@ -33,7 +33,7 @@ cursor.execute('''
         FOREIGN KEY (entryId) REFERENCES media_entry(entryId)
     )
 ''')
-#Change in jsonwrite.py the database
+# Change in jsonwrite.py the database
 json_select_all
 # Commit the changes and close the database connection when done.
 conn.commit()

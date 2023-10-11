@@ -14,7 +14,7 @@ class create_new_entry():
     # Saves entry id of media entry to a variable
     entry_id = cursor.lastrowid
     # Create new media data entry with media entry id
-    test_study_data = media_Metadata.create_new_mediadata(entry_id, "leftcamera", "rightcamera", "2023-10-09T10:18:35.200", 98, 124, 9, 15)
+    test_study_data = media_Metadata.create_new_mediadata(entry_id, "leftcamera", "rightcamera", "2023-10-09T10:18:35.200", 100, 124, 9, 15)
     # Insert the media metadata entry to media metadata table
     cursor.execute("INSERT INTO media_metadata (entryId, leftCameraMedia, rightCameraMedia, time, temperature, pressure, ph, dissolvedOxygen) "
                    "Values (?, ?, ?, ?, ?, ?, ?, ?)", test_study_data)
