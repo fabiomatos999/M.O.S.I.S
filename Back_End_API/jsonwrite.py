@@ -2,7 +2,6 @@ import sqlite3
 import json
 import sys
 
-
 class json_select_all():
     # Connect to the SQLite database
     conn = sqlite3.connect("my_database.db")
@@ -77,16 +76,21 @@ class json_select_all():
 
         media_data.append(entry_data)
 
-    #Checks if the media_entry and media_metadata tables are empty
+    # Checks if the media_entry and media_metadata tables are empty
     if not media_data:
         print("There is no data stored")
         sys.exit()
 
-    # Serialize the list of dictionaries to JSON format
-    json_data = json.dumps(media_data, indent=4)
-
-    # Print the JSON data or save it to a file
-    print(json_data)
+    # Serialize and save each entry to a separate JSON file
+    for index, entry in enumerate(media_data):
+        json_data = json.dumps(entry, indent=4)
+        filename = f"entry_{index + 1}.json"
+        with open(filename, 'w') as json_file:
+            json_file.write(json_data)
+        print(f"Saved JSON data to {filename}")
 
     # Close the database connection
     conn.close()
+
+# Execute the class to run the code
+json_select_all()
