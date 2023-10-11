@@ -1,6 +1,6 @@
 """Classes and functions for study profile configuration forms."""
 from flask_wtf import FlaskForm
-from wtforms import DecimalField, SubmitField, SelectField
+from wtforms import DecimalField, SubmitField, SelectField, StringField
 from wtforms.validators import InputRequired, NumberRange
 import decimal
 from enums import shotType, illuminationType
@@ -128,3 +128,12 @@ def return_form(class_string: str) -> Type[BaseShotTypeForm]:
         return ShotTypeVideoForm()
     else:
         raise ValueError("Cannot serve form.")
+
+
+class searchForm(FlaskForm):
+    searchBy = SelectField('Search By',
+                           choises=[("id", "ID"), ("shotType", "Shot Type"),
+                                    ("date", "Date"),
+                                    ("illuminationType", "Illumination Type")])
+    search = StringField("Search")
+    submit = SubmitField('Submit Study')

@@ -1,7 +1,8 @@
+"""Query Abstraction functions for SQLite database."""
 from representations import MediaEntryInternalRepresentation
 from representations import MediaMetadataInternalRepresentation
 from models import MediaEntry, MediaMetadata
-from sqlalchemy import select
+from sqlalchemy import select, desc, asc
 from datetime import datetime
 
 
@@ -95,3 +96,19 @@ def getAllMediaMetadata(db) -> list[MediaMetadataInternalRepresentation]:
                 rightCameraMedia, x[0].time, x[0].temperature, x[0].ph, x[
                     0].dissolvedOxygen, x[0].pressure), ret))
     return ret
+
+
+def getFirstMediaEntry(db) -> int:
+    """Get the minimum entryId from a database."""
+    ret = db.session.execute(
+        select(MediaEntry.entryId).order_by(asc(
+            MediaEntry.entryId)).limit(1)).first()
+    return int(ret[0])
+
+
+def getLastMediaEntry(db) -> int:
+    """Get the maximum entryId from a database."""
+    ret = db.session.execute(
+        select(MediaEntry.entryId).order_by(desc(
+            MediaEntry.entryId)).limit(1)).first()
+    return int(ret[0])
