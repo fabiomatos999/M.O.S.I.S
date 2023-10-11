@@ -112,3 +112,11 @@ def getLastMediaEntry(db) -> int:
         select(MediaEntry.entryId).order_by(desc(
             MediaEntry.entryId)).limit(1)).first()
     return int(ret[0])
+
+
+def getMediaEntries(db, entryIDs: [int]) -> [MediaEntryInternalRepresentation]:
+    """Get media entries given a list of entry IDs."""
+    returnMediaEntries = []
+    for id in entryIDs:
+        returnMediaEntries.append(getMediaEntry(db, id))
+    return returnMediaEntries
