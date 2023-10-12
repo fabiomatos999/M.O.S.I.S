@@ -1,11 +1,11 @@
 import sqlite3
-from jsonwrite import JsonSelectAll
+from JsonWrite import JsonSelectAll
 # Connect to or create an SQLite database file. If it doesn't exist, a new database will be created.
 conn = sqlite3.connect('MOSIS.db')
 
 # Create a cursor object to interact with the database.
 cursor = conn.cursor()
-
+# Creates the Media Entry Table
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS media_entry (
         entryId INTEGER PRIMARY KEY,
@@ -18,7 +18,7 @@ cursor.execute('''
         whiteBalance INTEGER NOT NULL
     )
 ''')
-
+# Creates the Media Metadata Table
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS media_metadata (
         metadataId INTEGER PRIMARY KEY,
@@ -33,8 +33,7 @@ cursor.execute('''
         FOREIGN KEY (entryId) REFERENCES media_entry(entryId)
     )
 ''')
-# Change in jsonwrite.py the database
-JsonSelectAll
+
 # Commit the changes and close the database connection when done.
 conn.commit()
 conn.close()

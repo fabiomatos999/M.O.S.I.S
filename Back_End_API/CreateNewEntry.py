@@ -1,5 +1,5 @@
 import sqlite3
-from media import MediaEntry, MediaMetadata
+from DataClass import MediaEntry, MediaMetadata
 
 
 class CreateNewEntry():
