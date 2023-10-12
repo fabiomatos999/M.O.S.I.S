@@ -2,7 +2,8 @@ import sqlite3
 import json
 import sys
 
-class json_select_all():
+
+class JsonSelectAll():
     # Connect to the SQLite database
     conn = sqlite3.connect("my_database.db")
     cursor = conn.cursor()
@@ -92,5 +93,6 @@ class json_select_all():
     # Close the database connection
     conn.close()
 
+
 # Execute the class to run the code
-json_select_all()
+JsonSelectAll()
