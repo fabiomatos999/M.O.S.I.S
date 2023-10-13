@@ -125,7 +125,7 @@ class CameraPictureControl():
         """Take a telescopic image given shots and min and max focus values.
 
         :param hcamera list of camera handlers from the
-         pxlapi initialize function
+         PxLApi initialize function
         :param minFocus The minimum focus value where the telescopic image
         capture will start
         :param maxFocus The maximum focus value where the telescopic image
@@ -261,6 +261,84 @@ class CameraPictureControl():
             return SUCCESS
 
         return FAILURE
+
+    def getVideo(self,
+                 cameraHandles: [int],
+                 recordTime: int = 60,
+                 videoFPS: int = 24,
+                 decimation: int = PxLApi.ClipPlaybackDefaults.DECIMATION_NONE,
+                 bitrate: int = PxLApi.ClipPlaybackDefaults.BITRATE_DEFAULT,
+                 encoding: int = PxLApi.ClipEncodingFormat.H264,
+                 filePath: str = str(),
+                 fileName: str = str()):
+        """Take a Video for all cameras simultaneously.
+
+        :param hcamera List of camera handlers from the
+         PxLApi initialize function
+        :param recordTime The amount of time to record in seconds.
+        :param videoFPS The amount of frames per second for the video.
+        :param decimation The amount of video blocks per frame.
+        Used to create slow or fast motion video.
+        Default is 1 video block per video frame or normal speed video.
+        :param bitrate The bitrate of the recorded video.
+        Default is 1000000 bits per second.
+        :param encoding The video encoding for the recorded video
+        Should almost always be used with defaults since PDS is legacy.
+        :param filePath The directory where the video files will be stored.
+        :param fileName The name of the video file.
+        """
+
+        @PxLApi._terminationFunction
+        def term_fn_get_encoded_clip_camera_1(hCamera,
+                                              numberOfFrameBlocksStreamed,
+                                              retCode):
+            # Just record the capture information into our shared (global)
+            # variables so the main line
+            # can report/take action on the result.
+            global numImagesStreamedCamera1
+            global captureRcCamera1
+            global captureFinishedCamera1
+            numImagesStreamedCamera1 = numberOfFrameBlocksStreamed
+            captureRcCamera1 = retCode
+            captureFinishedCamera1 = True
+            return PxLApi.ReturnCode.ApiSuccess
+
+        @PxLApi._terminationFunction
+        def term_fn_get_encoded_clip_camera_2(hCamera,
+                                              numberOfFrameBlocksStreamed,
+                                              retCode):
+            # Just record the capture information into our shared (global)
+            # variables so the main line
+            # can report/take action on the result.
+            global numImagesStreamedCamera2
+            global captureRcCamera2
+            global captureFinishedCamera2
+            numImagesStreamedCamera2 = numberOfFrameBlocksStreamed
+            captureRcCamera2 = retCode
+            captureFinishedCamera2 = True
+            return PxLApi.ReturnCode.ApiSuccess
+
+        numImages = int((videoFPS * recordTime) / decimation)
+        clipInfo = PxLApi.ClipEncodingInfo()
+        clipInfo.uStreamEncoding = encoding
+        clipInfo.uDecimationFactor = decimation
+        clipInfo.playbackFrameRate = videoFPS
+        clipInfo.playbackBitRate = bitrate
+        path = os.path.join(filePath, fileName)
+        for hCamera in cameraHandles:
+            PxLApi.setStreamState(hCamera, PxLApi.StreamState.START)
+        PxLApi.getEncodedClip(cameraHandles[0], numImages,
+                              "{}-L.h264".format(path), clipInfo,
+                              term_fn_get_encoded_clip_camera_1)
+        PxLApi.getEncodedClip(cameraHandles[1], numImages,
+                              "{}-R.h264".format(path), clipInfo,
+                              term_fn_get_encoded_clip_camera_2)
+        while not (captureFinishedCamera1 and captureFinishedCamera2):
+            time.sleep(0.2)
+        PxLApi.formatClip("{}-L.h264".format(path), "{}-L.mp4".format(path),
+                          encoding, PxLApi.ClipFileContainerFormat.MP4)
+        PxLApi.formatClip("{}-R.h264".format(path), "{}-R.mp4".format(path),
+                          encoding, PxLApi.ClipFileContainerFormat.MP4)
 
 
 def main():
