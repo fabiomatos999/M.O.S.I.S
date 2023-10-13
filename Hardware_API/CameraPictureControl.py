@@ -120,6 +120,32 @@ class CameraPictureControl():
         except Exception:
             return FAILURE
 
+    def getTelescopicSnapshot(self, hCamera: [int], minFocus: float,
+                              maxFocus: float, numShots: int):
+        """Take a telescopic image given shots and min and max focus values.
+
+        :param hcamera list of camera handlers from the
+         pxlapi initialize function
+        :param minFocus The minimum focus value where the telescopic image
+        capture will start
+        :param maxFocus The maximum focus value where the telescopic image
+        capture will stop
+        NOTE: Min and Max focus values have to be between 1 and 46,000.
+        """
+        if not (1 < minFocus < 46, 000 and 1 < minFocus < 46000):
+            raise ValueError(
+                "Min and Max Focus Have to be between 1 and 46,000")
+        if minFocus > maxFocus:
+            temp = minFocus
+            minFocus = maxFocus
+            maxFocus = temp
+        step = (maxFocus - minFocus) / numShots
+        for focusValue in range(minFocus, maxFocus + step, step):
+            for camera in hCamera:
+                PxLApi.setFeature(camera, PxLApi.FeatureId.FOCUS,
+                                  PxLApi.FeatureFlags.ONEPUSH, focusValue)
+                self.get_snapshot(camera, "formatted-filename")
+
     def determine_raw_image_size(self, hCamera):
         """
         Query the region of interest (ROI), decimation, and pixel format.
