@@ -1,0 +1,22 @@
+@startuml
+skinparam linetype ortho
+entity MediaEntry {
+	entryId
+	shotType
+	illuminationType
+	cameraSettings
+	--
+	entryId <<PK>>
+}
+entity MediaMetadata {
+	entryId
+	leftCameraMedia
+	rightCameraMedia
+	sterioscopicMedia
+	time
+	sensorData
+	--
+	entryId <<FK>>
+}
+MediaEntry ||-right-|{ MediaMetadata
+@enduml

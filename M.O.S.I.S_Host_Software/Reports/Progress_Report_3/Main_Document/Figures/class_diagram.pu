@@ -1,0 +1,43 @@
+@startuml
+class App {
+	+ routes
+	+ db
+	+ run()
+	+ backupPi()
+}
+class Route {
+	+ routeLink
+	+ GET()
+	+ POST()
+}
+abstract Form {
+	+ Submit()
+}
+class StudyProfileForm {
+	+ shotType
+	+ illuminationType
+	+ shotTypeSettings
+	+ cameraSettings
+	+ saveToPi()
+}
+class SearchForm {
+	+ searchCategory
+	+ searchQuery
+}
+enum ShotType {
+	SINGLE
+	BURST
+	TELESCOPIC
+	VIDEO
+}
+enum IlluminationType {
+	NONE
+	RED
+	WHITE
+	ULTRAVIOLET	
+}
+App o-- Route
+App o-- Form
+Form <|-- StudyProfileForm
+Form <|-- SearchForm
+@enduml
