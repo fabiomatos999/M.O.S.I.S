@@ -1,0 +1,6 @@
+@startuml
+frame "Study Profile" #AQUA {
+	component "Create Study Profile"
+	component "Save Study Profile"	
+}
+@enduml
