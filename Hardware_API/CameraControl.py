@@ -286,8 +286,7 @@ class CameraControl():
     def autoWhiteBalance(self, hCamera: [int]):
         """Auto white balance for both cameras.
 
-
-        :param hCamera List of Camera handlers from the
+        :param hcamera List of camera handlers from the
          PxLApi initialize function
         """
         cameraColors = [0, 0, 0]
@@ -303,7 +302,7 @@ class CameraControl():
                 time.sleep(1)
 
     def setFocus(self,
-                 hCamera: int = 2,
+                 hCamera: [int],
                  newfocusValue: float = 2,
                  mode: str = "auto"):
         """
