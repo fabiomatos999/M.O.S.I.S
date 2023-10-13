@@ -36,8 +36,8 @@ enum IlluminationType {
 	WHITE
 	ULTRAVIOLET	
 }
-App o-- Route
-App o-- Form
+App o-left- Route
+App o-right- Form
 Form <|-- StudyProfileForm
 Form <|-- SearchForm
 @enduml

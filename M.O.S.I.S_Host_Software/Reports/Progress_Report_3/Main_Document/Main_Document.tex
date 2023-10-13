@@ -2,8 +2,10 @@
 \beamertemplatenavigationsymbolsempty\usetheme{CambridgeUS}
 \usecolortheme{dolphin}
 \useinnertheme{rectangles}
+\usepackage[subpreambles=true]{standalone}
+\usepackage{import}
 
-\title{M.O.S.I.S Host Software Progress Report Presentation}
+\title[Host Software Progress Report]{M.O.S.I.S Host Software Progress Report Presentation}
 \author[Fabio J. Matos Nieves]{Fabio J. Matos Nieves}
 \institute[UPRM]{University of Puerto Rico Mayagüez Campus}
 \date{September 28, 2023}
@@ -18,19 +20,26 @@
 \section{Introduction}
 \section{System Model}
 \begin{frame}{System Model: Architectural Diagram}
- 
+
 \end{frame}
 \begin{frame}{System Model: Class Diagram}
- 
+	\begin{figure}
+		\begin{small}
+			\resizebox{!}{0.65\textheight}{
+				\import{./Figures}{class_diagram.tex}
+			}
+		\end{small}
+		\caption{M.O.S.I.S Host Software Class Diagram}
+	\end{figure}
 \end{frame}
 \section{System Specifications}
 \section{Features}
 \subsection{Study Media Presentation}
 \begin{frame}{Study Media Cature: Video}
- 
+
 \end{frame}
 \begin{frame}{Study Media Cature: Images}
- 
+
 \end{frame}
 \subsection{Study Profile Creation}
 \begin{frame}{Study Profile Creation}
