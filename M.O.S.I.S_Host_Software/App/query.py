@@ -4,7 +4,6 @@ from representations import MediaMetadataInternalRepresentation
 from models import MediaEntry, MediaMetadata
 from sqlalchemy import select, desc, asc
 from datetime import datetime
-from enums import shotType, illuminationType
 
 
 def getCurrentTime() -> str:
@@ -125,10 +124,10 @@ def getMediaEntriesById(db,
 
 
 def getMediaEntriesByShotType(
-        db, shotType: shotType) -> [MediaEntryInternalRepresentation]:
+        db, shotType: str) -> [MediaEntryInternalRepresentation]:
     """Get a list of media entries given a shot type."""
     ret = db.session.execute(
-        select(MediaEntry).where(MediaEntry.shotType == shotType.name))
+        select(MediaEntry).where(MediaEntry.shotType == shotType))
     ret = list(
         map(
             lambda x: MediaEntryInternalRepresentation(x[0].entryId, x[
@@ -152,12 +151,11 @@ def getMediaEntriesByTime(db, time: str) -> [MediaEntryInternalRepresentation]:
 
 
 def getMediaEntriesByIlluminationType(
-        db, illuminationType: illuminationType
-) -> [MediaEntryInternalRepresentation]:
+        db, illuminationType: str) -> [MediaEntryInternalRepresentation]:
     """Get a list of media entries given a illumination type."""
     ret = db.session.execute(
         select(MediaEntry).where(
-            MediaEntry.illuminationType == illuminationType.name))
+            MediaEntry.illuminationType == illuminationType))
     ret = list(
         map(
             lambda x: MediaEntryInternalRepresentation(x[0].entryId, x[

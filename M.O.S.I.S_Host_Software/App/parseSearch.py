@@ -1,7 +1,6 @@
 """Search query parsing module."""
 import re
 from query import getFirstMediaEntry, getLastMediaEntry
-from routes import db
 
 dualEndedRangeRegex = r'^\d+-\d+$'
 leftEndedRangeragex = r'^\d+-$'
@@ -10,7 +9,7 @@ commaSeparatedValueRegex = r'^(\d+,)+\d+$'
 singleValueRagex = r'^\d+$'
 
 
-def parseIdRange(searchQuery: str) -> [int]:
+def parseIdRange(db, searchQuery: str) -> [int]:
     dbMin = getFirstMediaEntry(db)
     dbMax = getLastMediaEntry(db)
     entries = set()

@@ -1,11 +1,18 @@
 from flask import render_template, url_for, Flask, request, Blueprint
 from flask_sqlalchemy import SQLAlchemy
 from query import getAllMediaEntry, getAllMediaMetadataId, getMediaEntry
+from query import getMediaEntriesById
+from query import getMediaEntriesByTime
+from query import getMediaEntriesByShotType
+from query import getMediaEntriesByIlluminationType
+from representations import MediaEntryInternalRepresentation
+from parseSearch import parseIdRange
 import os
 from forms import return_form, searchForm
 import json
 import rsyncCopy
 from cliArgs import args
+
 website = Blueprint('website', __name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -26,8 +33,7 @@ def index():
                            db=db,
                            getAllMediaMetadataId=getAllMediaMetadataId,
                            enumerate=enumerate,
-                           str=str,
-                           search=searchForm)
+                           str=str)
 
 
 @app.route("/entry/<id>")
@@ -72,13 +78,32 @@ def save():
     """Serve study profile preview and save page."""
     if request.method == "POST":
         writeStudyProfilesToJSON(remove_submit(studies))
-        rsyncCopy.rsync_recursive_copy(
-            os.path.realpath("studyProfile.json"),
-            "pi@{}:/home/pi/Documents/".format(args.ipaddress))
+        if not args.nobackup:
+            rsyncCopy.rsync_recursive_copy(
+                os.path.realpath("studyProfile.json"),
+                "pi@{}:/home/pi/Documents/".format(args.ipaddress))
         return index()
     else:
         return render_template("saveStudyProfile.html",
                                studies=remove_submit(studies))
+
+
+@app.route("/search", methods=['GET', 'POST'])
+def search():
+    """Serve search form if GET or serve search results if post."""
+    form = searchForm()
+    if form.is_submitted():
+        ret = request.form
+        searchBy = ret["searchBy"]
+        searchQuery = ret["search"]
+        mediaEntries = getMediaEntriesBySearchBy(searchBy, searchQuery)
+        return render_template('index.html',
+                               MediaEntries=mediaEntries,
+                               db=db,
+                               getAllMediaMetadataId=getAllMediaMetadataId,
+                               enumerate=enumerate,
+                               str=str)
+    return render_template('searchForm.html', form=form)
 
 
 def writeStudyProfilesToJSON(studies: [dict]):
@@ -87,3 +112,17 @@ def writeStudyProfilesToJSON(studies: [dict]):
     jsonFile = open("studyProfile.json", "w")
     jsonFile.write(jsonObject)
     jsonFile.close()
+
+
+def getMediaEntriesBySearchBy(
+        searchBy: str, searchQuery: str) -> [MediaEntryInternalRepresentation]:
+    if searchBy == "id":
+        return getMediaEntriesById(db, parseIdRange(db, searchQuery))
+    elif searchBy == "date":
+        return getMediaEntriesByTime(db, searchQuery)
+    elif searchBy == "shotType":
+        return getMediaEntriesByShotType(db, searchQuery)
+    elif searchBy == "illuminationType":
+        return getMediaEntriesByIlluminationType(db, searchQuery)
+    else:
+        raise ValueError("Invalid Search By Input")

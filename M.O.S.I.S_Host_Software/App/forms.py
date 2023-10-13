@@ -132,7 +132,7 @@ def return_form(class_string: str) -> Type[BaseShotTypeForm]:
 
 class searchForm(FlaskForm):
     searchBy = SelectField('Search By',
-                           choises=[("id", "ID"), ("shotType", "Shot Type"),
+                           choices=[("id", "ID"), ("shotType", "Shot Type"),
                                     ("date", "Date"),
                                     ("illuminationType", "Illumination Type")])
     search = StringField("Search")
