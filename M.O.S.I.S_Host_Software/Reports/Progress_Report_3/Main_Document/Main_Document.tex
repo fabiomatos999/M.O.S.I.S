@@ -14,10 +14,20 @@
 \begin{frame}
 	\maketitle
 \end{frame}
-\begin{frame}
+\section{Introduction}
+\begin{frame}{Agenda}
 	\tableofcontents
 \end{frame}
-\section{Introduction}
+\begin{frame}{What is the host software?}
+	\begin{itemize}
+		\item The data analysis tool for the M.O.S.I.S microscope that:
+		      \begin{itemize}
+			      \item Backs up the M.O.S.I.S microscope Raspberry Pi
+			      \item Analyses and presents the captured data
+			      \item Creates Study Profiles for the M.O.S.I.S microscope.
+		      \end{itemize}
+	\end{itemize}
+\end{frame}
 \section{System Model}
 \begin{frame}{System Model: Architectural Diagram}
 	\begin{figure}
@@ -50,19 +60,57 @@
 	\end{figure}
 \end{frame}
 \section{System Specifications}
+\begin{frame}{System Specifications}
+	\begin{itemize}
+		\item Front End: Flask with Bootstrap CSS
+		\item Back End: SQLite with SQLAlchemy
+		\item Back Up: rsync
+		\item Programming Language: Python
+	\end{itemize}
+\end{frame}
 \section{Features}
 \subsection{Study Media Presentation}
-\begin{frame}{Study Media Cature: Video}
-
-\end{frame}
-\begin{frame}{Study Media Cature: Images}
-
+\begin{frame}{Study Media Capture: Images}
+	\begin{figure}
+		\includegraphics[height=0.65\textheight]{./Figures/study_media_capture_images.png}
+		\caption{Media Entry Metadata Page}
+	\end{figure}
 \end{frame}
 \subsection{Study Profile Creation}
 \begin{frame}{Study Profile Creation}
+	\begin{figure}
+		\includegraphics[height=0.60\textheight]{./Figures/study_profile_creation.png}
+		\caption{Study Profile Creation Form}
+	\end{figure}
 \end{frame}
 \subsection{Entry Filtering}
-\subsection{Database Reconstruction}
-\subsection{Automated Media Backup}
+\begin{frame}{Entry Filtering: Form}
+	\begin{figure}
+		\includegraphics[height=0.55\textheight]{./Figures/entry_filtering_form.png}
+		\caption{Media Entry Filtering Form}
+	\end{figure}
 
+\end{frame}
+\begin{frame}{Entry Filtering: Results}
+	\begin{figure}
+		\includegraphics[height=0.55\textheight]{./Figures/entry_filtering_results.png}
+		\caption{Media Entry Filtering Results}
+	\end{figure}
+
+\end{frame}
+\subsection{Automated Raspberry Pi Backup}
+\begin{frame}{Automated Microscope Backup}
+	\begin{figure}
+		\includegraphics[width=\textwidth]{./Figures/automated_media_backup.png}
+		\caption{Start App Command Line Arguments}
+	\end{figure}
+\end{frame}
+\section{Live Demonstration}
+\begin{frame}
+	\centering Live Demonstration
+\end{frame}
+\section*{Questions}
+\begin{frame}
+	\centering Questions?
+\end{frame}
 \end{document}

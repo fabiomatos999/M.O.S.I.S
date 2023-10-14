@@ -12,6 +12,6 @@ package "File System" {
 	}
 }
 [Raspberry Pi]
-"Host Software" -left-> "Raspberry Pi"
-"Host Software" -up-> "File System"
+"Host Software" <-left-> "Raspberry Pi"
+"Host Software" <-up-> "File System"
 @enduml
