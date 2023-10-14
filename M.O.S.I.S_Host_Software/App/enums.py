@@ -1,7 +1,6 @@
-from enum import Enum, verify, UNIQUE, CONTINUOUS
+from enum import Enum
 
 
-@verify(UNIQUE, CONTINUOUS)
 class shotType(Enum):
     """Shot Type for the type of study to be performed."""
 
@@ -12,7 +11,6 @@ class shotType(Enum):
     VIDEO = 5
 
 
-@verify(UNIQUE, CONTINUOUS)
 class illuminationType(Enum):
     """Illumination Type."""
 
