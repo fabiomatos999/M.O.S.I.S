@@ -1,6 +1,7 @@
 import sys
 from PyQt6.QtWidgets import QApplication, QMainWindow
 from phSensorCalibrationMenu import Ui_Form
+from DissolvedOxygenCalibrationMenu import Ui_Form
 
 class MyMainWindow(QMainWindow):
     def __init__(self):
