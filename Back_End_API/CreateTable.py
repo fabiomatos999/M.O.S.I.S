@@ -1,7 +1,7 @@
 import sqlite3
-from JsonWrite import JsonSelectAll
+
 # Connect to or create an SQLite database file. If it doesn't exist, a new database will be created.
-conn = sqlite3.connect('MOSIS.db')
+conn = sqlite3.connect('testing.db')
 
 # Create a cursor object to interact with the database.
 cursor = conn.cursor()

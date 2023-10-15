@@ -5,7 +5,7 @@ import sys
 
 class JsonSelectAll():
     # Connect to the SQLite database
-    conn = sqlite3.connect("my_database.db")
+    conn = sqlite3.connect("testing.db")
     cursor = conn.cursor()
 
     # Selects data from both media entry and media metadata table using JOIN

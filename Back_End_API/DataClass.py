@@ -13,8 +13,8 @@ class MediaEntry():
 
     # Creates a new media entry
     @staticmethod
-    def create_new_media_entry(shot_Type: str, time: str, illumination_Type: str, iso: int,
-                               aperture_Size: float, shutter_Speed: float, white_Balance: int):
+    def media_entry(shot_Type: str, time: str, illumination_Type: str, iso: int,
+                    aperture_Size: float, shutter_Speed: float, white_Balance: int):
         shot_Type = shot_Type
         time = time
         illumination_Type = illumination_Type
@@ -40,12 +40,11 @@ class MediaMetadata():
         self.ph = ph
         self.dissolved_Oxygen = dissolved_Oxygen
 
-    # Creates new mediadata entry
+    # Creates new media metadata entry
     @staticmethod
-    def create_new_mediadata(entry_Id: int, left_Camera_Media: str, right_Camera_Media: str, time: str,
-                             temperature: float,
-                             pressure: float, ph: float, dissolved_Oxygen: float):
-        entry_Id = entry_Id
+    def mediadata( left_Camera_Media: str, right_Camera_Media: str, time: str,
+                  temperature: float,
+                  pressure: float, ph: float, dissolved_Oxygen: float):
         left_Camera_Media = left_Camera_Media
         right_Camera_Media = right_Camera_Media
         time = time
@@ -53,4 +52,5 @@ class MediaMetadata():
         pressure = pressure
         ph = ph
         dissolved_Oxygen = dissolved_Oxygen
-        return entry_Id, left_Camera_Media, right_Camera_Media, time, temperature, pressure, ph, dissolved_Oxygen
+        return left_Camera_Media, right_Camera_Media, time, temperature, pressure, ph, dissolved_Oxygen
+

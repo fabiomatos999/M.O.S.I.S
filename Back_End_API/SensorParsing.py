@@ -17,12 +17,3 @@ class SensorString():
 
         return pH_data, temp_data, dissolved_oxygen_data, barometer_data
 
-    # Testing the sensor separation
-    def test(self):
-        datas = self.sensor_string("9.657&25.761&8.3400&1234567NULL")
-        for data in datas:
-            print(data)
-
-
-sensor = SensorString()
-sensor.test()
