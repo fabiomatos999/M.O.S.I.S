@@ -415,7 +415,7 @@ if __name__ == "__main__":
         try:
             rsyncCopy.rsync_recursive_copy(
                 "pi@{}:/home/pi/".format(args.ipaddress),
-                "/home/uwu/Downloads/")
+                args.output)
         except Exception:
             raise ValueError("Invalid IP Address or Hostname was inputted.")
     from waitress import serve

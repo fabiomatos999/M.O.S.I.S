@@ -1,4 +1,5 @@
 import argparse
+import os
 parser = argparse.ArgumentParser(description='Start Host Software')
 group = parser.add_mutually_exclusive_group()
 group.add_argument("-n",
@@ -10,5 +11,6 @@ group.add_argument("-i",
                    type=str,
                    help="IP address of the Raspberry Pi",
                    default="raspberrypi")
+parser.add_argument('-o', '--output', type=str, default=os.path.join(os.getcwd(), "static"), help='Output folder for Raspberry Pi Backup')
 
 args = parser.parse_args()
