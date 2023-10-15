@@ -4,6 +4,7 @@
 \useinnertheme{rectangles}
 \usepackage[subpreambles=true]{standalone}
 \usepackage{import}
+\usepackage{emoji}
 
 \title[Host Software Progress Report]{M.O.S.I.S Host Software Progress Report Presentation}
 \author[Fabio J. Matos Nieves]{Fabio J. Matos Nieves}
@@ -28,7 +29,7 @@
 		      \end{itemize}
 	\end{itemize}
 \end{frame}
-\section{System Model}
+\section*{System Model}
 \begin{frame}{System Model: Architectural Diagram}
 	\begin{figure}
 		\begin{small}
@@ -59,7 +60,7 @@
 		\caption{M.O.S.I.S Host Software Class Diagram}
 	\end{figure}
 \end{frame}
-\section{System Specifications}
+\section*{System Specifications}
 \begin{frame}{System Specifications}
 	\begin{itemize}
 		\item Front End: Flask with Bootstrap CSS
@@ -69,7 +70,7 @@
 	\end{itemize}
 \end{frame}
 \section{Features}
-\subsection{Study Media Presentation}
+\subsection*{Study Media Presentation}
 \begin{frame}{Study Media Capture: Images}
 	\begin{figure}
 		\includegraphics[height=0.65\textheight]{./Figures/study_media_capture_images.png}
@@ -98,19 +99,76 @@
 	\end{figure}
 
 \end{frame}
-\subsection{Automated Raspberry Pi Backup}
+\subsection*{Automated Raspberry Pi Backup}
 \begin{frame}{Automated Microscope Backup}
 	\begin{figure}
 		\includegraphics[width=\textwidth]{./Figures/automated_media_backup.png}
 		\caption{Start App Command Line Arguments}
 	\end{figure}
 \end{frame}
-\section{Live Demonstration}
+\section*{Live Demonstration}
 \begin{frame}
-	\centering Live Demonstration
+	\begin{huge}
+		\begin{center}
+			Live Demonstration
+		\end{center}
+	\end{huge}
 \end{frame}
-\section*{Questions}
+\section{Conclusion}
+\subsection*{Project Status}
+\begin{frame}{Project Status}
+	\begin{itemize}
+		\item Three out of Four Features were implemented.
+		      \begin{itemize}
+			      \item Database Reconstruction was not implemented
+			      \item Illumination type refactor  was not completed.
+		      \end{itemize}
+	\end{itemize}
+\end{frame}
+\subsection{Deliverables}
+\begin{frame}{Deliverables}
+	\begin{center}
+		\begin{tabular}{||c | c||}
+			\hline
+			Deliverable            & \% Completion \\
+			\hline
+			Home Page              & 100\%         \\
+			\hline
+			Image Entry Preview    & 95\%          \\
+			\hline
+			Video Entry Preview    & 50\%          \\
+			\hline
+			Study Profile Creation & 95\%          \\
+			\hline
+			Raspberry Pi Backup    & 90\%          \\
+			\hline
+		\end{tabular}
+	\end{center}
+\end{frame}
+\subsection{Accomplishments}
+\begin{frame}{Accomplishments}
+	\begin{itemize}
+		\item Implemented always valid study profiles
+		\item Created start up script for ease of installation and usage
+		\item Automated the process of backing up the raspberry pi
+	\end{itemize}
+\end{frame}
+\subsection*{Future Work}
+\begin{frame}{Future Work}
+	\begin{itemize}
+		\item Training for using OpenCV
+		\item Stereoscopic image generation
+		\item Image alignment correction
+		\item Stereoscopic video creation
+		\item Automatic Report Generation
+	\end{itemize}
+\end{frame}
+\subsection*{Questions}
 \begin{frame}
-	\centering Questions?
+	\begin{center}
+		\begin{huge}
+			Questions?
+		\end{huge}
+	\end{center}
 \end{frame}
 \end{document}
