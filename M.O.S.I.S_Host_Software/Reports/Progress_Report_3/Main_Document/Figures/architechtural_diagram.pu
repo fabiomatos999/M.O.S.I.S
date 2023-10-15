@@ -6,12 +6,9 @@ package "Host Software"  {
 	
 }
 package "File System" {
-	database SQLite
-	folder "Raspberry Pi Backup" {
 		[Study Media]
-	}
 }
 [Raspberry Pi]
 "Host Software" <-left-> "Raspberry Pi"
-"Host Software" <-up-> "File System"
+"Host Software" <-right-> "File System"
 @enduml

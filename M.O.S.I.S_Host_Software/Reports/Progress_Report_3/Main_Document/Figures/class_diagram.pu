@@ -24,20 +24,8 @@ class SearchForm {
 	+ searchCategory
 	+ searchQuery
 }
-enum ShotType {
-	SINGLE
-	BURST
-	TELESCOPIC
-	VIDEO
-}
-enum IlluminationType {
-	NONE
-	RED
-	WHITE
-	ULTRAVIOLET	
-}
 App o-left- Route
 App o-right- Form
-Form <|-- StudyProfileForm
-Form <|-- SearchForm
+Form <|-right- StudyProfileForm
+Form <|-right- SearchForm
 @enduml
