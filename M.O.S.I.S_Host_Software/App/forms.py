@@ -20,8 +20,8 @@ class BaseShotTypeForm(FlaskForm):
     illuminationType = SelectField(
         'Illumination Type',
         choices=[(illuminationType.NONE.name, "None"),
-                 (illuminationType.VISIBLESPECTRUM.name, "Visible Spectrum"),
-                 (illuminationType.INFRARED.name, "Infrared"),
+                 (illuminationType.WHITE.name, "White"),
+                 (illuminationType.RED.name, "Red"),
                  (illuminationType.ULTRAVIOLET.name, "Ultraviolet")])
 
     gain = DecimalField('Gain (dB)',

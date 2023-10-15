@@ -3,8 +3,8 @@
 
 import os
 import random
-from app import shotType, illuminationType
-from app import insertMediaEntry, insertMediaMetadata, getAllMediaEntryIDs
+from enums import shotType, illuminationType
+from query import insertMediaEntry, insertMediaMetadata, getAllMediaEntryIDs
 from enum import Enum
 import math
 

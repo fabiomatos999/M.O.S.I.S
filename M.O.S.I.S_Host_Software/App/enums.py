@@ -15,6 +15,6 @@ class illuminationType(Enum):
     """Illumination Type."""
 
     NONE = 1
-    VISIBLESPECTRUM = 2
-    INFRARED = 3
+    WHITE = 2
+    RED = 3
     ULTRAVIOLET = 4
