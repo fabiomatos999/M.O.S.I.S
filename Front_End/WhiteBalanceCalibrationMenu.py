@@ -204,6 +204,7 @@ class Ui_Form(object):
         self.label1000k.setText(_translate("Form", "1000K"))
         self.label10000K.setText(_translate("Form", "10,000K"))
 
+# Changes the text of the label to the value on the slider
     def slider_value(self):
         value = self.WBSlider.value()
         self.CurrentWB.setText("Current WB: " + str(value) + "K")
