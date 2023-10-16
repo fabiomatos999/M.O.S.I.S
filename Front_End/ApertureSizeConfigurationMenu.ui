@@ -454,7 +454,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>90</y>
+     <y>70</y>
      <width>212</width>
      <height>46</height>
     </rect>
@@ -479,7 +479,7 @@ color: rgb(255, 149, 1);</string>
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>140</y>
+     <y>110</y>
      <width>212</width>
      <height>46</height>
     </rect>
@@ -501,7 +501,7 @@ color: rgb(255, 149, 1);</string>
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>180</y>
+     <y>150</y>
      <width>212</width>
      <height>46</height>
     </rect>
@@ -523,7 +523,7 @@ color: rgb(255, 149, 1);</string>
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>220</y>
+     <y>190</y>
      <width>212</width>
      <height>46</height>
     </rect>
@@ -552,7 +552,7 @@ background-color: rgb(0, 0, 0);</string>
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>260</y>
+     <y>230</y>
      <width>212</width>
      <height>46</height>
     </rect>
@@ -574,7 +574,7 @@ color: rgb(255, 149, 1);</string>
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>310</y>
+     <y>270</y>
      <width>212</width>
      <height>46</height>
     </rect>
@@ -596,7 +596,7 @@ color: rgb(255, 149, 1);</string>
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>350</y>
+     <y>310</y>
      <width>212</width>
      <height>46</height>
     </rect>
@@ -618,7 +618,7 @@ color: rgb(255, 149, 1);</string>
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>400</y>
+     <y>350</y>
      <width>212</width>
      <height>46</height>
     </rect>
@@ -639,8 +639,8 @@ color: rgb(255, 149, 1);</string>
   <widget class="QPushButton" name="f16Button">
    <property name="geometry">
     <rect>
-     <x>210</x>
-     <y>90</y>
+     <x>10</x>
+     <y>390</y>
      <width>212</width>
      <height>46</height>
     </rect>
@@ -661,8 +661,8 @@ color: rgb(255, 149, 1);</string>
   <widget class="QPushButton" name="f22Button_2">
    <property name="geometry">
     <rect>
-     <x>210</x>
-     <y>140</y>
+     <x>10</x>
+     <y>430</y>
      <width>212</width>
      <height>46</height>
     </rect>

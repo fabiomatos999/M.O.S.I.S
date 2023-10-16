@@ -12,7 +12,7 @@ class MyMainWindow(QMainWindow):
        # self.ui = Ui_Form()
         self.ui = Ui_ISOConfigurationMenu()
         self.ui = Ui_ApertureSizeConfigurationMenu()
-        self.ui = Ui_ShutterSpeedConfigurationMenu()
+        #self.ui = Ui_ShutterSpeedConfigurationMenu()
         self.ui.setupUi(self)
 
 if __name__ == "__main__":
