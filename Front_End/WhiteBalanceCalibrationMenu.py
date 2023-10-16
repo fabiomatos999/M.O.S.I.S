@@ -7,6 +7,7 @@
 
 
 from PyQt6 import QtCore, QtGui, QtWidgets
+from PyQt6.QtWidgets import QSlider
 
 
 class Ui_Form(object):
@@ -171,6 +172,11 @@ class Ui_Form(object):
         self.WBSlider.setGeometry(QtCore.QRect(20, 200, 761, 51))
         self.WBSlider.setOrientation(QtCore.Qt.Orientation.Horizontal)
         self.WBSlider.setObjectName("WBSlider")
+        self.WBSlider.setStyleSheet("QSlider::handle:horizontal {background-color:rgb(89, 239, 150);}")
+        self.WBSlider.setTickPosition(QSlider.TickPosition.TicksAbove)
+        self.WBSlider.setMinimum(1000)
+        self.WBSlider.setMaximum(10000)
+        self.WBSlider.valueChanged.connect(self.slider_value)
         self.label1000k = QtWidgets.QLabel(parent=Form)
         self.label1000k.setGeometry(QtCore.QRect(0, 270, 151, 91))
         font = QtGui.QFont()
@@ -197,3 +203,7 @@ class Ui_Form(object):
         self.CurrentWB.setText(_translate("Form", "Current WB: 4000K"))
         self.label1000k.setText(_translate("Form", "1000K"))
         self.label10000K.setText(_translate("Form", "10,000K"))
+
+    def slider_value(self):
+        value = self.WBSlider.value()
+        self.CurrentWB.setText("Current WB: " + str(value) + "K")

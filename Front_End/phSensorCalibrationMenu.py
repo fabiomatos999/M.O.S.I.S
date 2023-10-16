@@ -506,3 +506,4 @@ class Ui_Form(object):
         self.LowPoint14text.setText(_translate("Form", "14"))
         self.MidPoint14text.setText(_translate("Form", "14"))
         self.HighPoint14text.setText(_translate("Form", "14"))
+
