@@ -5,7 +5,7 @@ import sys
 
 class JsonSelectAll():
     # Connect to the SQLite database
-    conn = sqlite3.connect("testing2.db")
+    conn = sqlite3.connect("testing3.db")
     cursor = conn.cursor()
 
     # Selects data from both media entry and media metadata table using JOIN
@@ -15,8 +15,8 @@ class JsonSelectAll():
             media_entry.shotType,
             media_entry.time AS entryTime,
             media_entry.illuminationType,
-            media_entry.iso,
-            media_entry.apertureSize,
+            media_entry.gain,
+            media_entry.saturation,
             media_entry.shutterSpeed,
             media_entry.whiteBalance,
             media_metadata.metadataId,
@@ -42,8 +42,8 @@ class JsonSelectAll():
             shot_type,
             entry_time,
             illumination_type,
-            iso,
-            aperture_size,
+            gain,
+            saturation,
             shutter_speed,
             white_balance,
             metadata_id,
@@ -61,8 +61,8 @@ class JsonSelectAll():
             "shotType": shot_type,
             "entryTime": entry_time,
             "illuminationType": illumination_type,
-            "iso": iso,
-            "apertureSize": aperture_size,
+            "gain": gain,
+            "saturation": saturation,
             "shutterSpeed": shutter_speed,
             "whiteBalance": white_balance,
             "metadataId": metadata_id,

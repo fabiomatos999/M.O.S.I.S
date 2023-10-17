@@ -1,7 +1,7 @@
 import sqlite3
 
 # Connect to or create an SQLite database file. If it doesn't exist, a new database will be created.
-conn = sqlite3.connect('testing2.db')
+conn = sqlite3.connect('testing3.db')
 
 # Create a cursor object to interact with the database.
 cursor = conn.cursor()
@@ -12,8 +12,8 @@ cursor.execute('''
         shotType TEXT NOT NULL,
         time TEXT NOT NULL ,
         illuminationType TEXT NOT NULL,
-        iso INTEGER NOT NULL,
-        apertureSize REAL NOT NULL,
+        gain REAL NOT NULL,
+        saturation INTEGER NOT NULL,
         shutterSpeed REAL NOT NULL,
         whiteBalance INTEGER NOT NULL
     )

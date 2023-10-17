@@ -55,13 +55,13 @@ class RandomEntry:
 
         iso = (random.randint(1000, 9999))
 
-        aperturesize = (random.randint(1000, 9999))
+        saturation = (random.randint(1000, 9999))
 
         shutterspeed = (random.randint(1000, 9999))
 
         whitebalance = (random.randint(1000, 9999))
 
-        return MediaEntry.media_entry(shottype, timestamp, illuminationtype, iso, aperturesize, shutterspeed, whitebalance)
+        return MediaEntry.media_entry(shottype, timestamp, illuminationtype, iso, saturation, shutterspeed, whitebalance)
 
     # Creates a media metadata entry with random variables
     @staticmethod

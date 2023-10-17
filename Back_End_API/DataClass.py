@@ -1,28 +1,28 @@
 class MediaEntry():
     # Defines the media entry class for the Media Entry table
-    def __init__(self, entry_Id: int, shot_Type: str, time: str, illumination_Type: str, iso: int,
-                 aperture_Size: float, shutter_Speed: float, white_Balance: int):
+    def __init__(self, entry_Id: int, shot_Type: str, time: str, illumination_Type: str, saturation: int,
+                 gain: float, shutter_Speed: float, white_Balance: int):
         self.entry_Id = entry_Id
         self.shot_Type = shot_Type
         self.time = time
         self.illumination_Type = illumination_Type
-        self.iso = iso
-        self.aperture_Size = aperture_Size
+        self.gain = gain
+        self.saturation = saturation
         self.shutter_Speed = shutter_Speed
         self.white_Balance = white_Balance
 
     # Creates a new media entry
     @staticmethod
-    def media_entry(shot_Type: str, time: str, illumination_Type: str, iso: int,
-                    aperture_Size: float, shutter_Speed: float, white_Balance: int):
+    def media_entry(shot_Type: str, time: str, illumination_Type: str, gain: float,
+                    saturation: int, shutter_Speed: float, white_Balance: int):
         shot_Type = shot_Type
         time = time
         illumination_Type = illumination_Type
-        iso = iso
-        aperture_Size = aperture_Size
+        gain = gain
+        saturation = saturation
         shutter_Speed = shutter_Speed
         white_Balance = white_Balance
-        return shot_Type, time, illumination_Type, aperture_Size, iso, shutter_Speed, white_Balance
+        return shot_Type, time, illumination_Type, saturation, gain, shutter_Speed, white_Balance
 
 
 class MediaMetadata():

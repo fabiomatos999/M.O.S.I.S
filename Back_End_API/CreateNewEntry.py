@@ -3,13 +3,13 @@ from DataClass import MediaEntry, MediaMetadata
 from RandomEntryGenerator import RandomEntry
 
 class CreateNewEntry():
-    conn = sqlite3.connect('testing2.db')
+    conn = sqlite3.connect('testing3.db')
     # Create a cursor object to interact with the database.
     cursor = conn.cursor()
     # Create new media entry
     test_study_entry = RandomEntry.rand_media_entry()
     # Insert the media entry into media entry table
-    cursor.execute("INSERT INTO media_entry (shotType, time, illuminationType, iso, apertureSize, shutterSpeed, "
+    cursor.execute("INSERT INTO media_entry (shotType, time, illuminationType, gain, saturation, shutterSpeed, "
                    "whiteBalance) VALUES (?, ?, ?, ?, ?, ?, ?)", test_study_entry)
     # Saves entry id of media entry to a variable
     entry_id = cursor.lastrowid
