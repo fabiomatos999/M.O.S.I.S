@@ -50,7 +50,7 @@ class RandomEntry:
 
         timestamp = RandomEntry.random_timestamp_string()
         # List of illumination type to be chosen at random
-        illuminationtypelist = ["NONE", "VISIBLESPECTRUM", "INFRARED", "ULTRAVIOLET"]
+        illuminationtypelist = ["NONE", "WHITE", "RED", "ULTRAVIOLET"]
         illuminationtype = random.choice(illuminationtypelist)
 
         iso = (random.randint(1000, 9999))
