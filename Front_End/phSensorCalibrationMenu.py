@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file 'phSensorCalibrationMenu.ui'
+# Form implementation generated from reading ui file '.\phSensorCalibrationMenu.ui'
 #
 # Created by: PyQt6 UI code generator 6.4.2
 #
@@ -7,7 +7,8 @@
 
 
 from PyQt6 import QtCore, QtGui, QtWidgets
-
+from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QKeyEvent
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -205,6 +206,8 @@ class Ui_Form(object):
         brush.setStyle(QtCore.Qt.BrushStyle.SolidPattern)
         palette.setBrush(QtGui.QPalette.ColorGroup.Inactive, QtGui.QPalette.ColorRole.Highlight, brush)
         self.LowPointslide.setPalette(palette)
+        self.LowPointslide.setStyleSheet("QSlider::handle:horizontal {background-color:rgb(89, 239, 150);}")
+        self.LowPointslide.setMaximum(14)
         self.LowPointslide.setOrientation(QtCore.Qt.Orientation.Horizontal)
         self.LowPointslide.setObjectName("LowPointslide")
         self.calibrate_button = QtWidgets.QPushButton(parent=Form)
@@ -212,13 +215,73 @@ class Ui_Form(object):
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(89, 239, 150))
         brush.setStyle(QtCore.Qt.BrushStyle.SolidPattern)
+        palette.setBrush(QtGui.QPalette.ColorGroup.Active, QtGui.QPalette.ColorRole.WindowText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(106, 110, 128))
+        brush.setStyle(QtCore.Qt.BrushStyle.SolidPattern)
+        palette.setBrush(QtGui.QPalette.ColorGroup.Active, QtGui.QPalette.ColorRole.Button, brush)
+        brush = QtGui.QBrush(QtGui.QColor(89, 239, 150))
+        brush.setStyle(QtCore.Qt.BrushStyle.SolidPattern)
+        palette.setBrush(QtGui.QPalette.ColorGroup.Active, QtGui.QPalette.ColorRole.Text, brush)
+        brush = QtGui.QBrush(QtGui.QColor(89, 239, 150))
+        brush.setStyle(QtCore.Qt.BrushStyle.SolidPattern)
         palette.setBrush(QtGui.QPalette.ColorGroup.Active, QtGui.QPalette.ColorRole.ButtonText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(106, 110, 128))
+        brush.setStyle(QtCore.Qt.BrushStyle.SolidPattern)
+        palette.setBrush(QtGui.QPalette.ColorGroup.Active, QtGui.QPalette.ColorRole.Base, brush)
+        brush = QtGui.QBrush(QtGui.QColor(106, 110, 128))
+        brush.setStyle(QtCore.Qt.BrushStyle.SolidPattern)
+        palette.setBrush(QtGui.QPalette.ColorGroup.Active, QtGui.QPalette.ColorRole.Window, brush)
+        brush = QtGui.QBrush(QtGui.QColor(89, 239, 150, 128))
+        brush.setStyle(QtCore.Qt.BrushStyle.SolidPattern)
+        palette.setBrush(QtGui.QPalette.ColorGroup.Active, QtGui.QPalette.ColorRole.PlaceholderText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(89, 239, 150))
+        brush.setStyle(QtCore.Qt.BrushStyle.SolidPattern)
+        palette.setBrush(QtGui.QPalette.ColorGroup.Inactive, QtGui.QPalette.ColorRole.WindowText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(106, 110, 128))
+        brush.setStyle(QtCore.Qt.BrushStyle.SolidPattern)
+        palette.setBrush(QtGui.QPalette.ColorGroup.Inactive, QtGui.QPalette.ColorRole.Button, brush)
+        brush = QtGui.QBrush(QtGui.QColor(89, 239, 150))
+        brush.setStyle(QtCore.Qt.BrushStyle.SolidPattern)
+        palette.setBrush(QtGui.QPalette.ColorGroup.Inactive, QtGui.QPalette.ColorRole.Text, brush)
         brush = QtGui.QBrush(QtGui.QColor(89, 239, 150))
         brush.setStyle(QtCore.Qt.BrushStyle.SolidPattern)
         palette.setBrush(QtGui.QPalette.ColorGroup.Inactive, QtGui.QPalette.ColorRole.ButtonText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(106, 110, 128))
+        brush.setStyle(QtCore.Qt.BrushStyle.SolidPattern)
+        palette.setBrush(QtGui.QPalette.ColorGroup.Inactive, QtGui.QPalette.ColorRole.Base, brush)
+        brush = QtGui.QBrush(QtGui.QColor(106, 110, 128))
+        brush.setStyle(QtCore.Qt.BrushStyle.SolidPattern)
+        palette.setBrush(QtGui.QPalette.ColorGroup.Inactive, QtGui.QPalette.ColorRole.Window, brush)
+        brush = QtGui.QBrush(QtGui.QColor(89, 239, 150, 128))
+        brush.setStyle(QtCore.Qt.BrushStyle.SolidPattern)
+        palette.setBrush(QtGui.QPalette.ColorGroup.Inactive, QtGui.QPalette.ColorRole.PlaceholderText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(89, 239, 150))
+        brush.setStyle(QtCore.Qt.BrushStyle.SolidPattern)
+        palette.setBrush(QtGui.QPalette.ColorGroup.Disabled, QtGui.QPalette.ColorRole.WindowText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(106, 110, 128))
+        brush.setStyle(QtCore.Qt.BrushStyle.SolidPattern)
+        palette.setBrush(QtGui.QPalette.ColorGroup.Disabled, QtGui.QPalette.ColorRole.Button, brush)
+        brush = QtGui.QBrush(QtGui.QColor(89, 239, 150))
+        brush.setStyle(QtCore.Qt.BrushStyle.SolidPattern)
+        palette.setBrush(QtGui.QPalette.ColorGroup.Disabled, QtGui.QPalette.ColorRole.Text, brush)
+        brush = QtGui.QBrush(QtGui.QColor(89, 239, 150))
+        brush.setStyle(QtCore.Qt.BrushStyle.SolidPattern)
+        palette.setBrush(QtGui.QPalette.ColorGroup.Disabled, QtGui.QPalette.ColorRole.ButtonText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(106, 110, 128))
+        brush.setStyle(QtCore.Qt.BrushStyle.SolidPattern)
+        palette.setBrush(QtGui.QPalette.ColorGroup.Disabled, QtGui.QPalette.ColorRole.Base, brush)
+        brush = QtGui.QBrush(QtGui.QColor(106, 110, 128))
+        brush.setStyle(QtCore.Qt.BrushStyle.SolidPattern)
+        palette.setBrush(QtGui.QPalette.ColorGroup.Disabled, QtGui.QPalette.ColorRole.Window, brush)
+        brush = QtGui.QBrush(QtGui.QColor(89, 239, 150, 128))
+        brush.setStyle(QtCore.Qt.BrushStyle.SolidPattern)
+        palette.setBrush(QtGui.QPalette.ColorGroup.Disabled, QtGui.QPalette.ColorRole.PlaceholderText, brush)
         self.calibrate_button.setPalette(palette)
-        self.calibrate_button.setStyleSheet("QPushButton {\n"
+        self.calibrate_button.setStyleSheet("QPushButton\n"
+" {\n"
 "    background-color: rgb(106, 110, 128);\n"
+"    color: rgb(106, 110, 128);\n"
+"    color: rgb(89, 239, 150);\n"
 "}")
         self.calibrate_button.setObjectName("calibrate_button")
         self.MidPointslide = QtWidgets.QSlider(parent=Form)
@@ -231,6 +294,8 @@ class Ui_Form(object):
         brush.setStyle(QtCore.Qt.BrushStyle.SolidPattern)
         palette.setBrush(QtGui.QPalette.ColorGroup.Inactive, QtGui.QPalette.ColorRole.Highlight, brush)
         self.MidPointslide.setPalette(palette)
+        self.MidPointslide.setStyleSheet("QSlider::handle:horizontal {background-color:rgb(89, 239, 150);}")
+        self.MidPointslide.setMaximum(14)
         self.MidPointslide.setOrientation(QtCore.Qt.Orientation.Horizontal)
         self.MidPointslide.setObjectName("MidPointslide")
         self.Highpointslide = QtWidgets.QSlider(parent=Form)
@@ -243,10 +308,12 @@ class Ui_Form(object):
         brush.setStyle(QtCore.Qt.BrushStyle.SolidPattern)
         palette.setBrush(QtGui.QPalette.ColorGroup.Inactive, QtGui.QPalette.ColorRole.Highlight, brush)
         self.Highpointslide.setPalette(palette)
+        self.Highpointslide.setStyleSheet("QSlider::handle:horizontal {background-color:rgb(89, 239, 150);}")
+        self.Highpointslide.setMaximum(14)
         self.Highpointslide.setOrientation(QtCore.Qt.Orientation.Horizontal)
         self.Highpointslide.setObjectName("Highpointslide")
         self.LowPointtext = QtWidgets.QLabel(parent=Form)
-        self.LowPointtext.setGeometry(QtCore.QRect(260, 140, 301, 61))
+        self.LowPointtext.setGeometry(QtCore.QRect(180, 140, 491, 61))
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(254, 148, 1))
         brush.setStyle(QtCore.Qt.BrushStyle.SolidPattern)
@@ -273,7 +340,7 @@ class Ui_Form(object):
         self.LowPointtext.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.LowPointtext.setObjectName("LowPointtext")
         self.MidPointtext = QtWidgets.QLabel(parent=Form)
-        self.MidPointtext.setGeometry(QtCore.QRect(260, 240, 301, 61))
+        self.MidPointtext.setGeometry(QtCore.QRect(170, 240, 501, 61))
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(254, 148, 1))
         brush.setStyle(QtCore.Qt.BrushStyle.SolidPattern)
@@ -300,7 +367,7 @@ class Ui_Form(object):
         self.MidPointtext.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.MidPointtext.setObjectName("MidPointtext")
         self.HighPointText = QtWidgets.QLabel(parent=Form)
-        self.HighPointText.setGeometry(QtCore.QRect(260, 340, 301, 61))
+        self.HighPointText.setGeometry(QtCore.QRect(190, 340, 461, 61))
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(254, 148, 1))
         brush.setStyle(QtCore.Qt.BrushStyle.SolidPattern)
@@ -488,6 +555,12 @@ class Ui_Form(object):
 "}")
         self.HighPoint14text.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.HighPoint14text.setObjectName("HighPoint14text")
+        self.LowPointslide.valueChanged.connect(
+            lambda: self.LowPointtext.setText("Low Point: " + str(self.LowPointslide.value())))
+        self.MidPointslide.valueChanged.connect(
+            lambda: self.MidPointtext.setText("Mid Point: " + str(self.MidPointslide.value())))
+        self.Highpointslide.valueChanged.connect(
+            lambda: self.HighPointText.setText("High Point: " + str(self.Highpointslide.value())))
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
@@ -497,13 +570,14 @@ class Ui_Form(object):
         Form.setWindowTitle(_translate("Form", "Form"))
         self.pHSensorText.setText(_translate("Form", "pH Sensor Calibration"))
         self.calibrate_button.setText(_translate("Form", "Calibrate"))
-        self.LowPointtext.setText(_translate("Form", "Low Point"))
-        self.MidPointtext.setText(_translate("Form", "Mid Point"))
-        self.HighPointText.setText(_translate("Form", "High Point"))
+        self.LowPointtext.setText(_translate("Form", "Low Point: "))
+        self.MidPointtext.setText(_translate("Form", "Mid Point: "))
+        self.HighPointText.setText(_translate("Form", "High Point:"))
         self.LowPoint0text.setText(_translate("Form", "0"))
         self.MidPoint0text.setText(_translate("Form", "0"))
         self.HighPoint0text.setText(_translate("Form", "0"))
         self.LowPoint14text.setText(_translate("Form", "14"))
         self.MidPoint14text.setText(_translate("Form", "14"))
         self.HighPoint14text.setText(_translate("Form", "14"))
+
 
