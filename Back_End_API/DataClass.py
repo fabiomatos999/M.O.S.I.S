@@ -1,3 +1,6 @@
+import json
+
+
 class MediaEntry():
     # Defines the media entry class for the Media Entry table
     def __init__(self, entry_Id: int, shot_Type: str, time: str,
@@ -30,6 +33,9 @@ class MediaEntry():
         return "{}-{}-{}-{}-{}-{}-{}-{}".format(
             self.entry_Id, self.shot_Type, self.time, self.illumination_Type,
             self.gain, self.saturation, self.shutter_Speed, self.white_Balance)
+
+    def intoJSON(self) -> str:
+        return json.dumps(self.__dict__, indent=4)
 
 
 class MediaMetadata():
@@ -66,3 +72,6 @@ class MediaMetadata():
             self.media_Id, self.entry_Id, self.left_Camera_Media,
             self.right_Camera_Media, self.time, self.temperature,
             self.pressure, self.ph, self.dissolved_Oxygen)
+
+    def intoJSON(self) -> str:
+        return json.dumps(self.__dict__, indent=4)
