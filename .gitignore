@@ -383,3 +383,4 @@ Cargo.lock
 .vscode/settings.json
 M.O.S.I.S_Host_Software/*
 */venv/*
+*/__pycache__/*
