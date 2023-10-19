@@ -37,24 +37,10 @@ class JsonSelectAll():
 
     # Convert the fetched data into a list of dictionaries
     for row in rows:
-        (
-            entry_id,
-            shot_type,
-            entry_time,
-            illumination_type,
-            gain,
-            saturation,
-            shutter_speed,
-            white_balance,
-            metadata_id,
-            left_camera_media,
-            right_camera_media,
-            metadata_time,
-            temperature,
-            pressure,
-            ph,
-            dissolved_oxygen
-        ) = row
+        (entry_id, shot_type, entry_time, illumination_type, gain, saturation,
+         shutter_speed, white_balance, metadata_id, left_camera_media,
+         right_camera_media, metadata_time, temperature, pressure, ph,
+         dissolved_oxygen) = row
 
         entry_data = {
             "entryId": entry_id,
