@@ -24,13 +24,26 @@ class MyMainWindow(QMainWindow):
         self.sliders[self.current_slider_index].setFocus()
 
     def keyPressEvent(self, event):
-        if event.key() == Qt.Key.Key_Return:
+        if event.key() == Qt.Key.Key_K:
             # Increment the current slider index and cycle through the list
             self.current_slider_index = (self.current_slider_index + 1) % len(self.sliders)
-
+        else:
+            self.current_slider_index = (self.current_slider_index - 1) % len(self.sliders)
             # Set focus to the next slider in the cycle
-            self.sliders[self.current_slider_index].setFocus()
+        self.sliders[self.current_slider_index].setFocus()
+        self.sliders[self.current_slider_index].setStyleSheet( "QSlider::handle:horizontal {background-color:rgb(204, 255, 89);}")
 
+        if self.sliders[self.current_slider_index] % len(self.sliders) == 0:
+            self.sliders[1].setStyleSheet("QSlider::handle:horizontal {background-color:rgb(89, 239, 150);}")
+            self.sliders[2].setStyleSheet("QSlider::handle:horizontal {background-color:rgb(89, 239, 150);}")
+
+        if self.sliders[self.current_slider_index] % len(self.sliders) == 1:
+            self.sliders[0].setStyleSheet("QSlider::handle:horizontal {background-color:rgb(89, 239, 150);}")
+            self.sliders[2].setStyleSheet("QSlider::handle:horizontal {background-color:rgb(89, 239, 150);}")
+
+        if self.sliders[self.current_slider_index] % len(self.sliders) == 2:
+            self.sliders[1].setStyleSheet("QSlider::handle:horizontal {background-color:rgb(89, 239, 150);}")
+            self.sliders[0].setStyleSheet("QSlider::handle:horizontal {background-color:rgb(89, 239, 150);}")
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
