@@ -514,6 +514,24 @@
      <number>0</number>
     </property>
     <item>
+     <widget class="QLabel" name="status_label">
+      <property name="font">
+       <font>
+        <pointsize>25</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 149, 1);</string>
+      </property>
+      <property name="text">
+       <string>P.300.000 mbar</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignHCenter|Qt::AlignTop</set>
+      </property>
+     </widget>
+    </item>
+    <item>
      <widget class="QLabel" name="pressure_label">
       <property name="font">
        <font>
@@ -524,7 +542,10 @@
        <string notr="true">color: rgb(255, 149, 1);</string>
       </property>
       <property name="text">
-       <string>TextLabel</string>
+       <string>DO: 100.000 mg/L</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignHCenter|Qt::AlignTop</set>
       </property>
      </widget>
     </item>
@@ -539,22 +560,10 @@
        <string notr="true">color: rgb(255, 149, 1);</string>
       </property>
       <property name="text">
-       <string>TextLabel</string>
+       <string>In Progress</string>
       </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QLabel" name="status_label">
-      <property name="font">
-       <font>
-        <pointsize>25</pointsize>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">color: rgb(255, 149, 1);</string>
-      </property>
-      <property name="text">
-       <string>TextLabel</string>
+      <property name="alignment">
+       <set>Qt::AlignHCenter|Qt::AlignTop</set>
       </property>
      </widget>
     </item>
@@ -584,7 +593,10 @@
        <string notr="true">color: rgb(255, 149, 1);</string>
       </property>
       <property name="text">
-       <string>TextLabel</string>
+       <string>Temp: 25.068C</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
       </property>
      </widget>
     </item>
@@ -599,7 +611,10 @@
        <string notr="true">color: rgb(255, 149, 1);</string>
       </property>
       <property name="text">
-       <string>TextLabel</string>
+       <string>pHL 7.000</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
       </property>
      </widget>
     </item>
@@ -614,7 +629,10 @@
        <string notr="true">color: rgb(255, 149, 1);</string>
       </property>
       <property name="text">
-       <string>TextLabel</string>
+       <string>IP: 192.168.0.50</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
       </property>
      </widget>
     </item>
