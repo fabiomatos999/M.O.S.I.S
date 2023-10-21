@@ -73,19 +73,29 @@ class DatabaseQuery:
         ph: float,
         dissolvedOxygen: float,
     ) -> int:
+        # Looks for the most Recent metadataId from the table and adds one to it
+        self.cursor.execute(
+            "SELECT MAX(metadataId) FROM media_metadata"
+        )
+        result = self.cursor.fetchone()
+        if result[0] is not None:
+            metadataId = result[0] + 1
+        else:
+            metadataId = 1
         mediaEntry = self.getMediaEntrybyId(entryId)
+        # The recent most recent metadataId is then added to the string name of the left and right camera media path
         leftCameraMedia = os.path.join(
             path,
             str(mediaEntry),
-            "{}-{}-{}-{}-{}-{}-L.{}".format(
-                entryId, time, temperature, pressure, ph, dissolvedOxygen, extension
+            "{}-{}-{}-{}-{}-{}-{}-R.{}".format(
+                entryId, metadataId, time, temperature, pressure, ph, dissolvedOxygen, extension
             ),
         )
         rightCameraMedia = os.path.join(
             path,
             str(mediaEntry),
-            "{}-{}-{}-{}-{}-{}-R.{}".format(
-                entryId, time, temperature, pressure, ph, dissolvedOxygen, extension
+            "{}-{}-{}-{}-{}-{}-{}-R.{}".format(
+                entryId, metadataId, time, temperature, pressure, ph, dissolvedOxygen, extension
             ),
         )
         self.cursor.execute(
@@ -104,3 +114,4 @@ class DatabaseQuery:
         )
         self.conn.commit()
         return self.cursor.lastrowid
+
