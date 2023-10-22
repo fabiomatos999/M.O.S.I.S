@@ -6,15 +6,13 @@ from flask import render_template, url_for, Flask, request
 from flask_sqlalchemy import SQLAlchemy
 from representations import MediaEntryInternalRepresentation
 import os
-from forms import return_form, searchForm
+from forms import return_study_profile_form, searchForm
 import json
 from sqlalchemy.dialects.sqlite import TEXT, REAL, INTEGER
 import webbrowser
 from representations import MediaMetadataInternalRepresentation
 from sqlalchemy import select, desc, asc
 from datetime import datetime
-
-
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -38,8 +36,8 @@ class MediaEntry(db.Model):
     shotType (TEXT NOT NULLABLE) an enum,
     time (TEXT NOT NULLABLE) format (yyyy-MM-ddTHH:mm:ss.zzz),
     illumination_type (TEXT NOT NULLABLE) an enum,
-    iso (INTEGER NOT NULLABLE),
-    apertureSize (REAL NOT NULLABLE),
+    saturation (INTEGER NOT NULLABLE),
+    gain (REAL NOT NULLABLE),
     shutterSpeed (REAL NOT NULLABLE),
     whiteBalance (INTEGER NOT NULLABLE)
     """
@@ -52,8 +50,8 @@ class MediaEntry(db.Model):
     shotType = db.Column(TEXT, nullable=False)
     time = db.Column(TEXT, nullable=False)
     illuminationType = db.Column(TEXT, nullable=False)
-    iso = db.Column(INTEGER, nullable=False)
-    apertureSize = db.Column(REAL, nullable=False)
+    saturation = db.Column(INTEGER, nullable=False)
+    gain = db.Column(REAL, nullable=False)
     shutterSpeed = db.Column(REAL, nullable=False)
     whiteBalance = db.Column(INTEGER, nullable=False)
 
@@ -134,7 +132,7 @@ def remove_submit(studies: list) -> list:
 @app.route("/study/<st>", methods=['GET', 'POST'])
 def single(st="single"):
     """Serve shot type study profile template configuration page."""
-    form = return_form(st)
+    form = return_study_profile_form(st)
 
     if form.is_submitted():
         studies.append(request.form)
@@ -205,14 +203,14 @@ def getCurrentTime() -> str:
     return date.strftime('%Y-%m-%-dT%H:%M:%S.%f')
 
 
-def insertMediaEntry(db, shotType, illuminationType, iso, apertureSize,
+def insertMediaEntry(db, shotType, illuminationType, saturation, gain,
                      shutterSpeed, whiteBalance):
     """Insert a MediaEntry into the database."""
     new_entry = MediaEntry(shotType=str(shotType),
                            time=getCurrentTime(),
                            illuminationType=str(illuminationType),
-                           iso=iso,
-                           apertureSize=apertureSize,
+                           gain=gain,
+                           saturation=saturation,
                            shutterSpeed=shutterSpeed,
                            whiteBalance=whiteBalance)
     db.session.add(new_entry)
@@ -226,7 +224,7 @@ def getMediaEntry(db, id: int) -> MediaEntryInternalRepresentation:
     return MediaEntryInternalRepresentation(ret[0].entryId, ret[0].shotType,
                                             ret[0].time,
                                             ret[0].illuminationType,
-                                            ret[0].iso, ret[0].apertureSize,
+                                            ret[0].saturation, ret[0].gain,
                                             ret[0].shutterSpeed,
                                             ret[0].whiteBalance)
 
@@ -243,9 +241,9 @@ def getAllMediaEntry(db) -> list[MediaEntryInternalRepresentation]:
     ret = list(
         map(
             lambda x: MediaEntryInternalRepresentation(x[0].entryId, x[
-                0].shotType, x[0].time, x[0].illuminationType, x[0].iso, x[
-                    0].apertureSize, x[0].shutterSpeed, x[0].whiteBalance),
-            ret))
+                0].shotType, x[0].time, x[0].illuminationType, x[
+                    0].saturation, x[0].gain, x[0].shutterSpeed, x[0].
+                                                       whiteBalance), ret))
     return ret
 
 
@@ -357,6 +355,7 @@ def getMediaEntriesByIlluminationType(
             ret))
     return ret
 
+
 import re
 
 dualEndedRangeRegex = r'^\d+-\d+$'
@@ -410,12 +409,12 @@ def returnRange(left: int, right: int, dbMin: int, dbMax: int) -> [int]:
         right = dbMax
     return list(range(left, right + 1, 1))
 
+
 if __name__ == "__main__":
     if not args.nobackup:
         try:
             rsyncCopy.rsync_recursive_copy(
-                "pi@{}:/home/pi/".format(args.ipaddress),
-                args.output)
+                "pi@{}:/home/pi/".format(args.ipaddress), args.output)
         except Exception:
             raise ValueError("Invalid IP Address or Hostname was inputted.")
     from waitress import serve

@@ -11,15 +11,15 @@ class MediaEntryInternalRepresentation():
     whiteBalance = float()
 
     def __init__(self, entryId: int, shotType: shotType, time: str,
-                 illuminationType: illuminationType, iso: int,
-                 apertureSize: float, shutterSpeed: float, whiteBalance: int):
+                 illuminationType: illuminationType, saturation: int,
+                 gain: float, shutterSpeed: float, whiteBalance: int):
         """Construct MediaEntryInternalRepesentation."""
         self.entryId = entryId
         self.shotType = shotType
         self.time = time
         self.illuminationType = illuminationType
-        self.iso = iso
-        self.apertureSize = apertureSize
+        self.saturation = saturation
+        self.gain = gain
         self.shutterSpeed = shutterSpeed
         self.whiteBalance = whiteBalance
 

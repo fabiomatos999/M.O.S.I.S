@@ -4,7 +4,7 @@
 import os
 import random
 from enums import shotType, illuminationType
-from query import insertMediaEntry, insertMediaMetadata, getAllMediaEntryIDs
+from app import insertMediaEntry, insertMediaMetadata, getAllMediaEntryIDs
 from enum import Enum
 import math
 
@@ -52,33 +52,33 @@ def randIluminationType() -> Enum:
     return random.choice(list(illuminationType)).name
 
 
-def randISO() -> int:
-    """Return a random integer of either 100,200,400,800,1600,3200,6400."""
-    return random.choice([100, 200, 400, 800, 1600, 3200, 6400])
+def randGain() -> float:
+    """Return a random float between 0 and 24."""
+    return random.random() * 24
 
 
-def randApertureSize() -> float:
-    """Return a random float of either 1.4,2.0,2.8,4.0,5.6,8.0,11,16.0,22.0."""
-    return random.choice([1.4, 2.0, 2.8, 4.0, 5.6, 8.0, 11.0, 16.0, 22.0])
+def randSaturation() -> int:
+    """Return a random integer between 0 and 200."""
+    return random.randint(0, 200)
 
 
 def randShutterSpeed() -> float:
     """Return a random floating point number of common shutter speeds."""
     return random.choice([
         1 / 2000, 1 / 1000, 1 / 500, 1 / 250, 1 / 125, 1 / 60, 1 / 30, 1 / 15,
-        1 / 8, 1 / 4, 1 / 2, 1.0, 2.0, 4.0, 8.0, 15.0, 30.0
+        1 / 8, 1 / 4, 1 / 2, 1.0, 2.0
     ])
 
 
 def randWhiteBalance() -> int:
-    """Return a random integer between 1000 and 10,000."""
-    return math.floor(random.random() * 9000) + 1000
+    """Return a random integer between 3,200 and 6,500."""
+    return math.floor(random.random() * 3300) + 3200
 
 
 def insertRandomMediaEntry(db):
     """Insert a MediaEntry into a database with random valid data."""
-    insertMediaEntry(db, randShotType(), randIluminationType(), randISO(),
-                     randApertureSize(), randShutterSpeed(),
+    insertMediaEntry(db, randShotType(), randIluminationType(),
+                     randSaturation(), randGain(), randShutterSpeed(),
                      randWhiteBalance())
 
 
@@ -88,7 +88,7 @@ def getRandomMediaEntryEntryId(db) -> int:
 
 
 def insertRandomMediaMetadata(db):
-    """Insert a MediaMedata entry into a database with random valid data."""
+    """Insert a MediaMetadata entry into a database with random valid data."""
     randImages = randImage()
     insertMediaMetadata(db, getRandomMediaEntryEntryId(db), randImages[0],
                         randImages[1], randTemp(), randPressure(), randPh(),
