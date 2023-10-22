@@ -8,45 +8,45 @@
       <div class="col-6">
         <div class="card">
           <div class="card-body d-flex justify-content-center">
-            {{MediaEntry.time}}
+            {{MediaMetadata.time}}
           </div>
         </div>
       </div>
     </div>
     <div class="row">
       <div class="col-6 d-flex justify-content-center mt-1 mb-1">
-        <img src={{ url_for('static', filename=MediaEntry.leftCameraMedia.split("/").pop()) }} alt="">
+        <img src={{ url_for('static', filename=MediaMetadata.leftCameraMedia.split("/").pop()) }} alt="">
       </div>
       <div class="col-6 d-flex justify-content-center mt-1 mb-1">
-        <img src={{ url_for('static', filename=MediaEntry.rightCameraMedia.split("/").pop()) }} alt="">
+        <img src={{ url_for('static', filename=MediaMetadata.rightCameraMedia.split("/").pop()) }} alt="">
       </div>
     </div>
     <div class="row pt-3">
       <div class="col-3">
         <div class="card">
           <div class="card-body">
-            {{"Temperature: " + str(round(MediaEntry.temperature,3)) + " C" + '°'}}
+            {{"Temperature: " + str(round(MediaMetadata.temperature,3)) + " C" + '°'}}
           </div>
         </div>
       </div>
       <div class="col-3">
         <div class="card">
           <div class="card-body">
-            {{"pH: " + str(round(MediaEntry.ph,3))}}
+            {{"pH: " + str(round(MediaMetadata.ph,3))}}
           </div>
         </div>
       </div>
       <div class="col-3">
         <div class="card">
           <div class="card-body">
-            {{"Pressure: " + str(round(MediaEntry.pressure,3)) + " mbar"}}
+            {{"Pressure: " + str(round(MediaMetadata.pressure,3)) + " mbar"}}
           </div>
         </div>
       </div>
       <div class="col-3">
         <div class="card">
           <div class="card-body">
-            {{"Dissolved Oxygen: " + str(round(MediaEntry.dissolvedOxygen,3)) + " mg/L"}}
+            {{"Dissolved Oxygen: " + str(round(MediaMetadata.dissolvedOxygen,3)) + " mg/L"}}
           </div>
         </div>
       </div>

@@ -112,6 +112,37 @@ def listView():
 @app.route("/entry/<id>")
 def entry(id=0):
     """Return render template for a specific entry."""
+    MediaEntry=getMediaEntry(db,id)
+    if MediaEntry.shotType == "SINGLE":
+        return render_template("singleEntry.html",
+                               MediaMetadata=getAllMediaMetadataId(db, id)[0],
+                               str=str,
+                               round=round,
+                               url_for=url_for)
+    elif MediaEntry.shotType == "BURST":
+        return render_template("burstEntry.html",
+                               MediaMetadata=getAllMediaMetadataId(db, id),
+                               enumerate=enumerate,
+                               str=str,
+                               round=round,
+                               url_for=url_for)
+    elif MediaEntry.shotType == "TIMELAPSE":
+        return render_template("timeLapseEntry.html",
+                               MediaMetadata=getAllMediaMetadataId(db, id),
+                               enumerate=enumerate,
+                               str=str,
+                               round=round,
+                               url_for=url_for)
+    elif MediaEntry.shotType == "VIDEO":
+        return render_template("videoEntry.html",
+                               MediaMetadata=getAllMediaMetadataId(db, id),
+                               enumerate=enumerate,
+                               str=str,
+                               round=round,
+                               url_for=url_for)
+
+
+
     return render_template("entry.html",
                            MediaEntry=getMediaEntry(db, id),
                            MediaMetadata=getAllMediaMetadataId(db, id),
