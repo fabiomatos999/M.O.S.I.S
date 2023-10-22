@@ -6,13 +6,14 @@ from flask import render_template, url_for, Flask, request
 from flask_sqlalchemy import SQLAlchemy
 from representations import MediaEntryInternalRepresentation
 import os
-from forms import return_study_profile_form, searchForm
+from forms import return_study_profile_form, return_search_form
 import json
 from sqlalchemy.dialects.sqlite import TEXT, REAL, INTEGER
 import webbrowser
 from representations import MediaMetadataInternalRepresentation
 from sqlalchemy import select, desc, asc
 from datetime import datetime
+import re
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -157,13 +158,13 @@ def save():
                                studies=remove_submit(studies))
 
 
-@app.route("/search", methods=['GET', 'POST'])
-def search():
+@app.route("/search/<category>", methods=['GET', 'POST'])
+def search(category: str):
     """Serve search form if GET or serve search results if post."""
-    form = searchForm()
+    form = return_search_form(category)
     if form.is_submitted():
         ret = request.form
-        searchBy = ret["searchBy"]
+        searchBy = category
         searchQuery = ret["search"]
         mediaEntries = getMediaEntriesBySearchBy(searchBy, searchQuery)
         return render_template('index.html',
@@ -172,7 +173,22 @@ def search():
                                getAllMediaMetadataId=getAllMediaMetadataId,
                                enumerate=enumerate,
                                str=str)
-    return render_template('searchForm.html', form=form)
+
+    def prettyCategory(searchBy: str) -> str:
+        if searchBy == "id":
+            return "ID"
+        elif searchBy == "shotType":
+            return "Shot Type"
+        elif searchBy == "date":
+            return "Date"
+        elif searchBy == "illuminationType":
+            return "Illumination Type"
+        else:
+            raise ValueError("Invalid search category.")
+
+    return render_template('searchForm.html',
+                           form=form,
+                           searchBy=prettyCategory(category))
 
 
 def writeStudyProfilesToJSON(studies: [dict]):
@@ -322,9 +338,9 @@ def getMediaEntriesByShotType(
     ret = list(
         map(
             lambda x: MediaEntryInternalRepresentation(x[0].entryId, x[
-                0].shotType, x[0].time, x[0].illuminationType, x[0].iso, x[
-                    0].apertureSize, x[0].shutterSpeed, x[0].whiteBalance),
-            ret))
+                0].shotType, x[0].time, x[0].illuminationType, x[
+                    0].saturation, x[0].gain, x[0].shutterSpeed, x[0].
+                                                       whiteBalance), ret))
     return ret
 
 
@@ -335,9 +351,9 @@ def getMediaEntriesByTime(db, time: str) -> [MediaEntryInternalRepresentation]:
     ret = list(
         map(
             lambda x: MediaEntryInternalRepresentation(x[0].entryId, x[
-                0].shotType, x[0].time, x[0].illuminationType, x[0].iso, x[
-                    0].apertureSize, x[0].shutterSpeed, x[0].whiteBalance),
-            ret))
+                0].shotType, x[0].time, x[0].illuminationType, x[
+                    0].saturation, x[0].gain, x[0].shutterSpeed, x[0].
+                                                       whiteBalance), ret))
     return ret
 
 
@@ -350,13 +366,11 @@ def getMediaEntriesByIlluminationType(
     ret = list(
         map(
             lambda x: MediaEntryInternalRepresentation(x[0].entryId, x[
-                0].shotType, x[0].time, x[0].illuminationType, x[0].iso, x[
-                    0].apertureSize, x[0].shutterSpeed, x[0].whiteBalance),
-            ret))
+                0].shotType, x[0].time, x[0].illuminationType, x[
+                    0].saturation, x[0].gain, x[0].shutterSpeed, x[0].
+                                                       whiteBalance), ret))
     return ret
 
-
-import re
 
 dualEndedRangeRegex = r'^\d+-\d+$'
 leftEndedRangeragex = r'^\d+-$'
@@ -419,5 +433,5 @@ if __name__ == "__main__":
             raise ValueError("Invalid IP Address or Hostname was inputted.")
     from waitress import serve
     webbrowser.open("http://127.0.0.1:5000", new=2, autoraise=True)
-    serve(app, host="0.0.0.0", port=5000)
-    # app.run(debug=True)
+    #serve(app, host="0.0.0.0", port=5000)
+    app.run(debug=True)
