@@ -1,10 +1,11 @@
 """Classes and functions for study profile configuration forms."""
 from flask_wtf import FlaskForm
 from wtforms import DecimalField, SubmitField, SelectField, StringField
-from wtforms.validators import InputRequired, NumberRange
+from wtforms.validators import InputRequired, NumberRange, ValidationError
 import decimal
 from enums import shotType, illuminationType
 from typing import Type
+import re
 
 
 class BaseShotTypeForm(FlaskForm):
@@ -37,12 +38,24 @@ class BaseShotTypeForm(FlaskForm):
         default=100,
         validators=[InputRequired(), NumberRange(0, 200)])
 
-    shutterSpeed = DecimalField(
-        'Shutter Speed (s)',
-        places=5,
-        default=0.0167,
-        validators=[InputRequired(),
-                    NumberRange(0.00002, 120.0)])
+    shutterSpeed = StringField('Shutter Speed (s)',
+                               default="1/60",
+                               validators=[InputRequired()])
+
+    def validate_shutterSpeed(form, field):
+        shutterSpeed = field.data
+        if re.match(r"^\d+\/\d+$", shutterSpeed):
+            numerator = int(shutterSpeed.split("/")[0])
+            denominator = int(shutterSpeed.split("/")[1])
+            if not (0.00002 < numerator / denominator < 2):
+                raise ValidationError(
+                    "Please input a value between 0.00002 and 2.")
+        elif re.match(r"^\d+$", shutterSpeed):
+            if not (0.00002 < float(shutterSpeed) < 2):
+                raise ValidationError(
+                    "Please input a value between 0.00002 and 2.")
+        else:
+            raise ValidationError("Please Input a Valid Fraction.")
 
     submit = SubmitField('Submit Study')
 

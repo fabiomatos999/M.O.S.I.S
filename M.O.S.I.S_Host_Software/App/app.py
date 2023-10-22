@@ -105,14 +105,18 @@ def index():
                            enumerate=enumerate,
                            str=str)
 
+
 @app.route("/list")
 def listView():
-    return render_template("listView.html", MediaEntries=getAllMediaEntry(db), str=str)
+    return render_template("listView.html",
+                           MediaEntries=getAllMediaEntry(db),
+                           str=str)
+
 
 @app.route("/entry/<id>")
 def entry(id=0):
     """Return render template for a specific entry."""
-    MediaEntry=getMediaEntry(db,id)
+    MediaEntry = getMediaEntry(db, id)
     if MediaEntry.shotType == "SINGLE":
         return render_template("singleEntry.html",
                                MediaMetadata=getAllMediaMetadataId(db, id)[0],
@@ -140,23 +144,23 @@ def entry(id=0):
                                str=str,
                                round=round,
                                url_for=url_for)
+    else:
+        return render_template("entry.html",
+                               MediaEntry=getMediaEntry(db, id),
+                               MediaMetadata=getAllMediaMetadataId(db, id),
+                               enumerate=enumerate,
+                               str=str,
+                               round=round,
+                               url_for=url_for)
 
 
-
-    return render_template("entry.html",
-                           MediaEntry=getMediaEntry(db, id),
-                           MediaMetadata=getAllMediaMetadataId(db, id),
-                           enumerate=enumerate,
-                           str=str,
-                           round=round,
-                           url_for=url_for)
-
-
-def remove_submit(studies: list) -> list:
+def remove_submit_and_csrf_toten(studies: list) -> list:
     """Remove submit form field from studies."""
     ret = list()
     for study in studies:
-        filtered_keys = list(filter(lambda x: x != 'submit', study.keys()))
+        filtered_keys = list(
+            filter(lambda x: x != 'submit' and x != "csrf_token",
+                   study.keys()))
         temp_dict = dict()
         for key in filtered_keys:
             temp_dict[key] = study[key]
@@ -168,20 +172,23 @@ def remove_submit(studies: list) -> list:
 def single(st="single"):
     """Serve shot type study profile template configuration page."""
     form = return_study_profile_form(st)
-
     if form.is_submitted():
-        studies.append(request.form)
-        return index()
-    return render_template(form.filename,
-                           form=form,
-                           studies=remove_submit(studies))
+        if form.validate():
+            studies.append(request.form)
+            return index()
+    return render_template(
+        form.filename,
+        form=form,
+        studies=remove_submit_and_csrf_toten(studies),
+        error=form.errors,
+    )
 
 
 @app.route("/save", methods=["GET", "POST"])
 def save():
     """Serve study profile preview and save page."""
     if request.method == "POST":
-        writeStudyProfilesToJSON(remove_submit(studies))
+        writeStudyProfilesToJSON(remove_submit_and_csrf_toten(studies))
         if not args.nobackup:
             rsyncCopy.rsync_recursive_copy(
                 os.path.realpath("studyProfile.json"),
@@ -189,7 +196,7 @@ def save():
         return index()
     else:
         return render_template("saveStudyProfile.html",
-                               studies=remove_submit(studies))
+                               studies=remove_submit_and_csrf_toten(studies))
 
 
 @app.route("/search/<category>", methods=['GET', 'POST'])
