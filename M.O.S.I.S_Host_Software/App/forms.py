@@ -1,6 +1,7 @@
 """Classes and functions for study profile configuration forms."""
 from flask_wtf import FlaskForm
-from wtforms import DecimalField, SubmitField, SelectField, StringField
+from wtforms import DecimalField, SubmitField, SelectField, StringField, \
+    BooleanField
 from wtforms.validators import InputRequired, NumberRange, ValidationError
 import decimal
 from enums import shotType, illuminationType
@@ -146,11 +147,12 @@ def return_study_profile_form(class_string: str) -> Type[BaseShotTypeForm]:
 
 
 class baseSearchForm(FlaskForm):
+    listView = BooleanField("List View")
     submit = SubmitField('Submit Study')
 
 
 class idSearchForm(baseSearchForm):
-    search = StringField("Search")
+    search = StringField("Search", validators=[InputRequired()])
 
 
 class shotTypeSearchForm(baseSearchForm):
@@ -162,7 +164,7 @@ class shotTypeSearchForm(baseSearchForm):
 
 
 class dateSearchForm(baseSearchForm):
-    search = StringField("Search")
+    search = StringField("Search", validators=[InputRequired()])
 
 
 class illuminationTypeSearchForm(baseSearchForm):

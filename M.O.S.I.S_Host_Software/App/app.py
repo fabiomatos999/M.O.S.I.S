@@ -208,12 +208,20 @@ def search(category: str):
         searchBy = category
         searchQuery = ret["search"]
         mediaEntries = getMediaEntriesBySearchBy(searchBy, searchQuery)
-        return render_template('index.html',
-                               MediaEntries=mediaEntries,
-                               db=db,
-                               getAllMediaMetadataId=getAllMediaMetadataId,
-                               enumerate=enumerate,
-                               str=str)
+        if ret["listView"]:
+            return render_template('listView.html',
+                                   MediaEntries=mediaEntries,
+                                   db=db,
+                                   getAllMediaMetadataId=getAllMediaMetadataId,
+                                   enumerate=enumerate,
+                                   str=str)
+        else:
+            return render_template('index.html',
+                                   MediaEntries=mediaEntries,
+                                   db=db,
+                                   getAllMediaMetadataId=getAllMediaMetadataId,
+                                   enumerate=enumerate,
+                                   str=str)
 
     def prettyCategory(searchBy: str) -> str:
         if searchBy == "id":
