@@ -17,12 +17,14 @@ class BaseShotTypeForm(FlaskForm):
         default=3200,
         validators=[InputRequired(), NumberRange(3200, 6500)])
 
-    illuminationType = SelectField(
-        'Illumination Type',
-        choices=[(illuminationType.NONE.name, "None"),
-                 (illuminationType.WHITE.name, "White"),
-                 (illuminationType.RED.name, "Red"),
-                 (illuminationType.ULTRAVIOLET.name, "Ultraviolet")])
+    illuminationType = SelectField('Illumination Type',
+                                   choices=[
+                                       (illuminationType.NONE.name, "None"),
+                                       (illuminationType.WHITE.name, "White"),
+                                       (illuminationType.RED.name, "Red"),
+                                       (illuminationType.ULTRAVIOLET.name,
+                                        "Ultraviolet")
+                                   ])
 
     gain = DecimalField('Gain (dB)',
                         places=2,
@@ -89,7 +91,7 @@ class ShotTypeTimeLapseForm(BaseShotTypeForm):
                         places=0,
                         default=60,
                         validators=[InputRequired(),
-                                    NumberRange(1)])
+                                    NumberRange(0.1)])
     photoCount = DecimalField('Amount of Pictures',
                               places=0,
                               default=5,
@@ -110,8 +112,8 @@ class ShotTypeVideoForm(BaseShotTypeForm):
                                            NumberRange(2)])
 
 
-def return_form(class_string: str) -> Type[BaseShotTypeForm]:
-    """Return shot type form based on string.
+def return_study_profile_form(class_string: str) -> Type[BaseShotTypeForm]:
+    """Return Study Profile form based on string.
 
     It will raise a ValueError exception if class_string is not either:
     'single', 'burst', 'telescopic', 'timeLapse', 'video'
@@ -130,10 +132,45 @@ def return_form(class_string: str) -> Type[BaseShotTypeForm]:
         raise ValueError("Cannot serve form.")
 
 
-class searchForm(FlaskForm):
+class baseSearchForm(FlaskForm):
     searchBy = SelectField('Search By',
                            choices=[("id", "ID"), ("shotType", "Shot Type"),
                                     ("date", "Date"),
                                     ("illuminationType", "Illumination Type")])
-    search = StringField("Search")
     submit = SubmitField('Submit Study')
+
+
+class idSearchForm(baseSearchForm):
+    search = StringField("Search")
+
+
+class shotTypeSearchForm(baseSearchForm):
+    shotType = SelectField('Shot Type',
+                           choices=[("SINGLE", "Single"), ("BURST", "Burst"),
+                                    ("TELESCOPIC", "Telescopic"),
+                                    ("TIMElAPSE", "Time Lapse"),
+                                    ("VIDEO", "Video")])
+
+
+class dateSearchForm(baseSearchForm):
+    search = StringField("Search")
+
+
+class illuminationTypeSearchForm(baseSearchForm):
+    illuminationType = SelectField('Illumination Type',
+                                   choices=[("WHITE", "White"), ("RED", "Red"),
+                                            ("ULTRAVIOLET", "Ultraviolet"),
+                                            ("NONE", "None")])
+
+
+def return_search_form(searchBy: str) -> baseSearchForm:
+    if searchBy == "id":
+        return idSearchForm()
+    elif searchBy == "shotType":
+        return shotTypeSearchForm()
+    elif searchBy == "date":
+        return dateSearchForm()
+    elif searchBy == "illuminationType":
+        return illuminationType()
+    else:
+        raise ValueError("Invalid search category.")
