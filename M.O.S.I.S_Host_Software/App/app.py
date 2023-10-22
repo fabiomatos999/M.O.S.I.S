@@ -105,6 +105,9 @@ def index():
                            enumerate=enumerate,
                            str=str)
 
+@app.route("/list")
+def listView():
+    return render_template("listView.html", MediaEntries=getAllMediaEntry(db), str=str)
 
 @app.route("/entry/<id>")
 def entry(id=0):

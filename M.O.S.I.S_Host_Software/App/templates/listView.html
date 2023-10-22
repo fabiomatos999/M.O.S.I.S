@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %} M.O.S.I.S Host
+M.O.S.I.S Host Software Home Page{% endblock %}
+{% block body %}
+<table class="table table-striped">
+    <thead>
+        <th scope="col">ID</th>
+        <th scope="col">Shot Type</th>
+        <th scope="col">Time</th>
+        <th scope="col">Illumination Type</th>
+        <th scope="col">Gain</th>
+        <th scope="col">Saturation</th>
+        <th scope="col">Shutter Speed</th>
+        <th scope="col">White Balance</th>
+        <th scope="col">Link</th>
+    </thead>
+    <tbody>
+    {% for MediaEntry in MediaEntries %}
+        <tr>
+            <td>{{MediaEntry.entryId}}</td>
+            <td>{{MediaEntry.shotType}}</td>
+            <td>{{MediaEntry.time}}</td>
+            <td>{{MediaEntry.illuminationType}}</td>
+            <td>{{MediaEntry.gain}}</td>
+            <td>{{MediaEntry.saturation}}</td>
+            <td>{{MediaEntry.shutterSpeed}}</td>
+            <td>{{MediaEntry.whiteBalance}}</td>
+            <td><a href={{"entry/" + str(MediaEntry.entryId)}}>Link</a></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
