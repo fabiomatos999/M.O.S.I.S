@@ -266,3 +266,13 @@ class Ui_Form(object):
         self.ip_label.setText(_translate("Form", "IP: 192.168.0.50"))
         self.left_camera.setText(_translate("Form", "TextLabel"))
         self.right_camera.setText(_translate("Form", "TextLabel"))
+
+if __name__ == "__main__":
+    import sys
+
+    app = QtWidgets.QApplication(sys.argv)
+    form = QtWidgets.QWidget()
+    ui = Ui_Form()
+    ui.setupUi(form)
+    form.show()
+    sys.exit(app.exec())

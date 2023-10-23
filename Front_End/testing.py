@@ -9,8 +9,8 @@ from ApertureSizeConfigurationMenu import Ui_ApertureSizeConfigurationMenu
 from ShutterSpeedConfigurationMenu import Ui_ShutterSpeedConfigurationMenu
 from GainConfigurationMenu import Ui_GainConfigurationMenu
 from SaturationConfigurationMenu import Ui_SaturationConfigurationMenu
-from PreviewScreen import Ui_Form
-from StudyProfileSelectionMenu import Ui_Form
+#from PreviewScreen import Ui_Form
+#from StudyProfileSelectionMenu import Ui_Form
 class MyMainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -20,7 +20,7 @@ class MyMainWindow(QMainWindow):
         #self.ui = Ui_GainConfigurationMenu()
         #self.ui = Ui_SaturationConfigurationMenu()
         self.ui.setupUi(self)
-        """
+
         self.sliders = [self.ui.LowPointslide, self.ui.MidPointslide, self.ui.Highpointslide]
         self.current_slider_index = 0
         self.sliders[self.current_slider_index].setFocus()
@@ -36,7 +36,7 @@ class MyMainWindow(QMainWindow):
             # Set focus to the next slider in the cycle
         self.sliders[self.current_slider_index].setFocus()
         self.sliders[self.current_slider_index].setStyleSheet( "QSlider::handle:horizontal {background-color:rgb(204, 255, 89);}")
-    """
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

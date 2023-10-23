@@ -281,3 +281,13 @@ class Ui_ShutterSpeedConfigurationMenu(object):
         self.SS18Button.setText(_translate("ShutterSpeedConfigurationMenu", "1/8"))
         self.SS14Button.setText(_translate("ShutterSpeedConfigurationMenu", "1/4"))
         self.SS1500Button.setText(_translate("ShutterSpeedConfigurationMenu", "1/500"))
+
+if __name__ == "__main__":
+    import sys
+
+    app = QtWidgets.QApplication(sys.argv)
+    form = QtWidgets.QWidget()
+    ui = Ui_ShutterSpeedConfigurationMenu()
+    ui.setupUi(form)
+    form.show()
+    sys.exit(app.exec())

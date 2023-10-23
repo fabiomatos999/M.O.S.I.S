@@ -381,28 +381,41 @@ class Ui_Form(object):
         self.doZeroCal_2.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.doZeroCal_2.setObjectName("doZeroCal_2")
         self.CalibrateZeroCal = QtWidgets.QPushButton(parent=Form)
-        self.CalibrateZeroCal.setGeometry(QtCore.QRect(490, 150, 374, 48))
+        self.CalibrateZeroCal.setGeometry(QtCore.QRect(490, 140, 374, 48))
         self.CalibrateZeroCal.setBaseSize(QtCore.QSize(171, 48))
         self.CalibrateZeroCal.setStyleSheet("QPushButton {\n"
+          "    color: rgb(89, 239, 150);\n"
 "    background-color: rgb(106, 110, 128);\n"
 "}"
 "")
+        font = QtGui.QFont()
+        font.setPointSize(28)
+        self.CalibrateZeroCal.setFont(font)
         self.CalibrateZeroCal.setObjectName("CalibrateZeroCal")
         self.CalibrateAtmoCal = QtWidgets.QPushButton(parent=Form)
-        self.CalibrateAtmoCal.setGeometry(QtCore.QRect(490, 250, 374, 48))
+        self.CalibrateAtmoCal.setGeometry(QtCore.QRect(490, 230, 374, 48))
         self.CalibrateAtmoCal.setBaseSize(QtCore.QSize(171, 48))
         self.CalibrateAtmoCal.setStyleSheet("QPushButton {\n"
+           "    color: rgb(89, 239, 150);\n"                                 
 "    background-color: rgb(106, 110, 128);\n"
+                                            
 "}"
 "")
+        font = QtGui.QFont()
+        font.setPointSize(28)
+        self.CalibrateAtmoCal.setFont(font)
         self.CalibrateAtmoCal.setObjectName("CalibrateAtmoCal")
         self.Clear = QtWidgets.QPushButton(parent=Form)
         self.Clear.setGeometry(QtCore.QRect(490, 330, 374, 48))
         self.Clear.setBaseSize(QtCore.QSize(171, 48))
         self.Clear.setStyleSheet("QPushButton {\n"
+         "    color: rgb(89, 239, 150);\n"
 "    background-color: rgb(106, 110, 128);\n"
 "}"
 "")
+        font = QtGui.QFont()
+        font.setPointSize(28)
+        self.Clear.setFont(font)
         self.Clear.setObjectName("Clear")
 
         self.retranslateUi(Form)
@@ -418,3 +431,14 @@ class Ui_Form(object):
         self.CalibrateZeroCal.setText(_translate("Form", "Calibrate"))
         self.CalibrateAtmoCal.setText(_translate("Form", "Calibrate"))
         self.Clear.setText(_translate("Form", "Clear"))
+
+
+if __name__ == "__main__":
+    import sys
+
+    app = QtWidgets.QApplication(sys.argv)
+    form = QtWidgets.QWidget()
+    ui = Ui_Form()
+    ui.setupUi(form)
+    form.show()
+    sys.exit(app.exec())

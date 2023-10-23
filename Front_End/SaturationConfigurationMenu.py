@@ -199,3 +199,14 @@ class Ui_SaturationConfigurationMenu(object):
     def slider_value(self):
         value = self.horizontalSlider.value()
         self.CurrentSaturationLabel.setText("Current Saturation: " + str(value))
+
+
+if __name__ == "__main__":
+    import sys
+
+    app = QtWidgets.QApplication(sys.argv)
+    form = QtWidgets.QWidget()
+    ui = Ui_SaturationConfigurationMenu()
+    ui.setupUi(form)
+    form.show()
+    sys.exit(app.exec())

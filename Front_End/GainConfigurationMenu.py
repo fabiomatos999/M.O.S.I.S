@@ -197,3 +197,14 @@ class Ui_GainConfigurationMenu(object):
     def slider_value(self):
         value = self.horizontalSlider.value()
         self.CurrentGainLabel.setText("Current Gain: " + str(value/10))
+
+
+if __name__ == "__main__":
+    import sys
+
+    app = QtWidgets.QApplication(sys.argv)
+    form = QtWidgets.QWidget()
+    ui = Ui_GainConfigurationMenu()
+    ui.setupUi(form)
+    form.show()
+    sys.exit(app.exec())

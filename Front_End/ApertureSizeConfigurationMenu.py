@@ -272,3 +272,13 @@ class Ui_ApertureSizeConfigurationMenu(object):
         self.f11Button.setText(_translate("ApertureSizeConfigurationMenu", "f/11.0"))
         self.f16Button.setText(_translate("ApertureSizeConfigurationMenu", "f/16.0"))
         self.f22Button_2.setText(_translate("ApertureSizeConfigurationMenu", "f/22.0"))
+
+if __name__ == "__main__":
+    import sys
+
+    app = QtWidgets.QApplication(sys.argv)
+    form = QtWidgets.QWidget()
+    ui = Ui_ApertureSizeConfigurationMenu()
+    ui.setupUi(form)
+    form.show()
+    sys.exit(app.exec())

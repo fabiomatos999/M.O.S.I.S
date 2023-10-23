@@ -553,6 +553,7 @@ class Ui_Form(object):
         self.HighPoint14text.setStyleSheet("label{\n"
 "    color: rgb(255, 149, 1);\n"
 "}")
+
         self.HighPoint14text.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.HighPoint14text.setObjectName("HighPoint14text")
         self.LowPointslide.valueChanged.connect(
@@ -579,5 +580,32 @@ class Ui_Form(object):
         self.LowPoint14text.setText(_translate("Form", "14"))
         self.MidPoint14text.setText(_translate("Form", "14"))
         self.HighPoint14text.setText(_translate("Form", "14"))
+        self.sliders = [self.LowPointslide, self.MidPointslide, self.Highpointslide]
+        self.current_slider_index = 0
+
+    def keyPressEvent(self, event):
+        if event.key() == Qt.Key.Key_K:
+            # Increment the current slider index and cycle through the list
+            self.sliders[self.current_slider_index].setStyleSheet(
+                "QSlider::handle:horizontal {background-color:rgb(89, 239, 150);}")
+            self.current_slider_index = (self.current_slider_index + 1) % len(self.sliders)
+        else:
+            self.sliders[self.current_slider_index].setStyleSheet(
+                "QSlider::handle:horizontal {background-color:rgb(89, 239, 150);}")
+            self.current_slider_index = (self.current_slider_index - 1) % len(self.sliders)
+            # Set focus to the next slider in the cycle
+        self.sliders[self.current_slider_index].setFocus()
+        self.sliders[self.current_slider_index].setStyleSheet(
+            "QSlider::handle:horizontal {background-color:rgb(204, 255, 89);}")
+
+if __name__ == "__main__":
+    import sys
+
+    app = QtWidgets.QApplication(sys.argv)
+    form = QtWidgets.QWidget()
+    ui = Ui_Form()
+    ui.setupUi(form)
+    form.show()
+    sys.exit(app.exec())
 
 

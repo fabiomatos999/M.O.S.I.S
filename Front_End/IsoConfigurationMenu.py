@@ -162,15 +162,24 @@ class Ui_ISOConfigurationMenu(object):
         self.ISO100Button.setGeometry(QtCore.QRect(10, 110, 212, 46))
         self.ISO100Button.setStyleSheet("background-color: rgb(0, 0, 0);\n"
 "color: rgb(255, 149, 1);")
+        font = QtGui.QFont()
+        font.setPointSize(28)
+        self.ISO100Button.setFont(font)
         self.ISO100Button.setCheckable(False)
         self.ISO100Button.setObjectName("ISO100Button")
         self.ISO200Button = QtWidgets.QPushButton(parent=ISOConfigurationMenu)
         self.ISO200Button.setGeometry(QtCore.QRect(10, 160, 212, 46))
+        font = QtGui.QFont()
+        font.setPointSize(28)
+        self.ISO200Button.setFont(font)
         self.ISO200Button.setStyleSheet("background-color: rgb(0, 0, 0);\n"
 "color: rgb(255, 149, 1);")
         self.ISO200Button.setObjectName("ISO200Button")
         self.ISO400Button = QtWidgets.QPushButton(parent=ISOConfigurationMenu)
         self.ISO400Button.setGeometry(QtCore.QRect(10, 210, 212, 46))
+        font = QtGui.QFont()
+        font.setPointSize(28)
+        self.ISO400Button.setFont(font)
         self.ISO400Button.setStyleSheet("background-color: rgb(0, 0, 0);\n"
 "color: rgb(255, 149, 1);")
         self.ISO400Button.setObjectName("ISO400Button")
@@ -181,18 +190,30 @@ class Ui_ISOConfigurationMenu(object):
 "background-color: rgb(0, 0, 0);")
         self.ISO800Button.setAutoDefault(True)
         self.ISO800Button.setDefault(True)
+        font = QtGui.QFont()
+        font.setPointSize(28)
+        self.ISO800Button.setFont(font)
         self.ISO800Button.setObjectName("ISO800Button")
         self.ISO1600Button = QtWidgets.QPushButton(parent=ISOConfigurationMenu)
         self.ISO1600Button.setGeometry(QtCore.QRect(10, 310, 212, 46))
+        font = QtGui.QFont()
+        font.setPointSize(28)
+        self.ISO1600Button.setFont(font)
         self.ISO1600Button.setStyleSheet("background-color: rgb(0, 0, 0);\n"
 "color: rgb(255, 149, 1);")
         self.ISO1600Button.setObjectName("ISO1600Button")
         self.ISO3200Button = QtWidgets.QPushButton(parent=ISOConfigurationMenu)
         self.ISO3200Button.setGeometry(QtCore.QRect(10, 360, 212, 46))
+        font = QtGui.QFont()
+        font.setPointSize(28)
+        self.ISO3200Button.setFont(font)
         self.ISO3200Button.setStyleSheet("background-color: rgb(0, 0, 0);\n"
 "color: rgb(255, 149, 1);")
         self.ISO3200Button.setObjectName("ISO3200Button")
         self.ISO6400Button = QtWidgets.QPushButton(parent=ISOConfigurationMenu)
+        font = QtGui.QFont()
+        font.setPointSize(28)
+        self.ISO6400Button.setFont(font)
         self.ISO6400Button.setGeometry(QtCore.QRect(10, 410, 212, 46))
         self.ISO6400Button.setStyleSheet("background-color: rgb(0, 0, 0);\n"
 "color: rgb(255, 149, 1);")
@@ -222,4 +243,13 @@ class Ui_ISOConfigurationMenu(object):
         self.ISO3200Button.setText(_translate("ISOConfigurationMenu", "ISO 3200"))
         self.ISO6400Button.setText(_translate("ISOConfigurationMenu", "ISO 6400"))
 
+if __name__ == "__main__":
+    import sys
+
+    app = QtWidgets.QApplication(sys.argv)
+    form = QtWidgets.QWidget()
+    ui = Ui_ISOConfigurationMenu()
+    ui.setupUi(form)
+    form.show()
+    sys.exit(app.exec())
 
