@@ -7,6 +7,7 @@
 
 
 from PyQt6 import QtCore, QtGui, QtWidgets
+from PIL import Image
 
 
 class Ui_Form(object):
@@ -245,7 +246,6 @@ class Ui_Form(object):
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
         self.left_camera = QtWidgets.QLabel(parent=self.layoutWidget2)
         self.left_camera.setStyleSheet("background-color: rgb(255, 255, 255);")
-        self.left_camera.setObjectName("left_camera")
         self.horizontalLayout_3.addWidget(self.left_camera)
         self.right_camera = QtWidgets.QLabel(parent=self.layoutWidget2)
         self.right_camera.setStyleSheet("background-color: rgb(255, 255, 255);")
@@ -266,6 +266,13 @@ class Ui_Form(object):
         self.ip_label.setText(_translate("Form", "IP: 192.168.0.50"))
         self.left_camera.setText(_translate("Form", "TextLabel"))
         self.right_camera.setText(_translate("Form", "TextLabel"))
+        image = Image.open("/home/gram/Github_Repos/University/M.O.S.I.S/Front_End/coral.jpeg")
+        image.thumbnail((400,400))
+        image.save("/home/gram/Github_Repos/University/M.O.S.I.S/Front_End/thumbnail.jpeg")
+        self.left_camera.setStyleSheet("")
+        self.right_camera.setStyleSheet("")
+        self.left_camera.setPixmap(QtGui.QPixmap("/home/gram/Github_Repos/University/M.O.S.I.S/Front_End/thumbnail.jpeg"))
+        self.right_camera.setPixmap(QtGui.QPixmap("/home/gram/Github_Repos/University/M.O.S.I.S/Front_End/thumbnail.jpeg"))
 
 if __name__ == "__main__":
     import sys
