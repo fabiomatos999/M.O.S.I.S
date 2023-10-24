@@ -440,8 +440,9 @@ class Ui_Form(object):
         self.verticalLayout.addWidget(self.label)
         self.verticalLayout_2.addLayout(self.verticalLayout)
 
-        self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
+        self.groupBox = QtWidgets.QGroupBox()
+        self.groupBox.setLayout(self.verticalLayout)
 
     def setStudyProfileSumary(self):
         selectedItem = self.listWidget.selectedItems()[0].text()
@@ -456,12 +457,12 @@ class Ui_Form(object):
         Form.setWindowTitle(_translate("Form", "Form"))
 
 
-if __name__ == "__main__":
-    import sys
+# if __name__ == "__main__":
+#     import sys
 
-    app = QtWidgets.QApplication(sys.argv)
-    form = QtWidgets.QWidget()
-    ui = Ui_Form()
-    ui.setupUi(form)
-    form.show()
-    sys.exit(app.exec())
+#     app = QtWidgets.QApplication(sys.argv)
+#     form = QtWidgets.QWidget()
+#     ui = Ui_Form()
+#     ui.setupUi(form)
+#     form.show()
+#     sys.exit(app.exec())
