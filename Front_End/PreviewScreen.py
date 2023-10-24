@@ -262,7 +262,7 @@ class Ui_Form(object):
         self.pressure_label.setText(_translate("Form", "DO: 100.000 mg/L"))
         self.dissolved_oxygen_label.setText(_translate("Form", "In Progress"))
         self.temperature_label.setText(_translate("Form", "Temp: 25.068C"))
-        self.ph_label.setText(_translate("Form", "pHL 7.000"))
+        self.ph_label.setText(_translate("Form", "pH 7.000"))
         self.ip_label.setText(_translate("Form", "IP: 192.168.0.50"))
         self.left_camera.setText(_translate("Form", "TextLabel"))
         self.right_camera.setText(_translate("Form", "TextLabel"))

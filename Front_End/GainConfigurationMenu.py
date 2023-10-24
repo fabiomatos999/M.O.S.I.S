@@ -189,14 +189,14 @@ class Ui_GainConfigurationMenu(object):
     def retranslateUi(self, GainConfigurationMenu):
         _translate = QtCore.QCoreApplication.translate
         GainConfigurationMenu.setWindowTitle(_translate("GainConfigurationMenu", "GainConfigurationMenu"))
-        self.CurrentGainLabel.setText(_translate("GainConfigurationMenu", "Current Gain: 0"))
+        self.CurrentGainLabel.setText(_translate("GainConfigurationMenu", "Gain: 0"))
         self.label0.setText(_translate("GainConfigurationMenu", "0"))
         self.label24.setText(_translate("GainConfigurationMenu", "24"))
 
 
     def slider_value(self):
         value = self.horizontalSlider.value()
-        self.CurrentGainLabel.setText("Current Gain: " + str(value/10))
+        self.CurrentGainLabel.setText("Gain: " + str(value/10))
 
 
 if __name__ == "__main__":

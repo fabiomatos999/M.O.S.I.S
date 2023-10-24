@@ -192,13 +192,13 @@ class Ui_SaturationConfigurationMenu(object):
     def retranslateUi(self, SaturationConfigurationMenu):
         _translate = QtCore.QCoreApplication.translate
         SaturationConfigurationMenu.setWindowTitle(_translate("SaturationConfigurationMenu", "SaturationConfigurationMenu"))
-        self.CurrentSaturationLabel.setText(_translate("SaturationConfigurationMenu", "Current Saturation: 0"))
+        self.CurrentSaturationLabel.setText(_translate("SaturationConfigurationMenu", "Saturation: 0"))
         self.label0.setText(_translate("SaturationConfigurationMenu", "0"))
         self.label24.setText(_translate("SaturationConfigurationMenu", "200"))
 
     def slider_value(self):
         value = self.horizontalSlider.value()
-        self.CurrentSaturationLabel.setText("Current Saturation: " + str(value))
+        self.CurrentSaturationLabel.setText("Saturation: " + str(value))
 
 
 if __name__ == "__main__":

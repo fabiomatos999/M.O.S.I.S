@@ -1152,11 +1152,18 @@
      <height>48</height>
     </size>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>28</pointsize>
+    </font>
+   </property>
    <property name="styleSheet">
-    <string notr="true">QPushButton {
-     background-color: rgb(106, 110, 128);&quot;
-    }
-</string>
+    <string notr="true">QPushButton
+ {
+	background-color: rgb(106, 110, 128);
+	color: rgb(106, 110, 128);
+	color: rgb(89, 239, 150);
+}</string>
    </property>
    <property name="text">
     <string>Calibrate</string>
@@ -1177,11 +1184,18 @@
      <height>48</height>
     </size>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>28</pointsize>
+    </font>
+   </property>
    <property name="styleSheet">
-    <string notr="true">QPushButton {
-     background-color: rgb(106, 110, 128);&quot;
-    }
-</string>
+    <string notr="true">QPushButton
+ {
+	background-color: rgb(106, 110, 128);
+	color: rgb(106, 110, 128);
+	color: rgb(89, 239, 150);
+}</string>
    </property>
    <property name="text">
     <string>Calibrate</string>
@@ -1202,11 +1216,18 @@
      <height>48</height>
     </size>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>28</pointsize>
+    </font>
+   </property>
    <property name="styleSheet">
-    <string notr="true">QPushButton {
-     background-color: rgb(106, 110, 128);&quot;
-    }
-</string>
+    <string notr="true">QPushButton
+ {
+	background-color: rgb(106, 110, 128);
+	color: rgb(106, 110, 128);
+	color: rgb(89, 239, 150);
+}</string>
    </property>
    <property name="text">
     <string>Clear</string>

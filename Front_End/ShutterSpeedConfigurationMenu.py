@@ -157,7 +157,7 @@ class Ui_ShutterSpeedConfigurationMenu(object):
         font.setPointSize(48)
         self.CurrentShutterSpeedLabel.setFont(font)
         self.CurrentShutterSpeedLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
-        self.CurrentShutterSpeedLabel.setObjectName("CurrentShutterSpeedLabel")
+        self.CurrentShutterSpeedLabel.setObjectName("ShutterSpeedLabel")
         self.SS12000Button = QtWidgets.QPushButton(parent=ShutterSpeedConfigurationMenu)
         self.SS12000Button.setGeometry(QtCore.QRect(10, 80, 212, 46))
         font = QtGui.QFont()
@@ -244,25 +244,25 @@ class Ui_ShutterSpeedConfigurationMenu(object):
         self.SS1500Button.setObjectName("SS1500Button")
 
         self.SS12000Button.clicked.connect(
-            lambda: self.CurrentShutterSpeedLabel.setText("Current Shutter Speed : 1/2000"))
+            lambda: self.CurrentShutterSpeedLabel.setText("Shutter Speed : 1/2000"))
         self.SS11000Button.clicked.connect(
-            lambda: self.CurrentShutterSpeedLabel.setText("Current Shutter Speed : 1/1000"))
+            lambda: self.CurrentShutterSpeedLabel.setText("Shutter Speed : 1/1000"))
         self.SS1500Button.clicked.connect(
-            lambda: self.CurrentShutterSpeedLabel.setText("Current Shutter Speed : 1/500"))
+            lambda: self.CurrentShutterSpeedLabel.setText("Shutter Speed : 1/500"))
         self.SS1250Button.clicked.connect(
-            lambda: self.CurrentShutterSpeedLabel.setText("Current Shutter Speed : 1/250"))
+            lambda: self.CurrentShutterSpeedLabel.setText("Shutter Speed : 1/250"))
         self.SS125Button.clicked.connect(
-            lambda: self.CurrentShutterSpeedLabel.setText("Current Shutter Speed : 1/125"))
+            lambda: self.CurrentShutterSpeedLabel.setText("Shutter Speed : 1/125"))
         self.SS160Button.clicked.connect(
-            lambda: self.CurrentShutterSpeedLabel.setText("Current Shutter Speed : 1/60"))
+            lambda: self.CurrentShutterSpeedLabel.setText("Shutter Speed : 1/60"))
         self.SS130Button.clicked.connect(
-            lambda: self.CurrentShutterSpeedLabel.setText("Current Shutter Speed : 1/30"))
+            lambda: self.CurrentShutterSpeedLabel.setText("Shutter Speed : 1/30"))
         self.SS115Button.clicked.connect(
-            lambda: self.CurrentShutterSpeedLabel.setText("Current Shutter Speed : 1/15"))
+            lambda: self.CurrentShutterSpeedLabel.setText("Shutter Speed : 1/15"))
         self.SS18Button.clicked.connect(
-            lambda: self.CurrentShutterSpeedLabel.setText("Current Shutter Speed : 1/8"))
+            lambda: self.CurrentShutterSpeedLabel.setText("Shutter Speed : 1/8"))
         self.SS14Button.clicked.connect(
-            lambda: self.CurrentShutterSpeedLabel.setText("Current Shutter Speed : 1/4"))
+            lambda: self.CurrentShutterSpeedLabel.setText("Shutter Speed : 1/4"))
 
         self.retranslateUi(ShutterSpeedConfigurationMenu)
         QtCore.QMetaObject.connectSlotsByName(ShutterSpeedConfigurationMenu)
@@ -270,7 +270,7 @@ class Ui_ShutterSpeedConfigurationMenu(object):
     def retranslateUi(self, ShutterSpeedConfigurationMenu):
         _translate = QtCore.QCoreApplication.translate
         ShutterSpeedConfigurationMenu.setWindowTitle(_translate("ShutterSpeedConfigurationMenu", "ISOConfigurationMenu"))
-        self.CurrentShutterSpeedLabel.setText(_translate("ShutterSpeedConfigurationMenu", "Current Shutter Speed: 1/250"))
+        self.CurrentShutterSpeedLabel.setText(_translate("ShutterSpeedConfigurationMenu", "Shutter Speed: 1/250"))
         self.SS12000Button.setText(_translate("ShutterSpeedConfigurationMenu", "1/2000"))
         self.SS11000Button.setText(_translate("ShutterSpeedConfigurationMenu", "1/1000"))
         self.SS1250Button.setText(_translate("ShutterSpeedConfigurationMenu", "1/250"))

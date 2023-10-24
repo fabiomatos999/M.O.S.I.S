@@ -200,14 +200,14 @@ class Ui_Form(object):
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
-        self.CurrentWB.setText(_translate("Form", "Current WB: 3200K"))
+        self.CurrentWB.setText(_translate("Form", "WB: 3200K"))
         self.label3200k.setText(_translate("Form", "3,200K"))
         self.label6500K.setText(_translate("Form", "6,500K"))
 
 # Changes the text of the label to the value on the slider
     def slider_value(self):
         value = self.WBSlider.value()
-        self.CurrentWB.setText("Current WB: " + str(value) + "K")
+        self.CurrentWB.setText("WB: " + str(value) + "K")
 
 if __name__ == "__main__":
     import sys
