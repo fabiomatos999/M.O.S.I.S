@@ -22,7 +22,7 @@ class DatabaseQuery:
         )
         return ret
 
-    def getAllMediaMetadaByEntryId(self, entryId: int) -> DataClass.MediaMetadata:
+    def getAllMediaMetadaByEntryId(self, entryId: int) -> [DataClass.MediaMetadata]:
         ret = self.cursor.execute(
             "SELECT * FROM media_metadata WHERE entryId = ?", (entryId,)
         ).fetchall()
