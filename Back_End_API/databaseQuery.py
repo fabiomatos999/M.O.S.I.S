@@ -115,3 +115,15 @@ class DatabaseQuery:
         self.conn.commit()
         return self.cursor.lastrowid
 
+    #Gets all Media Entries from the media_entry table
+    def getAllMediaEntry(self) -> [str]:
+        ret = self.conn.execute("Select * from media_entry").fetchall()
+        ret = list(map(
+                lambda x: DataClass.MediaEntry(
+                    x[0], x[1], x[2], x[3], x[4], x[5], x[6], x[7]
+                ),
+                ret,
+            ))
+        ret = list(map(lambda x: str(x), ret))
+        return ret
+
