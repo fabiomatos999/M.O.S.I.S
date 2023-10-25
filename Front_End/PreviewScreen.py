@@ -237,38 +237,35 @@ class Ui_Form(object):
         self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_2.setSpacing(0)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
-        self.pressure_label_true = QtWidgets.QLabel(parent=self.layoutWidget)
+        self.pressure_label = QtWidgets.QLabel(parent=self.layoutWidget)
         font = QtGui.QFont()
         font.setPointSize(25)
-        self.pressure_label_true.setFont(font)
-        self.pressure_label_true.setStyleSheet("color: rgb(255, 149, 1);")
-        self.pressure_label_true.setAlignment(
-            QtCore.Qt.AlignmentFlag.AlignHCenter
-            | QtCore.Qt.AlignmentFlag.AlignTop)
-        self.pressure_label_true.setObjectName("status_label")
-        self.horizontalLayout_2.addWidget(self.pressure_label_true)
-        self.dissolved_oxygen_label_true = QtWidgets.QLabel(
+        self.pressure_label.setFont(font)
+        self.pressure_label.setStyleSheet("color: rgb(255, 149, 1);")
+        self.pressure_label.setAlignment(QtCore.Qt.AlignmentFlag.AlignHCenter
+                                         | QtCore.Qt.AlignmentFlag.AlignTop)
+        self.pressure_label.setObjectName("status_label")
+        self.horizontalLayout_2.addWidget(self.pressure_label)
+        self.dissolved_oxygen_label = QtWidgets.QLabel(
             parent=self.layoutWidget)
         font = QtGui.QFont()
         font.setPointSize(25)
-        self.dissolved_oxygen_label_true.setFont(font)
-        self.dissolved_oxygen_label_true.setStyleSheet(
-            "color: rgb(255, 149, 1);")
-        self.dissolved_oxygen_label_true.setAlignment(
+        self.dissolved_oxygen_label.setFont(font)
+        self.dissolved_oxygen_label.setStyleSheet("color: rgb(255, 149, 1);")
+        self.dissolved_oxygen_label.setAlignment(
             QtCore.Qt.AlignmentFlag.AlignHCenter
             | QtCore.Qt.AlignmentFlag.AlignTop)
-        self.dissolved_oxygen_label_true.setObjectName("pressure_label")
-        self.horizontalLayout_2.addWidget(self.dissolved_oxygen_label_true)
-        self.status_label_true = QtWidgets.QLabel(parent=self.layoutWidget)
+        self.dissolved_oxygen_label.setObjectName("pressure_label")
+        self.horizontalLayout_2.addWidget(self.dissolved_oxygen_label)
+        self.status_label = QtWidgets.QLabel(parent=self.layoutWidget)
         font = QtGui.QFont()
         font.setPointSize(25)
-        self.status_label_true.setFont(font)
-        self.status_label_true.setStyleSheet("color: rgb(255, 149, 1);")
-        self.status_label_true.setAlignment(
-            QtCore.Qt.AlignmentFlag.AlignHCenter
-            | QtCore.Qt.AlignmentFlag.AlignTop)
-        self.status_label_true.setObjectName("dissolved_oxygen_label")
-        self.horizontalLayout_2.addWidget(self.status_label_true)
+        self.status_label.setFont(font)
+        self.status_label.setStyleSheet("color: rgb(255, 149, 1);")
+        self.status_label.setAlignment(QtCore.Qt.AlignmentFlag.AlignHCenter
+                                       | QtCore.Qt.AlignmentFlag.AlignTop)
+        self.status_label.setObjectName("dissolved_oxygen_label")
+        self.horizontalLayout_2.addWidget(self.status_label)
         self.layoutWidget1 = QtWidgets.QWidget(parent=Form)
         self.layoutWidget1.setGeometry(QtCore.QRect(0, 400, 801, 57))
         self.layoutWidget1.setObjectName("layoutWidget1")
@@ -317,7 +314,12 @@ class Ui_Form(object):
         self.right_camera.setObjectName("right_camera")
         self.horizontalLayout_3.addWidget(self.right_camera)
 
+        self.setLabelDefaults()
         self.retranslateUi(Form)
+        self.ipAddressRefreshTimer = QTimer(Form)
+        self.ipAddressRefreshTimer.setInterval(1000)
+        self.ipAddressRefreshTimer.timeout.connect(self.setIPAddressLabel)
+        self.ipAddressRefreshTimer.start()
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form):
@@ -325,9 +327,9 @@ class Ui_Form(object):
         Form.setWindowTitle(_translate("Form", "Form"))
 
     def setLabelDefaults(self):
-        self.pressure_label_true.setText("P:300.000 mbar")
-        self.dissolved_oxygen_label_true.setText("DO: 100.000 mg/L")
-        self.status_label_true.setText("In Progress")
+        self.pressure_label.setText("P:300.000 mbar")
+        self.dissolved_oxygen_label.setText("DO: 100.000 mg/L")
+        self.status_label.setText("In Progress")
         self.temperature_label.setText("Temp: 25.068C")
         self.ph_label.setText("pH: 7.000")
         self.ip_label.setText("IP: 192.168.0.50")
@@ -338,10 +340,6 @@ class Ui_Form(object):
         self.right_camera.setStyleSheet("")
         self.left_camera.setPixmap(QtGui.QPixmap("thumbnail.jpeg"))
         self.right_camera.setPixmap(QtGui.QPixmap("thumbnail.jpeg"))
-        self.ipAddressRefreshTimer = QTimer(form)
-        self.ipAddressRefreshTimer.setInterval(1000)
-        self.ipAddressRefreshTimer.timeout.connect(self.setIPAddressLabel)
-        self.ipAddressRefreshTimer.start()
 
     def setIPAddressLabel(self, ipAddress: str = getIpAddress("enp5s0")):
         self.ip_label.setText("IP: {}".format(ipAddress))
@@ -351,11 +349,10 @@ class Ui_Form(object):
             temperature, 3)))
 
     def setPressureLabel(self, pressure: float):
-        self.pressure_label_true.setText("P: {}mbar".format(round(pressure,
-                                                                  3)))
+        self.pressure_label.setText("P: {}mbar".format(round(pressure, 3)))
 
     def setDissolvedOxygenLabel(self, dissolvedOxygen: float):
-        self.dissolved_oxygen_label_true.setText("DO: {} mg/L".format(
+        self.dissolved_oxygen_label.setText("DO: {} mg/L".format(
             round(dissolvedOxygen, 3)))
 
     def setpHLabel(self, ph: float):
@@ -363,9 +360,9 @@ class Ui_Form(object):
 
     def setStatusLabel(self, inProgress: bool):
         if inProgress:
-            self.status_label_true.setText("In Progress")
+            self.status_label.setText("In Progress")
         else:
-            self.status_label_true.setText("No Capture")
+            self.status_label.setText("No Capture")
 
 
 if __name__ == "__main__":
@@ -376,5 +373,4 @@ if __name__ == "__main__":
     ui = Ui_Form()
     ui.setupUi(form)
     form.show()
-    ui.setLabelDefaults()
     sys.exit(app.exec())
