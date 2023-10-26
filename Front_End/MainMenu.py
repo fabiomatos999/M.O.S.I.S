@@ -277,24 +277,27 @@ class MainMenu(object):
         self.stackedLayout.addWidget(self.phSensorCalibrationMenuForm)
         self.stackedLayout.setCurrentIndex(7)
         form.setLayout(self.stackedLayout)
+        form.keyPressEvent = self.keyPressEvent
 
     def keyPressEvent(self, event):
-        if event.key() == Qt.Key.Key_U:
-            self.stackedLayout.setCurrentIndex(self.stackIndexCycle(event, self.stackedLayout.currentIndex() + 1))
+        currentIndex = self.stackedLayout.currentIndex()
+        if event.key() == Qt.Key.Key_K:
+            self.stackedLayout.setCurrentIndex(
+                self.stackIndexCycle(event, self.stackedLayout.currentIndex()))
 
-        if event.key() == Qt.Key.Key_D:
-            self.stackedLayout.setCurrentIndex(self.stackIndexCycle(event, self.stackedLayout.currentIndex() - 1))
+        if event.key() == Qt.Key.Key_J:
+            self.stackedLayout.setCurrentIndex(
+                self.stackIndexCycle(event, self.stackedLayout.currentIndex()))
 
-    def stackIndexCycle(self, event,  count):
-        if event.key() == Qt.Key.Key_U:
+    def stackIndexCycle(self, event, count):
+        if event.key() == Qt.Key.Key_K:
             if count == self.stackedLayout.count() - 1:
                 return 0
             return count + 1
-        if event.key() == Qt.Key.Key_D:
+        if event.key() == Qt.Key.Key_J:
             if count == 0:
                 return self.stackedLayout.count() - 1
             return count - 1
-
 
 
 if __name__ == "__main__":
