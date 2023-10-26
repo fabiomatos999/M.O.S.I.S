@@ -1,4 +1,5 @@
 from PyQt6 import QtGui, QtWidgets
+from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QWidget, QStackedLayout
 from PyQt6 import QtCore
 import PreviewScreen
@@ -276,6 +277,24 @@ class MainMenu(object):
         self.stackedLayout.addWidget(self.phSensorCalibrationMenuForm)
         self.stackedLayout.setCurrentIndex(7)
         form.setLayout(self.stackedLayout)
+
+    def keyPressEvent(self, event):
+        if event.key() == Qt.Key.Key_U:
+            self.stackedLayout.setCurrentIndex(self.stackIndexCycle(event, self.stackedLayout.currentIndex() + 1))
+
+        if event.key() == Qt.Key.Key_D:
+            self.stackedLayout.setCurrentIndex(self.stackIndexCycle(event, self.stackedLayout.currentIndex() - 1))
+
+    def stackIndexCycle(self, event,  count):
+        if event.key() == Qt.Key.Key_U:
+            if count == self.stackedLayout.count() - 1:
+                return 0
+            return count + 1
+        if event.key() == Qt.Key.Key_D:
+            if count == 0:
+                return self.stackedLayout.count() - 1
+            return count - 1
+
 
 
 if __name__ == "__main__":
