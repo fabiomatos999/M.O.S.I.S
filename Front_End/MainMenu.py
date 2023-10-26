@@ -12,8 +12,15 @@ import DissolvedOxygenCalibrationMenu
 import phSensorCalibrationMenu
 import sys
 
+class BaseMenuWidget(QtWidgets.QWidget):
+    #Allows the button to be hightlighted when changing into it
+    def showEvent(self, event):
+        first_button = self.findChild(QtWidgets.QPushButton)
+        if first_button:
+            first_button.setFocus()
 
 class MainMenu(object):
+
 
     def __init__(self, form):
         form.resize(800, 480)
@@ -233,67 +240,68 @@ class MainMenu(object):
         form.setPalette(palette)
         self.stackedLayout = QtWidgets.QStackedLayout()
         self.previewScreen = PreviewScreen.Ui_Form()
-        self.previewScreenForm = QtWidgets.QWidget()
+        self.previewScreenForm = BaseMenuWidget()
         self.previewScreen.setupUi(self.previewScreenForm)
         self.stackedLayout.addWidget(self.previewScreenForm)
         self.studyProfileSelectionMenu = StudyProfileSelectionMenu.Ui_Form()
-        self.studyProfileSelectionMenuForm = QtWidgets.QWidget()
+        self.studyProfileSelectionMenuForm = BaseMenuWidget()
         self.studyProfileSelectionMenu.setupUi(
             self.studyProfileSelectionMenuForm)
         self.stackedLayout.addWidget(self.studyProfileSelectionMenuForm)
         self.shutterSpeedSelectionMenu = ShutterSpeedConfigurationMenu.Ui_Form(
         )
-        self.shutterSpeedSelectionMenuForm = QtWidgets.QWidget()
+        self.shutterSpeedSelectionMenuForm = BaseMenuWidget()
         self.shutterSpeedSelectionMenu.setupUi(
             self.shutterSpeedSelectionMenuForm)
         self.stackedLayout.addWidget(self.shutterSpeedSelectionMenuForm)
         self.saturationConfigurationMenu = SaturationConfigurationMenu.Ui_SaturationConfigurationMenu(
         )
-        self.saturationConfigurationMenuForm = QtWidgets.QWidget()
+        self.saturationConfigurationMenuForm = BaseMenuWidget()
         self.saturationConfigurationMenu.setupUi(
             self.saturationConfigurationMenuForm)
         self.stackedLayout.addWidget(self.saturationConfigurationMenuForm)
         self.gainConfigurationMenu = GainConfigurationMenu.Ui_GainConfigurationMenu(
         )
-        self.gainConfigurationMenuForm = QtWidgets.QWidget()
+        self.gainConfigurationMenuForm = BaseMenuWidget()
         self.gainConfigurationMenu.setupUi(self.gainConfigurationMenuForm)
         self.stackedLayout.addWidget(self.gainConfigurationMenuForm)
         self.whiteBalanceCalibrationMenu = WhiteBalanceCalibrationMenu.Ui_Form(
         )
-        self.whiteBalanceCalibrationMenuForm = QtWidgets.QWidget()
+        self.whiteBalanceCalibrationMenuForm = BaseMenuWidget()
         self.whiteBalanceCalibrationMenu.setupUi(
             self.whiteBalanceCalibrationMenuForm)
         self.stackedLayout.addWidget(self.whiteBalanceCalibrationMenuForm)
         self.dissolvedOxygenCalibrationMenu = \
             DissolvedOxygenCalibrationMenu.Ui_Form()
-        self.dissolvedOxygenCalibrationMenuForm = QtWidgets.QWidget()
+        self.dissolvedOxygenCalibrationMenuForm = BaseMenuWidget()
         self.dissolvedOxygenCalibrationMenu.setupUi(
             self.dissolvedOxygenCalibrationMenuForm)
         self.stackedLayout.addWidget(self.dissolvedOxygenCalibrationMenuForm)
         self.phSensorCalibrationMenu = \
             phSensorCalibrationMenu.Ui_phSensorCalibrationMenu()
-        self.phSensorCalibrationMenuForm = QtWidgets.QWidget()
+        self.phSensorCalibrationMenuForm = BaseMenuWidget()
         self.phSensorCalibrationMenu.setupUi(self.phSensorCalibrationMenuForm)
         self.stackedLayout.addWidget(self.phSensorCalibrationMenuForm)
         self.stackedLayout.setCurrentIndex(0)
         form.setLayout(self.stackedLayout)
         form.keyPressEvent = self.keyPressEvent
 
-
+    # When pressing F1 or F2 cycles through the menu
     def keyPressEvent(self, event):
         currentIndex = self.stackedLayout.currentIndex()
         if event.key() == Qt.Key.Key_F1:
-            print("Key pressed:", event.key())  # Check the key code in the console
             if currentIndex ==  self.stackedLayout.count():
                 self.stackedLayout.setCurrentIndex(0)
-                
-            self.stackedLayout.setCurrentIndex(currentIndex + 1)
-
+             
+            else:  
+                self.stackedLayout.setCurrentIndex(currentIndex + 1)
+            
         if event.key() == Qt.Key.Key_F2:
-            print("Key pressed:", event.key())  # Check the key code in the console
             if currentIndex == 0:
                 self.stackedLayout.setCurrentIndex(self.stackedLayout.count())
-            self.stackedLayout.setCurrentIndex(currentIndex - 1)
+            else:
+                self.stackedLayout.setCurrentIndex(currentIndex - 1)
+            
             
 
 if __name__ == "__main__":
