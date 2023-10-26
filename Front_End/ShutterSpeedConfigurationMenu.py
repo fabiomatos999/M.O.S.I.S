@@ -9,12 +9,12 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
 
 
-class Ui_ShutterSpeedConfigurationMenu(object):
-    def setupUi(self, ShutterSpeedConfigurationMenu):
-        ShutterSpeedConfigurationMenu.setObjectName("ShutterSpeedConfigurationMenu")
-        ShutterSpeedConfigurationMenu.setWindowModality(QtCore.Qt.WindowModality.WindowModal)
-        ShutterSpeedConfigurationMenu.setEnabled(True)
-        ShutterSpeedConfigurationMenu.resize(800, 480)
+class Ui_Form(object):
+    def setupUi(self, form):
+        form.setObjectName("ShutterSpeedConfigurationMenu")
+        form.setWindowModality(QtCore.Qt.WindowModality.WindowModal)
+        form.setEnabled(True)
+        form.resize(800, 480)
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(255, 149, 1))
         brush.setStyle(QtCore.Qt.BrushStyle.SolidPattern)
@@ -148,9 +148,9 @@ class Ui_ShutterSpeedConfigurationMenu(object):
         brush = QtGui.QBrush(QtGui.QColor(255, 149, 1))
         brush.setStyle(QtCore.Qt.BrushStyle.SolidPattern)
         palette.setBrush(QtGui.QPalette.ColorGroup.Disabled, QtGui.QPalette.ColorRole.ToolTipText, brush)
-        ShutterSpeedConfigurationMenu.setPalette(palette)
-        ShutterSpeedConfigurationMenu.setAutoFillBackground(False)
-        self.CurrentShutterSpeedLabel = QtWidgets.QLabel(parent=ShutterSpeedConfigurationMenu)
+        form.setPalette(palette)
+        form.setAutoFillBackground(False)
+        self.CurrentShutterSpeedLabel = QtWidgets.QLabel(parent=form)
         self.CurrentShutterSpeedLabel.setGeometry(QtCore.QRect(6, 0, 791, 91))
         font = QtGui.QFont()
         font.setFamily("Times New Roman")
@@ -158,7 +158,7 @@ class Ui_ShutterSpeedConfigurationMenu(object):
         self.CurrentShutterSpeedLabel.setFont(font)
         self.CurrentShutterSpeedLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.CurrentShutterSpeedLabel.setObjectName("ShutterSpeedLabel")
-        self.SS12000Button = QtWidgets.QPushButton(parent=ShutterSpeedConfigurationMenu)
+        self.SS12000Button = QtWidgets.QPushButton(parent=form)
         self.SS12000Button.setGeometry(QtCore.QRect(10, 80, 212, 46))
         font = QtGui.QFont()
         font.setPointSize(28)
@@ -167,7 +167,7 @@ class Ui_ShutterSpeedConfigurationMenu(object):
 "color: rgb(255, 149, 1);")
         self.SS12000Button.setCheckable(False)
         self.SS12000Button.setObjectName("SS12000Button")
-        self.SS11000Button = QtWidgets.QPushButton(parent=ShutterSpeedConfigurationMenu)
+        self.SS11000Button = QtWidgets.QPushButton(parent=form)
         self.SS11000Button.setGeometry(QtCore.QRect(10, 120, 212, 46))
         font = QtGui.QFont()
         font.setPointSize(28)
@@ -175,7 +175,7 @@ class Ui_ShutterSpeedConfigurationMenu(object):
         self.SS11000Button.setStyleSheet("background-color: rgb(0, 0, 0);\n"
 "color: rgb(255, 149, 1);")
         self.SS11000Button.setObjectName("SS11000Button")
-        self.SS1250Button = QtWidgets.QPushButton(parent=ShutterSpeedConfigurationMenu)
+        self.SS1250Button = QtWidgets.QPushButton(parent=form)
         self.SS1250Button.setGeometry(QtCore.QRect(10, 200, 212, 46))
         font = QtGui.QFont()
         font.setPointSize(28)
@@ -183,7 +183,7 @@ class Ui_ShutterSpeedConfigurationMenu(object):
         self.SS1250Button.setStyleSheet("background-color: rgb(0, 0, 0);\n"
 "color: rgb(255, 149, 1);")
         self.SS1250Button.setObjectName("SS1250Button")
-        self.SS125Button = QtWidgets.QPushButton(parent=ShutterSpeedConfigurationMenu)
+        self.SS125Button = QtWidgets.QPushButton(parent=form)
         self.SS125Button.setGeometry(QtCore.QRect(10, 240, 212, 46))
         font = QtGui.QFont()
         font.setPointSize(28)
@@ -194,7 +194,7 @@ class Ui_ShutterSpeedConfigurationMenu(object):
         self.SS125Button.setAutoDefault(True)
         self.SS125Button.setDefault(True)
         self.SS125Button.setObjectName("SS125Button")
-        self.SS160Button = QtWidgets.QPushButton(parent=ShutterSpeedConfigurationMenu)
+        self.SS160Button = QtWidgets.QPushButton(parent=form)
         self.SS160Button.setGeometry(QtCore.QRect(10, 280, 212, 46))
         font = QtGui.QFont()
         font.setPointSize(28)
@@ -202,7 +202,7 @@ class Ui_ShutterSpeedConfigurationMenu(object):
         self.SS160Button.setStyleSheet("background-color: rgb(0, 0, 0);\n"
 "color: rgb(255, 149, 1);")
         self.SS160Button.setObjectName("SS160Button")
-        self.SS130Button = QtWidgets.QPushButton(parent=ShutterSpeedConfigurationMenu)
+        self.SS130Button = QtWidgets.QPushButton(parent=form)
         self.SS130Button.setGeometry(QtCore.QRect(10, 320, 212, 46))
         font = QtGui.QFont()
         font.setPointSize(28)
@@ -210,7 +210,7 @@ class Ui_ShutterSpeedConfigurationMenu(object):
         self.SS130Button.setStyleSheet("background-color: rgb(0, 0, 0);\n"
 "color: rgb(255, 149, 1);")
         self.SS130Button.setObjectName("SS130Button")
-        self.SS115Button = QtWidgets.QPushButton(parent=ShutterSpeedConfigurationMenu)
+        self.SS115Button = QtWidgets.QPushButton(parent=form)
         self.SS115Button.setGeometry(QtCore.QRect(10, 360, 212, 46))
         font = QtGui.QFont()
         font.setPointSize(28)
@@ -218,7 +218,7 @@ class Ui_ShutterSpeedConfigurationMenu(object):
         self.SS115Button.setStyleSheet("background-color: rgb(0, 0, 0);\n"
 "color: rgb(255, 149, 1);")
         self.SS115Button.setObjectName("SS115Button")
-        self.SS18Button = QtWidgets.QPushButton(parent=ShutterSpeedConfigurationMenu)
+        self.SS18Button = QtWidgets.QPushButton(parent=form)
         self.SS18Button.setGeometry(QtCore.QRect(10, 400, 212, 46))
         font = QtGui.QFont()
         font.setPointSize(28)
@@ -226,7 +226,7 @@ class Ui_ShutterSpeedConfigurationMenu(object):
         self.SS18Button.setStyleSheet("background-color: rgb(0, 0, 0);\n"
 "color: rgb(255, 149, 1);")
         self.SS18Button.setObjectName("SS18Button")
-        self.SS14Button = QtWidgets.QPushButton(parent=ShutterSpeedConfigurationMenu)
+        self.SS14Button = QtWidgets.QPushButton(parent=form)
         self.SS14Button.setGeometry(QtCore.QRect(10, 440, 212, 46))
         font = QtGui.QFont()
         font.setPointSize(28)
@@ -234,7 +234,7 @@ class Ui_ShutterSpeedConfigurationMenu(object):
         self.SS14Button.setStyleSheet("background-color: rgb(0, 0, 0);\n"
 "color: rgb(255, 149, 1);")
         self.SS14Button.setObjectName("SS14Button")
-        self.SS1500Button = QtWidgets.QPushButton(parent=ShutterSpeedConfigurationMenu)
+        self.SS1500Button = QtWidgets.QPushButton(parent=form)
         self.SS1500Button.setGeometry(QtCore.QRect(10, 160, 212, 46))
         font = QtGui.QFont()
         font.setPointSize(28)
@@ -264,8 +264,8 @@ class Ui_ShutterSpeedConfigurationMenu(object):
         self.SS14Button.clicked.connect(
             lambda: self.CurrentShutterSpeedLabel.setText("Shutter Speed : 1/4"))
 
-        self.retranslateUi(ShutterSpeedConfigurationMenu)
-        QtCore.QMetaObject.connectSlotsByName(ShutterSpeedConfigurationMenu)
+        self.retranslateUi(form)
+        QtCore.QMetaObject.connectSlotsByName(form)
 
     def retranslateUi(self, ShutterSpeedConfigurationMenu):
         _translate = QtCore.QCoreApplication.translate
@@ -282,12 +282,12 @@ class Ui_ShutterSpeedConfigurationMenu(object):
         self.SS14Button.setText(_translate("ShutterSpeedConfigurationMenu", "1/4"))
         self.SS1500Button.setText(_translate("ShutterSpeedConfigurationMenu", "1/500"))
 
-if __name__ == "__main__":
-    import sys
+# if __name__ == "__main__":
+#     import sys
 
-    app = QtWidgets.QApplication(sys.argv)
-    form = QtWidgets.QWidget()
-    ui = Ui_ShutterSpeedConfigurationMenu()
-    ui.setupUi(form)
-    form.show()
-    sys.exit(app.exec())
+#     app = QtWidgets.QApplication(sys.argv)
+#     form = QtWidgets.QWidget()
+#     ui = Ui_ShutterSpeedConfigurationMenu()
+#     ui.setupUi(form)
+#     form.show()
+#     sys.exit(app.exec())

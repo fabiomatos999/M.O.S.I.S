@@ -3,6 +3,12 @@ from PyQt6.QtWidgets import QWidget, QStackedLayout
 from PyQt6 import QtCore
 import PreviewScreen
 import StudyProfileSelectionMenu
+import ShutterSpeedConfigurationMenu
+import SaturationConfigurationMenu
+import GainConfigurationMenu
+import WhiteBalanceCalibrationMenu
+import DissolvedOxygenCalibrationMenu
+import phSensorCalibrationMenu
 import sys
 
 
@@ -224,7 +230,6 @@ class MainMenu(object):
         palette.setBrush(QtGui.QPalette.ColorGroup.Disabled,
                          QtGui.QPalette.ColorRole.PlaceholderText, brush)
         form.setPalette(palette)
-        vboxLayout = QtWidgets.QVBoxLayout()
         self.stackedLayout = QtWidgets.QStackedLayout()
         self.previewScreen = PreviewScreen.Ui_Form()
         self.previewScreenForm = QtWidgets.QWidget()
@@ -235,9 +240,42 @@ class MainMenu(object):
         self.studyProfileSelectionMenu.setupUi(
             self.studyProfileSelectionMenuForm)
         self.stackedLayout.addWidget(self.studyProfileSelectionMenuForm)
-        self.stackedLayout.setCurrentIndex(1)
-        vboxLayout.addLayout(self.stackedLayout)
-        form.setLayout(vboxLayout)
+        self.shutterSpeedSelectionMenu = ShutterSpeedConfigurationMenu.Ui_Form(
+        )
+        self.shutterSpeedSelectionMenuForm = QtWidgets.QWidget()
+        self.shutterSpeedSelectionMenu.setupUi(
+            self.shutterSpeedSelectionMenuForm)
+        self.stackedLayout.addWidget(self.shutterSpeedSelectionMenuForm)
+        self.saturationConfigurationMenu = SaturationConfigurationMenu.Ui_SaturationConfigurationMenu(
+        )
+        self.saturationConfigurationMenuForm = QtWidgets.QWidget()
+        self.saturationConfigurationMenu.setupUi(
+            self.saturationConfigurationMenuForm)
+        self.stackedLayout.addWidget(self.saturationConfigurationMenuForm)
+        self.gainConfigurationMenu = GainConfigurationMenu.Ui_GainConfigurationMenu(
+        )
+        self.gainConfigurationMenuForm = QtWidgets.QWidget()
+        self.gainConfigurationMenu.setupUi(self.gainConfigurationMenuForm)
+        self.stackedLayout.addWidget(self.gainConfigurationMenuForm)
+        self.whiteBalanceCalibrationMenu = WhiteBalanceCalibrationMenu.Ui_Form(
+        )
+        self.whiteBalanceCalibrationMenuForm = QtWidgets.QWidget()
+        self.whiteBalanceCalibrationMenu.setupUi(
+            self.whiteBalanceCalibrationMenuForm)
+        self.stackedLayout.addWidget(self.whiteBalanceCalibrationMenuForm)
+        self.dissolvedOxygenCalibrationMenu = \
+            DissolvedOxygenCalibrationMenu.Ui_Form()
+        self.dissolvedOxygenCalibrationMenuForm = QtWidgets.QWidget()
+        self.dissolvedOxygenCalibrationMenu.setupUi(
+            self.dissolvedOxygenCalibrationMenuForm)
+        self.stackedLayout.addWidget(self.dissolvedOxygenCalibrationMenuForm)
+        self.phSensorCalibrationMenu = \
+            phSensorCalibrationMenu.Ui_phSensorCalibrationMenu()
+        self.phSensorCalibrationMenuForm = QtWidgets.QWidget()
+        self.phSensorCalibrationMenu.setupUi(self.phSensorCalibrationMenuForm)
+        self.stackedLayout.addWidget(self.phSensorCalibrationMenuForm)
+        self.stackedLayout.setCurrentIndex(7)
+        form.setLayout(self.stackedLayout)
 
 
 if __name__ == "__main__":
