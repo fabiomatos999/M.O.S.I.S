@@ -421,6 +421,7 @@ class Ui_Form(object):
         studyProfileContents = json.load(file)
         for i, studyProfile in enumerate(studyProfileContents):
             studyProfileString = "{}\n".format(i)
+
             for key in studyProfile.keys():
                 studyProfileString = studyProfileString + "{}: {}\n".format(
                     key, studyProfile[key])

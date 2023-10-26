@@ -290,7 +290,7 @@ class MainMenu(object):
     def keyPressEvent(self, event):
         currentIndex = self.stackedLayout.currentIndex()
         if event.key() == Qt.Key.Key_F1:
-            if currentIndex ==  self.stackedLayout.count():
+            if currentIndex ==  7:
                 self.stackedLayout.setCurrentIndex(0)
              
             else:  
@@ -298,7 +298,7 @@ class MainMenu(object):
             
         if event.key() == Qt.Key.Key_F2:
             if currentIndex == 0:
-                self.stackedLayout.setCurrentIndex(self.stackedLayout.count())
+                self.stackedLayout.setCurrentIndex(7)
             else:
                 self.stackedLayout.setCurrentIndex(currentIndex - 1)
             
