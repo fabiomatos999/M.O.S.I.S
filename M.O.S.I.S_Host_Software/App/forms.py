@@ -159,7 +159,7 @@ class shotTypeSearchForm(baseSearchForm):
     search = SelectField('Shot Type',
                          choices=[("SINGLE", "Single"), ("BURST", "Burst"),
                                   ("TELESCOPIC", "Telescopic"),
-                                  ("TIMElAPSE", "Time Lapse"),
+                                  ("TIMELAPSE", "Time Lapse"),
                                   ("VIDEO", "Video")])
 
 

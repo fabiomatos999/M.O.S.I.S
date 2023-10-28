@@ -110,7 +110,8 @@ def index():
 def listView():
     return render_template("listView.html",
                            MediaEntries=getAllMediaEntry(db),
-                           str=str)
+                           str=str,
+                           round=round)
 
 
 @app.route("/entry/<id>")
@@ -204,17 +205,19 @@ def search(category: str):
     """Serve search form if GET or serve search results if post."""
     form = return_search_form(category)
     if form.is_submitted():
+        print(form)
         ret = request.form
         searchBy = category
         searchQuery = ret["search"]
         mediaEntries = getMediaEntriesBySearchBy(searchBy, searchQuery)
-        if ret["listView"]:
+        if ret.get("listView"):
             return render_template('listView.html',
                                    MediaEntries=mediaEntries,
                                    db=db,
                                    getAllMediaMetadataId=getAllMediaMetadataId,
                                    enumerate=enumerate,
-                                   str=str)
+                                   str=str,
+                                   round=round)
         else:
             return render_template('index.html',
                                    MediaEntries=mediaEntries,

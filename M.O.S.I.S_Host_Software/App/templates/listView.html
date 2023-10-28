@@ -21,9 +21,9 @@ M.O.S.I.S Host Software Home Page{% endblock %}
             <td>{{MediaEntry.shotType}}</td>
             <td>{{MediaEntry.time}}</td>
             <td>{{MediaEntry.illuminationType}}</td>
-            <td>{{MediaEntry.gain}}</td>
+            <td>{{round(MediaEntry.gain, 3)}}</td>
             <td>{{MediaEntry.saturation}}</td>
-            <td>{{MediaEntry.shutterSpeed}}</td>
+            <td>{{round(MediaEntry.shutterSpeed, 3)}}</td>
             <td>{{MediaEntry.whiteBalance}}</td>
             <td><a href={{"entry/" + str(MediaEntry.entryId)}}>Link</a></td>
         </tr>
