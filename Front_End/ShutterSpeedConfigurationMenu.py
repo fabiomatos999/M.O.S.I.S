@@ -265,6 +265,16 @@ class Ui_Form(object):
             lambda: self.CurrentShutterSpeedLabel.setText("Shutter Speed : 1/4"))
 
         self.retranslateUi(form)
+        form.setFocus()
+        form.setTabOrder(self.SS12000Button, self.SS11000Button)
+        form.setTabOrder(self.SS11000Button, self.SS1500Button)
+        form.setTabOrder(self.SS1500Button, self.SS1250Button)
+        form.setTabOrder(self.SS1250Button, self.SS125Button)
+        form.setTabOrder(self.SS125Button, self.SS160Button)
+        form.setTabOrder(self.SS160Button, self.SS130Button)
+        form.setTabOrder(self.SS130Button, self.SS115Button)
+        form.setTabOrder(self.SS115Button, self.SS18Button)
+        form.setTabOrder(self.SS18Button, self.SS14Button)
         QtCore.QMetaObject.connectSlotsByName(form)
 
     def retranslateUi(self, ShutterSpeedConfigurationMenu):
@@ -273,6 +283,7 @@ class Ui_Form(object):
         self.CurrentShutterSpeedLabel.setText(_translate("ShutterSpeedConfigurationMenu", "Shutter Speed: 1/250"))
         self.SS12000Button.setText(_translate("ShutterSpeedConfigurationMenu", "1/2000"))
         self.SS11000Button.setText(_translate("ShutterSpeedConfigurationMenu", "1/1000"))
+        self.SS1500Button.setText(_translate("ShutterSpeedConfigurationMenu", "1/500"))
         self.SS1250Button.setText(_translate("ShutterSpeedConfigurationMenu", "1/250"))
         self.SS125Button.setText(_translate("ShutterSpeedConfigurationMenu", "1/125"))
         self.SS160Button.setText(_translate("ShutterSpeedConfigurationMenu", "1/60"))
@@ -280,14 +291,14 @@ class Ui_Form(object):
         self.SS115Button.setText(_translate("ShutterSpeedConfigurationMenu", "1/15"))
         self.SS18Button.setText(_translate("ShutterSpeedConfigurationMenu", "1/8"))
         self.SS14Button.setText(_translate("ShutterSpeedConfigurationMenu", "1/4"))
-        self.SS1500Button.setText(_translate("ShutterSpeedConfigurationMenu", "1/500"))
+      
 
-# if __name__ == "__main__":
-#     import sys
+if __name__ == "__main__":
+    import sys
 
-#     app = QtWidgets.QApplication(sys.argv)
-#     form = QtWidgets.QWidget()
-#     ui = Ui_ShutterSpeedConfigurationMenu()
-#     ui.setupUi(form)
-#     form.show()
-#     sys.exit(app.exec())
+    app = QtWidgets.QApplication(sys.argv)
+    form = QtWidgets.QWidget()
+    ui = Ui_Form()
+    ui.setupUi(form)
+    form.show()
+    sys.exit(app.exec())

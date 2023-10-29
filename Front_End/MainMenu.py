@@ -302,10 +302,13 @@ class MainMenu(object):
             else:
                 self.stackedLayout.setCurrentIndex(currentIndex - 1)
 
-        # When the menu cycles to the study profile select menu it sets the keyboard focus to the Studies list widget
+        # When the menu cycles to the corresponding menu it sets the keyboard focus to the widget
         if currentIndex == 1:
             self.studyProfileSelectionMenu.listWidget.setFocus()
-            
+        elif currentIndex == 2:
+            self.shutterSpeedSelectionMenu.SS1250Button.setFocus() 
+       
+        
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
