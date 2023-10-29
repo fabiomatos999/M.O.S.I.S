@@ -301,7 +301,10 @@ class MainMenu(object):
                 self.stackedLayout.setCurrentIndex(7)
             else:
                 self.stackedLayout.setCurrentIndex(currentIndex - 1)
-            
+
+        # When the menu cycles to the study profile select menu it sets the keyboard focus to the Studies list widget
+        if currentIndex == 1:
+            self.studyProfileSelectionMenu.listWidget.setFocus()
             
 
 if __name__ == "__main__":
