@@ -50,6 +50,9 @@ Configure Study
         <div class="col-6">
             <h2>Current Study Profile</h2>
         </div>
+        {% if studyAdded %}
+        <div class="alert alert-success">Study profile added successfully.</div>
+        {% endif %}
     </div>
 </div>
 <table class="table table-striped">

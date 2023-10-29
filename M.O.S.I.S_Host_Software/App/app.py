@@ -173,10 +173,11 @@ def remove_submit_and_csrf_toten(studies: list) -> list:
 def single(st="single"):
     """Serve shot type study profile template configuration page."""
     form = return_study_profile_form(st)
+    studyAdded = False
     if form.is_submitted():
         if form.validate():
             studies.append(request.form)
-            return index()
+            studyAdded = True
     return render_template(
         form.filename,
         form=form,
@@ -185,7 +186,8 @@ def single(st="single"):
         str=str,
         enumerate=enumerate,
         len=len,
-        range=range
+        range=range,
+        studyAdded=studyAdded
     )
 
 
