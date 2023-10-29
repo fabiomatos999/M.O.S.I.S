@@ -28,3 +28,9 @@ def generateStereoscopicImage(filename: str, leftImage: str, rightImg: str):
     composite = numpy.concatenate((left_image, intersection, right_image),
                                   axis=1)
     return composite
+
+
+def generateWhiteScaleImage(imagePath: str):
+    image = cv2.imread(imagePath, 0)
+    ret, thr1 = cv2.threshold(image, 127, 255, cv2.THRESH_BINARY)
+    return thr1
