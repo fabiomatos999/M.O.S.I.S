@@ -165,7 +165,7 @@ class Ui_GainConfigurationMenu(object):
         self.horizontalSlider.setStyleSheet("QSlider::handle:horizontal {background-color:rgb(89, 239, 150);}")
         self.horizontalSlider.setMaximum(240)
         self.horizontalSlider.setSingleStep(1)
-        self.horizontalSlider.setPageStep(1)
+        self.horizontalSlider.setPageStep(10)
         self.horizontalSlider.setOrientation(QtCore.Qt.Orientation.Horizontal)
         self.horizontalSlider.setObjectName("horizontalSlider")
         self.label0 = QtWidgets.QLabel(parent=GainConfigurationMenu)

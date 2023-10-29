@@ -176,6 +176,7 @@ class Ui_Form(object):
         self.WBSlider.setMinimum(3200)
         self.WBSlider.setMaximum(6500)
         self.WBSlider.setSingleStep(10)
+        self.WBSlider.setPageStep(100)
         self.WBSlider.valueChanged.connect(self.slider_value)
         self.label3200k = QtWidgets.QLabel(parent=Form)
         self.label3200k.setGeometry(QtCore.QRect(10, 260, 191, 91))

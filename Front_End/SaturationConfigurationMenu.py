@@ -166,7 +166,7 @@ class Ui_SaturationConfigurationMenu(object):
 
         self.horizontalSlider.setMaximum(200)
         self.horizontalSlider.setSingleStep(1)
-        self.horizontalSlider.setPageStep(1)
+        self.horizontalSlider.setPageStep(10)
         self.horizontalSlider.setOrientation(QtCore.Qt.Orientation.Horizontal)
         self.horizontalSlider.setObjectName("horizontalSlider")
         self.label0 = QtWidgets.QLabel(parent=SaturationConfigurationMenu)
