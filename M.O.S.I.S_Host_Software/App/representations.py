@@ -1,19 +1,13 @@
+from enums import illuminationType, shotType
+
+
 class MediaEntryInternalRepresentation():
     """Internal representation for MediaEntry."""
-
-    entryId = int()
-    shotType = None
-    time = str()
-    illuminationType = None
-    iso = int()
-    apertureSize = float()
-    shutterSpeed = float()
-    whiteBalance = float()
 
     def __init__(self, entryId: int, shotType: shotType, time: str,
                  illuminationType: illuminationType, saturation: int,
                  gain: float, shutterSpeed: float, whiteBalance: int):
-        """Construct MediaEntryInternalRepesentation."""
+        """Construct w."""
         self.entryId = entryId
         self.shotType = shotType
         self.time = time
@@ -23,19 +17,15 @@ class MediaEntryInternalRepresentation():
         self.shutterSpeed = shutterSpeed
         self.whiteBalance = whiteBalance
 
+    def __str__(self):
+        """Text representation for MediaEntry."""
+        return "{}-{}-{}-{}-{}-{}-{}-{}".format(
+            self.entryId, self.shotType, self.time, self.illuminationType,
+            self.gain, self.saturation, self.shutterSpeed, self.whiteBalance)
+
 
 class MediaMetadataInternalRepresentation:
     """Internal representation for a MediaMetadata entry."""
-
-    metadataId = int()
-    entryId = int()
-    leftCameraMedia = str()
-    rightCameraMedia = str()
-    time = str()
-    temperature = float()
-    pressure = float()
-    ph = float()
-    dissolvedOxygen = float()
 
     def __init__(self, metadataId: int, entryId: int, leftCameraMedia: str,
                  rightCameraMedia: str, time: str, temperature: float,

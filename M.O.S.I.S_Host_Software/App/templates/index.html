@@ -17,7 +17,7 @@ M.O.S.I.S Host Software Home Page
               src={{ url_for('static', filename=getAllMediaMetadataId(db,MediaEntry.entryId)[0].leftCameraMedia.split("/").pop()) }}/>
             <div class="card-body" >
 	      <a href={{"/entry/" + str(MediaEntry.entryId)}} class="streched-link">
-	      {{"{}-{}-{}-{}-{}-{}-{}-{}".format(MediaEntry.entryId,MediaEntry.shotType,MediaEntry.time,MediaEntry.illuminationType,MediaEntry.gain,MediaEntry.saturation,MediaEntry.shutterSpeed,MediaEntry.whiteBalance)}}
+	      {{str(MediaEntry)}}
 </a>
 	    </div>
           </div>
