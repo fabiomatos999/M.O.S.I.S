@@ -2,6 +2,7 @@
 {% block title %} M.O.S.I.S Host
 M.O.S.I.S Host Software Home Page{% endblock %}
 {% block body %}
+{% if MediaEntries %}
 <table class="table table-striped">
     <thead>
         <th scope="col">ID</th>
@@ -25,9 +26,18 @@ M.O.S.I.S Host Software Home Page{% endblock %}
             <td>{{MediaEntry.saturation}}</td>
             <td>{{round(MediaEntry.shutterSpeed, 3)}}</td>
             <td>{{MediaEntry.whiteBalance}}</td>
-            <td><a href={{"entry/" + str(MediaEntry.entryId)}}>Link</a></td>
+            <td><a href={{"/entry/" + str(MediaEntry.entryId)}}>Link</a></td>
         </tr>
     {% endfor %}
     </tbody>
 </table>
+{% else %}
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h2>No results found.</h2>
+    </div>
+  </div>
+</div>
+{% endif %}
 {% endblock %}
