@@ -194,19 +194,20 @@ def single(st="single"):
 @app.route("/save", methods=["GET", "POST"])
 def save():
     """Serve study profile preview and save page."""
+    studySaved = False
     if request.method == "POST":
         writeStudyProfilesToJSON(remove_submit_and_csrf_toten(studies))
         if not args.nobackup:
             rsyncCopy.rsync_recursive_copy(
                 os.path.realpath("studyProfile.json"),
                 "pi@{}:/home/pi/Documents/".format(args.ipaddress))
-        return index()
-    else:
-        return render_template("saveStudyProfile.html",
-                               studies=remove_submit_and_csrf_toten(studies),
-                               enumerate=enumerate,
-                               str=str,
-                               len=len)
+        studySaved = True
+    return render_template("saveStudyProfile.html",
+                           studies=remove_submit_and_csrf_toten(studies),
+                           enumerate=enumerate,
+                           str=str,
+                           len=len,
+                           studySaved=studySaved)
 
 
 @app.route("/search/<category>", methods=['GET', 'POST'])

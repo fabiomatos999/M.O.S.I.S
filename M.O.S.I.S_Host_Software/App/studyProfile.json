@@ -8,96 +8,20 @@
         "shutterSpeed": "1/60"
     },
     {
-        "shotType": "SINGLE",
-        "whiteBalance": "3200",
-        "illuminationType": "NONE",
-        "gain": "0.00",
-        "saturation": "100",
-        "shutterSpeed": "1/60"
-    },
-    {
-        "shotType": "SINGLE",
-        "whiteBalance": "3200",
-        "illuminationType": "NONE",
-        "gain": "0.00",
-        "saturation": "100",
-        "shutterSpeed": "1/60"
-    },
-    {
-        "shotType": "SINGLE",
-        "whiteBalance": "3200",
-        "illuminationType": "NONE",
-        "gain": "0.00",
-        "saturation": "100",
-        "shutterSpeed": "1/60"
-    },
-    {
-        "shotType": "SINGLE",
-        "whiteBalance": "3200",
-        "illuminationType": "NONE",
-        "gain": "0.00",
-        "saturation": "100",
-        "shutterSpeed": "1/60"
-    },
-    {
-        "shotType": "SINGLE",
-        "whiteBalance": "3200",
-        "illuminationType": "NONE",
-        "gain": "0.00",
-        "saturation": "100",
-        "shutterSpeed": "1/60"
-    },
-    {
-        "shotType": "SINGLE",
-        "whiteBalance": "3200",
-        "illuminationType": "NONE",
-        "gain": "0.00",
-        "saturation": "100",
-        "shutterSpeed": "1/60"
-    },
-    {
-        "shotType": "TELESCOPIC",
+        "shotType": "BURST",
         "whiteBalance": "3200",
         "illuminationType": "NONE",
         "gain": "0.00",
         "saturation": "100",
         "shutterSpeed": "1/60",
-        "zoomOutCount": "5"
+        "shotCount": "5"
     },
     {
-        "shotType": "TELESCOPIC",
+        "shotType": "SINGLE",
         "whiteBalance": "3200",
         "illuminationType": "NONE",
         "gain": "0.00",
         "saturation": "100",
-        "shutterSpeed": "1/60",
-        "zoomOutCount": "5"
-    },
-    {
-        "shotType": "TELESCOPIC",
-        "whiteBalance": "3200",
-        "illuminationType": "NONE",
-        "gain": "0.00",
-        "saturation": "100",
-        "shutterSpeed": "1/60",
-        "zoomOutCount": "5"
-    },
-    {
-        "shotType": "TELESCOPIC",
-        "whiteBalance": "3200",
-        "illuminationType": "NONE",
-        "gain": "0.00",
-        "saturation": "100",
-        "shutterSpeed": "1/60",
-        "zoomOutCount": "5"
-    },
-    {
-        "shotType": "TELESCOPIC",
-        "whiteBalance": "3200",
-        "illuminationType": "NONE",
-        "gain": "0.00",
-        "saturation": "100",
-        "shutterSpeed": "1/60",
-        "zoomOutCount": "5"
+        "shutterSpeed": "1/60"
     }
 ]

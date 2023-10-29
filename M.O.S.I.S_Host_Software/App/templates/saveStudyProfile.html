@@ -3,16 +3,19 @@
 Save Study
 {% endblock %}
 {% block body %}
+{% if studySaved %}
+<div class="alert alert-success">Study added succesfully.</div>
+{% endif %}
 <div class="container">
     <div class="row">
-      <div class="col-6">
-	<h2>Current Study Profile</h2>
-      </div>
+        <div class="col-6">
+            <h2>Current Study Profile</h2>
+        </div>
     </div>
     <div class="row">
-      <form method="post", action="/save">
-      <input class="btn btn-primary" type="submit" value="Save Study Profile">
-      </form>
+        <form method="post" , action="/save">
+            <input class="btn btn-primary" type="submit" value="Save Study Profile">
+        </form>
     </div>
 </div>
 <table class="table table-striped">
@@ -40,5 +43,4 @@ Save Study
         {% endfor %}
     </tbody>
 </table>
-
 {% endblock %}
