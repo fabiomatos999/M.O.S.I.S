@@ -182,6 +182,10 @@ def single(st="single"):
         form=form,
         studies=remove_submit_and_csrf_toten(studies),
         error=form.errors,
+        str=str,
+        enumerate=enumerate,
+        len=len,
+        range=range
     )
 
 
@@ -197,7 +201,10 @@ def save():
         return index()
     else:
         return render_template("saveStudyProfile.html",
-                               studies=remove_submit_and_csrf_toten(studies))
+                               studies=remove_submit_and_csrf_toten(studies),
+                               enumerate=enumerate,
+                               str=str,
+                               len=len)
 
 
 @app.route("/search/<category>", methods=['GET', 'POST'])

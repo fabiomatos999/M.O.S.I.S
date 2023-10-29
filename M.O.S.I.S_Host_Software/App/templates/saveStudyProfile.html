@@ -14,22 +14,31 @@ Save Study
       <input class="btn btn-primary" type="submit" value="Save Study Profile">
       </form>
     </div>
-    <div class="card">
-      <div class="card-body">
-    {% for study in studies %}
-    <div class="row">
-	{% for key, value in study.items() %}
-      <div class="col-2">
-	<div class="card mt-3 mb-3">
-	  <div class="card-body">
-	    {{key + ": " + value}}
-	 </div>
-	</div>
-     </div>
-	{% endfor %}
-    </div>
-      {% endfor %}
-      </div>
-    </div>
 </div>
+<table class="table table-striped">
+    <thead>
+        <th scope="col"></th>
+        <th scope="col">Study Profile</th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+    </thead>
+    <tbody>
+        {% for index, study in enumerate(studies) %}
+        <tr>
+            <td>{{str(index+1)}}</td>
+            {% for key, value in study.items() %}
+            <td>{{str(key) + ": " +str(value)}}</td>
+            {% endfor %}
+            {% for _ in range(8-len(study)) %}
+            <td></td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
 {% endblock %}
