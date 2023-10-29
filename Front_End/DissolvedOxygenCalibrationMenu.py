@@ -381,7 +381,7 @@ class Ui_Form(object):
         self.doZeroCal_2.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.doZeroCal_2.setObjectName("doZeroCal_2")
         self.CalibrateZeroCal = QtWidgets.QPushButton(parent=Form)
-        self.CalibrateZeroCal.setGeometry(QtCore.QRect(490, 140, 374, 48))
+        self.CalibrateZeroCal.setGeometry(QtCore.QRect(410, 150, 374, 48))
         self.CalibrateZeroCal.setBaseSize(QtCore.QSize(171, 48))
         self.CalibrateZeroCal.setStyleSheet("QPushButton {\n"
           "    color: rgb(89, 239, 150);\n"
@@ -393,7 +393,7 @@ class Ui_Form(object):
         self.CalibrateZeroCal.setFont(font)
         self.CalibrateZeroCal.setObjectName("CalibrateZeroCal")
         self.CalibrateAtmoCal = QtWidgets.QPushButton(parent=Form)
-        self.CalibrateAtmoCal.setGeometry(QtCore.QRect(490, 230, 374, 48))
+        self.CalibrateAtmoCal.setGeometry(QtCore.QRect(410, 240, 374, 48))
         self.CalibrateAtmoCal.setBaseSize(QtCore.QSize(171, 48))
         self.CalibrateAtmoCal.setStyleSheet("QPushButton {\n"
            "    color: rgb(89, 239, 150);\n"                                 
@@ -406,7 +406,7 @@ class Ui_Form(object):
         self.CalibrateAtmoCal.setFont(font)
         self.CalibrateAtmoCal.setObjectName("CalibrateAtmoCal")
         self.Clear = QtWidgets.QPushButton(parent=Form)
-        self.Clear.setGeometry(QtCore.QRect(490, 330, 374, 48))
+        self.Clear.setGeometry(QtCore.QRect(410, 330, 374, 48))
         self.Clear.setBaseSize(QtCore.QSize(171, 48))
         self.Clear.setStyleSheet("QPushButton {\n"
          "    color: rgb(89, 239, 150);\n"
