@@ -178,7 +178,7 @@ class Ui_Form(object):
         self.WBSlider.setSingleStep(10)
         self.WBSlider.valueChanged.connect(self.slider_value)
         self.label3200k = QtWidgets.QLabel(parent=Form)
-        self.label3200k.setGeometry(QtCore.QRect(0, 270, 151, 91))
+        self.label3200k.setGeometry(QtCore.QRect(10, 260, 191, 91))
         font = QtGui.QFont()
         font.setPointSize(40)
         self.label3200k.setFont(font)
