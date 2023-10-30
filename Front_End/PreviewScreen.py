@@ -9,6 +9,12 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 from PIL import Image
 from getIPAddress import getIpAddress
 from PyQt6.QtCore import QTimer
+from PyQt6.QtCore import QThread
+import CameraControl
+import CameraPictureControl
+import CameraPreview
+import time
+from pixelinkWrapper import PxLApi
 
 
 class Ui_Form(object):
@@ -230,6 +236,8 @@ class Ui_Form(object):
         palette.setBrush(QtGui.QPalette.ColorGroup.Disabled,
                          QtGui.QPalette.ColorRole.PlaceholderText, brush)
         Form.setPalette(palette)
+        self.cameraControl = CameraControl.CameraControl()
+        self.cameraHandles = self.cameraControl.setUpCamera(2)
         self.layoutWidget = QtWidgets.QWidget(parent=Form)
         self.layoutWidget.setGeometry(QtCore.QRect(0, 440, 801, 57))
         self.layoutWidget.setObjectName("layoutWidget")
@@ -319,7 +327,11 @@ class Ui_Form(object):
         self.ipAddressRefreshTimer = QTimer(Form)
         self.ipAddressRefreshTimer.setInterval(1000)
         self.ipAddressRefreshTimer.timeout.connect(self.setIPAddressLabel)
+        self.cameraPreviewRefreshTimer = QTimer(Form)
+        self.cameraPreviewRefreshTimer.setInterval(int((1/24)*1000))
+        self.cameraPreviewRefreshTimer.timeout.connect(self.setCameraLabelsPixmap)
         self.ipAddressRefreshTimer.start()
+        self.cameraPreviewRefreshTimer.start()
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form):
@@ -363,7 +375,21 @@ class Ui_Form(object):
             self.status_label.setText("In Progress")
         else:
             self.status_label.setText("No Capture")
+    def setCameraLabelsPixmap(self):
+        CameraPreview.getPreviewImage(self.cameraHandles[0], "Preview", self.cameraHandles[0])
+        CameraPreview.getPreviewImage(self.cameraHandles[1], "Preview", self.cameraHandles[1])
+        left_image = "Preview1.jpeg"
+        right_image = "Preview2.jpeg"
+        self.left_camera.setPixmap(QtGui.QPixmap(left_image))
+        self.right_camera.setPixmap(QtGui.QPixmap(right_image))
 
+class ImageSavingThread(QThread):
+    def __init__(self, cameraHandle):
+        super().__init__()
+        self.cameraHandle = cameraHandle
+
+    def run(self):
+        CameraPreview.getPreviewImage(self.cameraHandle, "Preview", self.cameraHandle)
 
 if __name__ == "__main__":
     import sys
