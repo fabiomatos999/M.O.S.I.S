@@ -11,9 +11,7 @@ from getIPAddress import getIpAddress
 from PyQt6.QtCore import QTimer
 from PyQt6.QtCore import QThread
 import CameraControl
-import CameraPictureControl
 import CameraPreview
-import time
 from pixelinkWrapper import PxLApi
 
 
@@ -328,11 +326,12 @@ class Ui_Form(object):
         self.ipAddressRefreshTimer.setInterval(1000)
         self.ipAddressRefreshTimer.timeout.connect(self.setIPAddressLabel)
         self.cameraPreviewRefreshTimer = QTimer(Form)
-        self.cameraPreviewRefreshTimer.setInterval(int((5/1)*1000))
+        self.cameraPreviewRefreshTimer.setInterval(int((1/1)*1000))
         self.cameraPreviewRefreshTimer.timeout.connect(self.startPreviewImageCapture)
         self.ipAddressRefreshTimer.start()
         self.cameraDefaults()
         self.capturing = False
+        self.active = True
         self.cameraPreviewRefreshTimer.start()
         QtCore.QMetaObject.connectSlotsByName(Form)
 
@@ -378,9 +377,10 @@ class Ui_Form(object):
         else:
             self.status_label.setText("No Capture")
     def startPreviewImageCapture(self):
-        for handle in self.cameraHandles:
-            CameraPreview.getPreviewImage(handle, "Preview", handle)
-        self.setCameraPreviewLabels()
+        if self.active:
+            for handle in self.cameraHandles:
+                CameraPreview.getPreviewImage(handle, "Preview", handle)
+            self.setCameraPreviewLabels()
 
     def setCameraPreviewLabels(self):
         left_image = "Preview2.jpeg"

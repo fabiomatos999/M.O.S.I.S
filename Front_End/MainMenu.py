@@ -285,9 +285,17 @@ class MainMenu(object):
         self.phSensorCalibrationMenu.setupUi(self.phSensorCalibrationMenuForm)
         self.stackedLayout.addWidget(self.phSensorCalibrationMenuForm)
         self.stackedLayout.setCurrentIndex(0)
+        self.stackedLayout.currentChanged.connect(self.changePreviewWindow)
         form.setLayout(self.stackedLayout)
         form.keyPressEvent = self.keyPressEvent
         self.cameraPictureControl = CameraPictureControl.CameraPictureControl()
+
+    def changePreviewWindow(self):
+        if self.stackedLayout.currentIndex() == 0:
+            self.previewScreen.active = True
+        else:
+            self.previewScreen.active = False
+        self.stackedLayout.setCurrentIndex(self.stackedLayout.currentIndex())
 
     # When pressing F1 or F2 cycles through the menu
     def keyPressEvent(self, event):
@@ -306,10 +314,7 @@ class MainMenu(object):
                 self.stackedLayout.setCurrentIndex(currentIndex - 1)
         elif event.key(
         ) == Qt.Key.Key_Return and self.stackedLayout.currentIndex() == 0:
-            self.cameraPictureControl.get_snapshot(
-                self.previewScreen.cameraHandles[0], "It_Works-R")
-            self.cameraPictureControl.get_snapshot(
-                self.previewScreen.cameraHandles[1], "It_Works-L")
+            self.executeStudyProfile()
 
         # When the menu cycles to the corresponding menu it sets the keyboard
         # focus to the widget
@@ -317,6 +322,31 @@ class MainMenu(object):
             self.studyProfileSelectionMenu.listWidget.setFocus()
         elif currentIndex == 2:
             self.shutterSpeedSelectionMenu.SS1250Button.setFocus()
+
+    def executeStudyProfile(self):
+        studyProfile = self.studyProfileSelectionMenu.studyProfileContents[
+            self.studyProfileSelectionMenu.currentStudyProfileIndex]
+        self.previewScreen.setStatusLabel(True)
+        self.previewScreen.cameraControl.setExposure(
+            self.previewScreen.cameraHandles,
+            float(studyProfile["shutterSpeed"]))
+        self.previewScreen.cameraControl.setWhiteBalance(
+            self.previewScreen.cameraHandles,
+            int(studyProfile["whiteBalance"]))
+        if studyProfile["shotType"] == "SINGLE":
+            for handle in self.previewScreen.cameraHandles:
+                self.cameraPictureControl.get_snapshot(handle,
+                                                       "test" + str(handle))
+            print("test captured")
+        elif studyProfile["shotType"] == "BURST":
+            for handle in self.previewScreen.cameraHandles:
+                self.cameraPictureControl.getBurstSnapshot(3, handle)
+        elif studyProfile["shotType"] == "TIMELAPSE":
+            pass
+        elif studyProfile["shotType"] == "TELESCOPIC":
+            pass
+        elif studyProfile["shotType"] == "VIDEO":
+            pass
 
 
 if __name__ == "__main__":
