@@ -11,6 +11,8 @@ import WhiteBalanceCalibrationMenu
 import DissolvedOxygenCalibrationMenu
 import phSensorCalibrationMenu
 import sys
+import CameraPictureControl
+
 
 class BaseMenuWidget(QtWidgets.QWidget):
     #Allows the button to be hightlighted when changing into it
@@ -19,8 +21,8 @@ class BaseMenuWidget(QtWidgets.QWidget):
         if first_button:
             first_button.setFocus()
 
-class MainMenu(object):
 
+class MainMenu(object):
 
     def __init__(self, form):
         form.resize(800, 480)
@@ -285,30 +287,37 @@ class MainMenu(object):
         self.stackedLayout.setCurrentIndex(0)
         form.setLayout(self.stackedLayout)
         form.keyPressEvent = self.keyPressEvent
+        self.cameraPictureControl = CameraPictureControl.CameraPictureControl()
 
     # When pressing F1 or F2 cycles through the menu
     def keyPressEvent(self, event):
         currentIndex = self.stackedLayout.currentIndex()
         if event.key() == Qt.Key.Key_F1:
-            if currentIndex ==  7:
+            if currentIndex == 7:
                 self.stackedLayout.setCurrentIndex(0)
-             
-            else:  
+
+            else:
                 self.stackedLayout.setCurrentIndex(currentIndex + 1)
-            
-        if event.key() == Qt.Key.Key_F2:
+
+        elif event.key() == Qt.Key.Key_F2:
             if currentIndex == 0:
                 self.stackedLayout.setCurrentIndex(7)
             else:
                 self.stackedLayout.setCurrentIndex(currentIndex - 1)
+        elif event.key(
+        ) == Qt.Key.Key_Return and self.stackedLayout.currentIndex() == 0:
+            self.cameraPictureControl.get_snapshot(
+                self.previewScreen.cameraHandles[0], "It_Works-R")
+            self.cameraPictureControl.get_snapshot(
+                self.previewScreen.cameraHandles[1], "It_Works-L")
 
-        # When the menu cycles to the corresponding menu it sets the keyboard focus to the widget
+        # When the menu cycles to the corresponding menu it sets the keyboard
+        # focus to the widget
         if currentIndex == 1:
             self.studyProfileSelectionMenu.listWidget.setFocus()
         elif currentIndex == 2:
-            self.shutterSpeedSelectionMenu.SS1250Button.setFocus() 
-       
-        
+            self.shutterSpeedSelectionMenu.SS1250Button.setFocus()
+
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)

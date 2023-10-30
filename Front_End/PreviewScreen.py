@@ -328,9 +328,11 @@ class Ui_Form(object):
         self.ipAddressRefreshTimer.setInterval(1000)
         self.ipAddressRefreshTimer.timeout.connect(self.setIPAddressLabel)
         self.cameraPreviewRefreshTimer = QTimer(Form)
-        self.cameraPreviewRefreshTimer.setInterval(int((1/24)*1000))
-        self.cameraPreviewRefreshTimer.timeout.connect(self.setCameraLabelsPixmap)
+        self.cameraPreviewRefreshTimer.setInterval(int((5/1)*1000))
+        self.cameraPreviewRefreshTimer.timeout.connect(self.startPreviewImageCapture)
         self.ipAddressRefreshTimer.start()
+        self.cameraDefaults()
+        self.capturing = False
         self.cameraPreviewRefreshTimer.start()
         QtCore.QMetaObject.connectSlotsByName(Form)
 
@@ -375,13 +377,26 @@ class Ui_Form(object):
             self.status_label.setText("In Progress")
         else:
             self.status_label.setText("No Capture")
-    def setCameraLabelsPixmap(self):
-        CameraPreview.getPreviewImage(self.cameraHandles[0], "Preview", self.cameraHandles[0])
-        CameraPreview.getPreviewImage(self.cameraHandles[1], "Preview", self.cameraHandles[1])
-        left_image = "Preview1.jpeg"
-        right_image = "Preview2.jpeg"
+    def startPreviewImageCapture(self):
+        for handle in self.cameraHandles:
+            CameraPreview.getPreviewImage(handle, "Preview", handle)
+        self.setCameraPreviewLabels()
+
+    def setCameraPreviewLabels(self):
+        left_image = "Preview2.jpeg"
+        right_image = "Preview1.jpeg"
         self.left_camera.setPixmap(QtGui.QPixmap(left_image))
         self.right_camera.setPixmap(QtGui.QPixmap(right_image))
+
+    def cameraDefaults(self):
+        self.cameraControl.autoWhiteBalance(self.cameraHandles)
+        self.cameraControl.setExposure(self.cameraHandles)
+        #self.cameraControl.setFocus(self.cameraHandles)
+        self.cameraControl.setGain(self.cameraHandles)
+        self.cameraControl.setRegionOfInterest(self.cameraHandles)
+        self.cameraControl.setWhiteBalance(self.cameraHandles)
+        for camera in self.cameraHandles:
+            PxLApi.setPreviewState(camera, PxLApi.PreviewState.STOP)
 
 class ImageSavingThread(QThread):
     def __init__(self, cameraHandle):
@@ -390,6 +405,19 @@ class ImageSavingThread(QThread):
 
     def run(self):
         CameraPreview.getPreviewImage(self.cameraHandle, "Preview", self.cameraHandle)
+
+class ThreadSpawnerThread(QThread):
+    def __init__(self, threads: [], parent):
+        super().__init__()
+        self.threads = threads
+        self.parent = parent
+
+    def run(self):
+        for thread in self.threads:
+            thread.start()
+            thread.wait()
+        
+        
 
 if __name__ == "__main__":
     import sys
