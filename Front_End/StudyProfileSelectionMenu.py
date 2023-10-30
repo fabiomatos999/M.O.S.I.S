@@ -417,9 +417,8 @@ class Ui_Form(object):
                                       "background-color: rgb(0, 0, 0);")
         self.listWidget.setObjectName("listView")
         file = open("studyProfile.json")
-        global studyProfileContents
-        studyProfileContents = json.load(file)
-        for i, studyProfile in enumerate(studyProfileContents):
+        self.studyProfileContents = json.load(file)
+        for i, studyProfile in enumerate(self.studyProfileContents):
             studyProfileString = "{}\n".format(i)
 
             for key in studyProfile.keys():
@@ -427,6 +426,7 @@ class Ui_Form(object):
                     key, studyProfile[key])
             self.listWidget.insertItem(i, studyProfileString)
         self.listWidget.setCurrentItem(self.listWidget.item(0))
+        self.currentStudyProfileIndex = 0
         self.verticalLayout.addWidget(self.listWidget)
         self.listWidget.currentItemChanged.connect(self.setStudyProfileSumary)
         self.label = QtWidgets.QLabel(parent=Form)
@@ -449,15 +449,17 @@ class Ui_Form(object):
     def setStudyProfileSumary(self):
         selectedItem = self.listWidget.selectedItems()[0].text()
         index = int(selectedItem.split('\n')[0])
+        self.currentStudyProfileIndex = index
         summaryString = "{}-".format(str(index))
-        for value in studyProfileContents[index].values():
+        for value in self.studyProfileContents[index].values():
             summaryString = summaryString + "{}-".format(str(value))
         self.label.setText(summaryString[:-1])
-
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
+
+    
 
     
 # if __name__ == "__main__":
