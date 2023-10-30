@@ -1,40 +1,23 @@
-"""
-previewWithPyQt5.py
-
-Simple sample application demonstrating the use of the API Preview function, 
-embedded within a PyQt5 windows
-
-PyQt5 needs to be installed to run this sample (e.g.: 'pip install PyQt5')
-to locate the appropriate libaries.
-"""
+"""PyQt6 Widget for displaying camera preview."""
 from pixelinkWrapper import PxLApi
-from ctypes import *
 import time
 import sys
 
-from PyQt6.QtWidgets import QApplication
-from PyQt6.QtWidgets import QMainWindow
-from PyQt6.QtWidgets import QWidget
+from PyQt6.QtWidgets import QApplication, QVBoxLayout, QWidget
 from PyQt6.QtCore import QThread
 
-"""
-PyQt5 top-level window with a menu bar and a preview window
-"""
-class MainWindow(QMainWindow):
-    # Create our top-level window with a menu bar and a preview window
-    def __init__(self, parent=None):
-        # Initializer
-        super().__init__(parent)
-        # Main Window's properties
-        self.setWindowTitle("PixelinkPreview")
-        self.setGeometry(0, 0, 1024, 768)
-        # Create and set the central widget as
-        self.previewWindow = PreviewWindow(self)
-        self.setCentralWidget(self.previewWindow)   
-        # Set the menu bar with actions
-        # Start using the camera
-        self._startCamera()
 
+class PreviewWidget(QWidget):
+    """Main widget for spawning and starting PixeLink Camera preview."""
+
+    def __init__(self, parent=None):
+        """Initialize the parent window and starts the camera preview."""
+        super().__init__(parent)
+        self.previewWindow = PreviewWindow(self)
+        self.vboxLayout = QVBoxLayout()
+        self.vboxLayout.addWidget(self.previewWindow)
+        self.setLayout(self.vboxLayout)
+        self._startCamera()
 
     def _startCamera(self):
         # Set up the camera and start the stream
@@ -47,7 +30,6 @@ class MainWindow(QMainWindow):
             if PxLApi.apiSuccess(ret[0]):
                 self._startPreview()
 
-    # Start preview (with message pump). Preview gets stopped when the top level window is closed.
     def _startPreview(self):
         self.previewWindow.previewState = PxLApi.PreviewState.START
         self.previewWindow.previewThread.start()
@@ -57,57 +39,67 @@ class MainWindow(QMainWindow):
         self.previewWindow.previewState = PxLApi.PreviewState.STOP
         # Give preview a bit of time to stop
         time.sleep(0.05)
-          
+
         PxLApi.setStreamState(self.hCamera, PxLApi.StreamState.STOP)
 
         PxLApi.uninitialize(self.hCamera)
 
     def exitApp(self):
+        """Call super class to close widget properly."""
         self.close()
 
     def closeEvent(self, event):
-        # The user has quit the application, stop using the camera
+        """Once the user has quit the application, stop using the camera."""
         self._stopCamera()
         return super().closeEvent(event)
-        
-"""
-PyQt5 Preview window with the API preview control
-"""
+
+
 class PreviewWindow(QWidget):
+    """Contain the windows ID and process thread object."""
 
     def __init__(self, parent=None):
+        """Assign parent and create thread object for preview."""
         super().__init__(parent)
         self.mainWindow = parent
         self.winId = int(self.winId())
-        self.previewState = PxLApi.PreviewState.STOP    # default preview state
+        self.previewState = PxLApi.PreviewState.STOP  # default preview state
         self.previewThread = ControlPreview(self)
-        
+
     # Window resize handler
-    def resizeEvent(self, event):        
-        # The user has resized the window. Also resize the preview so that the preview will scale to the new window size
+    def resizeEvent(self, event):
+        """Set the preview size of the widget."""
         hCamera = self.mainWindow.hCamera
         width = event.size().width()
         height = event.size().height()
         previewHwnd = self.winId
-        PxLApi.setPreviewSettings(hCamera, "", PxLApi.WindowsPreview.WS_VISIBLE | PxLApi.WindowsPreview.WS_CHILD , 0, 0, width, height, previewHwnd)
+        PxLApi.setPreviewSettings(
+            hCamera, "",
+            PxLApi.WindowsPreview.WS_VISIBLE | PxLApi.WindowsPreview.WS_CHILD,
+            0, 0, width, height, previewHwnd)
 
 
 """
-Preview control QThread -- starts and stops the preview, as well as handles the Windows Dispatch
-of the preview window.
+Preview control QThread -- starts and stops the preview of the preview window.
 """
+
+
 class ControlPreview(QThread):
+    """Process thread for previewing the camera."""
 
     def __init__(self, parent=None):
+        """Assign parent and start QThread constructor."""
         super().__init__()
         self.previewWindow = parent
-       
+
     def run(self):
-        # Run preview function
+        """Override of run method for QThread, ran when start method is run."""
         self._runPreview()
 
     def _runPreview(self):
-        
+        """Start preview for the camera in a process thread.
+
+        Will run until previewState of the camera is not Stopped.
+        """
         # Get the current dimensions of the Preview Window
         hCamera = self.previewWindow.mainWindow.hCamera
         width = self.previewWindow.size().width()
@@ -119,20 +111,19 @@ class ControlPreview(QThread):
         assert PxLApi.apiSuccess(ret[0]), "%i" % ret[0]
 
         # Set preview settings
-        ret = PxLApi.setPreviewSettings(hCamera, "", PxLApi.WindowsPreview.WS_VISIBLE | PxLApi.WindowsPreview.WS_CHILD, 
-                                        0, 0, width, height, previewHwnd)
-
-        # Start the preview (NOTE: camera must be streaming). Keep looping until the previewState is STOPed
+        ret = PxLApi.setPreviewSettings(
+            hCamera, "",
+            PxLApi.WindowsPreview.WS_VISIBLE | PxLApi.WindowsPreview.WS_CHILD,
+            0, 0, width, height, previewHwnd)
+        """Start the preview (NOTE: camera must be streaming).
+        Keep looping until the previewState is Stopped."""
         ret = PxLApi.setPreviewState(hCamera, PxLApi.PreviewState.START)
-        while (PxLApi.PreviewState.START == self.previewWindow.previewState and PxLApi.apiSuccess(ret[0])):
-            # if user32.PeekMessageW(pMsg, 0, 0, 0, 1) != 0:
-            #     # All messages are simlpy forwarded onto to other Win32 event handlers. However, we do
-            #     # set the cursor just to ensure that parent windows resize cursors do not persist within
-            #     # the preview window
+        while (PxLApi.PreviewState.START == self.previewWindow.previewState
+               and PxLApi.apiSuccess(ret[0])):
             #     user32.TranslateMessage(pMsg)
             #     user32.DispatchMessageW(pMsg)
-            i = 0
-    
+            continue
+
         # User has exited -- Stop the preview
         ret = PxLApi.setPreviewState(hCamera, PxLApi.PreviewState.STOP)
         assert PxLApi.apiSuccess(ret[0]), "%i" % ret[0]
@@ -140,6 +131,7 @@ class ControlPreview(QThread):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    mainWin = MainWindow()
-    mainWin.show()
+    parent = QWidget()
+    mainWin = PreviewWidget()(parent=parent)
+    parent.show()
     sys.exit(app.exec())
