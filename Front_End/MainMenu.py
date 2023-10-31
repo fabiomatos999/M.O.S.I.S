@@ -336,11 +336,12 @@ class MainMenu(object):
         self.previewScreen.cameraControl.setWhiteBalance(
             self.previewScreen.cameraHandles,
             int(studyProfile["whiteBalance"]))
+        media_entry = DataClass.MediaEntry.media_entry(studyProfile["shotType"], MainMenu.getCurrentTime(), studyProfile["illuminationType"], float(studyProfile["gain"], int(studyProfile["saturation"]), MainMenu.validate_shutterSpeed(studyProfile["shutterSpeed"]), int(studyProfile["whiteBalance"])))
+
         if studyProfile["shotType"] == "SINGLE":
             for handle in self.previewScreen.cameraHandles:
                 self.cameraPictureControl.get_snapshot(handle,
                                                        "test" + str(handle))
-            media_entry = DataClass.MediaEntry.media_entry(studyProfile["shotType"], MainMenu.getCurrentTime(), studyProfile["illuminationType"], MainMenu.validate_shutterSpeed(float(studyProfile["gain"]), int(studyProfile["saturation"]), float(studyProfile["shutterSpeed"]), int(studyProfile["whiteBalance"])))
             
             print("test captured")
         elif studyProfile["shotType"] == "BURST":
