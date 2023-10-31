@@ -348,12 +348,15 @@ class MainMenu(object):
         media_entry = dq.getMediaEntrybyId(entry_id)
         fsg = FolderStructureGenerator.FolderStructureGenerator()
         path = os.path.join(fsg.root_path, str(media_entry))
+        fsg.create_folder_structure(entry_id)
         if studyProfile["shotType"] == "SINGLE":
             media_metadata = dq.insertMediaMetadata(entry_id, path, "jpg", MainMenu.getCurrentTime(), 95.5, 100, 8, 0.5)
-            media_metadata = dq.getAllMediaMetadaByEntryId
-            for handle in self.previewScreen.cameraHandles:
-                self.cameraPictureControl.get_snapshot(handle,
-                                                       )
+            media_metadata = dq.getMediaMetadatabyId(entry_id)
+            self.cameraPictureControl.get_snapshot(self.previewScreen.cameraHandles[0],
+                                media_metadata.left_Camera_Media)
+            self.cameraPictureControl.get_snapshot(self.previewScreen.cameraHandles[1],
+                                media_metadata.right_Camera_Media)
+            
             print("test captured")
         elif studyProfile["shotType"] == "BURST":
             for handle in self.previewScreen.cameraHandles:
@@ -365,6 +368,7 @@ class MainMenu(object):
         elif studyProfile["shotType"] == "VIDEO":
             pass
         self.previewScreen.setStatusLabel(False)
+        fsg.exportMetadata(entry_id)
 
     @staticmethod
     def getCurrentTime() -> str:
