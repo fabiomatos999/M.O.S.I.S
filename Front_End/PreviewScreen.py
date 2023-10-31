@@ -379,7 +379,7 @@ class Ui_Form(object):
     def startPreviewImageCapture(self):
         if self.active:
             for handle in self.cameraHandles:
-                CameraPreview.getPreviewImage(handle, "Preview", handle)
+                CameraPreview.getPreviewImage(handle, "Preview")
             self.setCameraPreviewLabels()
 
     def setCameraPreviewLabels(self):
@@ -404,7 +404,7 @@ class ImageSavingThread(QThread):
         self.cameraHandle = cameraHandle
 
     def run(self):
-        CameraPreview.getPreviewImage(self.cameraHandle, "Preview", self.cameraHandle)
+        CameraPreview.getPreviewImage(self.cameraHandle, "Preview")
 
 class ThreadSpawnerThread(QThread):
     def __init__(self, threads: [], parent):
