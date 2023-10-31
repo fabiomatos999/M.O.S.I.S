@@ -1,6 +1,5 @@
 from PyQt6 import QtGui, QtWidgets
 from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import QWidget, QStackedLayout
 from PyQt6 import QtCore
 import PreviewScreen
 import StudyProfileSelectionMenu
@@ -12,6 +11,7 @@ import DissolvedOxygenCalibrationMenu
 import phSensorCalibrationMenu
 import sys
 import CameraPictureControl
+import FolderStructureGenerator
 
 
 class BaseMenuWidget(QtWidgets.QWidget):

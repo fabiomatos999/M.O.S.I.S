@@ -214,7 +214,7 @@ class CameraPictureControl():
 
         # Put camera into streaming state so we can capture an image
         ret = PxLApi.setStreamState(hCamera, PxLApi.StreamState.START)
-        #if not PxLApi.apiSuccess(ret[0]):
+        # if not PxLApi.apiSuccess(ret[0]):
         #    return FAILURE
 
         # Get an image
@@ -242,15 +242,9 @@ class CameraPictureControl():
         assert 0 != len(formatedImage)
 
         # Create a folder to save snapshots if it does not exist
-        if not os.path.exists("Media"):
-            os.makedirs("Media")
 
-        if not os.path.exists("Media/Images"):
-            os.makedirs("Media/Images")
-
-        filepass = "Media/Images/" + fileName + ".jpeg"
         # Open a file for binary write
-        file = open(filepass, "wb")
+        file = open(fileName, "wb")
         if file is None:
             return FAILURE
         numBytesWritten = file.write(formatedImage)

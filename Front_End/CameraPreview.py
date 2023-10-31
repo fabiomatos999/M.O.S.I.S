@@ -1,12 +1,13 @@
 import CameraPictureControl
-import cv2
-import time
+import CameraControl
+from pixelinkwrapper import PxLApi
 
 
-def getPreviewImage(hCamera, path: str, cameraNumber: int) -> str:
+def getPreviewImage(hCamera: [int], path: str) -> str:
     cpc = CameraPictureControl.CameraPictureControl()
-    cpc.get_snapshot(hCamera, (path + str(cameraNumber)))
-    img = cv2.imread("Media/Images/" + (path + str(cameraNumber)) + ".jpeg")
-    img = cv2.resize(img, (400, 400))
-    cv2.imwrite((path + str(cameraNumber) + ".jpeg"), img)
+    cc = CameraControl.CameraControl()
+    cc.setRegionOfInterest(hCamera, 1096, 772, 400, 400)
+    cpc.get_snapshot(hCamera[0], (path + str(hCamera[0])))
+    cpc.get_snapshot(hCamera[1], (path + str(hCamera[1])))
+    cc.setRegionOfInterest(hCamera)
     return path
