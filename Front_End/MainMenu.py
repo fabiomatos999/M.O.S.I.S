@@ -336,13 +336,18 @@ class MainMenu(object):
         self.previewScreen.cameraControl.setWhiteBalance(
             self.previewScreen.cameraHandles,
             int(studyProfile["whiteBalance"]))
-        media_entry = DataClass.MediaEntry.media_entry(studyProfile["shotType"], MainMenu.getCurrentTime(), studyProfile["illuminationType"], float(studyProfile["gain"], int(studyProfile["saturation"]), MainMenu.validate_shutterSpeed(studyProfile["shutterSpeed"]), int(studyProfile["whiteBalance"])))
+        media_entry = DataClass.MediaEntry.media_entry(
+            studyProfile["shotType"], MainMenu.getCurrentTime(),
+            studyProfile["illuminationType"],
+            float(studyProfile["gain"], int(studyProfile["saturation"]),
+                  MainMenu.validate_shutterSpeed(studyProfile["shutterSpeed"]),
+                  int(studyProfile["whiteBalance"])))
 
         if studyProfile["shotType"] == "SINGLE":
             for handle in self.previewScreen.cameraHandles:
                 self.cameraPictureControl.get_snapshot(handle,
                                                        "test" + str(handle))
-            
+
             print("test captured")
         elif studyProfile["shotType"] == "BURST":
             for handle in self.previewScreen.cameraHandles:
@@ -360,16 +365,17 @@ class MainMenu(object):
         """Return current time in 'yyyy-MM-ddTHH:mm:ss.zzz' format."""
         date = datetime.now()
         return date.strftime('%Y-%m-%-dT%H:%M:%S.%f')
-    
+
     @staticmethod
     def validate_shutterSpeed(field):
         shutterSpeed = field.data
         if re.match(r"^\d+\/\d+$", shutterSpeed):
             numerator = int(shutterSpeed.split("/")[0])
             denominator = int(shutterSpeed.split("/")[1])
-            return numerator/denominator
+            return numerator / denominator
         else:
             return float(field)
+
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
