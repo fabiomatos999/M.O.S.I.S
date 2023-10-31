@@ -21,6 +21,17 @@ class DatabaseQuery:
             ret[0], ret[1], ret[2], ret[3], ret[4], ret[5], ret[6], ret[7]
         )
         return ret
+    def getMediaMetadatabyId(self, metadataId: int) -> DataClass.MediaMetadata:
+        """Given a Media Metadata ID, return the row associated with the ID."""
+        ret = self.cursor.execute(
+
+            "Select * from media_metadata WHERE metadataId = ?", (metadataId,)
+        ).fetchone()
+        ret = DataClass.MediaMetadata(
+            ret[0], ret[1], ret[2], ret[3], ret[4], ret[5], ret[6], ret[7], ret[8]
+                ),
+                
+        return ret
 
     def getAllMediaMetadaByEntryId(self, entryId: int) -> [DataClass.MediaMetadata]:
         ret = self.cursor.execute(

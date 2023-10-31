@@ -12,9 +12,11 @@ import phSensorCalibrationMenu
 import sys
 import CameraPictureControl
 import DataClass
+import databaseQuery
 from datetime import datetime
 import FolderStructureGenerator
 import re
+import os
 
 
 class BaseMenuWidget(QtWidgets.QWidget):
@@ -336,18 +338,22 @@ class MainMenu(object):
         self.previewScreen.cameraControl.setWhiteBalance(
             self.previewScreen.cameraHandles,
             int(studyProfile["whiteBalance"]))
-        media_entry = DataClass.MediaEntry.media_entry(
+        dq = databaseQuery.DatabaseQuery()
+        entry_id = dq.insertMediaEntry(
             studyProfile["shotType"], MainMenu.getCurrentTime(),
             studyProfile["illuminationType"],
-            float(studyProfile["gain"], int(studyProfile["saturation"]),
+            float(studyProfile["gain"]), int(studyProfile["saturation"]),
                   MainMenu.validate_shutterSpeed(studyProfile["shutterSpeed"]),
-                  int(studyProfile["whiteBalance"])))
-
+                  int(studyProfile["whiteBalance"]))
+        media_entry = dq.getMediaEntrybyId(entry_id)
+        fsg = FolderStructureGenerator.FolderStructureGenerator()
+        path = os.path.join(fsg.root_path, str(media_entry))
         if studyProfile["shotType"] == "SINGLE":
+            media_metadata = dq.insertMediaMetadata(entry_id, path, "jpg", MainMenu.getCurrentTime(), 95.5, 100, 8, 0.5)
+            media_metadata = dq.getAllMediaMetadaByEntryId
             for handle in self.previewScreen.cameraHandles:
                 self.cameraPictureControl.get_snapshot(handle,
-                                                       "test" + str(handle))
-
+                                                       )
             print("test captured")
         elif studyProfile["shotType"] == "BURST":
             for handle in self.previewScreen.cameraHandles:
