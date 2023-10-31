@@ -11,7 +11,10 @@ import DissolvedOxygenCalibrationMenu
 import phSensorCalibrationMenu
 import sys
 import CameraPictureControl
+import DataClass
+from datetime import datetime
 import FolderStructureGenerator
+import re
 
 
 class BaseMenuWidget(QtWidgets.QWidget):
@@ -337,6 +340,8 @@ class MainMenu(object):
             for handle in self.previewScreen.cameraHandles:
                 self.cameraPictureControl.get_snapshot(handle,
                                                        "test" + str(handle))
+            media_entry = DataClass.MediaEntry.media_entry(studyProfile["shotType"], MainMenu.getCurrentTime(), studyProfile["illuminationType"], MainMenu.validate_shutterSpeed(float(studyProfile["gain"]), int(studyProfile["saturation"]), float(studyProfile["shutterSpeed"]), int(studyProfile["whiteBalance"])))
+            
             print("test captured")
         elif studyProfile["shotType"] == "BURST":
             for handle in self.previewScreen.cameraHandles:
@@ -347,7 +352,23 @@ class MainMenu(object):
             pass
         elif studyProfile["shotType"] == "VIDEO":
             pass
+        self.previewScreen.setStatusLabel(False)
 
+    @staticmethod
+    def getCurrentTime() -> str:
+        """Return current time in 'yyyy-MM-ddTHH:mm:ss.zzz' format."""
+        date = datetime.now()
+        return date.strftime('%Y-%m-%-dT%H:%M:%S.%f')
+    
+    @staticmethod
+    def validate_shutterSpeed(field):
+        shutterSpeed = field.data
+        if re.match(r"^\d+\/\d+$", shutterSpeed):
+            numerator = int(shutterSpeed.split("/")[0])
+            denominator = int(shutterSpeed.split("/")[1])
+            return numerator/denominator
+        else:
+            return float(field)
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
