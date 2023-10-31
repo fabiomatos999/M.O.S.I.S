@@ -11,7 +11,6 @@ import DissolvedOxygenCalibrationMenu
 import phSensorCalibrationMenu
 import sys
 import CameraPictureControl
-import DataClass
 import databaseQuery
 from datetime import datetime
 import FolderStructureGenerator
@@ -341,26 +340,38 @@ class MainMenu(object):
         dq = databaseQuery.DatabaseQuery()
         entry_id = dq.insertMediaEntry(
             studyProfile["shotType"], MainMenu.getCurrentTime(),
-            studyProfile["illuminationType"],
-            float(studyProfile["gain"]), int(studyProfile["saturation"]),
-                  MainMenu.validate_shutterSpeed(studyProfile["shutterSpeed"]),
-                  int(studyProfile["whiteBalance"]))
+            studyProfile["illuminationType"], float(studyProfile["gain"]),
+            int(studyProfile["saturation"]),
+            MainMenu.validate_shutterSpeed(studyProfile["shutterSpeed"]),
+            int(studyProfile["whiteBalance"]))
         media_entry = dq.getMediaEntrybyId(entry_id)
         fsg = FolderStructureGenerator.FolderStructureGenerator()
         path = os.path.join(fsg.root_path, str(media_entry))
         fsg.create_folder_structure(entry_id)
         if studyProfile["shotType"] == "SINGLE":
-            media_metadata = dq.insertMediaMetadata(entry_id, path, "jpg", MainMenu.getCurrentTime(), 95.5, 100, 8, 0.5)
+            media_metadata = dq.insertMediaMetadata(entry_id, path, "jpg",
+                                                    MainMenu.getCurrentTime(),
+                                                    95.5, 100, 8, 0.5)
             media_metadata = dq.getMediaMetadatabyId(entry_id)
-            self.cameraPictureControl.get_snapshot(self.previewScreen.cameraHandles[0],
-                                media_metadata.left_Camera_Media)
-            self.cameraPictureControl.get_snapshot(self.previewScreen.cameraHandles[1],
-                                media_metadata.right_Camera_Media)
-            
+            self.cameraPictureControl.get_snapshot(
+                self.previewScreen.cameraHandles[0],
+                media_metadata.left_Camera_Media)
+            self.cameraPictureControl.get_snapshot(
+                self.previewScreen.cameraHandles[1],
+                media_metadata.right_Camera_Media)
             print("test captured")
         elif studyProfile["shotType"] == "BURST":
-            for handle in self.previewScreen.cameraHandles:
-                self.cameraPictureControl.getBurstSnapshot(3, handle)
+            for _ in range(int(studyProfile["shotCount"])):
+                media_metadata = dq.insertMediaMetadata(
+                    entry_id, path, "jpg", MainMenu.getCurrentTime(), 95.5,
+                    100, 8, 0.5)
+                media_metadata = dq.getMediaMetadatabyId(media_entry)
+                self.cameraPictureControl.get_snapshot(
+                    self.previewScreen.cameraHandles[0],
+                    media_metadata.left_Camera_Media)
+                self.cameraPictureControl.get_snapshot(
+                    self.previewScreen.cameraHandles[1],
+                    media_metadata.right_Camera_Media)
         elif studyProfile["shotType"] == "TIMELAPSE":
             pass
         elif studyProfile["shotType"] == "TELESCOPIC":

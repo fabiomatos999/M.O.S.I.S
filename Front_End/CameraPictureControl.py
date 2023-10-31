@@ -4,6 +4,8 @@ import os
 from ctypes import create_string_buffer
 from datetime import datetime
 import time
+import databaseQuery
+from MainMenu.MainMenu import getCurrentTime
 
 SUCCESS = 0
 FAILURE = 1
@@ -71,8 +73,9 @@ class CameraPictureControl():
 
     def getBurstSnapshot(self,
                          burstNumber: int,
-                         hCamera,
-                         burstInterval=0) -> int:
+                         hCamera: int,
+                         fileName: str,
+                         burstInterval: int = 0) -> int:
         """Get burst image from a camera.
 
         Return SUCCESS or FAILURE.
@@ -81,9 +84,6 @@ class CameraPictureControl():
 
         try:
             while counter < burstNumber:
-                fileName = "burst" + str(counter) + "-" + str(
-                    datetime.now().strftime("%Y-%m-%dT%H:%M"))
-                # Get a snapshot and save it to a folder as a file
                 self.get_snapshot(hCamera, fileName)
                 counter += 1
             return SUCCESS
