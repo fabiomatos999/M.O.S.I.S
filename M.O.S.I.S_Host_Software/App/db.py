@@ -205,7 +205,7 @@ class DatabaseQuery:
                     left = dbMin
                     if right > dbMax:
                         right = dbMax
-                        return list(range(left, right + 1, 1))
+            return list(range(left, right + 1, 1))
 
         for query in searchQuery.split(" "):
             if bool(re.search(dualEndedRangeRegex, query)):
@@ -232,4 +232,4 @@ class DatabaseQuery:
                 entries = list(
                     filter(lambda x: x >= dbMin and x <= dbMax, entries))
                 entries.sort()
-                return entries
+            return entries
