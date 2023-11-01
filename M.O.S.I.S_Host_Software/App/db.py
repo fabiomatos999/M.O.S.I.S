@@ -4,6 +4,7 @@ from enums import illuminationType, shotType
 from representations import MediaEntryInternalRepresentation, \
     MediaMetadataInternalRepresentation
 import re
+from app import getCurrentTime
 
 
 class DatabaseQuery:
@@ -119,6 +120,18 @@ class DatabaseQuery:
         ).fetchone()
         return int(ret[0])
 
+    def getFirstMediaMetadata(self) -> int:
+        ret = self.cursor.execute(
+            """SELECT metadataId FROM MediaMetadata ORDER BY metadataId ASC LIMIT 1"""
+        ).fetchone()
+        return int(ret[0])
+
+    def getLastMediaMetadata(self) -> int:
+        ret = self.cursor.execute(
+            """SELECT metadataId FROM MediaMetadata ORDER BY metadataId DESC LIMIT 1"""
+        ).fetchone()
+        return int(ret[0])
+
     def getMediaEntriesByShotType(
             self, shottype: str) -> [MediaEntryInternalRepresentation]:
         ret = self.cursor.execute(
@@ -213,3 +226,11 @@ class DatabaseQuery:
                     filter(lambda x: x >= dbMin and x <= dbMax, entries))
                 entries.sort()
                 return entries
+
+
+if __name__ == "__main__":
+    uwu = DatabaseQuery()
+    uwu.insertMediaEntry(1, shotType.SINGLE, getCurrentTime(),
+                         illuminationType.NONE, 7.47, 100, "1/50", 3200)
+    uwu.insertMediaMetadata(1, 1, "UwU", "UwU", getCurrentTime(), 50.3, 6500.4,
+                            6.96, 100.7)

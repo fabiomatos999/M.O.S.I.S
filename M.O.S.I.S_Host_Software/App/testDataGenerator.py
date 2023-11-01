@@ -4,16 +4,19 @@
 import os
 import random
 from enums import shotType, illuminationType
-from app import insertMediaEntry, insertMediaMetadata, getAllMediaEntryIDs
 from enum import Enum
 import math
+import db
+from app import getCurrentTime
 
-sterioscopicImageDirectory = os.path.realpath("static")
+dbQuery = db.DatabaseQuery()
+
+sterioscopicImageDirectory = "static"
 sterioscopicImageSeletection = ["Geology", "Island", "Mountains"]
 
 
 def randImage() -> (str, str):
-    """Return random sterioscopic images from sterioscopicImageSelection."""
+    """Return random stereoscopic images from stereoscopicImageSelection."""
     image = random.choice(sterioscopicImageSeletection)
     imageLeft = "L-{}.png".format(image)
     imageLeft = os.path.join(sterioscopicImageDirectory, imageLeft)
@@ -44,12 +47,12 @@ def randDissolvedOxygen() -> float:
 
 def randShotType() -> Enum:
     """Return a random shotType."""
-    return random.choice(list(shotType)).name
+    return random.choice(list(shotType))
 
 
 def randIluminationType() -> Enum:
-    """Return a random iluminationType."""
-    return random.choice(list(illuminationType)).name
+    """Return a random illuminationType."""
+    return random.choice(list(illuminationType))
 
 
 def randGain() -> float:
@@ -65,8 +68,8 @@ def randSaturation() -> int:
 def randShutterSpeed() -> float:
     """Return a random floating point number of common shutter speeds."""
     return random.choice([
-        1 / 2000, 1 / 1000, 1 / 500, 1 / 250, 1 / 125, 1 / 60, 1 / 30, 1 / 15,
-        1 / 8, 1 / 4, 1 / 2, 1.0, 2.0
+        "1 / 2000", "1 / 1000", "1 / 500", "1 / 250", "1 / 125", "1 / 60",
+        "1 / 30", "1 / 15", "1 / 8", "1 / 4", "1 / 2", "1.0", "2.0"
     ])
 
 
@@ -75,21 +78,48 @@ def randWhiteBalance() -> int:
     return math.floor(random.random() * 3300) + 3200
 
 
-def insertRandomMediaEntry(db):
+def insertRandomMediaEntry():
     """Insert a MediaEntry into a database with random valid data."""
-    insertMediaEntry(db, randShotType(), randIluminationType(),
-                     randSaturation(), randGain(), randShutterSpeed(),
-                     randWhiteBalance())
+    try:
+        dbQuery.insertMediaEntry(dbQuery.getLastMediaEntry() + 1,
+                                 randShotType(), getCurrentTime(),
+                                 randIluminationType(), randSaturation(),
+                                 randGain(), randShutterSpeed(),
+                                 randWhiteBalance())
+    except Exception as e:
+        print("Warning empty MediaEntry table.: {}".format(e))
+        dbQuery.insertMediaEntry(1, randShotType(), getCurrentTime(),
+                                 randIluminationType(), randSaturation(),
+                                 randGain(), randShutterSpeed(),
+                                 randWhiteBalance())
 
 
-def getRandomMediaEntryEntryId(db) -> int:
+def getRandomMediaEntryEntryId() -> int:
     """Return a random entryId from MediaEntry table."""
-    return random.choice(getAllMediaEntryIDs(db))
+    return random.choice(dbQuery.getAllMediaEntryIDs())
 
 
-def insertRandomMediaMetadata(db):
+def insertRandomMediaMetadata():
     """Insert a MediaMetadata entry into a database with random valid data."""
     randImages = randImage()
-    insertMediaMetadata(db, getRandomMediaEntryEntryId(db), randImages[0],
-                        randImages[1], randTemp(), randPressure(), randPh(),
-                        randDissolvedOxygen())
+    try:
+        dbQuery.insertMediaMetadata(dbQuery.getLastMediaMetadata() + 1,
+                                    getRandomMediaEntryEntryId(),
+                                    randImages[0], randImages[1],
+                                    getCurrentTime(), randTemp(),
+                                    randPressure(), randPh(),
+                                    randDissolvedOxygen())
+    except Exception as e:
+        print("Warning empty MediaMetadata table: {}".format(e))
+        dbQuery.insertMediaMetadata(1, getRandomMediaEntryEntryId(),
+                                    randImages[0], randImages[1],
+                                    getCurrentTime(), randTemp(),
+                                    randPressure(), randPh(),
+                                    randDissolvedOxygen())
+
+
+if __name__ == "__name__":
+    for _ in range(100):
+        insertRandomMediaEntry()
+    for _ in range(1000):
+        insertRandomMediaMetadata()
