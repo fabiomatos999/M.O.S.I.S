@@ -4,7 +4,6 @@ from enums import illuminationType, shotType
 from representations import MediaEntryInternalRepresentation, \
     MediaMetadataInternalRepresentation
 import re
-from app import getCurrentTime
 
 
 class DatabaseQuery:
@@ -12,7 +11,7 @@ class DatabaseQuery:
 
     def __init__(self, db: str = "test.db"):
         """Create db tables and gives a db connection and cursor."""
-        self.conn = sqlite3.connect('test.db')
+        self.conn = sqlite3.connect('test.db', check_same_thread=False)
         self.cursor = self.conn.cursor()
         # Create MediaEntry table if not exists
         self.cursor.execute('''
@@ -69,6 +68,14 @@ class DatabaseQuery:
     def getAllMediaEntryIDs(self):
         ret = self.cursor.execute("SELECT entryId FROM MediaEntry").fetchall()
         return list(map(lambda x: x[0], ret))
+
+    def getMediaEntriesById(
+            self, entryIDs: [int]) -> [MediaEntryInternalRepresentation]:
+        """Get a list of media entries given a list of entry IDs."""
+        returnMediaEntries = []
+        for id in entryIDs:
+            returnMediaEntries.append(self.getMediaEntry(id))
+        return returnMediaEntries
 
     def getAllMediaEntry(self) -> [MediaEntryInternalRepresentation]:
         ret = self.cursor.execute("SELECT * FROM MediaEntry").fetchall()
@@ -226,11 +233,3 @@ class DatabaseQuery:
                     filter(lambda x: x >= dbMin and x <= dbMax, entries))
                 entries.sort()
                 return entries
-
-
-if __name__ == "__main__":
-    uwu = DatabaseQuery()
-    uwu.insertMediaEntry(1, shotType.SINGLE, getCurrentTime(),
-                         illuminationType.NONE, 7.47, 100, "1/50", 3200)
-    uwu.insertMediaMetadata(1, 1, "UwU", "UwU", getCurrentTime(), 50.3, 6500.4,
-                            6.96, 100.7)
