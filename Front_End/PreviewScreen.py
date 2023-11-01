@@ -13,7 +13,7 @@ from PyQt6.QtCore import QThread
 import CameraControl
 import CameraPreview
 from pixelinkWrapper import PxLApi
-
+import random
 
 class Ui_Form(object):
 
@@ -324,7 +324,7 @@ class Ui_Form(object):
         self.retranslateUi(Form)
         self.ipAddressRefreshTimer = QTimer(Form)
         self.ipAddressRefreshTimer.setInterval(1000)
-        self.ipAddressRefreshTimer.timeout.connect(self.setIPAddressLabel)
+        #self.ipAddressRefreshTimer.timeout.connect(self.setIPAddressLabel)
         self.cameraPreviewRefreshTimer = QTimer(Form)
         self.cameraPreviewRefreshTimer.setInterval(int((1/1)*1000))
         self.cameraPreviewRefreshTimer.timeout.connect(self.startPreviewImageCapture)
@@ -333,6 +333,9 @@ class Ui_Form(object):
         self.capturing = False
         self.active = True
         self.cameraPreviewRefreshTimer.start()
+        self.sensorTimer = QTimer(Form)
+        self.sensorTimer.timeout.connect(self.randomSensorValue)
+        self.sensorTimer.start(2000)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form):
@@ -376,6 +379,36 @@ class Ui_Form(object):
             self.status_label.setText("In Progress")
         else:
             self.status_label.setText("No Capture")
+
+    def randomSensorValue(self):
+        # Creates the pH sensor String with a format of X.XXX where X is a random digit
+        ph_sensor_decimal = random.randint(0, 9)
+        ph_sensor_hundred = random.randint(100, 999)
+        ph_sensor = f"{ph_sensor_decimal}.{ph_sensor_hundred:03d}"
+
+        # Creates the temp sensor String with a format of XX.XXX where X is a random digit
+        temp_sensor_decimal = random.randint(10, 99)
+        temp_sensor_hundred = random.randint(100, 999)
+        temp_sensor = f"{temp_sensor_decimal}.{temp_sensor_hundred:03d}"
+
+        # Creates the do sensor String with a format of X.XXXX where X is a random digit
+        do_sensor_decimal = random.randint(0, 9)
+        do_sensor_hundred = random.randint(1000, 9999)
+        do_sensor = f"{do_sensor_decimal}.{do_sensor_hundred:03d}"
+
+        # Creates the baro sensor String with a format of XXXXXX where X is a random digit
+        baro_sensor = random.randint(100000, 999999)
+        ip_parts = [str(random.randint(0, 255)) for _ in range(4)]
+        random_ip = ".".join(ip_parts)
+
+        #Assigns the values to the sensor labels
+        self.dissolved_oxygen_label.setText("DO: " + str(do_sensor) + " mg/L")
+        self.pressure_label.setText("P: " + str(baro_sensor) + " mbar")
+        self.ph_label.setText("pH: " + str(ph_sensor))
+        self.temperature_label.setText("Temp: " + str(temp_sensor))
+        self.ip_label.setText("IP: " + random_ip)
+        print("ph value = " + str(ph_sensor) + "\n temp value = " + str(temp_sensor) + "\n do value = " + str(do_sensor) + "\n pressure value = " + str(baro_sensor) + "\n IP value = " + random_ip)
+        
     def startPreviewImageCapture(self):
         if self.active:
             for handle in self.cameraHandles:
