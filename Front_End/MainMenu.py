@@ -292,6 +292,7 @@ class MainMenu(object):
         self.stackedLayout.currentChanged.connect(self.changePreviewWindow)
         form.setLayout(self.stackedLayout)
         form.keyPressEvent = self.keyPressEvent
+        self.studyProfileSelectionMenu.listWidget.currentItemChanged.connect(self.studyProfileSettings)
         self.cameraPictureControl = CameraPictureControl.CameraPictureControl()
 
     def changePreviewWindow(self):
@@ -300,6 +301,15 @@ class MainMenu(object):
         else:
             self.previewScreen.active = False
         self.stackedLayout.setCurrentIndex(self.stackedLayout.currentIndex())
+
+    #When a StudyProfile is chosen changes the default settings to the one on the StudyProfile
+    def studyProfileSettings(self):
+        studyProfile = self.studyProfileSelectionMenu.studyProfileContents[
+            self.studyProfileSelectionMenu.currentStudyProfileIndex]
+        self.whiteBalanceCalibrationMenu.CurrentWB.setText("White Balance: " + studyProfile["whiteBalance"])
+        self.gainConfigurationMenu.CurrentGainLabel.setText("Gain: " + studyProfile["gain"])
+        self.saturationConfigurationMenu.CurrentSaturationLabel.setText("Saturation: " + studyProfile["saturation"])
+        self.shutterSpeedSelectionMenu.CurrentShutterSpeedLabel.setText("ShutterSpeed: " + studyProfile["shutterSpeed"])
 
     # When pressing F1 or F2 cycles through the menu
     def keyPressEvent(self, event):
