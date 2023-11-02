@@ -378,7 +378,7 @@ class MainMenu(object):
                 media_metadata = dq.insertMediaMetadata(
                     entry_id, path, "jpg", MainMenu.getCurrentTime(), 95.5,
                     100, 8, 0.5)
-                media_metadata = dq.getMediaMetadatabyId(media_entry)
+                media_metadata = dq.getMediaMetadatabyId(media_metadata)
                 self.cameraPictureControl.get_snapshot(
                     self.previewScreen.cameraHandles[0],
                     media_metadata.left_Camera_Media)
@@ -388,7 +388,7 @@ class MainMenu(object):
         elif studyProfile["shotType"] == "TIMELAPSE":
             time = float(studyProfile["time"] )
             photoCount = int(studyProfile["photoCount"])
-            self.cameraPictureControl.getIntervalSnapshot(self.previewScreen.cameraHandles, time, photoCount, entry_id)
+            self.cameraPictureControl.getIntervalSnapshot(self.previewScreen.cameraHandles, time, photoCount, entry_id, path)
         elif studyProfile["shotType"] == "TELESCOPIC":
             pass
         elif studyProfile["shotType"] == "VIDEO":

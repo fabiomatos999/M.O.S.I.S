@@ -5,7 +5,7 @@ from ctypes import create_string_buffer
 from datetime import datetime
 import time
 import databaseQuery
-from MainMenu.MainMenu import getCurrentTime
+from MainMenu import MainMenu
 import databaseQuery
 
 SUCCESS = 0
@@ -92,13 +92,17 @@ class CameraPictureControl():
             return FAILURE
 
     def getIntervalSnapshot(self, hCamera: [int], total_interval_min: float,
-                            steps: int, entryId: int):
+                            steps: int, entryId: int, path: str):
         """Take a (time lapse) snapshot using total time and pictures."""
         counter = 0
-
+        dq = databaseQuery.DatabaseQuery
+        media_metadata = dq.insertMediaMetadata(
+                    entryId, path, "jpg", MainMenu.getCurrentTime(), 95.5,
+                    100, 8, 0.5)
         interval_seconds = 60 * total_interval_min
         start_time = time.time()
         start_step = time.time()
+        media_metadata = dq.getMediaMetadatabyId(media_metadata)
 
         print("start interval snapshot")
         total_pictures = interval_seconds / steps
@@ -111,12 +115,12 @@ class CameraPictureControl():
                 # print("time difference: ", time.time() - start_time)
                 if time.time() - start_step >= steps:
 
-                    fileName = "interval" + str(counter) + "-" + str(
-                        datetime.now().strftime("%Y-%m-%dT%H:%M"))
-
-                    # Get a snapshot and save it to a folder as a file
-                    for handle in hCamera:
-                        self.get_snapshot(handle, fileName)
+                    MainMenu.cameraPictureControl.get_snapshot(
+                    MainMenu.previewScreen.cameraHandles[0],
+                    media_metadata.left_Camera_Media)
+                    MainMenu.cameraPictureControl.get_snapshot(
+                    MainMenu.previewScreen.cameraHandles[1],
+                    media_metadata.right_Camera_Media)
                     counter += 1
                     start_step = time.time()
             return SUCCESS
