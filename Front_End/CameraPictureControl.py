@@ -6,6 +6,7 @@ from datetime import datetime
 import time
 import databaseQuery
 from MainMenu.MainMenu import getCurrentTime
+import databaseQuery
 
 SUCCESS = 0
 FAILURE = 1
@@ -90,8 +91,8 @@ class CameraPictureControl():
         except Exception:
             return FAILURE
 
-    def getIntervalSnapshot(self, hCamera, total_interval_min: int,
-                            steps: int):
+    def getIntervalSnapshot(self, hCamera: [int], total_interval_min: float,
+                            steps: int, entryId: int):
         """Take a (time lapse) snapshot using total time and pictures."""
         counter = 0
 
@@ -109,11 +110,13 @@ class CameraPictureControl():
             ) - start_time <= interval_seconds or counter < total_pictures:
                 # print("time difference: ", time.time() - start_time)
                 if time.time() - start_step >= steps:
+
                     fileName = "interval" + str(counter) + "-" + str(
                         datetime.now().strftime("%Y-%m-%dT%H:%M"))
 
                     # Get a snapshot and save it to a folder as a file
-                    self.get_snapshot(hCamera, fileName)
+                    for handle in hCamera:
+                        self.get_snapshot(handle, fileName)
                     counter += 1
                     start_step = time.time()
             return SUCCESS

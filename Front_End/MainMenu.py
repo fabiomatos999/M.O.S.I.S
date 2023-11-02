@@ -386,10 +386,14 @@ class MainMenu(object):
                     self.previewScreen.cameraHandles[1],
                     media_metadata.right_Camera_Media)
         elif studyProfile["shotType"] == "TIMELAPSE":
-            pass
+            time = float(studyProfile["time"] )
+            photoCount = int(studyProfile["photoCount"])
+            self.cameraPictureControl.getIntervalSnapshot(self.previewScreen.cameraHandles, time, photoCount, entry_id)
         elif studyProfile["shotType"] == "TELESCOPIC":
             pass
         elif studyProfile["shotType"] == "VIDEO":
+            videoLength = int(float(studyProfile["videoLength"])*60.0)
+            # self.cameraPictureControl.getVideo(self.previewScreen.cameraHandles, videoLength, 24,fileName=)
             pass
         self.previewScreen.setStatusLabel(False)
         fsg.exportMetadata(entry_id)
