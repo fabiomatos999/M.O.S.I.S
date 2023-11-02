@@ -400,9 +400,9 @@ class MainMenu(object):
 
     @staticmethod
     def getCurrentTime() -> str:
-        """Return current time in 'yyyy-MM-ddTHH:mm:ss.zzz' format."""
+        """Return current time in 'yyyy-MM-ddTHH-mm-ss.zzz' format."""
         date = datetime.now()
-        return date.strftime('%Y-%m-%-dT%H:%M:%S.%f')
+        return date.strftime('%Y-%m-%-dT%H-%M-%S.%f')
 
     @staticmethod
     def validate_shutterSpeed(field):
