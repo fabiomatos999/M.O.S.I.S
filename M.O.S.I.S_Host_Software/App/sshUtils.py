@@ -2,7 +2,7 @@
 import subprocess
 
 
-def rsync_recursive_copy(source: str, destination: str):
+def scp_recursive_copy(source: str, destination: str):
     """
     Call rsync and recursively copy files from source to destination.
 
@@ -12,6 +12,13 @@ def rsync_recursive_copy(source: str, destination: str):
     """
     try:
         subprocess.check_call(["scp", "-r", source, destination],
+                              )
+    except Exception as err:
+        raise err
+
+def ssh_delete(target: str, directory: str):
+    try:
+        subprocess.check_call(["ssh", target, 'rm -rf {}'.format(directory)],
                               )
     except Exception as err:
         raise err

@@ -5,7 +5,7 @@ from forms import return_study_profile_form, return_search_form
 import json
 import db
 from cliArgs import args
-import rsyncCopy
+import sshUtils
 
 website = Blueprint('website', __name__)
 dbQuery = db.DatabaseQuery()
@@ -43,11 +43,12 @@ def entry(id=0):
     """Return render template for a specific entry."""
     MediaEntry = dbQuery.getMediaEntry(id)
     if MediaEntry.shotType == "SINGLE":
-        return render_template("singleEntry.html",
-                               MediaMetadata=dbQuery.getAllMediaMetadataId(id)[0],
-                               str=str,
-                               round=round,
-                               url_for=url_for)
+        return render_template(
+            "singleEntry.html",
+            MediaMetadata=dbQuery.getAllMediaMetadataId(id)[0],
+            str=str,
+            round=round,
+            url_for=url_for)
     elif MediaEntry.shotType == "BURST":
         return render_template("burstEntry.html",
                                MediaMetadata=dbQuery.getAllMediaMetadataId(id),
@@ -102,17 +103,15 @@ def single(st="single"):
         if form.validate():
             studies.append(request.form)
             studyAdded = True
-    return render_template(
-        form.filename,
-        form=form,
-        studies=remove_submit_and_csrf_toten(studies),
-        error=form.errors,
-        str=str,
-        enumerate=enumerate,
-        len=len,
-        range=range,
-        studyAdded=studyAdded
-    )
+    return render_template(form.filename,
+                           form=form,
+                           studies=remove_submit_and_csrf_toten(studies),
+                           error=form.errors,
+                           str=str,
+                           enumerate=enumerate,
+                           len=len,
+                           range=range,
+                           studyAdded=studyAdded)
 
 
 @app.route("/save", methods=["GET", "POST"])
@@ -122,7 +121,7 @@ def save():
     if request.method == "POST":
         writeStudyProfilesToJSON(remove_submit_and_csrf_toten(studies))
         if not args.nobackup:
-            rsyncCopy.rsync_recursive_copy(
+            sshUtils.scp_recursive_copy(
                 os.path.realpath("studyProfile.json"),
                 "pi@{}:/home/pi/Documents/".format(args.ipaddress))
         studySaved = True
@@ -137,10 +136,13 @@ def save():
 @app.route("/search/<category>", methods=['GET', 'POST'])
 def search(category: str):
     """Serve search form if GET or serve search results if post."""
+
     def getMediaEntriesBySearchBy(
-            searchBy: str, searchQuery: str) -> [MediaEntryInternalRepresentation]:
+            searchBy: str,
+            searchQuery: str) -> [MediaEntryInternalRepresentation]:
         if searchBy == "id":
-            return dbQuery.getMediaEntriesById(dbQuery.parseIdRange(searchQuery))
+            return dbQuery.getMediaEntriesById(
+                dbQuery.parseIdRange(searchQuery))
         elif searchBy == "date":
             return dbQuery.getMediaEntriesByTime(searchQuery)
         elif searchBy == "shotType":
@@ -149,6 +151,7 @@ def search(category: str):
             return dbQuery.getMediaEntriesByIlluminationType(searchQuery)
         else:
             raise ValueError("Invalid Search By Input")
+
     form = return_search_form(category)
     if form.is_submitted():
         print(form)
@@ -157,18 +160,20 @@ def search(category: str):
         searchQuery = ret["search"]
         mediaEntries = getMediaEntriesBySearchBy(searchBy, searchQuery)
         if ret.get("listView"):
-            return render_template('listView.html',
-                                   MediaEntries=mediaEntries,
-                                   getAllMediaMetadataId=dbQuery.getAllMediaMetadataId,
-                                   enumerate=enumerate,
-                                   str=str,
-                                   round=round)
+            return render_template(
+                'listView.html',
+                MediaEntries=mediaEntries,
+                getAllMediaMetadataId=dbQuery.getAllMediaMetadataId,
+                enumerate=enumerate,
+                str=str,
+                round=round)
         else:
-            return render_template('index.html',
-                                   MediaEntries=mediaEntries,
-                                   getAllMediaMetadataId=dbQuery.getAllMediaMetadataId,
-                                   enumerate=enumerate,
-                                   str=str)
+            return render_template(
+                'index.html',
+                MediaEntries=mediaEntries,
+                getAllMediaMetadataId=dbQuery.getAllMediaMetadataId,
+                enumerate=enumerate,
+                str=str)
 
     def prettyCategory(searchBy: str) -> str:
         if searchBy == "id":
