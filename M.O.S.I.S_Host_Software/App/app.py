@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Launches app.py using python3 without calling interpreter explicitly."""
-import rsyncCopy
+import sshUtils
 from cliArgs import args
 import webbrowser
 from datetime import datetime
@@ -19,8 +19,8 @@ def getCurrentTime() -> str:
 if __name__ == "__main__":
     if not args.nobackup:
         try:
-            rsyncCopy.rsync_recursive_copy(
-                "pi@{}:/home/pi/".format(args.ipaddress), args.output)
+            sshUtils.scp_recursive_copy(
+                "pi@{}:/home/pi/Documents".format(args.ipaddress), args.output)
         except Exception:
             raise ValueError("Invalid IP Address or Hostname was inputted.")
     from waitress import serve
