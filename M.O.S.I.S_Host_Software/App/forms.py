@@ -185,3 +185,8 @@ def return_search_form(searchBy: str) -> baseSearchForm:
         return illuminationTypeSearchForm()
     else:
         raise ValueError("Invalid search category.")
+
+class deletionForm(FlaskForm):
+    delete = BooleanField("Do you want to delete the Raspberry Pi Media?")
+    confirmation = BooleanField("Are you sure?")
+    submit = SubmitField('Delete Raspberry Pi Media')

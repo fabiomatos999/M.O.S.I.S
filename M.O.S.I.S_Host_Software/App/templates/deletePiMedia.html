@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}
+Delete RPi Media
+{% endblock %}
+{% block body %}
+{% if nobackup %}
+<div class="alert alert-danger">Raspberry Pi Media was not backed up.<br>Deletetion functionality disabled.<br>Please Backup the media on the Raspberry Pi.</div>
+{% endif %}
+{% if mediaDeleted %}
+<div class="alert alert-success">Raspberry Pi media was deleted succesfully.</div>
+{% endif %}
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <h2>Delete Raspberry Pi Media</h2>
+        </div>
+    </div>
+    <div class="row">
+        <form method="post" class="form-control">
+        <div class="form-group">
+            {{form.delete.label}}
+            {{form.delete()}}
+        </div>
+        <div class="form-group">
+            {{form.confirmation.label}}
+            {{form.confirmation()}}
+        </div>
+        <div class="form-group">
+            {{form.submit()}}
+        </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,7 +1,7 @@
-from flask import render_template, url_for, Flask, request, Blueprint
+from flask import render_template, url_for, Flask, request, Blueprint, redirect
 from representations import MediaEntryInternalRepresentation
 import os
-from forms import return_study_profile_form, return_search_form
+from forms import return_study_profile_form, return_search_form, deletionForm
 import json
 import db
 from cliArgs import args
@@ -131,6 +131,26 @@ def save():
                            str=str,
                            len=len,
                            studySaved=studySaved)
+
+
+@app.route("/delete", methods=["GET", "POST"])
+def delete():
+    """Serve delete RPi media page."""
+    form = deletionForm()
+    mediaDeleted = False
+    if args.nobackup:
+        form.submit(disabled=True)
+    if form.is_submitted():
+        ret = request.form
+        if ret.get("confirmation") and ret.get("delete"):
+            sshUtils.ssh_delete("pi@10.0.0.73", "~/Videos")
+            mediaDeleted = True
+        else:
+            return redirect("/")
+    return render_template('deletePiMedia.html',
+                           form=form,
+                           nobackup=args.nobackup,
+                           mediaDeleted=mediaDeleted)
 
 
 @app.route("/search/<category>", methods=['GET', 'POST'])
