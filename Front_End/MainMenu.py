@@ -306,12 +306,14 @@ class MainMenu(object):
     def studyProfileSettings(self):
         studyProfile = self.studyProfileSelectionMenu.studyProfileContents[
             self.studyProfileSelectionMenu.currentStudyProfileIndex]
+        gain = float(studyProfile["gain"])
+        gain = int(gain*10)
         self.whiteBalanceCalibrationMenu.CurrentWB.setText("White Balance: " + studyProfile["whiteBalance"])
         self.whiteBalanceCalibrationMenu.WBSlider.setValue(int(studyProfile["whiteBalance"]))
         self.gainConfigurationMenu.CurrentGainLabel.setText("Gain: " + studyProfile["gain"])
-        self.gainConfigurationMenu.horizontalSlider.setValue(int(studyProfile["gain"]) * 10)
+        self.gainConfigurationMenu.horizontalSlider.setValue(gain)
         self.saturationConfigurationMenu.CurrentSaturationLabel.setText("Saturation: " + studyProfile["saturation"])
-        self.saturationConfigurationMenu.horizontalSlider.setValue(float(studyProfile["saturation"]))
+        self.saturationConfigurationMenu.horizontalSlider.setValue(int(studyProfile["saturation"]))
         self.shutterSpeedSelectionMenu.CurrentShutterSpeedLabel.setText("ShutterSpeed: " + studyProfile["shutterSpeed"])
 
     # When pressing F1 or F2 cycles through the menu
