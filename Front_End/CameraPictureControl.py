@@ -94,38 +94,24 @@ class CameraPictureControl():
     def getIntervalSnapshot(self, hCamera: [int], total_interval_min: float,
                             steps: int, entryId: int, path: str):
         """Take a (time lapse) snapshot using total time and pictures."""
+        dq = databaseQuery.DatabaseQuery()
         counter = 0
-        dq = databaseQuery.DatabaseQuery
-        media_metadata = dq.insertMediaMetadata(
-                    entryId, path, "jpg", MainMenu.getCurrentTime(), 95.5,
-                    100, 8, 0.5)
-        interval_seconds = 60 * total_interval_min
-        start_time = time.time()
-        start_step = time.time()
-        media_metadata = dq.getMediaMetadatabyId(media_metadata)
+        stepInterval = (total_interval_min * 60) / steps
+        stepTime = time.time() + stepInterval
 
-        print("start interval snapshot")
-        total_pictures = interval_seconds / steps
-
-        print("start time: ", start_time)
-
-        try:
-            while time.time(
-            ) - start_time <= interval_seconds or counter < total_pictures:
-                # print("time difference: ", time.time() - start_time)
-                if time.time() - start_step >= steps:
-
-                    MainMenu.cameraPictureControl.get_snapshot(
-                    MainMenu.previewScreen.cameraHandles[0],
-                    media_metadata.left_Camera_Media)
-                    MainMenu.cameraPictureControl.get_snapshot(
-                    MainMenu.previewScreen.cameraHandles[1],
-                    media_metadata.right_Camera_Media)
-                    counter += 1
-                    start_step = time.time()
-            return SUCCESS
-        except Exception:
-            return FAILURE
+        while counter < steps:
+            if time.time() > stepTime or counter == 0:
+                media_metadata = dq.insertMediaMetadata(
+                    entryId, path, "jpg", MainMenu.getCurrentTime(), 95.5, 100,
+                    8, 0.5)
+                media_metadata = dq.getMediaMetadatabyId(media_metadata)
+                self.get_snapshot(hCamera[0], media_metadata.left_Camera_Media)
+                self.get_snapshot(hCamera[1],
+                                  media_metadata.right_Camera_Media)
+                stepTime = time.time() + stepInterval
+                counter += 1
+            else:
+                time.sleep(0.1)
 
     def getTelescopicSnapshot(self, hCamera: [int], minFocus: float,
                               maxFocus: float, numShots: int):
@@ -274,7 +260,6 @@ class CameraPictureControl():
                  filePath: str = str(),
                  fileName: str = str()):
         pass
-
 
 
 def main():
