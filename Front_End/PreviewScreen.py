@@ -411,8 +411,7 @@ class Ui_Form(object):
         
     def startPreviewImageCapture(self):
         if self.active:
-            for handle in self.cameraHandles:
-                CameraPreview.getPreviewImage(handle, "Preview")
+            CameraPreview.getPreviewImage(self.cameraHandles)
             self.setCameraPreviewLabels()
 
     def setCameraPreviewLabels(self):
