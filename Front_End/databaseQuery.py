@@ -96,14 +96,12 @@ class DatabaseQuery:
         # The recent most recent metadataId is then added to the string name of the left and right camera media path
         leftCameraMedia = os.path.join(
             path,
-            str(mediaEntry),
-            "{}-{}-{}-{}-{}-{}-{}-R.{}".format(
+            "{}-{}-{}-{}-{}-{}-{}-L.{}".format(
                 entryId, metadataId, time, temperature, pressure, ph, dissolvedOxygen, extension
             ),
         )
         rightCameraMedia = os.path.join(
             path,
-            str(mediaEntry),
             "{}-{}-{}-{}-{}-{}-{}-R.{}".format(
                 entryId, metadataId, time, temperature, pressure, ph, dissolvedOxygen, extension
             ),

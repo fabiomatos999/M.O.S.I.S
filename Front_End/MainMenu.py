@@ -348,7 +348,7 @@ class MainMenu(object):
         self.previewScreen.setStatusLabel(True)
         self.previewScreen.cameraControl.setExposure(
             self.previewScreen.cameraHandles,
-            float(studyProfile["shutterSpeed"]))
+            MainMenu.decodeShutterSpeed(studyProfile["shutterSpeed"]))
         self.previewScreen.cameraControl.setWhiteBalance(
             self.previewScreen.cameraHandles,
             int(studyProfile["whiteBalance"]))
@@ -357,17 +357,17 @@ class MainMenu(object):
             studyProfile["shotType"], MainMenu.getCurrentTime(),
             studyProfile["illuminationType"], float(studyProfile["gain"]),
             int(studyProfile["saturation"]),
-            MainMenu.validate_shutterSpeed(studyProfile["shutterSpeed"]),
+            MainMenu.decodeShutterSpeed(studyProfile["shutterSpeed"]),
             int(studyProfile["whiteBalance"]))
         media_entry = dq.getMediaEntrybyId(entry_id)
-        fsg = FolderStructureGenerator.FolderStructureGenerator()
+        fsg = FolderStructureGenerator.FolderStructureGenerator(os.path.join(os.getcwd(), "test"))
         path = os.path.join(fsg.root_path, str(media_entry))
         fsg.create_folder_structure(entry_id)
         if studyProfile["shotType"] == "SINGLE":
             media_metadata = dq.insertMediaMetadata(entry_id, path, "jpg",
                                                     MainMenu.getCurrentTime(),
                                                     95.5, 100, 8, 0.5)
-            media_metadata = dq.getMediaMetadatabyId(entry_id)
+            media_metadata = dq.getMediaMetadatabyId(media_metadata)
             self.cameraPictureControl.get_snapshot(
                 self.previewScreen.cameraHandles[0],
                 media_metadata.left_Camera_Media)
@@ -407,8 +407,8 @@ class MainMenu(object):
         return date.strftime('%Y-%m-%-dT%H-%M-%S.%f')
 
     @staticmethod
-    def validate_shutterSpeed(field):
-        shutterSpeed = field.data
+    def decodeShutterSpeed(field):
+        shutterSpeed = field
         if re.match(r"^\d+\/\d+$", shutterSpeed):
             numerator = int(shutterSpeed.split("/")[0])
             denominator = int(shutterSpeed.split("/")[1])

@@ -255,16 +255,11 @@ class CameraControl():
         it will default to the maximum resolution of the
         PL-D755 Camera.
         """
-        if 0 < ftop < 1928 and\
-           0 < fleft < 2560 and\
-           0 < fwidth < 2592 and\
-           0 < fheight < 1944:
-            for cameraHandle in hCamera:
-                PxLApi.setFeature(cameraHandle, PxLApi.FeatureId.ROI,
-                                  PxLApi.FeatureFlags.MANUAL,
-                                  [fleft, ftop, fwidth, fheight])
-            else:
-                raise ValueError()
+        for cameraHandle in hCamera:
+            PxLApi.setStreamState(cameraHandle, PxLApi.StreamState().STOP)
+            PxLApi.setFeature(cameraHandle, PxLApi.FeatureId.ROI,
+                              PxLApi.FeatureFlags.MANUAL,
+                              [fleft, ftop, fwidth, fheight])
 
     def setWhiteBalance(self, hCamera: [int], temp: int = 3200):
         """Set the color temperature for both cameras.
@@ -315,19 +310,19 @@ class CameraControl():
         will use newFocusValue
         :return
         """
-        # params = []
+        params = []
         print(self.maxFocusValue, self.minFocusValue)
         if mode == "auto":
-            # params.insert(0, self.minFocusValue)
-            #             params.insert(1, self.maxFocusValue)
+            params.insert(0, self.minFocusValue)
+            params.insert(1, self.maxFocusValue)
 
-            for i in range(len(hCamera)):
-                ret = PxLApi.setFeature(hCamera[i], PxLApi.FeatureId.FOCUS,
-                                        PxLApi.FeatureFlags.ONEPUSH,
-                                        self.minMaxParams)
+            for handle in hCamera:
+                print(handle)
+                ret = PxLApi.setFeature(handle, PxLApi.FeatureId.FOCUS,
+                                        PxLApi.FeatureFlags.MANUAL, params)
                 if not PxLApi.apiSuccess(ret[0]):
                     print("  Could not set Focus Feature, ret: %d!" % ret[0])
-                    PxLApi.uninitialize(hCamera[i])
+                    PxLApi.uninitialize(handle)
                     return
 
         else:
@@ -338,19 +333,20 @@ class CameraControl():
             # self.params.insert(0, newfocusValue)
             self.customFocus[0] = newfocusValue
 
-            for i in range(len(hCamera)):
-                ret = PxLApi.setFeature(hCamera[i], PxLApi.FeatureId.FOCUS,
+            for handle in range(len(hCamera)):
+                ret = PxLApi.setFeature(hCamera[handle],
+                                        PxLApi.FeatureId.FOCUS,
                                         PxLApi.FeatureFlags.MANUAL,
                                         self.customFocus)
                 if not PxLApi.apiSuccess(ret[0]):
                     print("  Could not set Focus Feature, ret: %d!" % ret[0])
-                    PxLApi.uninitialize(hCamera[i])
+                    PxLApi.uninitialize(hCamera[handle])
                     return
             self.focusValue = newfocusValue
 
     def setExposure(self,
                     hCamera: [int],
-                    newExposureValue: float = 0.00010699999984353781,
+                    newExposureValue: float = 0.0001078958302969113,
                     mode: str = "auto"):
         """
         Set exposure for a camera.

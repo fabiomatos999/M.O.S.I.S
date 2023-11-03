@@ -15,11 +15,11 @@ class FolderStructureGenerator:
         os.makedirs(folderPath, exist_ok=True)
 
     def exportMetadata(self, entryId: int):
-        metadata = self.databaseQuery.getAllMediaMetadaByEntryId(id)
+        metadata = self.databaseQuery.getAllMediaMetadaByEntryId(entryId)
         metadata = list(map(lambda x: x.__dict__, metadata))
         jsonContents = json.dumps(metadata, indent=4)
         entryFolder = os.path.join(
-            self.root_path, self.databaseQuery.getMediaEntrybyId(entryId))
+            self.root_path, str(self.databaseQuery.getMediaEntrybyId(entryId)))
         file = open(os.path.join(entryFolder, "metadata.json"), "w")
         file.write(jsonContents)
         file.close()

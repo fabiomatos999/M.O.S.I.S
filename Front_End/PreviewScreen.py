@@ -326,7 +326,7 @@ class Ui_Form(object):
         self.ipAddressRefreshTimer.setInterval(1000)
         #self.ipAddressRefreshTimer.timeout.connect(self.setIPAddressLabel)
         self.cameraPreviewRefreshTimer = QTimer(Form)
-        self.cameraPreviewRefreshTimer.setInterval(int((1/1)*1000))
+        self.cameraPreviewRefreshTimer.setInterval(int((2/1)*1000))
         self.cameraPreviewRefreshTimer.timeout.connect(self.startPreviewImageCapture)
         self.ipAddressRefreshTimer.start()
         self.cameraDefaults()
@@ -411,7 +411,7 @@ class Ui_Form(object):
         
     def startPreviewImageCapture(self):
         if self.active:
-            CameraPreview.getPreviewImage(self.cameraHandles)
+            CameraPreview.getPreviewImage(self.cameraHandles, "Preview")
             self.setCameraPreviewLabels()
 
     def setCameraPreviewLabels(self):
@@ -422,8 +422,8 @@ class Ui_Form(object):
 
     def cameraDefaults(self):
         self.cameraControl.autoWhiteBalance(self.cameraHandles)
-        self.cameraControl.setExposure(self.cameraHandles)
-        #self.cameraControl.setFocus(self.cameraHandles)
+        self.cameraControl.setExposure(self.cameraHandles, 0.0001078958302969113*10,mode="")
+        self.cameraControl.setFocus(self.cameraHandles)
         self.cameraControl.setGain(self.cameraHandles)
         self.cameraControl.setRegionOfInterest(self.cameraHandles)
         self.cameraControl.setWhiteBalance(self.cameraHandles)
