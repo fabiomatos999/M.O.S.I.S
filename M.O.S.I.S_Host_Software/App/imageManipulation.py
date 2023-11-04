@@ -9,7 +9,6 @@ def generateStereoscopicImage(leftImage: str, rightImage: str, path: str):
     right_image = cv2.imread(rightImage)
 
     composite = numpy.concatenate((left_image, right_image), axis=1)
-    print(path)
     cv2.imwrite(path, composite)
     return composite
 

@@ -64,7 +64,6 @@ class DBReconstruct:
             mediaMetadata = self.query.getMediaMetadataByMetadataId(
                 int(metadataId))
             mediaEntry = self.query.getMediaEntry(int(entryId))
-            print(folder)
             stereoMediaPath = "static/Media/{}/{}-{}-{}-{}-{}-{}-{}-S.jpg".format(
                 folder, entryId, metadataId, time, temperature, pressure, ph,
                 dissolvedOxygen)
