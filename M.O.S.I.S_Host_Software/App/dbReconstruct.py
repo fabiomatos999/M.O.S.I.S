@@ -2,6 +2,7 @@ import os
 import db
 from enums import shotType, illuminationType
 import re
+import imageManipulation
 
 
 class DBReconstruct:
@@ -60,10 +61,13 @@ class DBReconstruct:
                                            leftCameraMedia, rightCameraMedia,
                                            time, temperature, pressure, ph,
                                            dissolvedOxygen)
+        shottype = self.query.getMediaEntry(entryId).shotType
+        if shottype == "BURST" or shottype == "TIMELAPSE":
+            imageManipulation.generateGif(os.path.join(self.rootPath, folder),
+                                          imagePairs)
 
 
 if __name__ == "__main__":
+    os.remove("test.db")
     dbr = DBReconstruct("static/Media")
     print(dbr.query.getAllMediaEntry())
-    while True:
-        continue
