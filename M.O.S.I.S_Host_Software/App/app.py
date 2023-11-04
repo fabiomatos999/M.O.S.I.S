@@ -5,6 +5,8 @@ from cliArgs import args
 import webbrowser
 from datetime import datetime
 from routes import app, website
+import dbReconstruct
+import os
 
 
 app.register_blueprint(website)
@@ -17,6 +19,8 @@ def getCurrentTime() -> str:
 
 
 if __name__ == "__main__":
+    os.remove("test.db")
+    dbr = dbReconstruct.DBReconstruct("static/Media")
     if not args.nobackup:
         try:
             sshUtils.scp_recursive_copy(

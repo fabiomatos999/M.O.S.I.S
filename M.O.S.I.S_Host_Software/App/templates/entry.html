@@ -18,10 +18,10 @@
     </div>
     <div class="row">
       <div class="col-6 d-flex justify-content-center mt-1 mb-1">
-        <img src={{ url_for('static', filename=md.leftCameraMedia.split("/").pop()) }} alt="">
+        <img src={{ url_for('static', filename=os.path.join("Media", md.leftCameraMedia)) }} alt="">
       </div>
       <div class="col-6 d-flex justify-content-center mt-1 mb-1">
-        <img src={{ url_for('static', filename=md.rightCameraMedia.split("/").pop()) }} alt="">
+        <img src={{ url_for('static', filename=os.path.join("Media", md.rightCameraMedia)) }} alt="">
       </div>
     </div>
     <div class="row pt-3">

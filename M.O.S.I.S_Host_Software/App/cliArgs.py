@@ -11,6 +11,6 @@ group.add_argument("-i",
                    type=str,
                    help="IP address of the Raspberry Pi",
                    default="raspberrypi")
-parser.add_argument('-o', '--output', type=str, default=os.path.join(os.getcwd(), "static"), help='Output folder for Raspberry Pi Backup')
+parser.add_argument('-o', '--output', type=str, default=os.path.join("static/Media"), help='Output folder for Raspberry Pi Backup')
 
 args = parser.parse_args()

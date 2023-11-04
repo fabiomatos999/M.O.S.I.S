@@ -27,7 +27,8 @@ def index():
                            MediaEntries=dbQuery.getAllMediaEntry(),
                            getAllMediaMetadataId=dbQuery.getAllMediaMetadataId,
                            enumerate=enumerate,
-                           str=str)
+                           str=str,
+                           os=os)
 
 
 @app.route("/list")
@@ -48,36 +49,41 @@ def entry(id=0):
             MediaMetadata=dbQuery.getAllMediaMetadataId(id)[0],
             str=str,
             round=round,
-            url_for=url_for)
+            url_for=url_for,
+            os=os)
     elif MediaEntry.shotType == "BURST":
         return render_template("burstEntry.html",
                                MediaMetadata=dbQuery.getAllMediaMetadataId(id),
                                enumerate=enumerate,
                                str=str,
                                round=round,
-                               url_for=url_for)
+                               url_for=url_for,
+                               os=os)
     elif MediaEntry.shotType == "TIMELAPSE":
         return render_template("timeLapseEntry.html",
                                MediaMetadata=dbQuery.getAllMediaMetadataId(id),
                                enumerate=enumerate,
                                str=str,
                                round=round,
-                               url_for=url_for)
+                               url_for=url_for,
+                               os=os)
     elif MediaEntry.shotType == "VIDEO":
         return render_template("videoEntry.html",
                                MediaMetadata=dbQuery.getAllMediaMetadataId(id),
                                enumerate=enumerate,
                                str=str,
                                round=round,
-                               url_for=url_for)
+                               url_for=url_for,
+                               os=os)
     else:
-        return render_template("entry.w",
+        return render_template("entry.html",
                                MediaEntry=dbQuery.getMediaEntry(id),
                                MediaMetadata=dbQuery.getAllMediaMetadataId(id),
                                enumerate=enumerate,
                                str=str,
                                round=round,
-                               url_for=url_for)
+                               url_for=url_for,
+                               os=os)
 
 
 def remove_submit_and_csrf_toten(studies: list) -> list:

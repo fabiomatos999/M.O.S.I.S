@@ -60,3 +60,10 @@ class DBReconstruct:
                                            leftCameraMedia, rightCameraMedia,
                                            time, temperature, pressure, ph,
                                            dissolvedOxygen)
+
+
+if __name__ == "__main__":
+    dbr = DBReconstruct("static/Media")
+    print(dbr.query.getAllMediaEntry())
+    while True:
+        continue
