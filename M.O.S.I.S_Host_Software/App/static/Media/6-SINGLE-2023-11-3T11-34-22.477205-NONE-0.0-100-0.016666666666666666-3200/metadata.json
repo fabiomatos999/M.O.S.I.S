@@ -1,0 +1,13 @@
+[
+    {
+        "media_Id": 6,
+        "entry_Id": 6,
+        "left_Camera_Media": "/home/gram/Github_Repos/University/M.O.S.I.S/Front_End/test/6-SINGLE-2023-11-3T11-34-22.477205-NONE-0.0-100-0.016666666666666666-3200/6-6-2023-11-3T11-34-22.480362-95.5-100-8-0.5-R.jpg",
+        "right_Camera_Media": "/home/gram/Github_Repos/University/M.O.S.I.S/Front_End/test/6-SINGLE-2023-11-3T11-34-22.477205-NONE-0.0-100-0.016666666666666666-3200/6-6-2023-11-3T11-34-22.480362-95.5-100-8-0.5-R.jpg",
+        "time": "2023-11-3T11-34-22.480362",
+        "temperature": 95.5,
+        "pressure": 100.0,
+        "ph": 8.0,
+        "dissolved_Oxygen": 0.5
+    }
+]
