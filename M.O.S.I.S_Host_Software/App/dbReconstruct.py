@@ -61,13 +61,24 @@ class DBReconstruct:
                                            leftCameraMedia, rightCameraMedia,
                                            time, temperature, pressure, ph,
                                            dissolvedOxygen)
+            mediaMetadata = self.query.getMediaMetadataByMetadataId(
+                int(metadataId))
+            mediaEntry = self.query.getMediaEntry(int(entryId))
+            print(folder)
+            stereoMediaPath = "static/Media/{}/{}-{}-{}-{}-{}-{}-{}-S.jpg".format(
+                folder, entryId, metadataId, time, temperature, pressure, ph,
+                dissolvedOxygen)
+            if not os.path.exists(stereoMediaPath):
+                imageManipulation.generateStereoscopicImage(
+                    os.path.join(self.rootPath, leftCameraMedia),
+                    os.path.join(self.rootPath, rightCameraMedia),
+                    stereoMediaPath)
         shottype = self.query.getMediaEntry(entryId).shotType
         if shottype == "BURST" or shottype == "TIMELAPSE":
-            imageManipulation.generateGif(os.path.join(self.rootPath, folder),
-                                          imagePairs)
+            imageManipulation.generateGif(
+                "{}/{}".format(self.rootPath, folder), imagePairs)
 
 
 if __name__ == "__main__":
     os.remove("test.db")
     dbr = DBReconstruct("static/Media")
-    print(dbr.query.getAllMediaEntry())

@@ -40,3 +40,16 @@ class MediaMetadataInternalRepresentation:
         self.ph = ph
         self.dissolvedOxygen = dissolvedOxygen
         self.pressure = pressure
+
+    def __str__(self):
+        return "{}-{}-{}-{}-{}-{}-{}-{}-{}".format(
+            self.metadataId,
+            self.entryId,
+            self.leftCameraMedia,
+            self.rightCameraMedia,
+            self.time,
+            self.temperature,
+            self.pressure,
+            self.ph,
+            self.dissolvedOxygen,
+        )

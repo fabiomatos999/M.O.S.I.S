@@ -99,6 +99,13 @@ class DatabaseQuery:
              temperature, pressure, ph, dissolvedOxygen))
         self.conn.commit()
 
+    def getMediaMetadataByMetadataId(
+            self, metadataId: int) -> MediaMetadataInternalRepresentation:
+        ret = self.cursor.execute(
+            "SELECT * FROM MediaMetadata WHERE metadataId = ?",
+            (metadataId, )).fetchone()
+        return DatabaseQuery.mediaMetadataTableToInternalRepresentation(ret)
+
     def getAllMediaMetadataId(
             self, entryId: int) -> [MediaMetadataInternalRepresentation]:
         ret = self.cursor.execute(
