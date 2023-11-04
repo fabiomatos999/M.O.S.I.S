@@ -4,6 +4,7 @@ from enums import illuminationType, shotType
 from representations import MediaEntryInternalRepresentation, \
     MediaMetadataInternalRepresentation
 import re
+import os
 
 
 class DatabaseQuery:
@@ -11,6 +12,7 @@ class DatabaseQuery:
 
     def __init__(self, db: str = "test.db"):
         """Create db tables and gives a db connection and cursor."""
+        os.remove(db)
         self.conn = sqlite3.connect('test.db', check_same_thread=False)
         self.cursor = self.conn.cursor()
         # Create MediaEntry table if not exists
