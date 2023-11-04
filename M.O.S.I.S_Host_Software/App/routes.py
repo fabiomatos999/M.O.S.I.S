@@ -58,7 +58,8 @@ def entry(id=0):
                                str=str,
                                round=round,
                                url_for=url_for,
-                               os=os)
+                               os=os,
+                               folder=os.path.join("Media" ,str(dbQuery.getMediaEntry(id))))
     elif MediaEntry.shotType == "TIMELAPSE":
         return render_template("timeLapseEntry.html",
                                MediaMetadata=dbQuery.getAllMediaMetadataId(id),
@@ -66,7 +67,8 @@ def entry(id=0):
                                str=str,
                                round=round,
                                url_for=url_for,
-                               os=os)
+                               os=os,
+                               folder=os.path.join("Media" ,str(dbQuery.getMediaEntry(id))))
     elif MediaEntry.shotType == "VIDEO":
         return render_template("videoEntry.html",
                                MediaMetadata=dbQuery.getAllMediaMetadataId(id),
@@ -83,7 +85,8 @@ def entry(id=0):
                                str=str,
                                round=round,
                                url_for=url_for,
-                               os=os)
+                               os=os,
+                               )
 
 
 def remove_submit_and_csrf_toten(studies: list) -> list:

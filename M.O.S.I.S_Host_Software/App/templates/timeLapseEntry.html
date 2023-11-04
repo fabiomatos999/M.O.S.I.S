@@ -2,7 +2,7 @@
 {% block shotTypeCustom %}
 <div class="row">
     <div class="col">
-        <img src="https://cdn.arcgis.com/sharing/rest/content/items/125de49c249d4c51ab0478cf3b590f03/resources/ErgH7hePhnT6pgMZ7aHqJ.gif" alt="" class="img-fluid mx-auto d-block">
+        <img src={{url_for('static', filename=os.path.join(folder, "stereo.gif"))}} alt="" class="img-fluid mx-auto d-block">
     </div>
 </div>
 {% endblock %}

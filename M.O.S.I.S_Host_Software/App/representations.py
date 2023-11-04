@@ -21,7 +21,7 @@ class MediaEntryInternalRepresentation():
         """Text representation for MediaEntry."""
         return "{}-{}-{}-{}-{}-{}-{}-{}".format(
             self.entryId, self.shotType, self.time, self.illuminationType,
-            self.gain, self.saturation, self.shutterSpeed, self.whiteBalance)
+            self.saturation, self.gain, self.shutterSpeed, self.whiteBalance)
 
 
 class MediaMetadataInternalRepresentation:
