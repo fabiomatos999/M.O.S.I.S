@@ -9,6 +9,7 @@ Delete RPi Media
 {% if mediaDeleted %}
 <div class="alert alert-success">Raspberry Pi media was deleted succesfully.</div>
 {% endif %}
+{% if not nobackup %}
 <div class="container">
     <div class="row">
         <div class="col-6">
@@ -31,4 +32,5 @@ Delete RPi Media
         </form>
     </div>
 </div>
+{% endif %}
 {% endblock %}
