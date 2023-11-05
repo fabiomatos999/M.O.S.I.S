@@ -20,5 +20,5 @@ if __name__ == "__main__":
             raise ValueError("Invalid IP Address or Hostname was inputted.")
     from waitress import serve
     webbrowser.open("http://127.0.0.1:5000", new=2, autoraise=True)
-    serve(app, host="0.0.0.0", port=5000)
+    serve(app, host="0.0.0.0", port=5000, threads=4)
     #app.run(debug=True)
