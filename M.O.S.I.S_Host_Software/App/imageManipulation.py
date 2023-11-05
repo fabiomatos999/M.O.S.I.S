@@ -69,9 +69,10 @@ def generateGif(path: str, imagePairs: [(str, str)]):
     os.remove(os.path.join(path, "stereoFrame.jpg"))
 
 
-def generateWhiteScaleImage(imagePath: str):
+def generateWhiteScaleImage(imagePath: str, outputPath: str):
     image = cv2.imread(imagePath, 0)
     ret, thr1 = cv2.threshold(image, 127, 255, cv2.THRESH_BINARY)
+    cv2.imwrite(outputPath, thr1)
     return thr1
 
 

@@ -29,7 +29,9 @@ class MediaMetadataInternalRepresentation:
 
     def __init__(self, metadataId: int, entryId: int, leftCameraMedia: str,
                  rightCameraMedia: str, time: str, temperature: float,
-                 ph: float, dissolvedOxygen: float, pressure: float):
+                 ph: float, dissolvedOxygen: float, pressure: float,
+                 grayscaleLeftMedia: str, grayscaleRightMedia: str,
+                 stereoMedia: str, taggedMedia: str):
         """Construct MediaMetadataInternalRepresentation."""
         self.metadataId = metadataId
         self.entryId = entryId
@@ -40,6 +42,10 @@ class MediaMetadataInternalRepresentation:
         self.ph = ph
         self.dissolvedOxygen = dissolvedOxygen
         self.pressure = pressure
+        self.grayscaleLeftMedia = grayscaleLeftMedia
+        self.grayscaleRightMedia = grayscaleRightMedia
+        self.stereoMedia = stereoMedia
+        self.taggedMedia = taggedMedia
 
     def __str__(self):
         return "{}-{}-{}-{}-{}-{}-{}-{}-{}".format(

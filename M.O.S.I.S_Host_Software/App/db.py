@@ -39,6 +39,10 @@ class DatabaseQuery:
         pressure REAL NOT NULL,
         ph REAL NOT NULL,
         dissolvedOxygen REAL NOT NULL,
+        grayscaleLeftMedia TEXT NOT NULL,
+        grayscaleRightMedia TEXT NOT NULL,
+        stereoMedia TEXT NOT NULL,
+        taggedMedia TEXT NOT NULL,
         FOREIGN KEY (entryId) REFERENCES media_entry(entryId)
     )
 ''')
@@ -88,15 +92,20 @@ class DatabaseQuery:
     def insertMediaMetadata(self, metadataId: int, entryId: int,
                             leftCameraMedia: str, rightCameraMedia, time: str,
                             temperature: float, pressure: float, ph: float,
-                            dissolvedOxygen: float):
+                            dissolvedOxygen: float, grayscaleLeftMedia: str,
+                            grayscaleRightMedia: str, stereoMedia: str,
+                            taggedMedia: str):
         self.cursor.execute(
             """INSERT INTO MediaMetadata
             (metadataId, entryId, leftCameraMedia,
             rightCameraMedia, time, temperature,
-            pressure, ph, dissolvedOxygen)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+            pressure, ph, dissolvedOxygen,
+            grayscaleLeftMedia, grayscaleRightMedia,
+            stereoMedia, taggedMedia)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
             (metadataId, entryId, leftCameraMedia, rightCameraMedia, time,
-             temperature, pressure, ph, dissolvedOxygen))
+             temperature, pressure, ph, dissolvedOxygen, grayscaleLeftMedia,
+             grayscaleRightMedia, stereoMedia, taggedMedia))
         self.conn.commit()
 
     def getMediaMetadataByMetadataId(
@@ -185,11 +194,10 @@ class DatabaseQuery:
 
     def mediaMetadataTableToInternalRepresentation(dbQuery: (
     )) -> MediaMetadataInternalRepresentation:
-        return MediaMetadataInternalRepresentation(dbQuery[0], dbQuery[1],
-                                                   dbQuery[2], dbQuery[3],
-                                                   dbQuery[4], dbQuery[5],
-                                                   dbQuery[6], dbQuery[7],
-                                                   dbQuery[8])
+        return MediaMetadataInternalRepresentation(
+            dbQuery[0], dbQuery[1], dbQuery[2], dbQuery[3], dbQuery[4],
+            dbQuery[5], dbQuery[6], dbQuery[7], dbQuery[8], dbQuery[9],
+            dbQuery[10], dbQuery[11], dbQuery[12])
 
     def parseIdRange(self, searchQuery: str) -> [int]:
         dualEndedRangeRegex = r'^\d+-\d+$'

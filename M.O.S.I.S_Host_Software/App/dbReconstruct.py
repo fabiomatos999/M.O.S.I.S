@@ -57,13 +57,6 @@ class DBReconstruct:
             dissolvedOxygen = fields[10]
             leftCameraMedia = os.path.join(folder, pair[0])
             rightCameraMedia = os.path.join(folder, pair[1])
-            self.query.insertMediaMetadata(metadataId, entryId,
-                                           leftCameraMedia, rightCameraMedia,
-                                           time, temperature, pressure, ph,
-                                           dissolvedOxygen)
-            mediaMetadata = self.query.getMediaMetadataByMetadataId(
-                int(metadataId))
-            mediaEntry = self.query.getMediaEntry(int(entryId))
             stereoMediaPath = "static/Media/{}/{}-{}-{}-{}-{}-{}-{}-S.jpg".format(
                 folder, entryId, metadataId, time, temperature, pressure, ph,
                 dissolvedOxygen)
@@ -72,6 +65,50 @@ class DBReconstruct:
                     os.path.join(self.rootPath, leftCameraMedia),
                     os.path.join(self.rootPath, rightCameraMedia),
                     stereoMediaPath)
+            thresholdLeftImagePath = "static/Media/{}/{}-{}-{}-{}-{}-{}-{}-GL.jpg".format(
+                folder, entryId, metadataId, time, temperature, pressure, ph,
+                dissolvedOxygen)
+            thresholdRightImagePath = "static/Media/{}/{}-{}-{}-{}-{}-{}-{}-GR.jpg".format(
+                folder, entryId, metadataId, time, temperature, pressure, ph,
+                dissolvedOxygen)
+            if not os.path.exists(thresholdLeftImagePath):
+                imageManipulation.generateWhiteScaleImage(
+                    os.path.join(self.rootPath, leftCameraMedia),
+                    thresholdLeftImagePath)
+            if not os.path.exists(thresholdRightImagePath):
+                imageManipulation.generateWhiteScaleImage(
+                    os.path.join(self.rootPath, rightCameraMedia),
+                    thresholdRightImagePath)
+            taggedStereoMediaPath = "static/Media/{}/{}-{}-{}-{}-{}-{}-{}-T.jpg".format(
+                folder, entryId, metadataId, time, temperature, pressure, ph,
+                dissolvedOxygen)
+            if not os.path.exists(taggedStereoMediaPath):
+                imageManipulation.addMetadataBar(stereoMediaPath,
+                                                 taggedStereoMediaPath, time,
+                                                 float(temperature),
+                                                 float(pressure), float(ph),
+                                                 float(dissolvedOxygen))
+            stereoMediaPath = "{}/{}".format(
+                stereoMediaPath.split("/")[-2],
+                stereoMediaPath.split("/")[-1])
+            thresholdLeftImagePath = "{}/{}".format(
+                thresholdLeftImagePath.split("/")[-2],
+                thresholdLeftImagePath.split("/")[-1])
+            thresholdRightImagePath = "{}/{}".format(
+                thresholdRightImagePath.split("/")[-2],
+                thresholdRightImagePath.split("/")[-1])
+            thresholdRightImagePath = "{}/{}".format(
+                thresholdRightImagePath.split("/")[-2],
+                thresholdRightImagePath.split("/")[-1])
+            taggedStereoMediaPath = "{}/{}".format(
+                taggedStereoMediaPath.split("/")[-2],
+                taggedStereoMediaPath.split("/")[-1])
+            self.query.insertMediaMetadata(
+                metadataId, entryId, leftCameraMedia, rightCameraMedia, time,
+                temperature, pressure, ph, dissolvedOxygen,
+                thresholdLeftImagePath, thresholdRightImagePath,
+                stereoMediaPath, taggedStereoMediaPath)
+
         shottype = self.query.getMediaEntry(entryId).shotType
         if shottype == "BURST" or shottype == "TIMELAPSE":
             imageManipulation.generateGif(
