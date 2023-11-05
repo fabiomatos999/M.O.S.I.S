@@ -6,6 +6,7 @@ import json
 import db
 from cliArgs import args
 import sshUtils
+import pdfkit
 
 website = Blueprint('website', __name__)
 dbQuery = db.DatabaseQuery()
@@ -98,8 +99,6 @@ def returnTemplateByEntryId(entryId: int):
                                round=round,
                                url_for=url_for,
                                os=os)
-    
-    
 
 
 def remove_submit_and_csrf_toten(studies: list) -> list:
@@ -248,6 +247,12 @@ def export(IDs: str):
                                round=round,
                                url_for=url_for,
                                os=os)
+
+@app.route("/exportPrompt/<IDs>", methods=["POST"])
+def exportPrompt(IDs: str):
+    path = "test.pdf"
+    pdfkit.from_url("127.0.0.1:5000/export/{}".format(IDs), path)
+    return redirect("/")
 
 
 def writeStudyProfilesToJSON(studies: [dict]):

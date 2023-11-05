@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.css') }}">
+    <title>Report</title>
+</head>
+<body>
+    
+    <div class="container">
+    {% for MediaEntry in MediaEntries %}
+    {% for md in getAllMediaMetadataId(MediaEntry.entryId) %}
+    <hr>
+    <div class="row d-flex justify-content-center">
+      <div class="col-6">
+        <div class="card">
+          <div class="card-body d-flex justify-content-center">
+            {{md.time}}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6 d-flex justify-content-center mt-3 mb-3">
+        <img src={{ url_for('static', filename=os.path.join("Media", md.leftCameraMedia)) }} alt="" class="img-fluid">
+      </div>
+      <div class="col-6 d-flex justify-content-center mt-3 mb-3">
+        <img src={{ url_for('static', filename=os.path.join("Media", md.rightCameraMedia)) }} alt="" class="img-fluid">
+      </div>
+    </div>
+    <div class="row pt-3">
+      <div class="col-3">
+        <div class="card">
+          <div class="card-body">
+            {{"Temperature: " + str(round(md.temperature,3)) + " C" + '°'}}
+          </div>
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="card">
+          <div class="card-body">
+            {{"pH: " + str(round(md.ph,3))}}
+          </div>
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="card">
+          <div class="card-body">
+            {{"Pressure: " + str(round(md.pressure,3)) + " mbar"}}
+          </div>
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="card">
+          <div class="card-body">
+            {{"Dissolved Oxygen: " + str(round(md.dissolvedOxygen,3)) + " mg/L"}}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col mt-3 mb-3">
+        <img src={{ url_for('static', filename=os.path.join("Media", md.stereoMedia)) }} alt="" class="img-fluid">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col mt-3 mb-3">
+        <img src={{ url_for('static', filename=os.path.join("Media", md.taggedMedia)) }} alt="" class="img-fluid">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6 d-flex justify-content-center mt-3 mb-3">
+        <img src={{ url_for('static', filename=os.path.join("Media", md.grayscaleLeftMedia)) }} alt="" class="img-fluid">
+      </div>
+      <div class="col-6 d-flex justify-content-center mt-3 mb-3">
+        <img src={{ url_for('static', filename=os.path.join("Media", md.grayscaleRightMedia)) }} alt="" class="img-fluid">
+      </div>
+    </div>
+    {% endfor %}
+    {% endfor %}
+    </div>
+    <script>
+      src="{{ url_for('static', filename='bootstrap.js') }}"
+    </script>
+</body>
+</html>
