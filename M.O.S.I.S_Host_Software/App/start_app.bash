@@ -9,5 +9,6 @@ if [ ! -d $(pwd)"/venv" ]; then
     source $(pwd)"/venv/bin/activate"
     pip install -r $(pwd)"/requirements.txt"
 fi
+rm test.db
 source $(pwd)"/venv/bin/activate"
 ./app.py $@

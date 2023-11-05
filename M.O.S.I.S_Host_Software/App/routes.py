@@ -9,9 +9,13 @@ import sshUtils
 import pdfkit
 import subprocess
 
-path_wkhtmltopdf = 'C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe'
-config = pdfkit.configuration(wkhtmltopdf=path_wkhtmltopdf)
+path_wkhtmltopdf = None
+config = None
 
+if os.name == 'nt':
+    path_wkhtmltopdf = 'C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe'
+    config = pdfkit.configuration(wkhtmltopdf=path_wkhtmltopdf)
+    
 website = Blueprint('website', __name__)
 dbQuery = db.DatabaseQuery()
 
@@ -262,6 +266,10 @@ def exportPrompt(IDs: str):
     if os.name == 'nt':
         pdfkit.from_url("127.0.0.1:5000/export/{}".format(IDs), path, configuration = config)
         subprocess.Popen(["powershell",os.path.join(os.getcwd(), "compressPDF.ps1"), "-I", path, "-O", output])
+    else:
+        pdfkit.from_url("127.0.0.1:5000/export/{}".format(IDs), path)
+        subprocess.call(["gs", "-sDEVICE=pdfwrite", "-dPDFSETTINGS=/ebook", "-q", "-o", output, path])
+        os.remove(path)
 
     return redirect("/")
 
