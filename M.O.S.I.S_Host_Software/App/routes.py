@@ -50,7 +50,8 @@ def listView():
     return render_template("listView.html",
                            MediaEntries=dbQuery.getAllMediaEntry(),
                            str=str,
-                           round=round)
+                           round=round,
+                           sei=serializeEntryIds)
 
 
 @app.route("/entry/<id>")
@@ -211,7 +212,8 @@ def search(category: str):
                 getAllMediaMetadataId=dbQuery.getAllMediaMetadataId,
                 enumerate=enumerate,
                 str=str,
-                round=round)
+                round=round,
+                sei=serializeEntryIds)
         else:
             return render_template(
                 'index.html',
@@ -256,9 +258,10 @@ def export(IDs: str):
 @app.route("/exportPrompt/<IDs>", methods=["POST"])
 def exportPrompt(IDs: str):
     path = "test.pdf"
+    output = "report.pdf"
     if os.name == 'nt':
         pdfkit.from_url("127.0.0.1:5000/export/{}".format(IDs), path, configuration = config)
-        subprocess.Popen(["powershell",os.path.join(os.getcwd(), "compressPDF.ps1"), "-PATH", path])
+        subprocess.Popen(["powershell",os.path.join(os.getcwd(), "compressPDF.ps1"), "-I", path, "-O", output])
 
     return redirect("/")
 
