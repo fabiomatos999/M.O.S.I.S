@@ -71,6 +71,7 @@ def generateGif(path: str, imagePairs: [(str, str)]):
 
 def generateWhiteScaleImage(imagePath: str, outputPath: str):
     image = cv2.imread(imagePath, 0)
+    image = cv2.equalizeHist(image)
     ret, thr1 = cv2.threshold(image, 127, 255, cv2.THRESH_BINARY)
     cv2.imwrite(outputPath, thr1)
     return thr1
