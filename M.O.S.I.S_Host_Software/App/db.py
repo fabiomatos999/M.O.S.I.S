@@ -70,7 +70,7 @@ class DatabaseQuery:
                                   (entryId, )).fetchone()
         return DatabaseQuery.mediaEntryTableToInternalRepresentation(ret)
 
-    def getAllMediaEntryIDs(self):
+    def getAllMediaEntryIDs(self) -> [int]:
         ret = self.cursor.execute("SELECT entryId FROM MediaEntry").fetchall()
         return list(map(lambda x: x[0], ret))
 
@@ -248,4 +248,6 @@ class DatabaseQuery:
                 entries = list(
                     filter(lambda x: x >= dbMin and x <= dbMax, entries))
                 entries.sort()
+            entryIds = self.getAllMediaEntryIDs()
+            entries = list(filter(lambda x: entryIds.__contains__(x) , entries))
             return entries

@@ -202,7 +202,8 @@ def search(category: str):
                 MediaEntries=mediaEntries,
                 getAllMediaMetadataId=dbQuery.getAllMediaMetadataId,
                 enumerate=enumerate,
-                str=str)
+                str=str,
+                os=os)
 
     def prettyCategory(searchBy: str) -> str:
         if searchBy == "id":
