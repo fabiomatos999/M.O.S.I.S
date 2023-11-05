@@ -7,6 +7,7 @@ import db
 from cliArgs import args
 import sshUtils
 import pdfkit
+import subprocess
 
 path_wkhtmltopdf = 'C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe'
 config = pdfkit.configuration(wkhtmltopdf=path_wkhtmltopdf)
@@ -218,7 +219,8 @@ def search(category: str):
                 getAllMediaMetadataId=dbQuery.getAllMediaMetadataId,
                 enumerate=enumerate,
                 str=str,
-                os=os)
+                os=os,
+                sei=serializeEntryIds)
 
     def prettyCategory(searchBy: str) -> str:
         if searchBy == "id":
@@ -256,6 +258,7 @@ def exportPrompt(IDs: str):
     path = "test.pdf"
     if os.name == 'nt':
         pdfkit.from_url("127.0.0.1:5000/export/{}".format(IDs), path, configuration = config)
+        subprocess.Popen(["powershell",os.path.join(os.getcwd(), "compressPDF.ps1"), "-PATH", path])
 
     return redirect("/")
 
