@@ -15,10 +15,10 @@
     </div>
     <div class="row">
       <div class="col-6 d-flex justify-content-center mt-1 mb-1">
-        <img src={{ url_for('static', filename=os.path.join("Media", MediaMetadata.leftCameraMedia)) }} alt="" class="img-fluid">
+        <img src={{ url_for('static', filename=("Media" + "/" + MediaMetadata.leftCameraMedia)) }} alt="" class="img-fluid">
       </div>
       <div class="col-6 d-flex justify-content-center mt-1 mb-1">
-        <img src={{ url_for('static', filename=os.path.join("Media", MediaMetadata.rightCameraMedia)) }} alt="" class="img-fluid">
+        <img src={{ url_for('static', filename=("Media" + "/" + MediaMetadata.rightCameraMedia)) }} alt="" class="img-fluid">
       </div>
     </div>
     <div class="row pt-3">
@@ -53,20 +53,20 @@
     </div>
     <div class="row">
       <div class="col mt-3 mb-3">
-        <img src={{ url_for('static', filename=os.path.join("Media", MediaMetadata.stereoMedia)) }} alt="" class="img-fluid">
+        <img src={{ url_for('static', filename=("Media" + "/" + MediaMetadata.stereoMedia)) }} alt="" class="img-fluid">
       </div>
     </div>
     <div class="row">
       <div class="col mt-3 mb-3">
-        <img src={{ url_for('static', filename=os.path.join("Media", MediaMetadata.taggedMedia)) }} alt="" class="img-fluid">
+        <img src={{ url_for('static', filename=("Media" + "/" + MediaMetadata.taggedMedia)) }} alt="" class="img-fluid">
       </div>
     </div>
     <div class="row">
       <div class="col-6 d-flex justify-content-center mt-3 mb-3">
-        <img src={{ url_for('static', filename=os.path.join("Media", MediaMetadata.grayscaleLeftMedia)) }} alt="" class="img-fluid">
+        <img src={{ url_for('static', filename=("Media" + "/" + MediaMetadata.grayscaleLeftMedia)) }} alt="" class="img-fluid">
       </div>
       <div class="col-6 d-flex justify-content-center mt-3 mb-3">
-        <img src={{ url_for('static', filename=os.path.join("Media", MediaMetadata.grayscaleRightMedia)) }} alt="" class="img-fluid">
+        <img src={{ url_for('static', filename=("Media" + "/" + MediaMetadata.grayscaleRightMedia)) }} alt="" class="img-fluid">
       </div>
     </div>
   </div>

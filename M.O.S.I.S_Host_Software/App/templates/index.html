@@ -12,7 +12,7 @@ M.O.S.I.S Host Software Home Page
     <div class="col-lg-3 col-sm-6">
       <div class="card" style="width: ">
         <img alt="" class="card-img-top" src={{ url_for('static',
-          filename=(os.path.join("Media",getAllMediaMetadataId(MediaEntry.entryId)[0].leftCameraMedia))) }} />
+          filename=("Media" + "/" + getAllMediaMetadataId(MediaEntry.entryId)[0].leftCameraMedia)) }} />
         <div class="card-body">
           <a href={{"/entry/" + str(MediaEntry.entryId)}} class="streched-link">
             {{str(MediaEntry)}}

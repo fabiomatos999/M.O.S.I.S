@@ -8,6 +8,9 @@ from cliArgs import args
 import sshUtils
 import pdfkit
 
+path_wkhtmltopdf = 'C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe'
+config = pdfkit.configuration(wkhtmltopdf=path_wkhtmltopdf)
+
 website = Blueprint('website', __name__)
 dbQuery = db.DatabaseQuery()
 
@@ -72,7 +75,7 @@ def returnTemplateByEntryId(entryId: int):
                                round=round,
                                url_for=url_for,
                                os=os,
-                               folder=os.path.join("Media" ,str(dbQuery.getMediaEntry(entryId))))
+                               folder=("Media" + "/" + str(dbQuery.getMediaEntry(entryId))))
     elif MediaEntry.shotType == "TIMELAPSE":
         return render_template("timeLapseEntry.html",
                                MediaMetadata=dbQuery.getAllMediaMetadataId(entryId),
@@ -81,7 +84,7 @@ def returnTemplateByEntryId(entryId: int):
                                round=round,
                                url_for=url_for,
                                os=os,
-                               folder=os.path.join("Media" ,str(dbQuery.getMediaEntry(entryId))))
+                               folder=("Media" + "/" + str(dbQuery.getMediaEntry(entryId))))
     elif MediaEntry.shotType == "VIDEO":
         return render_template("videoEntry.html",
                                MediaMetadata=dbQuery.getAllMediaMetadataId(entryId),
@@ -251,7 +254,9 @@ def export(IDs: str):
 @app.route("/exportPrompt/<IDs>", methods=["POST"])
 def exportPrompt(IDs: str):
     path = "test.pdf"
-    pdfkit.from_url("127.0.0.1:5000/export/{}".format(IDs), path)
+    if os.name == 'nt':
+        pdfkit.from_url("127.0.0.1:5000/export/{}".format(IDs), path, configuration = config)
+
     return redirect("/")
 
 

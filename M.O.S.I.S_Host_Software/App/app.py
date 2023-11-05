@@ -6,20 +6,11 @@ import webbrowser
 from datetime import datetime
 from routes import app, website
 import dbReconstruct
-import os
 
 
 app.register_blueprint(website)
 
-
-def getCurrentTime() -> str:
-    """Return current time in 'yyyy-MM-ddTHH:mm:ss.zzz' format."""
-    date = datetime.now()
-    return date.strftime('%Y-%m-%-dT%H:%M:%S.%f')
-
-
 if __name__ == "__main__":
-    os.remove("test.db")
     dbr = dbReconstruct.DBReconstruct("static/Media")
     if not args.nobackup:
         try:
@@ -29,5 +20,5 @@ if __name__ == "__main__":
             raise ValueError("Invalid IP Address or Hostname was inputted.")
     from waitress import serve
     webbrowser.open("http://127.0.0.1:5000", new=2, autoraise=True)
-    #serve(app, host="0.0.0.0", port=5000)
-    app.run(debug=True)
+    serve(app, host="0.0.0.0", port=5000)
+    #app.run(debug=True)

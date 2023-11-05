@@ -2,7 +2,7 @@
 {% block shotTypeCustom %}
 <div class="row">
     <div class="col">
-        <img src={{url_for('static', filename=os.path.join(folder, "stereo.gif"))}} alt="" class="img-fluid mx-auto d-block">
+        <img src={{url_for('static', filename=(folder + "/" +"stereo.gif"))}} alt="" class="img-fluid mx-auto d-block">
     </div>
 </div>
 {% endblock %}

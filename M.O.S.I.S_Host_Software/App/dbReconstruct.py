@@ -14,6 +14,7 @@ class DBReconstruct:
         for folder in self.folders:
             self.insertMediaEntryFromFolderName(folder)
             self.insertMediaMetadataFromFolderName(folder)
+        self.query.__del__()
 
     def insertMediaEntryFromFolderName(self, folder: str):
         fields = folder.split("-")
@@ -55,8 +56,8 @@ class DBReconstruct:
             pressure = fields[8]
             ph = fields[9]
             dissolvedOxygen = fields[10]
-            leftCameraMedia = os.path.join(folder, pair[0])
-            rightCameraMedia = os.path.join(folder, pair[1])
+            leftCameraMedia = (folder + "/" +pair[0])
+            rightCameraMedia = (folder + "/" + pair[1])
             stereoMediaPath = "static/Media/{}/{}-{}-{}-{}-{}-{}-{}-S.jpg".format(
                 folder, entryId, metadataId, time, temperature, pressure, ph,
                 dissolvedOxygen)

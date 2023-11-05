@@ -12,7 +12,8 @@ class DatabaseQuery:
 
     def __init__(self, db: str = "test.db"):
         """Create db tables and gives a db connection and cursor."""
-        self.conn = sqlite3.connect('test.db', check_same_thread=False)
+        self.db = db
+        self.conn = sqlite3.connect(self.db, check_same_thread=False)
         self.cursor = self.conn.cursor()
         # Create MediaEntry table if not exists
         self.cursor.execute('''
@@ -251,3 +252,6 @@ class DatabaseQuery:
             entryIds = self.getAllMediaEntryIDs()
             entries = list(filter(lambda x: entryIds.__contains__(x) , entries))
             return entries
+    
+
+        
