@@ -6,7 +6,7 @@ import webbrowser
 from datetime import datetime
 from routes import app, website
 import dbReconstruct
-
+import os
 
 app.register_blueprint(website)
 
@@ -15,7 +15,7 @@ if __name__ == "__main__":
     if not args.nobackup:
         try:
             sshUtils.scp_recursive_copy(
-                "pi@{}:/home/pi/Documents".format(args.ipaddress), args.output)
+                "pi@{}:/home/pi/Documents".format(args.ipaddress), os.path.join("static", "Media"))
         except Exception:
             raise ValueError("Invalid IP Address or Hostname was inputted.")
     from waitress import serve

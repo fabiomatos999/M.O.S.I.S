@@ -262,7 +262,7 @@ def export(IDs: str):
 @app.route("/exportPrompt/<IDs>", methods=["POST"])
 def exportPrompt(IDs: str):
     path = "test.pdf"
-    output = "report.pdf"
+    output = os.path.join(args.output, "report.pdf")
     if os.name == 'nt':
         pdfkit.from_url("127.0.0.1:5000/export/{}".format(IDs), path, configuration = config)
         subprocess.Popen(["powershell",os.path.join(os.getcwd(), "compressPDF.ps1"), "-I", path, "-O", output])
