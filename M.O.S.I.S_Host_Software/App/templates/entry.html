@@ -17,11 +17,29 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-6 d-flex justify-content-center mt-1 mb-1">
+      <div class="col-6 d-flex justify-content-center mt-3 mb-3">
         <img src={{ url_for('static', filename=os.path.join("Media", md.leftCameraMedia)) }} alt="" class="img-fluid">
       </div>
-      <div class="col-6 d-flex justify-content-center mt-1 mb-1">
+      <div class="col-6 d-flex justify-content-center mt-3 mb-3">
         <img src={{ url_for('static', filename=os.path.join("Media", md.rightCameraMedia)) }} alt="" class="img-fluid">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col mt-3 mb-3">
+        <img src={{ url_for('static', filename=os.path.join("Media", md.stereoMedia)) }} alt="" class="img-fluid">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col mt-3 mb-3">
+        <img src={{ url_for('static', filename=os.path.join("Media", md.taggedMedia)) }} alt="" class="img-fluid">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6 d-flex justify-content-center mt-3 mb-3">
+        <img src={{ url_for('static', filename=os.path.join("Media", md.grayscaleLeftMedia)) }} alt="" class="img-fluid">
+      </div>
+      <div class="col-6 d-flex justify-content-center mt-3 mb-3">
+        <img src={{ url_for('static', filename=os.path.join("Media", md.grayscaleRightMedia)) }} alt="" class="img-fluid">
       </div>
     </div>
     <div class="row pt-3">
