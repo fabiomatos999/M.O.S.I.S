@@ -3,36 +3,40 @@
 M.O.S.I.S Host Software Home Page
 {% endblock %}
 {% block body %}
-    <div class="container">
-      {% if MediaEntries -%}
-      {% for index, MediaEntry in enumerate(MediaEntries) %}
-      {% if index%4 == 0 -%}
-      <div class="row">
-	{% endif %}
-        <div class="col-lg-3 col-sm-6">
-          <div class="card" style="width: ">
-            <img
-              alt=""
-              class="card-img-top"
-              src={{ url_for('static', filename=(os.path.join("Media",getAllMediaMetadataId(MediaEntry.entryId)[0].leftCameraMedia))) }}/>
-            <div class="card-body" >
-	      <a href={{"/entry/" + str(MediaEntry.entryId)}} class="streched-link">
-	      {{str(MediaEntry)}}
-</a>
-	    </div>
-          </div>
+<div class="container">
+  {% if MediaEntries -%}
+  {% for index, MediaEntry in enumerate(MediaEntries) %}
+  {% if index%4 == 0 -%}
+  <div class="row">
+    {% endif %}
+    <div class="col-lg-3 col-sm-6">
+      <div class="card" style="width: ">
+        <img alt="" class="card-img-top" src={{ url_for('static',
+          filename=(os.path.join("Media",getAllMediaMetadataId(MediaEntry.entryId)[0].leftCameraMedia))) }} />
+        <div class="card-body">
+          <a href={{"/entry/" + str(MediaEntry.entryId)}} class="streched-link">
+            {{str(MediaEntry)}}
+          </a>
         </div>
-      {% if index%4 == 3 -%}
       </div>
-      {% endif %}
-      {% endfor %}
-      {% else %}
-      <div class="row">
-	<div class="col">
-	<h2>No results found.</h2>
-	</div>
-      </div>
-      {% endif%}
     </div>
-{% endblock %} 
-
+    {% if index%4 == 3 -%}
+  </div>
+  {% endif %}
+  {% endfor %}
+  {% else %}
+  <div class="row">
+    <div class="col">
+      <h2>No results found.</h2>
+    </div>
+  </div>
+  {% endif%}
+  <div class="row">
+    <div class="col">
+      <form method="post" , action={{"/exportPrompt/" + sei(MediaEntries)}}>
+        <input class="btn btn-primary" type="submit" value="Save Study Profile">
+      </form>
+    </div>
+  </div>
+  </div>
+  {% endblock %}

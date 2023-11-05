@@ -28,7 +28,16 @@ def index():
                            getAllMediaMetadataId=dbQuery.getAllMediaMetadataId,
                            enumerate=enumerate,
                            str=str,
-                           os=os)
+                           os=os,
+                           sei=serializeEntryIds)
+
+def serializeEntryIds(mediaEntries: [MediaEntryInternalRepresentation]) -> str:
+    IDs = list(map(lambda x: x.entryId, mediaEntries))
+    ret = str()
+    for ID in IDs:
+        ret = ret + (str(ID) + ",")
+    ret = ret[:-1]
+    return ret
 
 
 @app.route("/list")
@@ -42,36 +51,39 @@ def listView():
 @app.route("/entry/<id>")
 def entry(id=0):
     """Return render template for a specific entry."""
-    MediaEntry = dbQuery.getMediaEntry(id)
+    return returnTemplateByEntryId(id)
+    
+def returnTemplateByEntryId(entryId: int):
+    MediaEntry = dbQuery.getMediaEntry(entryId)
     if MediaEntry.shotType == "SINGLE":
         return render_template(
             "singleEntry.html",
-            MediaMetadata=dbQuery.getAllMediaMetadataId(id)[0],
+            MediaMetadata=dbQuery.getAllMediaMetadataId(entryId)[0],
             str=str,
             round=round,
             url_for=url_for,
             os=os)
     elif MediaEntry.shotType == "BURST":
         return render_template("burstEntry.html",
-                               MediaMetadata=dbQuery.getAllMediaMetadataId(id),
+                               MediaMetadata=dbQuery.getAllMediaMetadataId(entryId),
                                enumerate=enumerate,
                                str=str,
                                round=round,
                                url_for=url_for,
                                os=os,
-                               folder=os.path.join("Media" ,str(dbQuery.getMediaEntry(id))))
+                               folder=os.path.join("Media" ,str(dbQuery.getMediaEntry(entryId))))
     elif MediaEntry.shotType == "TIMELAPSE":
         return render_template("timeLapseEntry.html",
-                               MediaMetadata=dbQuery.getAllMediaMetadataId(id),
+                               MediaMetadata=dbQuery.getAllMediaMetadataId(entryId),
                                enumerate=enumerate,
                                str=str,
                                round=round,
                                url_for=url_for,
                                os=os,
-                               folder=os.path.join("Media" ,str(dbQuery.getMediaEntry(id))))
+                               folder=os.path.join("Media" ,str(dbQuery.getMediaEntry(entryId))))
     elif MediaEntry.shotType == "VIDEO":
         return render_template("videoEntry.html",
-                               MediaMetadata=dbQuery.getAllMediaMetadataId(id),
+                               MediaMetadata=dbQuery.getAllMediaMetadataId(entryId),
                                enumerate=enumerate,
                                str=str,
                                round=round,
@@ -79,14 +91,15 @@ def entry(id=0):
                                os=os)
     else:
         return render_template("entry.html",
-                               MediaEntry=dbQuery.getMediaEntry(id),
-                               MediaMetadata=dbQuery.getAllMediaMetadataId(id),
+                               MediaEntry=dbQuery.getMediaEntry(entryId),
+                               MediaMetadata=dbQuery.getAllMediaMetadataId(entryId),
                                enumerate=enumerate,
                                str=str,
                                round=round,
                                url_for=url_for,
-                               os=os,
-                               )
+                               os=os)
+    
+    
 
 
 def remove_submit_and_csrf_toten(studies: list) -> list:
@@ -220,6 +233,21 @@ def search(category: str):
     return render_template('searchForm.html',
                            form=form,
                            searchBy=prettyCategory(category))
+
+@app.route("/export/<IDs>", methods=["GET"])
+def export(IDs: str):
+    IDsList = []
+    for ID in IDs.split(","):
+        IDsList.append(int(ID))
+    mediaEntries = dbQuery.getMediaEntriesById(IDsList)
+    return render_template("export.html",
+                               MediaEntries=mediaEntries,
+                               getAllMediaMetadataId=dbQuery.getAllMediaMetadataId,
+                               enumerate=enumerate,
+                               str=str,
+                               round=round,
+                               url_for=url_for,
+                               os=os)
 
 
 def writeStudyProfilesToJSON(studies: [dict]):
