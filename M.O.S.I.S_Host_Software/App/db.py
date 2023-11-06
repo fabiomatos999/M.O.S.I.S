@@ -10,10 +10,10 @@ import os
 class DatabaseQuery:
     """Database query class used to interact with the db and create tables."""
 
-    def __init__(self, db: str = "test.db"):
+    def __init__(self, db: str = "file::memory:?cache=shared"):
         """Create db tables and gives a db connection and cursor."""
         self.db = db
-        self.conn = sqlite3.connect(self.db, check_same_thread=False)
+        self.conn = sqlite3.connect(self.db, check_same_thread=False, uri=True)
         self.cursor = self.conn.cursor()
         # Create MediaEntry table if not exists
         self.cursor.execute('''
