@@ -1,10 +1,14 @@
 #!/usr/bin/env bash
-if ! command -v python3 &> /dev/null; then
-    echo "Python is not installed"
-    exit
+if ! command wkhtmltopdf; then
+    sudo apt install wkhtmltopdf -y
+fi
+if ! command ghostscript; then
+    sudo apt install ghostscript -y
+fi
+if ! command python3; then
+    sudo apt install python3 python3-venv -y
 fi
 if [ ! -d $(pwd)"/venv" ]; then
-    sudo apt install python3-venv rsync -y
     python3 -m venv $(pwd)"/venv"
     source $(pwd)"/venv/bin/activate"
     pip install -r $(pwd)"/requirements.txt"
