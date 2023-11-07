@@ -1,7 +1,7 @@
 import argparse
 import os
 parser = argparse.ArgumentParser(description='Start Host Software')
-group = parser.add_mutually_exclusive_group()
+group = parser.add_mutually_exclusive_group(required=True)
 group.add_argument("-n",
                    "--nobackup",
                    action="store_true",
@@ -11,6 +11,6 @@ group.add_argument("-i",
                    type=str,
                    help="IP address of the Raspberry Pi",
                    default="raspberrypi")
-parser.add_argument('-o', '--output', type=str, default=os.getcwd(), help='Output folder for Raspberry Pi Backup')
+parser.add_argument('-o', '--output', type=str, default=os.getcwd(), help='Output Folder for the Generated Report')
 
 args = parser.parse_args()
