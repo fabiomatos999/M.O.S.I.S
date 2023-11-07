@@ -416,6 +416,25 @@ class MainMenu(object):
         else:
             return float(field)
 
+    def getCurrentShutterSpeed(self) -> str:
+        """ Return current shutterspeed from the shutterspeed configuration menu."""
+        shutterspeed = self.shutterSpeedSelectionMenu.CurrentShutterSpeedLabel.text()
+        return shutterspeed
+    
+    def getCurrentGain(self) -> str:
+        """ Return current gain from the gain configuration menu."""
+        gain = self.gainConfigurationMenu.CurrentGainLabel.text()
+        return gain
+    
+    def getCurrentWhiteBalance(self) -> str:
+        """ Return current whitebalance from the whitebalance configuration menu."""
+        whitebalance = self.whiteBalanceCalibrationMenu.CurrentWB.text()
+        return whitebalance
+    
+    def getCurrentSaturation(self) -> str:
+        """ Return current saturation from the saturation configuration menu."""
+        saturation = self.saturationConfigurationMenu.CurrentSaturationLabel.text()
+        return saturation
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
