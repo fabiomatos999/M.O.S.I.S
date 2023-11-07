@@ -1,45 +1,60 @@
-import sys
-from PyQt6.QtWidgets import QApplication, QMainWindow
-from PyQt6.QtCore import Qt
-from phSensorCalibrationMenu import Ui_Form
-#from DissolvedOxygenCalibrationMenu import Ui_Form
-#from WhiteBalanceCalibrationMenu import Ui_Form
-from IsoConfigurationMenu import Ui_ISOConfigurationMenu
-from ApertureSizeConfigurationMenu import Ui_ApertureSizeConfigurationMenu
-from ShutterSpeedConfigurationMenu import Ui_ShutterSpeedConfigurationMenu
-from GainConfigurationMenu import Ui_GainConfigurationMenu
-from SaturationConfigurationMenu import Ui_SaturationConfigurationMenu
-#from PreviewScreen import Ui_Form
-#from StudyProfileSelectionMenu import Ui_Form
-class MyMainWindow(QMainWindow):
-    def __init__(self):
-        super().__init__()
-        self.ui = Ui_Form()
-        #self.ui = Ui_ApertureSizeConfigurationMenu()
-        #self.ui = Ui_ShutterSpeedConfigurationMenu()
-        #self.ui = Ui_GainConfigurationMenu()
-        #self.ui = Ui_SaturationConfigurationMenu()
-        self.ui.setupUi(self)
-
-        self.sliders = [self.ui.LowPointslide, self.ui.MidPointslide, self.ui.Highpointslide]
-        self.current_slider_index = 0
-        self.sliders[self.current_slider_index].setFocus()
-
-    def keyPressEvent(self, event):
-        if event.key() == Qt.Key.Key_K:
-            # Increment the current slider index and cycle through the list
-            self.sliders[self.current_slider_index].setStyleSheet("QSlider::handle:horizontal {background-color:rgb(89, 239, 150);}")
-            self.current_slider_index = (self.current_slider_index + 1) % len(self.sliders)
-        else:
-            self.sliders[self.current_slider_index].setStyleSheet("QSlider::handle:horizontal {background-color:rgb(89, 239, 150);}")
-            self.current_slider_index = (self.current_slider_index - 1) % len(self.sliders)
-            # Set focus to the next slider in the cycle
-        self.sliders[self.current_slider_index].setFocus()
-        self.sliders[self.current_slider_index].setStyleSheet( "QSlider::handle:horizontal {background-color:rgb(204, 255, 89);}")
+import sqlite3
+import os
+import DataClass  
 
 
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    window = MyMainWindow()
-    window.show()
-    sys.exit(app.exec())
+from databaseQuery import DatabaseQuery
+
+# Create a database connection
+db = DatabaseQuery("testing3.db")
+
+# Test the getMediaEntrybyId method
+entry_id = 1  
+media_entry = db.getMediaEntrybyId(entry_id)
+print("Media Entry by ID:")
+print(media_entry)
+
+# Test the getMediaMetadatabyId method
+metadata_id = 1  
+media_metadata = db.getMediaMetadatabyId(metadata_id)
+print("Media Metadata by ID:")
+print(media_metadata)
+
+# Test the getAllMediaMetadaByEntryId method
+entry_id = 1  
+metadata_list = db.getAllMediaMetadaByEntryId(entry_id)
+print("All Media Metadata for Entry ID:")
+for metadata in metadata_list:
+    print(metadata)
+
+# Test the insertMediaEntry method
+new_entry_id = db.insertMediaEntry(
+    shotType="Test Shot",
+    time="2023-11-05",
+    illuminationType="LED",
+    gain=1.5,
+    saturation=100,
+    shutterSpeed=1/50.0,
+    whiteBalance=5000
+)
+print(f"Inserted Media Entry with ID: {new_entry_id}")
+
+# Test the insertMediaMetadata method
+entry_id = 1  
+path = "/path/to/media"
+extension = "jpg"
+time = "2023-11-05"
+temperature = 25.0
+pressure = 1013.25
+ph = 7.0
+dissolved_oxygen = 8.0
+new_metadata_id = db.insertMediaMetadata(
+    entry_id, path, extension, time, temperature, pressure, ph, dissolved_oxygen
+)
+print(f"Inserted Media Metadata with ID: {new_metadata_id}")
+
+# Test the getAllMediaEntry method
+media_entries = db.getAllMediaEntry()
+print("All Media Entries:")
+for entry in media_entries:
+    print(entry)
