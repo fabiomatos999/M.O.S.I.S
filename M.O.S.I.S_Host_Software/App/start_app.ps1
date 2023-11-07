@@ -4,9 +4,11 @@ if (!(Test-Path -Path 'C:\Program Files\wkhtmltopdf\*')) {
 }
 if (!(Test-Path -Path 'C:\Program Files\gs\*')) {
     Write-Error "GhostScript is not installed: Please install it from here: https://www.ghostscript.com/releases/gsdnld.html"
+    exit
 }
 if (!(Get-Command python)) {
     Write-Error "Python is not installed: Please install it from here: https://www.python.org/downloads/"
+    exit
 }
 if (!(Test-Path -Path '.\venv')) {
     mkdir .\venv
