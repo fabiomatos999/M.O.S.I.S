@@ -16,6 +16,8 @@ from datetime import datetime
 import FolderStructureGenerator
 import re
 import os
+import HallEffectSensor
+import RPi.GPIO as GPIO
 
 
 class BaseMenuWidget(QtWidgets.QWidget):
@@ -30,6 +32,7 @@ class MainMenu(object):
 
     def __init__(self, form):
         form.resize(800, 480)
+        self.form = form
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(255, 149, 1))
         brush.setStyle(QtCore.Qt.BrushStyle.SolidPattern)
@@ -294,7 +297,35 @@ class MainMenu(object):
         form.keyPressEvent = self.keyPressEvent
         self.studyProfileSelectionMenu.listWidget.currentItemChanged.connect(self.studyProfileSettings)
         self.cameraPictureControl = CameraPictureControl.CameraPictureControl()
+        self.hallEffectSensors = []
+        GPIO.setmode(GPIO.BCM)
+        self.hallEffectSensors.append(HallEffectSensor.HallEffectSensor(17, self.decodeGPIOtoKeyPress))
+        self.hallEffectSensors.append(HallEffectSensor.HallEffectSensor(27, self.decodeGPIOtoKeyPress))
+        self.hallEffectSensors.append(HallEffectSensor.HallEffectSensor(5, self.decodeGPIOtoKeyPress))
+        self.hallEffectSensors.append(HallEffectSensor.HallEffectSensor(6, self.decodeGPIOtoKeyPress))
+        self.hallEffectSensors.append(HallEffectSensor.HallEffectSensor(26, self.decodeGPIOtoKeyPress))
+        self.hallEffectSensors.append(HallEffectSensor.HallEffectSensor(23, self.decodeGPIOtoKeyPress))
+        self.hallEffectSensors.append(HallEffectSensor.HallEffectSensor(24, self.decodeGPIOtoKeyPress))
+        self.hallEffectSensors.append(HallEffectSensor.HallEffectSensor(25, self.decodeGPIOtoKeyPress))
 
+    def decodeGPIOtoKeyPress(self,pin):
+        if pin == 17:
+            self.form.keyPressEvent.emit(Qt.Key.Key_F1)
+        elif pin == 27:
+            pass
+        elif pin == 5:
+            pass
+        elif pin == 6:
+            pass
+        elif pin == 26:
+            pass
+        elif pin == 23:
+            pass
+        elif pin == 24:
+            pass
+        elif pin == 25:
+            pass
+        
     def changePreviewWindow(self):
         if self.stackedLayout.currentIndex() == 0:
             self.previewScreen.active = True
