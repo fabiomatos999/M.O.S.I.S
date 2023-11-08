@@ -10,9 +10,9 @@ from PIL import Image
 from getIPAddress import getIpAddress
 from PyQt6.QtCore import QTimer
 from PyQt6.QtCore import QThread
-import CameraControl
-import CameraPreview
-from pixelinkWrapper import PxLApi
+#import CameraControl
+#import CameraPreview
+#from pixelinkWrapper import PxLApi
 import random
 
 class Ui_Form(object):
@@ -234,8 +234,8 @@ class Ui_Form(object):
         palette.setBrush(QtGui.QPalette.ColorGroup.Disabled,
                          QtGui.QPalette.ColorRole.PlaceholderText, brush)
         Form.setPalette(palette)
-        self.cameraControl = CameraControl.CameraControl()
-        self.cameraHandles = self.cameraControl.setUpCamera(2)
+        #self.cameraControl = CameraControl.CameraControl()
+        #self.cameraHandles = self.cameraControl.setUpCamera(2)
         self.layoutWidget = QtWidgets.QWidget(parent=Form)
         self.layoutWidget.setGeometry(QtCore.QRect(0, 440, 801, 57))
         self.layoutWidget.setObjectName("layoutWidget")
@@ -325,14 +325,14 @@ class Ui_Form(object):
         self.ipAddressRefreshTimer = QTimer(Form)
         self.ipAddressRefreshTimer.setInterval(1000)
         #self.ipAddressRefreshTimer.timeout.connect(self.setIPAddressLabel)
-        self.cameraPreviewRefreshTimer = QTimer(Form)
-        self.cameraPreviewRefreshTimer.setInterval(int((2/1)*1000))
-        self.cameraPreviewRefreshTimer.timeout.connect(self.startPreviewImageCapture)
+        #self.cameraPreviewRefreshTimer = QTimer(Form)
+        #self.cameraPreviewRefreshTimer.setInterval(int((2/1)*1000))
+        #self.cameraPreviewRefreshTimer.timeout.connect(self.startPreviewImageCapture)
         self.ipAddressRefreshTimer.start()
-        self.cameraDefaults()
+        #self.cameraDefaults()
         self.capturing = False
         self.active = True
-        self.cameraPreviewRefreshTimer.start()
+        #self.cameraPreviewRefreshTimer.start()
         self.sensorTimer = QTimer(Form)
         self.sensorTimer.timeout.connect(self.randomSensorValue)
         self.sensorTimer.start(2000)
@@ -408,7 +408,7 @@ class Ui_Form(object):
         self.temperature_label.setText("Temp: " + str(temp_sensor))
         self.ip_label.setText("IP: " + random_ip)
         print("ph value = " + str(ph_sensor) + "\n temp value = " + str(temp_sensor) + "\n do value = " + str(do_sensor) + "\n pressure value = " + str(baro_sensor) + "\n IP value = " + random_ip)
-        
+        """
     def startPreviewImageCapture(self):
         if self.active:
             CameraPreview.getPreviewImage(self.cameraHandles, "Preview")
@@ -448,7 +448,7 @@ class ThreadSpawnerThread(QThread):
         for thread in self.threads:
             thread.start()
             thread.wait()
-        
+        """
         
 
 if __name__ == "__main__":

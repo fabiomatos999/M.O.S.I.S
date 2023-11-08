@@ -4,7 +4,7 @@ import DataClass
 
 
 class DatabaseQuery:
-    def __init__(self, db: str = "testing3.db"):
+    def __init__(self, db: str = "testing6.db"):
         """Given a database string, return a database cursor."""
         self.conn = sqlite3.connect(db)
         self.cursor = self.conn.cursor()
@@ -53,7 +53,7 @@ class DatabaseQuery:
         illuminationType: str,
         gain: float,
         saturation: int,
-        shutterSpeed: float,
+        shutterSpeed: str,
         whiteBalance: int,
     ) -> int:
         self.cursor.execute(

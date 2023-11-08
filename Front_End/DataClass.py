@@ -10,9 +10,9 @@ class MediaEntry:
         shot_Type: str,
         time: str,
         illumination_Type: str,
-        gain: int,
-        saturation: float,
-        shutter_Speed: float,
+        gain: float,
+        saturation: int,
+        shutter_Speed: str,
         white_Balance: int,
     ):
         self.entry_Id = entry_Id
@@ -32,7 +32,7 @@ class MediaEntry:
         illumination_Type: str,
         gain: float,
         saturation: int,
-        shutter_Speed: float,
+        shutter_Speed: str,
         white_Balance: int,
     ):
         shot_Type = shot_Type

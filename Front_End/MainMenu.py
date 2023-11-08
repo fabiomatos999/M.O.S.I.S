@@ -10,7 +10,7 @@ import WhiteBalanceCalibrationMenu
 import DissolvedOxygenCalibrationMenu
 import phSensorCalibrationMenu
 import sys
-import CameraPictureControl
+#import CameraPictureControl
 import databaseQuery
 from datetime import datetime
 import FolderStructureGenerator
@@ -293,7 +293,7 @@ class MainMenu(object):
         form.setLayout(self.stackedLayout)
         form.keyPressEvent = self.keyPressEvent
         self.studyProfileSelectionMenu.listWidget.currentItemChanged.connect(self.studyProfileSettings)
-        self.cameraPictureControl = CameraPictureControl.CameraPictureControl()
+        #self.cameraPictureControl = CameraPictureControl.CameraPictureControl()
 
     def changePreviewWindow(self):
         if self.stackedLayout.currentIndex() == 0:
@@ -346,57 +346,24 @@ class MainMenu(object):
         studyProfile = self.studyProfileSelectionMenu.studyProfileContents[
             self.studyProfileSelectionMenu.currentStudyProfileIndex]
         self.previewScreen.setStatusLabel(True)
-        self.previewScreen.cameraControl.setExposure(
-            self.previewScreen.cameraHandles,
-            MainMenu.decodeShutterSpeed(studyProfile["shutterSpeed"]))
-        self.previewScreen.cameraControl.setWhiteBalance(
-            self.previewScreen.cameraHandles,
-            int(studyProfile["whiteBalance"]))
+        #self.previewScreen.cameraControl.setExposure(
+         #   self.previewScreen.cameraHandles,
+         #   MainMenu.decodeShutterSpeed(studyProfile["shutterSpeed"]))
+        #self.previewScreen.cameraControl.setWhiteBalance(
+         #   self.previewScreen.cameraHandles,
+         #   int(studyProfile["whiteBalance"]))
         dq = databaseQuery.DatabaseQuery()
         entry_id = dq.insertMediaEntry(
             studyProfile["shotType"], MainMenu.getCurrentTime(),
-            studyProfile["illuminationType"], float(studyProfile["gain"]),
-            int(studyProfile["saturation"]),
-            MainMenu.decodeShutterSpeed(studyProfile["shutterSpeed"]),
-            int(studyProfile["whiteBalance"]))
+            studyProfile["illuminationType"], self.getCurrentGain(),
+           self.getCurrentSaturation(),
+            self.getCurrentShutterSpeed(),
+            self.getCurrentWhiteBalance)
         media_entry = dq.getMediaEntrybyId(entry_id)
         fsg = FolderStructureGenerator.FolderStructureGenerator(os.path.join(os.getcwd(), "test"))
         path = os.path.join(fsg.root_path, str(media_entry))
         fsg.create_folder_structure(entry_id)
-        if studyProfile["shotType"] == "SINGLE":
-            media_metadata = dq.insertMediaMetadata(entry_id, path, "jpg",
-                                                    MainMenu.getCurrentTime(),
-                                                    95.5, 100, 8, 0.5)
-            media_metadata = dq.getMediaMetadatabyId(media_metadata)
-            self.cameraPictureControl.get_snapshot(
-                self.previewScreen.cameraHandles[0],
-                media_metadata.left_Camera_Media)
-            self.cameraPictureControl.get_snapshot(
-                self.previewScreen.cameraHandles[1],
-                media_metadata.right_Camera_Media)
-            print("test captured")
-        elif studyProfile["shotType"] == "BURST":
-            for _ in range(int(studyProfile["shotCount"])):
-                media_metadata = dq.insertMediaMetadata(
-                    entry_id, path, "jpg", MainMenu.getCurrentTime(), 95.5,
-                    100, 8, 0.5)
-                media_metadata = dq.getMediaMetadatabyId(media_metadata)
-                self.cameraPictureControl.get_snapshot(
-                    self.previewScreen.cameraHandles[0],
-                    media_metadata.left_Camera_Media)
-                self.cameraPictureControl.get_snapshot(
-                    self.previewScreen.cameraHandles[1],
-                    media_metadata.right_Camera_Media)
-        elif studyProfile["shotType"] == "TIMELAPSE":
-            time = float(studyProfile["time"] )
-            photoCount = int(studyProfile["photoCount"])
-            self.cameraPictureControl.getIntervalSnapshot(self.previewScreen.cameraHandles, time, photoCount, entry_id, path)
-        elif studyProfile["shotType"] == "TELESCOPIC":
-            pass
-        elif studyProfile["shotType"] == "VIDEO":
-            videoLength = int(float(studyProfile["videoLength"])*60.0)
-            # self.cameraPictureControl.getVideo(self.previewScreen.cameraHandles, videoLength, 24,fileName=)
-            pass
+        
         self.previewScreen.setStatusLabel(False)
         fsg.exportMetadata(entry_id)
 
@@ -418,22 +385,38 @@ class MainMenu(object):
 
     def getCurrentShutterSpeed(self) -> str:
         """ Return current shutterspeed from the shutterspeed configuration menu."""
-        shutterspeed = self.shutterSpeedSelectionMenu.CurrentShutterSpeedLabel.text()
+        string = self.shutterSpeedSelectionMenu.CurrentShutterSpeedLabel.text()
+        string = string.replace(" ", "")
+        string = string.replace("/", "_")
+        strings = string.split(":")
+        print (string)
+        print(strings[0])
+        print(strings[1])
+        shutterspeed = strings[1]
         return shutterspeed
     
-    def getCurrentGain(self) -> str:
+    def getCurrentGain(self) -> float:
         """ Return current gain from the gain configuration menu."""
-        gain = self.gainConfigurationMenu.CurrentGainLabel.text()
+        string = self.gainConfigurationMenu.CurrentGainLabel.text()
+        string = string.replace(" ", "")
+        strings = string.split(":")
+        gain = float(strings[1])
         return gain
     
-    def getCurrentWhiteBalance(self) -> str:
+    def getCurrentWhiteBalance(self) -> int:
         """ Return current whitebalance from the whitebalance configuration menu."""
-        whitebalance = self.whiteBalanceCalibrationMenu.CurrentWB.text()
+        string = self.whiteBalanceCalibrationMenu.CurrentWB.text()
+        string = string.replace(" ", "")
+        strings = string.split(":")
+        whitebalance = int(strings[1])
         return whitebalance
     
-    def getCurrentSaturation(self) -> str:
+    def getCurrentSaturation(self) -> float:
         """ Return current saturation from the saturation configuration menu."""
-        saturation = self.saturationConfigurationMenu.CurrentSaturationLabel.text()
+        string = self.saturationConfigurationMenu.CurrentSaturationLabel.text()
+        string = string.replace(" ", "")
+        strings = string.split(":")
+        saturation = float(strings[1])
         return saturation
 
 if __name__ == "__main__":
