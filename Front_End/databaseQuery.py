@@ -135,3 +135,7 @@ class DatabaseQuery:
         ret = list(map(lambda x: str(x), ret))
         return ret
 
+    def getCountbyMediaEntry(self) -> [int]:
+        ret = self.conn.execute("Select Count(entryId) FROM media_entry")
+        result = ret.fetchone()
+        return int(result[0])

@@ -26,13 +26,14 @@ class FolderStructureGenerator:
 
     def create_folder_structure_for_all(self):
         media_entries = self.databaseQuery.getAllMediaEntry()
-        
         for mediaEntry in media_entries:
             folderPath = os.path.join(self.root_path, str(mediaEntry))
             os.makedirs(folderPath, exist_ok=True)
+            
+        for x in range(1, self.databaseQuery.getCountbyMediaEntry() + 1):
+            self.exportMetadata(int(x))
 
 if __name__ == "__main__":
 
     fol = FolderStructureGenerator(os.path.join(os.getcwd(), "test"))
-
     fol.create_folder_structure_for_all()
