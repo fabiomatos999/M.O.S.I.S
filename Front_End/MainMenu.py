@@ -3,7 +3,7 @@ from PyQt6.QtCore import Qt
 from PyQt6 import QtCore
 import PreviewScreen
 import StudyProfileSelectionMenu
-import ShutterSpeedConfigurationMenu
+import ShutterSpeedConfigMenu
 import SaturationConfigurationMenu
 import GainConfigurationMenu
 import WhiteBalanceCalibrationMenu
@@ -254,7 +254,7 @@ class MainMenu(object):
         self.studyProfileSelectionMenu.setupUi(
             self.studyProfileSelectionMenuForm)
         self.stackedLayout.addWidget(self.studyProfileSelectionMenuForm)
-        self.shutterSpeedSelectionMenu = ShutterSpeedConfigurationMenu.Ui_Form(
+        self.shutterSpeedSelectionMenu = ShutterSpeedConfigMenu.Ui_Form(
         )
         self.shutterSpeedSelectionMenuForm = BaseMenuWidget()
         self.shutterSpeedSelectionMenu.setupUi(
@@ -314,7 +314,7 @@ class MainMenu(object):
         self.gainConfigurationMenu.horizontalSlider.setValue(gain)
         self.saturationConfigurationMenu.CurrentSaturationLabel.setText("Saturation: " + studyProfile["saturation"])
         self.saturationConfigurationMenu.horizontalSlider.setValue(int(studyProfile["saturation"]))
-        self.shutterSpeedSelectionMenu.CurrentShutterSpeedLabel.setText("ShutterSpeed: " + studyProfile["shutterSpeed"])
+        self.shutterSpeedSelectionMenu.label.setText("ShutterSpeed: " + studyProfile["shutterSpeed"])
 
     # When pressing F1 or F2 cycles through the menu
     def keyPressEvent(self, event):
@@ -340,7 +340,7 @@ class MainMenu(object):
         if currentIndex == 1:
             self.studyProfileSelectionMenu.listWidget.setFocus()
         elif currentIndex == 2:
-            self.shutterSpeedSelectionMenu.SS1250Button.setFocus()
+            self.shutterSpeedSelectionMenu.listWidget.setFocus()
 
     def executeStudyProfile(self):
         studyProfile = self.studyProfileSelectionMenu.studyProfileContents[
@@ -363,6 +363,7 @@ class MainMenu(object):
         fsg = FolderStructureGenerator.FolderStructureGenerator(os.path.join(os.getcwd(), "test"))
         path = os.path.join(fsg.root_path, str(media_entry))
         fsg.create_folder_structure(entry_id)
+    
         if studyProfile["shotType"] == "SINGLE":
             media_metadata = dq.insertMediaMetadata(entry_id, path, "jpg",
                                                     MainMenu.getCurrentTime(),
@@ -397,6 +398,7 @@ class MainMenu(object):
             videoLength = int(float(studyProfile["videoLength"])*60.0)
             # self.cameraPictureControl.getVideo(self.previewScreen.cameraHandles, videoLength, 24,fileName=)
             pass
+            
         self.previewScreen.setStatusLabel(False)
         fsg.exportMetadata(entry_id)
 
