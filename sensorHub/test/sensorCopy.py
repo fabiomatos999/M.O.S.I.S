@@ -82,14 +82,14 @@ class sensorHub:
     """
 
     # reference attribute
-    _UARTPort = "/dev/serial0"
+    _UARTPort = "/dev/ttyS0"
     uart = None
     encoding = "ascii"
     decoding = "ascii"
 
     def __init__(self):
         try:
-            self.uart = serial.Serial(self._UARTPort, baudrate=115200, timeout=8)
+            self.uart = serial.Serial(self._UARTPort, baudrate=9600, timeout=8)
             print(self.uart)
         except serial.SerialException as e:
             raise Exception("Error opening serial port: " + str(e))
