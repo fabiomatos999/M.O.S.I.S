@@ -82,7 +82,7 @@ class sensorHub:
     """
 
     # reference attribute
-    _UARTPort = "/dev/ttyAMA0"
+    _UARTPort = "/dev/serial0"
     uart = None
     encoding = "ascii"
     decoding = "ascii"
