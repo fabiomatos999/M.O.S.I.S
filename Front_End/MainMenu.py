@@ -310,21 +310,21 @@ class MainMenu(object):
 
     def decodeGPIOtoKeyPress(self,pin):
         if pin == 17:
-            self.form.keyPressEvent.emit(Qt.Key.Key_F1)
+            self.form.keyPressEvent.emit(Qt.Key.Key_Up)
         elif pin == 27:
-            pass
+            self.form.keyPressEvent.emit(Qt.Key.Key_Down)
         elif pin == 5:
-            pass
+            self.form.keyPressEvent.emit(Qt.Key.Key_Right)
         elif pin == 6:
-            pass
+            self.form.keyPressEvent.emit(Qt.Key.Key_Down)
         elif pin == 26:
-            pass
+            self.form.keyPressEvent.emit(Qt.Key.Key_F1)
         elif pin == 23:
-            pass
+            self.form.keyPressEvent.emit(Qt.Key.Key_Enter)
         elif pin == 24:
-            pass
+            self.form.keyPressEvent.emit(Qt.Key.Key_Q)
         elif pin == 25:
-            pass
+            self.form.keyPressEvent.emit(Qt.Key.Key_F2)
         
     def changePreviewWindow(self):
         if self.stackedLayout.currentIndex() == 0:
