@@ -1,8 +1,8 @@
 """Hall Effect Sensor (Button) GPIO Interface for the M.O.S.I.S Microscope."""
 import RPi.GPIO as GPIO
 from typing import Callable
-from pynput.keyboard import Controller, Key
 
+GPIO.setmode(GPIO.BCM)
 
 class HallEffectSensor:
     """
@@ -48,3 +48,7 @@ class HallEffectSensor:
         return f"""HallEffectSensor Object:
                     pin: {self.pin}
                     callback function on press: {self.callback.__name__}"""
+if __name__ == "__main__":
+    HallEffectSensor(26, lambda: print("UwU"))
+    while True:
+        continue

@@ -1,6 +1,8 @@
 from PyQt6 import QtGui, QtWidgets
 from PyQt6.QtCore import Qt
 from PyQt6 import QtCore
+from PyQt6.QtGui import QKeyEvent
+from PyQt6.QtCore import QEvent
 import PreviewScreen
 import StudyProfileSelectionMenu
 import ShutterSpeedConfigurationMenu
@@ -318,7 +320,9 @@ class MainMenu(object):
         elif pin == 6:
             self.form.keyPressEvent.emit(Qt.Key.Key_Down)
         elif pin == 26:
-            self.form.keyPressEvent.emit(Qt.Key.Key_F1)
+            key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_F1, Qt.KeyboardModifier(0), "F1")
+            QtWidgets.QApplication.sendEvent(self.form, key_event)
+            print("It Entered the Pin")
         elif pin == 23:
             self.form.keyPressEvent.emit(Qt.Key.Key_Enter)
         elif pin == 24:
@@ -452,5 +456,5 @@ if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     form = QtWidgets.QWidget()
     ui = MainMenu(form)
-    form.show()
+    form.showFullScreen()
     sys.exit(app.exec())
