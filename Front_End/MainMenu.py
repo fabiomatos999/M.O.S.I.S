@@ -311,24 +311,28 @@ class MainMenu(object):
         self.hallEffectSensors.append(HallEffectSensor.HallEffectSensor(25, self.decodeGPIOtoKeyPress))
 
     def decodeGPIOtoKeyPress(self,pin):
+        key_event = None
         if pin == 17:
-            self.form.keyPressEvent.emit(Qt.Key.Key_Up)
+            key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_Up, Qt.KeyboardModifier(0), "Up")
         elif pin == 27:
-            self.form.keyPressEvent.emit(Qt.Key.Key_Down)
+            key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_Left, Qt.KeyboardModifier(0), "Left")
         elif pin == 5:
             self.form.keyPressEvent.emit(Qt.Key.Key_Right)
+            key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_Right, Qt.KeyboardModifier(0), "Right")
         elif pin == 6:
-            self.form.keyPressEvent.emit(Qt.Key.Key_Down)
+            key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_Down, Qt.KeyboardModifier(0), "Down")
         elif pin == 26:
             key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_F1, Qt.KeyboardModifier(0), "F1")
-            QtWidgets.QApplication.sendEvent(self.form, key_event)
-            print("It Entered the Pin")
         elif pin == 23:
-            self.form.keyPressEvent.emit(Qt.Key.Key_Enter)
+            key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_Enter, Qt.KeyboardModifier(0), "Enter")
         elif pin == 24:
             self.form.keyPressEvent.emit(Qt.Key.Key_Q)
+            key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_Q, Qt.KeyboardModifier(0), "Q")
         elif pin == 25:
-            self.form.keyPressEvent.emit(Qt.Key.Key_F2)
+            key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_F2, Qt.KeyboardModifier(0), "F2")
+        else:
+            return
+        QtWidgets.QApplication.sendEvent(self.form, key_event)
         
     def changePreviewWindow(self):
         if self.stackedLayout.currentIndex() == 0:
