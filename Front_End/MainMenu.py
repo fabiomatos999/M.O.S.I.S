@@ -1,6 +1,8 @@
 from PyQt6 import QtGui, QtWidgets
 from PyQt6.QtCore import Qt
 from PyQt6 import QtCore
+from PyQt6.QtGui import QKeyEvent
+from PyQt6.QtCore import QEvent
 import PreviewScreen
 import StudyProfileSelectionMenu
 import ShutterSpeedConfigurationMenu
@@ -10,12 +12,14 @@ import WhiteBalanceCalibrationMenu
 import DissolvedOxygenCalibrationMenu
 import phSensorCalibrationMenu
 import sys
-#import CameraPictureControl
+import CameraPictureControl
 import databaseQuery
 from datetime import datetime
 import FolderStructureGenerator
 import re
 import os
+import HallEffectSensor
+import RPi.GPIO as GPIO
 
 
 class BaseMenuWidget(QtWidgets.QWidget):
@@ -30,6 +34,7 @@ class MainMenu(object):
 
     def __init__(self, form):
         form.resize(800, 480)
+        self.form = form
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(255, 149, 1))
         brush.setStyle(QtCore.Qt.BrushStyle.SolidPattern)
@@ -293,8 +298,42 @@ class MainMenu(object):
         form.setLayout(self.stackedLayout)
         form.keyPressEvent = self.keyPressEvent
         self.studyProfileSelectionMenu.listWidget.currentItemChanged.connect(self.studyProfileSettings)
-        #self.cameraPictureControl = CameraPictureControl.CameraPictureControl()
+        self.cameraPictureControl = CameraPictureControl.CameraPictureControl()
+        self.hallEffectSensors = []
+        GPIO.setmode(GPIO.BCM)
+        self.hallEffectSensors.append(HallEffectSensor.HallEffectSensor(17, self.decodeGPIOtoKeyPress))
+        self.hallEffectSensors.append(HallEffectSensor.HallEffectSensor(27, self.decodeGPIOtoKeyPress))
+        self.hallEffectSensors.append(HallEffectSensor.HallEffectSensor(5, self.decodeGPIOtoKeyPress))
+        self.hallEffectSensors.append(HallEffectSensor.HallEffectSensor(6, self.decodeGPIOtoKeyPress))
+        self.hallEffectSensors.append(HallEffectSensor.HallEffectSensor(26, self.decodeGPIOtoKeyPress))
+        self.hallEffectSensors.append(HallEffectSensor.HallEffectSensor(23, self.decodeGPIOtoKeyPress))
+        self.hallEffectSensors.append(HallEffectSensor.HallEffectSensor(24, self.decodeGPIOtoKeyPress))
+        self.hallEffectSensors.append(HallEffectSensor.HallEffectSensor(25, self.decodeGPIOtoKeyPress))
 
+    def decodeGPIOtoKeyPress(self,pin):
+        key_event = None
+        if pin == 17:
+            key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_Up, Qt.KeyboardModifier(0), "Up")
+        elif pin == 27:
+            key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_Left, Qt.KeyboardModifier(0), "Left")
+        elif pin == 5:
+            self.form.keyPressEvent.emit(Qt.Key.Key_Right)
+            key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_Right, Qt.KeyboardModifier(0), "Right")
+        elif pin == 6:
+            key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_Down, Qt.KeyboardModifier(0), "Down")
+        elif pin == 26:
+            key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_F1, Qt.KeyboardModifier(0), "F1")
+        elif pin == 23:
+            key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_Enter, Qt.KeyboardModifier(0), "Enter")
+        elif pin == 24:
+            self.form.keyPressEvent.emit(Qt.Key.Key_Q)
+            key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_Q, Qt.KeyboardModifier(0), "Q")
+        elif pin == 25:
+            key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_F2, Qt.KeyboardModifier(0), "F2")
+        else:
+            return
+        QtWidgets.QApplication.sendEvent(self.form, key_event)
+        
     def changePreviewWindow(self):
         if self.stackedLayout.currentIndex() == 0:
             self.previewScreen.active = True
@@ -346,12 +385,12 @@ class MainMenu(object):
         studyProfile = self.studyProfileSelectionMenu.studyProfileContents[
             self.studyProfileSelectionMenu.currentStudyProfileIndex]
         self.previewScreen.setStatusLabel(True)
-        #self.previewScreen.cameraControl.setExposure(
-         #   self.previewScreen.cameraHandles,
-         #   MainMenu.decodeShutterSpeed(studyProfile["shutterSpeed"]))
-        #self.previewScreen.cameraControl.setWhiteBalance(
-         #   self.previewScreen.cameraHandles,
-         #   int(studyProfile["whiteBalance"]))
+        self.previewScreen.cameraControl.setExposure(
+            self.previewScreen.cameraHandles,
+            MainMenu.decodeShutterSpeed(studyProfile["shutterSpeed"]))
+        self.previewScreen.cameraControl.setWhiteBalance(
+            self.previewScreen.cameraHandles,
+            int(studyProfile["whiteBalance"]))
         dq = databaseQuery.DatabaseQuery()
         entry_id = dq.insertMediaEntry(
             studyProfile["shotType"], MainMenu.getCurrentTime(),
@@ -420,5 +459,5 @@ if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     form = QtWidgets.QWidget()
     ui = MainMenu(form)
-    form.show()
+    form.showFullScreen()
     sys.exit(app.exec())
