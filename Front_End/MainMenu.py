@@ -358,7 +358,7 @@ class MainMenu(object):
             studyProfile["illuminationType"], self.getCurrentGain(),
            self.getCurrentSaturation(),
             self.getCurrentShutterSpeed(),
-            self.getCurrentWhiteBalance)
+            self.getCurrentWhiteBalance())
         media_entry = dq.getMediaEntrybyId(entry_id)
         fsg = FolderStructureGenerator.FolderStructureGenerator(os.path.join(os.getcwd(), "test"))
         path = os.path.join(fsg.root_path, str(media_entry))
@@ -387,11 +387,7 @@ class MainMenu(object):
         """ Return current shutterspeed from the shutterspeed configuration menu."""
         string = self.shutterSpeedSelectionMenu.CurrentShutterSpeedLabel.text()
         string = string.replace(" ", "")
-        string = string.replace("/", "_")
         strings = string.split(":")
-        print (string)
-        print(strings[0])
-        print(strings[1])
         shutterspeed = strings[1]
         return shutterspeed
     
@@ -407,6 +403,7 @@ class MainMenu(object):
         """ Return current whitebalance from the whitebalance configuration menu."""
         string = self.whiteBalanceCalibrationMenu.CurrentWB.text()
         string = string.replace(" ", "")
+        string = string.replace("K", "")
         strings = string.split(":")
         whitebalance = int(strings[1])
         return whitebalance
