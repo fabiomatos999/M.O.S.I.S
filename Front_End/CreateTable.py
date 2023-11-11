@@ -1,6 +1,8 @@
+"""Create tables for the M.O.S.I.S UI database."""
 import sqlite3
 
-# Connect to or create an SQLite database file. If it doesn't exist, a new database will be created.
+# Connect to or create an SQLite database file. If it doesn't exist,
+# a new database will be created.
 conn = sqlite3.connect('testing6.db')
 
 # Create a cursor object to interact with the database.
