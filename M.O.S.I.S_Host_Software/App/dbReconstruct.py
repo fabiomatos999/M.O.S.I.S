@@ -1,7 +1,6 @@
 import os
 import db
 from enums import shotType, illuminationType
-import re
 import imageManipulation
 
 
@@ -33,19 +32,8 @@ class DBReconstruct:
 
     def insertMediaMetadataFromFolderName(self, folder: str):
 
-        def findImagePairs(self, folder: str) -> [(str, str)]:
-            files = os.listdir(os.path.join(self.rootPath, folder))
-            files = list(
-                filter(lambda x: not re.match(r"^.*\.json$", x), files))
-            leftImages = list(
-                filter(lambda x: re.match(r".*-L\..*$", x), files))
-            rightImages = list(
-                filter(lambda x: re.match(r".*-R\..*$", x), files))
-            leftImages.sort()
-            rightImages.sort()
-            return list(zip(leftImages, rightImages))
-
-        imagePairs = findImagePairs(self, folder)
+        imagePairs = imageManipulation.findImagePairs(
+            os.path.join(self.rootPath, folder))
         for pair in imagePairs:
             fields = pair[0].split('-')
             entryId = fields[0]
@@ -56,22 +44,25 @@ class DBReconstruct:
             pressure = fields[8]
             ph = fields[9]
             dissolvedOxygen = fields[10]
-            leftCameraMedia = (folder + "/" +pair[0])
+            leftCameraMedia = (folder + "/" + pair[0])
             rightCameraMedia = (folder + "/" + pair[1])
-            stereoMediaPath = "static/Media/{}/{}-{}-{}-{}-{}-{}-{}-S.jpg".format(
-                folder, entryId, metadataId, time, temperature, pressure, ph,
-                dissolvedOxygen)
+            stereoMediaPath = \
+                "static/Media/{}/{}-{}-{}-{}-{}-{}-{}-S.jpg".format(
+                    folder, entryId, metadataId, time, temperature, pressure,
+                    ph, dissolvedOxygen)
             if not os.path.exists(stereoMediaPath):
                 imageManipulation.generateStereoscopicImage(
                     os.path.join(self.rootPath, leftCameraMedia),
                     os.path.join(self.rootPath, rightCameraMedia),
                     stereoMediaPath)
-            thresholdLeftImagePath = "static/Media/{}/{}-{}-{}-{}-{}-{}-{}-GL.jpg".format(
-                folder, entryId, metadataId, time, temperature, pressure, ph,
-                dissolvedOxygen)
-            thresholdRightImagePath = "static/Media/{}/{}-{}-{}-{}-{}-{}-{}-GR.jpg".format(
-                folder, entryId, metadataId, time, temperature, pressure, ph,
-                dissolvedOxygen)
+            thresholdLeftImagePath = \
+                "static/Media/{}/{}-{}-{}-{}-{}-{}-{}-GL.jpg".format(
+                    folder, entryId, metadataId, time, temperature, pressure,
+                    ph, dissolvedOxygen)
+            thresholdRightImagePath = \
+                "static/Media/{}/{}-{}-{}-{}-{}-{}-{}-GR.jpg".format(
+                    folder, entryId, metadataId, time, temperature, pressure,
+                    ph, dissolvedOxygen)
             if not os.path.exists(thresholdLeftImagePath):
                 imageManipulation.generateWhiteScaleImage(
                     os.path.join(self.rootPath, leftCameraMedia),
@@ -80,9 +71,10 @@ class DBReconstruct:
                 imageManipulation.generateWhiteScaleImage(
                     os.path.join(self.rootPath, rightCameraMedia),
                     thresholdRightImagePath)
-            taggedStereoMediaPath = "static/Media/{}/{}-{}-{}-{}-{}-{}-{}-T.jpg".format(
-                folder, entryId, metadataId, time, temperature, pressure, ph,
-                dissolvedOxygen)
+            taggedStereoMediaPath = \
+                "static/Media/{}/{}-{}-{}-{}-{}-{}-{}-T.jpg".format(
+                    folder, entryId, metadataId, time, temperature, pressure,
+                    ph, dissolvedOxygen)
             if not os.path.exists(taggedStereoMediaPath):
                 imageManipulation.addMetadataBar(stereoMediaPath,
                                                  taggedStereoMediaPath, time,

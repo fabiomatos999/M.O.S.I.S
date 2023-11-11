@@ -1,7 +1,28 @@
+"""Image manipulation module for M.O.S.I.S host software.
+
+Provides functionality to generate stereoscopic images,
+add metadata bar to stereoscopic image,
+GIF generation,
+threshold image generation,
+focus stack and video generation.
+"""
 import cv2
 import numpy
 import os
 from PIL import Image
+import re
+import subprocess
+
+
+@staticmethod
+def findImagePairs(folder: str) -> [(str, str)]:
+    files = os.listdir(os.path.join(folder))
+    files = list(filter(lambda x: not re.match(r"^.*\.json$", x), files))
+    leftImages = list(filter(lambda x: re.match(r".*-L\..*$", x), files))
+    rightImages = list(filter(lambda x: re.match(r".*-R\..*$", x), files))
+    leftImages.sort()
+    rightImages.sort()
+    return list(zip(leftImages, rightImages))
 
 
 def generateStereoscopicImage(leftImage: str, rightImage: str, path: str):
@@ -77,16 +98,34 @@ def generateWhiteScaleImage(imagePath: str, outputPath: str):
     return thr1
 
 
+def generateFocusStackImage(folderPath: str):
+    images = findImagePairs(folderPath)
+    images.sort()
+    if os.name == 'nt':
+        pass
+    else:
+        threads = subprocess.check_output(["nproc"])
+        threads = threads.decode()
+        threads = threads[:-1]
+        args = ["focus-stack", "--threads={}".format(str(threads))]
+        for image in images:
+            args.append(os.path.join(folderPath, image[0]))
+        args.append("--output={}".format(
+            os.path.join(folderPath, "focusStack-L.jpg")))
+        subprocess.check_call(args)
+        args = ["focus-stack", "--threads={}".format(str(threads))]
+        for image in images:
+            args.append(os.path.join(folderPath, image[1]))
+        args.append("--output={}".format(
+            os.path.join(folderPath, "focusStack-R.jpg")))
+        subprocess.check_call(args)
+        generateStereoscopicImage(os.path.join(folderPath, "focusStack-L.jpg"),
+                                  os.path.join(folderPath, "focusStack-R.jpg"),
+                                  os.path.join(folderPath, "focusStack-S.jpg"))
+
+
 def displayImage(UMat):
     while True:
         cv2.imshow('', UMat)
         if cv2.waitKey(10) & 0xFF == 27:
             break
-
-
-if __name__ == "__main__":
-    leftImage = "static/Media/8-SINGLE-2023-11-3T11-36-35.450975-NONE-0.0-100-0.016666666666666666-3200/8-8-2023-11-3T11-36-35.453342-95.5-100-8-0.5-L.jpg"
-    rightImage = "static/Media/8-SINGLE-2023-11-3T11-36-35.450975-NONE-0.0-100-0.016666666666666666-3200/8-8-2023-11-3T11-36-35.453342-95.5-100-8-0.5-R.jpg"
-    UMat = generateStereoscopicImage(leftImage, rightImage, "test.jpg")
-    uwu = addMetadataBar("test.jpg", "data.jpg", "2023-11-3T11-36-35.450975",
-                         10.312, 45000.312, 10.312, 100.312)
