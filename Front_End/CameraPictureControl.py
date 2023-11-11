@@ -1,12 +1,9 @@
 """Camera Picture Control Module for M.O.S.I.S microscope."""
 from pixelinkWrapper import PxLApi
-import os
 from ctypes import create_string_buffer
-from datetime import datetime
 import time
 import databaseQuery
 from MainMenu import MainMenu
-import databaseQuery
 
 SUCCESS = 0
 FAILURE = 1
@@ -139,6 +136,32 @@ class CameraPictureControl():
                                   PxLApi.FeatureFlags.ONEPUSH, focusValue)
                 self.get_snapshot(camera, "formatted-filename")
 
+    def getVideo(self,
+                 cameraHandles: [int],
+                 entryId: int,
+                 path: str,
+                 recordTime: int = 60):
+        """Capture sterioscopic images as fast as the camera sensors allows.
+
+        :param cameraHandles list of camera handlers from the
+         PxLApi initialize function
+        :param entryId The id for the MediaEntry table entry.
+        This is associated with the MediaMetadata table as a foreign key.
+        :param path Directory where the MediaMetadata will the stored.
+        :param recordTime Recording time for the video in seconds.
+
+        The images will be converted into a video file by the host software.
+        """
+        dq = databaseQuery.DatabaseQuery()
+        now = time.time()
+        while time.time() < now + recordTime:
+            metadata = dq.insertMediaMetadata(entryId, path, "jpg",
+                                              MainMenu.getCurrentTime(), 24.5,
+                                              1000, 7.45, 300.56)
+            metadata = dq.getMediaMetadatabyId(metadata)
+            self.get_snapshot(cameraHandles[0], metadata.leftCameraPath)
+            self.get_snapshot(cameraHandles[1], metadata.rightCameraPath)
+
     def determine_raw_image_size(self, hCamera):
         """
         Query the region of interest (ROI), decimation, and pixel format.
@@ -249,17 +272,6 @@ class CameraPictureControl():
             return SUCCESS
 
         return FAILURE
-
-    def getVideo(self,
-                 cameraHandles: [int],
-                 recordTime: int = 60,
-                 videoFPS: int = 24,
-                 decimation: int = PxLApi.ClipPlaybackDefaults.DECIMATION_NONE,
-                 bitrate: int = PxLApi.ClipPlaybackDefaults.BITRATE_DEFAULT,
-                 encoding: int = PxLApi.ClipEncodingFormat.H264,
-                 filePath: str = str(),
-                 fileName: str = str()):
-        pass
 
 
 def main():

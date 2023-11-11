@@ -297,43 +297,60 @@ class MainMenu(object):
         self.stackedLayout.currentChanged.connect(self.changePreviewWindow)
         form.setLayout(self.stackedLayout)
         form.keyPressEvent = self.keyPressEvent
-        self.studyProfileSelectionMenu.listWidget.currentItemChanged.connect(self.studyProfileSettings)
+        self.studyProfileSelectionMenu.listWidget.currentItemChanged.connect(
+            self.studyProfileSettings)
         self.cameraPictureControl = CameraPictureControl.CameraPictureControl()
         self.hallEffectSensors = []
         GPIO.setmode(GPIO.BCM)
-        self.hallEffectSensors.append(HallEffectSensor.HallEffectSensor(17, self.decodeGPIOtoKeyPress))
-        self.hallEffectSensors.append(HallEffectSensor.HallEffectSensor(27, self.decodeGPIOtoKeyPress))
-        self.hallEffectSensors.append(HallEffectSensor.HallEffectSensor(5, self.decodeGPIOtoKeyPress))
-        self.hallEffectSensors.append(HallEffectSensor.HallEffectSensor(6, self.decodeGPIOtoKeyPress))
-        self.hallEffectSensors.append(HallEffectSensor.HallEffectSensor(26, self.decodeGPIOtoKeyPress))
-        self.hallEffectSensors.append(HallEffectSensor.HallEffectSensor(23, self.decodeGPIOtoKeyPress))
-        self.hallEffectSensors.append(HallEffectSensor.HallEffectSensor(24, self.decodeGPIOtoKeyPress))
-        self.hallEffectSensors.append(HallEffectSensor.HallEffectSensor(25, self.decodeGPIOtoKeyPress))
+        self.hallEffectSensors.append(
+            HallEffectSensor.HallEffectSensor(17, self.decodeGPIOtoKeyPress))
+        self.hallEffectSensors.append(
+            HallEffectSensor.HallEffectSensor(27, self.decodeGPIOtoKeyPress))
+        self.hallEffectSensors.append(
+            HallEffectSensor.HallEffectSensor(5, self.decodeGPIOtoKeyPress))
+        self.hallEffectSensors.append(
+            HallEffectSensor.HallEffectSensor(6, self.decodeGPIOtoKeyPress))
+        self.hallEffectSensors.append(
+            HallEffectSensor.HallEffectSensor(26, self.decodeGPIOtoKeyPress))
+        self.hallEffectSensors.append(
+            HallEffectSensor.HallEffectSensor(23, self.decodeGPIOtoKeyPress))
+        self.hallEffectSensors.append(
+            HallEffectSensor.HallEffectSensor(24, self.decodeGPIOtoKeyPress))
+        self.hallEffectSensors.append(
+            HallEffectSensor.HallEffectSensor(25, self.decodeGPIOtoKeyPress))
 
-    def decodeGPIOtoKeyPress(self,pin):
+    def decodeGPIOtoKeyPress(self, pin):
         key_event = None
         if pin == 17:
-            key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_Up, Qt.KeyboardModifier(0), "Up")
+            key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_Up,
+                                  Qt.KeyboardModifier(0), "Up")
         elif pin == 27:
-            key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_Left, Qt.KeyboardModifier(0), "Left")
+            key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_Left,
+                                  Qt.KeyboardModifier(0), "Left")
         elif pin == 5:
             self.form.keyPressEvent.emit(Qt.Key.Key_Right)
-            key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_Right, Qt.KeyboardModifier(0), "Right")
+            key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_Right,
+                                  Qt.KeyboardModifier(0), "Right")
         elif pin == 6:
-            key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_Down, Qt.KeyboardModifier(0), "Down")
+            key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_Down,
+                                  Qt.KeyboardModifier(0), "Down")
         elif pin == 26:
-            key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_F1, Qt.KeyboardModifier(0), "F1")
+            key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_F1,
+                                  Qt.KeyboardModifier(0), "F1")
         elif pin == 23:
-            key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_Enter, Qt.KeyboardModifier(0), "Enter")
+            key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_Enter,
+                                  Qt.KeyboardModifier(0), "Enter")
         elif pin == 24:
             self.form.keyPressEvent.emit(Qt.Key.Key_Q)
-            key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_Q, Qt.KeyboardModifier(0), "Q")
+            key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_Q,
+                                  Qt.KeyboardModifier(0), "Q")
         elif pin == 25:
-            key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_F2, Qt.KeyboardModifier(0), "F2")
+            key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_F2,
+                                  Qt.KeyboardModifier(0), "F2")
         else:
             return
         QtWidgets.QApplication.sendEvent(self.form, key_event)
-        
+
     def changePreviewWindow(self):
         if self.stackedLayout.currentIndex() == 0:
             self.previewScreen.active = True
@@ -346,14 +363,20 @@ class MainMenu(object):
         studyProfile = self.studyProfileSelectionMenu.studyProfileContents[
             self.studyProfileSelectionMenu.currentStudyProfileIndex]
         gain = float(studyProfile["gain"])
-        gain = int(gain*10)
-        self.whiteBalanceCalibrationMenu.CurrentWB.setText("White Balance: " + studyProfile["whiteBalance"])
-        self.whiteBalanceCalibrationMenu.WBSlider.setValue(int(studyProfile["whiteBalance"]))
-        self.gainConfigurationMenu.CurrentGainLabel.setText("Gain: " + studyProfile["gain"])
+        gain = int(gain * 10)
+        self.whiteBalanceCalibrationMenu.CurrentWB.setText(
+            "White Balance: " + studyProfile["whiteBalance"])
+        self.whiteBalanceCalibrationMenu.WBSlider.setValue(
+            int(studyProfile["whiteBalance"]))
+        self.gainConfigurationMenu.CurrentGainLabel.setText(
+            "Gain: " + studyProfile["gain"])
         self.gainConfigurationMenu.horizontalSlider.setValue(gain)
-        self.saturationConfigurationMenu.CurrentSaturationLabel.setText("Saturation: " + studyProfile["saturation"])
-        self.saturationConfigurationMenu.horizontalSlider.setValue(int(studyProfile["saturation"]))
-        self.shutterSpeedSelectionMenu.CurrentShutterSpeedLabel.setText("ShutterSpeed: " + studyProfile["shutterSpeed"])
+        self.saturationConfigurationMenu.CurrentSaturationLabel.setText(
+            "Saturation: " + studyProfile["saturation"])
+        self.saturationConfigurationMenu.horizontalSlider.setValue(
+            int(studyProfile["saturation"]))
+        self.shutterSpeedSelectionMenu.CurrentShutterSpeedLabel.setText(
+            "ShutterSpeed: " + studyProfile["shutterSpeed"])
 
     # When pressing F1 or F2 cycles through the menu
     def keyPressEvent(self, event):
@@ -394,15 +417,53 @@ class MainMenu(object):
         dq = databaseQuery.DatabaseQuery()
         entry_id = dq.insertMediaEntry(
             studyProfile["shotType"], MainMenu.getCurrentTime(),
-            studyProfile["illuminationType"], self.getCurrentGain(),
-           self.getCurrentSaturation(),
-            self.getCurrentShutterSpeed(),
-            self.getCurrentWhiteBalance())
+            studyProfile["illuminationType"], float(studyProfile["gain"]),
+            int(studyProfile["saturation"]),
+            MainMenu.decodeShutterSpeed(studyProfile["shutterSpeed"]),
+            int(studyProfile["whiteBalance"]))
         media_entry = dq.getMediaEntrybyId(entry_id)
-        fsg = FolderStructureGenerator.FolderStructureGenerator(os.path.join(os.getcwd(), "test"))
+        fsg = FolderStructureGenerator.FolderStructureGenerator(
+            os.path.join(os.getcwd(), "test"))
         path = os.path.join(fsg.root_path, str(media_entry))
         fsg.create_folder_structure(entry_id)
-        
+
+        if studyProfile["shotType"] == "SINGLE":
+            media_metadata = dq.insertMediaMetadata(entry_id, path, "jpg",
+                                                    MainMenu.getCurrentTime(),
+                                                    95.5, 100, 8, 0.5)
+            media_metadata = dq.getMediaMetadatabyId(media_metadata)
+            self.cameraPictureControl.get_snapshot(
+                self.previewScreen.cameraHandles[0],
+                media_metadata.left_Camera_Media)
+            self.cameraPictureControl.get_snapshot(
+                self.previewScreen.cameraHandles[1],
+                media_metadata.right_Camera_Media)
+            print("test captured")
+        elif studyProfile["shotType"] == "BURST":
+            for _ in range(int(studyProfile["shotCount"])):
+                media_metadata = dq.insertMediaMetadata(
+                    entry_id, path, "jpg", MainMenu.getCurrentTime(), 95.5,
+                    100, 8, 0.5)
+                media_metadata = dq.getMediaMetadatabyId(media_metadata)
+                self.cameraPictureControl.get_snapshot(
+                    self.previewScreen.cameraHandles[0],
+                    media_metadata.left_Camera_Media)
+                self.cameraPictureControl.get_snapshot(
+                    self.previewScreen.cameraHandles[1],
+                    media_metadata.right_Camera_Media)
+        elif studyProfile["shotType"] == "TIMELAPSE":
+            time = float(studyProfile["time"])
+            photoCount = int(studyProfile["photoCount"])
+            self.cameraPictureControl.getIntervalSnapshot(
+                self.previewScreen.cameraHandles, time, photoCount, entry_id,
+                path)
+        elif studyProfile["shotType"] == "TELESCOPIC":
+            pass
+        elif studyProfile["shotType"] == "VIDEO":
+            videoLength = int(float(studyProfile["videoLength"]) * 60.0)
+            self.cameraPictureControl.getVideo(
+                self.previewScreen.cameraHandles, entry_id, path, videoLength)
+
         self.previewScreen.setStatusLabel(False)
         fsg.exportMetadata(entry_id)
 
@@ -429,7 +490,7 @@ class MainMenu(object):
         strings = string.split(":")
         shutterspeed = strings[1]
         return shutterspeed
-    
+
     def getCurrentGain(self) -> float:
         """ Return current gain from the gain configuration menu."""
         string = self.gainConfigurationMenu.CurrentGainLabel.text()
@@ -437,7 +498,7 @@ class MainMenu(object):
         strings = string.split(":")
         gain = float(strings[1])
         return gain
-    
+
     def getCurrentWhiteBalance(self) -> int:
         """ Return current whitebalance from the whitebalance configuration menu."""
         string = self.whiteBalanceCalibrationMenu.CurrentWB.text()
@@ -446,7 +507,7 @@ class MainMenu(object):
         strings = string.split(":")
         whitebalance = int(strings[1])
         return whitebalance
-    
+
     def getCurrentSaturation(self) -> float:
         """ Return current saturation from the saturation configuration menu."""
         string = self.saturationConfigurationMenu.CurrentSaturationLabel.text()
@@ -454,6 +515,7 @@ class MainMenu(object):
         strings = string.split(":")
         saturation = float(strings[1])
         return saturation
+
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
