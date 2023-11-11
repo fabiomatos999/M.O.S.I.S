@@ -1,3 +1,9 @@
+"""Main Menu for the M.O.S.I.S UI.
+
+Contains preview screen, study select menu,
+gain, shutter speed, saturation, white balance control menus,
+pH sensor calibration menu and dissolved oxygen sensor calibration menu.
+"""
 from PyQt6 import QtGui, QtWidgets
 from PyQt6.QtCore import Qt
 from PyQt6 import QtCore
@@ -23,16 +29,27 @@ import RPi.GPIO as GPIO
 
 
 class BaseMenuWidget(QtWidgets.QWidget):
-    #Allows the button to be hightlighted when changing into it
+    """Wrapper class for screens to enable highlighting elements.
+
+    Allows the button to be highlighted when changing into it
+    """
+
     def showEvent(self, event):
+        """Set focus on next child element within a screen."""
         first_button = self.findChild(QtWidgets.QPushButton)
         if first_button:
             first_button.setFocus()
 
 
 class MainMenu(object):
+    """Hold all screens and spawn application."""
 
     def __init__(self, form):
+        """Initialize cameras, connect to GPIO, load study profile.
+
+        :param form QWidget parent object.
+        The form will show the user interface.
+        """
         form.resize(800, 480)
         self.form = form
         palette = QtGui.QPalette()
@@ -265,14 +282,14 @@ class MainMenu(object):
         self.shutterSpeedSelectionMenu.setupUi(
             self.shutterSpeedSelectionMenuForm)
         self.stackedLayout.addWidget(self.shutterSpeedSelectionMenuForm)
-        self.saturationConfigurationMenu = SaturationConfigurationMenu.Ui_SaturationConfigurationMenu(
-        )
+        self.saturationConfigurationMenu = \
+            SaturationConfigurationMenu.Ui_SaturationConfigurationMenu()
         self.saturationConfigurationMenuForm = BaseMenuWidget()
         self.saturationConfigurationMenu.setupUi(
             self.saturationConfigurationMenuForm)
         self.stackedLayout.addWidget(self.saturationConfigurationMenuForm)
-        self.gainConfigurationMenu = GainConfigurationMenu.Ui_GainConfigurationMenu(
-        )
+        self.gainConfigurationMenu = \
+            GainConfigurationMenu.Ui_GainConfigurationMenu()
         self.gainConfigurationMenuForm = BaseMenuWidget()
         self.gainConfigurationMenu.setupUi(self.gainConfigurationMenuForm)
         self.stackedLayout.addWidget(self.gainConfigurationMenuForm)
@@ -319,7 +336,21 @@ class MainMenu(object):
         self.hallEffectSensors.append(
             HallEffectSensor.HallEffectSensor(25, self.decodeGPIOtoKeyPress))
 
-    def decodeGPIOtoKeyPress(self, pin):
+    def decodeGPIOtoKeyPress(self, pin: int):
+        """Decode Raspberry Pi GPIO interrupt into a QKeyEvent.
+
+        Serve as the callback function for the GPIO pins.
+        The physical layout of the Hall effect sensors and
+        the GPIO pins are as follows:
+
+        17  --> |-------------| <--  26
+        27  --> |             | <--  23
+        5   --> |   Display   | <--  24
+        6   --> |_____________| <--  25
+
+        Note: Will ignore GPIO interrupts that are not bound to the Hall effect
+        sensors.
+        """
         key_event = None
         if pin == 17:
             key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_Up,
@@ -352,14 +383,19 @@ class MainMenu(object):
         QtWidgets.QApplication.sendEvent(self.form, key_event)
 
     def changePreviewWindow(self):
+        """Disable camera preview when preview screen is not visible."""
         if self.stackedLayout.currentIndex() == 0:
             self.previewScreen.active = True
         else:
             self.previewScreen.active = False
         self.stackedLayout.setCurrentIndex(self.stackedLayout.currentIndex())
 
-    #When a StudyProfile is chosen changes the default settings to the one on the StudyProfile
     def studyProfileSettings(self):
+        """Change labels on other screens when a study profile overrides them.
+
+        When a StudyProfile is chosen changes the default settings to the
+        one on the StudyProfile
+        """
         studyProfile = self.studyProfileSelectionMenu.studyProfileContents[
             self.studyProfileSelectionMenu.currentStudyProfileIndex]
         gain = float(studyProfile["gain"])
@@ -378,8 +414,11 @@ class MainMenu(object):
         self.shutterSpeedSelectionMenu.CurrentShutterSpeedLabel.setText(
             "ShutterSpeed: " + studyProfile["shutterSpeed"])
 
-    # When pressing F1 or F2 cycles through the menu
     def keyPressEvent(self, event):
+        """Override of key press event handler in QWidget class.
+
+        Pressing F1 and F2 cycles through the menus.
+        """
         currentIndex = self.stackedLayout.currentIndex()
         if event.key() == Qt.Key.Key_F1:
             if currentIndex == 7:
@@ -405,6 +444,13 @@ class MainMenu(object):
             self.shutterSpeedSelectionMenu.SS1250Button.setFocus()
 
     def executeStudyProfile(self):
+        """Execute currently selected study profile.
+
+        Will change the shutter speed and white balance of the cameras.
+        Executes single, burst, time lapse, telescopic or video depending
+        on the shot type defined in the study profile, created by the host
+        software.
+        """
         studyProfile = self.studyProfileSelectionMenu.studyProfileContents[
             self.studyProfileSelectionMenu.currentStudyProfileIndex]
         self.previewScreen.setStatusLabel(True)
@@ -422,8 +468,7 @@ class MainMenu(object):
             MainMenu.decodeShutterSpeed(studyProfile["shutterSpeed"]),
             int(studyProfile["whiteBalance"]))
         media_entry = dq.getMediaEntrybyId(entry_id)
-        fsg = FolderStructureGenerator.FolderStructureGenerator(
-            os.path.join(os.getcwd(), "test"))
+        fsg = FolderStructureGenerator.FolderStructureGenerator()
         path = os.path.join(fsg.root_path, str(media_entry))
         fsg.create_folder_structure(entry_id)
 
@@ -474,17 +519,25 @@ class MainMenu(object):
         return date.strftime('%Y-%m-%-dT%H-%M-%S.%f')
 
     @staticmethod
-    def decodeShutterSpeed(field):
-        shutterSpeed = field
+    def decodeShutterSpeed(shutterSpeed: str):
+        """Convert either fractional or floating point string into float.
+
+        :param shutterSpeed The string representation of a fraction
+        (i.e "1/60") or a string of a floating point number.
+
+        Note: If the shutter speed string given to the function
+        cannot be coerced into a float, it will return a NaN.
+        """
+        shutterSpeed = shutterSpeed
         if re.match(r"^\d+\/\d+$", shutterSpeed):
             numerator = int(shutterSpeed.split("/")[0])
             denominator = int(shutterSpeed.split("/")[1])
             return numerator / denominator
         else:
-            return float(field)
+            return float(shutterSpeed)
 
     def getCurrentShutterSpeed(self) -> str:
-        """ Return current shutterspeed from the shutterspeed configuration menu."""
+        """Return current shutterspeed from the shutterspeed config menu."""
         string = self.shutterSpeedSelectionMenu.CurrentShutterSpeedLabel.text()
         string = string.replace(" ", "")
         strings = string.split(":")
@@ -492,7 +545,7 @@ class MainMenu(object):
         return shutterspeed
 
     def getCurrentGain(self) -> float:
-        """ Return current gain from the gain configuration menu."""
+        """Return current gain from the gain configuration menu."""
         string = self.gainConfigurationMenu.CurrentGainLabel.text()
         string = string.replace(" ", "")
         strings = string.split(":")
@@ -500,7 +553,7 @@ class MainMenu(object):
         return gain
 
     def getCurrentWhiteBalance(self) -> int:
-        """ Return current whitebalance from the whitebalance configuration menu."""
+        """Return current whitebalance from the whitebalance config menu."""
         string = self.whiteBalanceCalibrationMenu.CurrentWB.text()
         string = string.replace(" ", "")
         string = string.replace("K", "")
@@ -509,7 +562,7 @@ class MainMenu(object):
         return whitebalance
 
     def getCurrentSaturation(self) -> float:
-        """ Return current saturation from the saturation configuration menu."""
+        """Return current saturation from the saturation configuration menu."""
         string = self.saturationConfigurationMenu.CurrentSaturationLabel.text()
         string = string.replace(" ", "")
         strings = string.split(":")
