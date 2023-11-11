@@ -32,28 +32,26 @@ class CameraControl():
         self.maxGainValue = None
         self.gainValue = None
 
-    def setUpStreamSize(self, width, height):
+    def setUpStreamSize(self, width: int, height: int):
         """
         Set the global stream width and height.
 
-        :param width: width of the preview stream
-        :param height: height of the preview height
-        :return:
+        :param width width of the preview stream
+        :param height height of the preview height
         """
         self.stream_width = width
         self.stream_height = height
 
-    def setUpMaxMinFeatureValues(self, hCamera: int):
+    def setUpMaxMinFeatureValues(self, cameraHandle: int):
         """
         Set the camera features min and max values for automatic mode.
 
         Also make sure new values are within an acceptable range.
-        :param hCamera Camera handler from the
+        :param cameraHandle Camera handler from the
          PxLApi initialize function
-        :return:
         """
         # Get Focus Feature Min and Max values
-        ret = PxLApi.getCameraFeatures(hCamera, PxLApi.FeatureId.FOCUS)
+        ret = PxLApi.getCameraFeatures(cameraHandle, PxLApi.FeatureId.FOCUS)
         if (PxLApi.apiSuccess(ret[0])):
             if (ret[1] is not None):
                 cameraFeatures = ret[1]
@@ -75,7 +73,7 @@ class CameraControl():
                 print("max focus value: ", self.maxFocusValue)
 
         # Get Exposure Feature Min and Max value
-        ret = PxLApi.getCameraFeatures(hCamera, PxLApi.FeatureId.EXPOSURE)
+        ret = PxLApi.getCameraFeatures(cameraHandle, PxLApi.FeatureId.EXPOSURE)
         if (PxLApi.apiSuccess(ret[0])):
             if (ret[1] is not None):
                 cameraFeatures = ret[1]
@@ -94,7 +92,8 @@ class CameraControl():
                 print("max exposure value: ", self.maxExposureValue)
 
         # Get Saturation Feature Min and Max value
-        ret = PxLApi.getCameraFeatures(hCamera, PxLApi.FeatureId.SATURATION)
+        ret = PxLApi.getCameraFeatures(cameraHandle,
+                                       PxLApi.FeatureId.SATURATION)
         if (PxLApi.apiSuccess(ret[0])):
             if (ret[1] is not None):
                 cameraFeatures = ret[1]
@@ -113,7 +112,7 @@ class CameraControl():
                 print("max saturation value: ", self.maxSaturationValue)
 
         # Get Saturation Feature Min and Max value
-        ret = PxLApi.getCameraFeatures(hCamera, PxLApi.FeatureId.GAIN)
+        ret = PxLApi.getCameraFeatures(cameraHandle, PxLApi.FeatureId.GAIN)
         if (PxLApi.apiSuccess(ret[0])):
             if (ret[1] is not None):
                 cameraFeatures = ret[1]
@@ -181,9 +180,9 @@ class CameraControl():
         """
         Thread  function in charge of showing the camera preview.
 
-        :param topHwnd: integer number that corresponds to the parent window
+        :param topHwnd integer number that corresponds to the parent window
         the stream will be showed in
-        :return: an assertion that the stream was successfully stopped,
+        :return an assertion that the stream was successfully stopped,
         once the user exits the preview
         """
         width = 400
@@ -213,7 +212,7 @@ class CameraControl():
         :param stream_height Preview window size in pixels
         :param hCamera Camera handler from the
          PxLApi initialize function
-        :param topHwnd: integer number that corresponds to the parent window
+        :param topHwnd integer number that corresponds to the parent window
         the stream will be showed in
         Preview gets stopped when the top level window is closed.
         """
