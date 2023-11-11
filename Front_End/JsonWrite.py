@@ -1,9 +1,15 @@
+"""JSON Creation module for MediaEntry and MediaMetadata.
+
+This is used for testing and demonstration.
+"""
 import sqlite3
 import json
 import sys
 
 
 class JsonSelectAll():
+    """Wrapper class for test JSON Creator."""
+
     # Connect to the SQLite database
     conn = sqlite3.connect("testing3.db")
     cursor = conn.cursor()

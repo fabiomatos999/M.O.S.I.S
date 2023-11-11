@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file '.\PreviewScreen.ui'
+"""Form implementation generated from reading ui file 'PreviewScreen.ui'."""
 #
 # Created by: PyQt6 UI code generator 6.4.2
 #
@@ -9,15 +9,20 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 from PIL import Image
 from getIPAddress import getIpAddress
 from PyQt6.QtCore import QTimer
-from PyQt6.QtCore import QThread
 import CameraControl
 import CameraPreview
 from pixelinkWrapper import PxLApi
 import random
 
+
 class Ui_Form(object):
+    """PreviewScreen widget wrapper class."""
 
     def setupUi(self, Form):
+        """Create UI for PreviewScreen.
+
+        :param Form QWidget parent object
+        """
         Form.setObjectName("Form")
         Form.resize(800, 480)
         palette = QtGui.QPalette()
@@ -324,10 +329,11 @@ class Ui_Form(object):
         self.retranslateUi(Form)
         self.ipAddressRefreshTimer = QTimer(Form)
         self.ipAddressRefreshTimer.setInterval(1000)
-        #self.ipAddressRefreshTimer.timeout.connect(self.setIPAddressLabel)
+        # self.ipAddressRefreshTimer.timeout.connect(self.setIPAddressLabel)
         self.cameraPreviewRefreshTimer = QTimer(Form)
-        self.cameraPreviewRefreshTimer.setInterval(int((1/1)*1000))
-        self.cameraPreviewRefreshTimer.timeout.connect(self.startPreviewImageCapture)
+        self.cameraPreviewRefreshTimer.setInterval(int((1 / 1) * 1000))
+        self.cameraPreviewRefreshTimer.timeout.connect(
+            self.startPreviewImageCapture)
         self.ipAddressRefreshTimer.start()
         self.cameraDefaults()
         self.capturing = False
@@ -339,10 +345,15 @@ class Ui_Form(object):
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form):
+        """Set default labels.
+
+        :param Form Parent QWidget parent object.
+        """
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
 
     def setLabelDefaults(self):
+        """Set label defaults for when the application starts."""
         self.pressure_label.setText("P:300.000 mbar")
         self.dissolved_oxygen_label.setText("DO: 100.000 mg/L")
         self.status_label.setText("In Progress")
@@ -357,72 +368,107 @@ class Ui_Form(object):
         self.left_camera.setPixmap(QtGui.QPixmap("thumbnail.jpeg"))
         self.right_camera.setPixmap(QtGui.QPixmap("thumbnail.jpeg"))
 
-    def setIPAddressLabel(self, ipAddress: str = getIpAddress("enp5s0")):
+    def setIPAddressLabel(self, ipAddress: str = getIpAddress("wlan0")):
+        """Set IP address label.
+
+        :param ipAddress IP address of the wireless network adapter.
+        """
         self.ip_label.setText("IP: {}".format(ipAddress))
 
     def setTemperatureLabel(self, temperature: float):
+        """Set temperature label. Temperature is rounded to 3 decimal points.
+
+        :param temperature Temperature of the environment in Celsius
+        """
         self.temperature_label.setText("Temp: {}C".format(round(
             temperature, 3)))
 
     def setPressureLabel(self, pressure: float):
+        """Set pressure label. Pressure is rounded to 3 decimal points.
+
+        :param pressure Pressure of the environment in mbar
+        """
         self.pressure_label.setText("P: {}mbar".format(round(pressure, 3)))
 
     def setDissolvedOxygenLabel(self, dissolvedOxygen: float):
+        """Set dissolved oxygen label. DO is rounded to 3 decimal points.
+
+        :param dissolvedOxygen DO of the environment in mg/L
+        """
         self.dissolved_oxygen_label.setText("DO: {} mg/L".format(
             round(dissolvedOxygen, 3)))
 
     def setpHLabel(self, ph: float):
+        """Set pH label. pH is rounded to 3 decimal points.
+
+        :param ph pH of the environment
+        """
         self.ph_label.setText("pH: {}".format(round(ph, 3)))
 
     def setStatusLabel(self, inProgress: bool):
+        """Set status label.
+
+        :param inProgress Bool value that indicates in a study is in progress.
+        """
         if inProgress:
             self.status_label.setText("In Progress")
         else:
             self.status_label.setText("No Capture")
 
     def randomSensorValue(self):
-        # Creates the pH sensor String with a format of X.XXX where X is a random digit
-        ph_sensor_decimal = random.randint(0, 9)
+        """Create random label values. Used for demo purposes."""
+        # Creates the pH sensor String with a format of X.XXX where X is a
+        # random digit
+        ph_sensor_decimal = random.randint(0, 14)
         ph_sensor_hundred = random.randint(100, 999)
         ph_sensor = f"{ph_sensor_decimal}.{ph_sensor_hundred:03d}"
 
-        # Creates the temp sensor String with a format of XX.XXX where X is a random digit
+        # Creates the temp sensor String with a format of XX.XXX where
+        # X is a random digit
         temp_sensor_decimal = random.randint(10, 99)
         temp_sensor_hundred = random.randint(100, 999)
-        temp_sensor = f"{temp_sensor_decimal}.{temp_sensor_hundred:03d}"
+        temp_sensor = f"{temp_sensor_decimal}.{temp_sensor_hundred:03d}C"
 
-        # Creates the do sensor String with a format of X.XXXX where X is a random digit
+        # Creates the do sensor String with a format of X.XXXX where X
+        # is a random digit
         do_sensor_decimal = random.randint(0, 9)
         do_sensor_hundred = random.randint(1000, 9999)
         do_sensor = f"{do_sensor_decimal}.{do_sensor_hundred:03d}"
 
-        # Creates the baro sensor String with a format of XXXXXX where X is a random digit
+        # Creates the baro sensor String with a format of XXXXXX where X
+        # is a random digit
         baro_sensor = random.randint(100000, 999999)
         ip_parts = [str(random.randint(0, 255)) for _ in range(4)]
         random_ip = ".".join(ip_parts)
 
-        #Assigns the values to the sensor labels
+        # Assigns the values to the sensor labels
         self.dissolved_oxygen_label.setText("DO: " + str(do_sensor) + " mg/L")
         self.pressure_label.setText("P: " + str(baro_sensor) + " mbar")
         self.ph_label.setText("pH: " + str(ph_sensor))
         self.temperature_label.setText("Temp: " + str(temp_sensor))
         self.ip_label.setText("IP: " + random_ip)
-        print("ph value = " + str(ph_sensor) + "\n temp value = " + str(temp_sensor) + "\n do value = " + str(do_sensor) + "\n pressure value = " + str(baro_sensor) + "\n IP value = " + random_ip)
-        
+        print("ph value = " + str(ph_sensor) + "\n temp value = " +
+              str(temp_sensor) + "\n do value = " + str(do_sensor) +
+              "\n pressure value = " + str(baro_sensor) + "\n IP value = " +
+              random_ip)
+
     def startPreviewImageCapture(self):
+        """Generate preview if preview window is active."""
         if self.active:
             CameraPreview.getPreviewImage(self.cameraHandles, "Preview")
             self.setCameraPreviewLabels()
 
     def setCameraPreviewLabels(self):
+        """Set camera preview labels with generated preview images."""
         left_image = "Preview2.jpeg"
         right_image = "Preview1.jpeg"
         self.left_camera.setPixmap(QtGui.QPixmap(left_image))
         self.right_camera.setPixmap(QtGui.QPixmap(right_image))
 
     def cameraDefaults(self):
+        """Set default camera setting upon boot."""
         self.cameraControl.autoWhiteBalance(self.cameraHandles)
-        self.cameraControl.setExposure(self.cameraHandles, 1/15,mode="")
+        self.cameraControl.setExposure(self.cameraHandles, 1 / 15, mode="")
         self.cameraControl.setFocus(self.cameraHandles)
         self.cameraControl.setGain(self.cameraHandles)
         self.cameraControl.setRegionOfInterest(self.cameraHandles)
@@ -430,26 +476,6 @@ class Ui_Form(object):
         for camera in self.cameraHandles:
             PxLApi.setPreviewState(camera, PxLApi.PreviewState.STOP)
 
-class ImageSavingThread(QThread):
-    def __init__(self, cameraHandle):
-        super().__init__()
-        self.cameraHandle = cameraHandle
-
-    def run(self):
-        CameraPreview.getPreviewImage(self.cameraHandle, "Preview")
-
-class ThreadSpawnerThread(QThread):
-    def __init__(self, threads: [], parent):
-        super().__init__()
-        self.threads = threads
-        self.parent = parent
-
-    def run(self):
-        for thread in self.threads:
-            thread.start()
-            thread.wait()
-        
-        
 
 if __name__ == "__main__":
     import sys

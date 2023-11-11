@@ -4,6 +4,7 @@ from typing import Callable
 
 GPIO.setmode(GPIO.BCM)
 
+
 class HallEffectSensor:
     """
     Interface for controlling the hall effect sensors to the raspberry pi.
@@ -48,6 +49,8 @@ class HallEffectSensor:
         return f"""HallEffectSensor Object:
                     pin: {self.pin}
                     callback function on press: {self.callback.__name__}"""
+
+
 if __name__ == "__main__":
     HallEffectSensor(26, lambda: print("UwU"))
     while True:

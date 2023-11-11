@@ -14,7 +14,7 @@ class Ui_Form(object):
     """DissolvedOxygenCalibrationMenu widget wrapper class."""
 
     def setupUi(self, Form):
-        """Create UI for DOCalibrationMenu.
+        """Create UI for DissolvedOxygenCalibrationMenu.
 
         :param Form QWidget parent object
         """
