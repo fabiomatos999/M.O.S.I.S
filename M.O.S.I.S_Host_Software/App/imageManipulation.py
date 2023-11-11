@@ -99,27 +99,24 @@ def generateWhiteScaleImage(imagePath: str, outputPath: str):
 
 
 def generateFocusStackImage(folderPath: str):
+    def callFocusStackExecutable(images: [str], outputPath: str):
+        threads = os.cpu_count()
+        args = list()
+        if os.name == 'nt':
+            args.append(os.path.join(os.getcwd(), "focus-stack/focus-stack.exe"))
+        else:
+            args.append("focus-stack")
+        args.append("--threads={}".format(str(threads)))
+        for image in images:
+            args.append(os.path.join(folderPath, image))
+        args.append("--output={}".format(
+            os.path.join(folderPath, outputPath)))
+        subprocess.check_call(args)
     images = findImagePairs(folderPath)
     images.sort()
-    if os.name == 'nt':
-        pass
-    else:
-        threads = subprocess.check_output(["nproc"])
-        threads = threads.decode()
-        threads = threads[:-1]
-        args = ["focus-stack", "--threads={}".format(str(threads))]
-        for image in images:
-            args.append(os.path.join(folderPath, image[0]))
-        args.append("--output={}".format(
-            os.path.join(folderPath, "focusStack-L.jpg")))
-        subprocess.check_call(args)
-        args = ["focus-stack", "--threads={}".format(str(threads))]
-        for image in images:
-            args.append(os.path.join(folderPath, image[1]))
-        args.append("--output={}".format(
-            os.path.join(folderPath, "focusStack-R.jpg")))
-        subprocess.check_call(args)
-        generateStereoscopicImage(os.path.join(folderPath, "focusStack-L.jpg"),
+    callFocusStackExecutable(list(map(lambda x: x[0], images)), "focusStack-L.jpg")
+    callFocusStackExecutable(list(map(lambda x: x[1], images)), "focusStack-R.jpg")
+    generateStereoscopicImage(os.path.join(folderPath, "focusStack-L.jpg"),
                                   os.path.join(folderPath, "focusStack-R.jpg"),
                                   os.path.join(folderPath, "focusStack-S.jpg"))
 
