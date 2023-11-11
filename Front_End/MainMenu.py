@@ -26,6 +26,7 @@ import re
 import os
 import HallEffectSensor
 import RPi.GPIO as GPIO
+import subprocess
 
 
 class BaseMenuWidget(QtWidgets.QWidget):
@@ -335,6 +336,7 @@ class MainMenu(object):
             HallEffectSensor.HallEffectSensor(24, self.decodeGPIOtoKeyPress))
         self.hallEffectSensors.append(
             HallEffectSensor.HallEffectSensor(25, self.decodeGPIOtoKeyPress))
+        self.lastGPIOPressed = int()
 
     def decodeGPIOtoKeyPress(self, pin: int):
         """Decode Raspberry Pi GPIO interrupt into a QKeyEvent.
@@ -352,6 +354,11 @@ class MainMenu(object):
         sensors.
         """
         key_event = None
+        if (pin == 17 and self.lastGPIOPressed
+                == 6) or (pin == 6 and self.lastGPIOPressed == 17):
+            subprocess.call(["sudo", "shutdown", "now"])
+        self.lastGPIOPressed = pin
+
         if pin == 17:
             key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_Up,
                                   Qt.KeyboardModifier(0), "Up")
