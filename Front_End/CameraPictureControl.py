@@ -159,8 +159,8 @@ class CameraPictureControl():
                                               MainMenu.getCurrentTime(), 24.5,
                                               1000, 7.45, 300.56)
             metadata = dq.getMediaMetadatabyId(metadata)
-            self.get_snapshot(cameraHandles[0], metadata.leftCameraPath)
-            self.get_snapshot(cameraHandles[1], metadata.rightCameraPath)
+            self.get_snapshot(cameraHandles[0], metadata.left_Camera_Media)
+            self.get_snapshot(cameraHandles[1], metadata.right_Camera_Media)
 
     def determine_raw_image_size(self, hCamera):
         """
