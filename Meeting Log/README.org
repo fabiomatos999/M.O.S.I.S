@@ -16,6 +16,7 @@
   - [[#26sep2023][26/Sep/2023]]
   - [[#29sep2023][29/Sep/2023]]
   - [[#2oct2023][2/Oct/2023]]
+  - [[#11oct2023][11/Oct/2023]]
 
 ** 30/Aug/2023
 1. Discussed how to setup LaTeX environment on Eduardo's computer.
@@ -115,3 +116,7 @@
 4. Fixed design justification
 5. Fixed table format
 6. Fixed module description and use case diagram
+
+** 11/Oct/2023
+1. Setup Latex Environment Again.
+2. Divided final report sections.
