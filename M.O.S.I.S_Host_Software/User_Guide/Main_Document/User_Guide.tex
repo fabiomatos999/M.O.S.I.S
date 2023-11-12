@@ -1,26 +1,43 @@
 \documentclass[12pt]{article}
 \usepackage{graphicx}
+\usepackage{minted}
+\usepackage{hyperref}
 
 \begin{document}
-  \input{../Title_Page/Title Page.tex}
-  \tableofcontents
-  \newpage
-  \section{Installation}
-  \subsection{Windows}
-  \subsection{Linux}
-  \section{Start Host Software}
-  \subsection{Windows}
-  \subsection{Linux}
-  \section{Usage}
-  \subsection{Viewing All Captured Media}
-  \subsection{Viewing A Specific Captured Media}
-  \subsection{Search}
-  \subsubsection{ID}
-  \subsubsection{Shot Type}
-  \subsubsection{Illumination Type}
-  \subsubsection{Date}
-  \subsection{Study Profile Creation}
-  \subsection{Study Profile Upload}
-  \section{Backup Raspberry Pi Media}
-  \section{Backup Raspberry Pi SD Card}
+\input{../Title_Page/Title Page.tex}
+\tableofcontents
+\newpage
+\section{Installation}
+\subsection{Windows}
+\subsubsection{Installing Git}
+In order get the host software we first have to install Git to clone the Host Software repository. We can download Git from \href{https://git-scm.com/download/win}{here}. You choose the ``64-bit Git for Windows Setup'' for the vast majority of cases. You should only opt for using ``32-bit Git for Windows Setup'' for very old computers. If prompted to where to download the file, select the ``Downloads'' folder. Once the Git installer has finished downloading, open the file explorer and go to the downloads folder as shown here:
+After opening the downloads folder, double click on the on the Git installer and if a darkened screen appears asking for administrator privileges, press the yes button. Once the Git installer is open, follow these steps:
+Once Git is installed open Powershell by typing ``powershell'' in the search bar in the taskbar at the bottom of the screen and press on the entry called ``Windows Powershell''. The following screen should appear:
+Type into the shell ``git -v'' and  then press enter on the keyboard. It should return with ``git version'' followed by a version number.
+\subsubsection{Installing wkhtmltopdf}
+In order to get wkhktmktopdf, we can download it from \href{https://wkhtmltopdf.org/downloads.html}{here}. For the vast majority of cases, choose the ``Windows Installer 64-bit'' option and then the download should start. Once it has finished downloading, tn a similar fashion to installing Git, go to the Downloads folder in the File explorer and double click on the wkhtmltopdf installer. The following screen should appear and then proceed through the installation:
+\subsubsection{Installing Python}
+In order to get Python, we can download it from \href{https://www.python.org/downloads/}{here}. Press the yellow download Python button on the page and the download should start. Again, find the Python installer in the Downloads folder. Double click on the executable file and follow the following steps carefully.
+\subsubsection{Additional Setup}
+In order to make the Host Software to run we need to make sure that Powershell scripts can be executed. First search for ``Windows Powershell'' in the search bar in the taskbar at the bottom of the screen but press the ``Run as administrator button'', if it prompts you to confirm running as administrator, press yes. Once Powershell is opened, type the following command into Powershell and press enter:
+\begin{minted}{ps1}
+  set-executionpolicy remotesigned
+\end{minted}
+It will then prompt you for additional input. Type ``Y'' and press enter. Then close Powershell.
+\subsection{Linux}
+\section{Start Host Software}
+\subsection{Windows}
+\subsection{Linux}
+\section{Usage}
+\subsection{Viewing All Captured Media}
+\subsection{Viewing A Specific Captured Media}
+\subsection{Search}
+\subsubsection{ID}
+\subsubsection{Shot Type}
+\subsubsection{Illumination Type}
+\subsubsection{Date}
+\subsection{Study Profile Creation}
+\subsection{Study Profile Upload}
+\section{Backup Raspberry Pi Media}
+\section{Backup Raspberry Pi SD Card}
 \end{document}
