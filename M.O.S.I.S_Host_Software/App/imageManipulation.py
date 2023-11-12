@@ -99,26 +99,48 @@ def generateWhiteScaleImage(imagePath: str, outputPath: str):
 
 
 def generateFocusStackImage(folderPath: str):
+
     def callFocusStackExecutable(images: [str], outputPath: str):
         threads = os.cpu_count()
         args = list()
         if os.name == 'nt':
-            args.append(os.path.join(os.getcwd(), "focus-stack/focus-stack.exe"))
+            args.append(
+                os.path.join(os.getcwd(), "focus-stack/focus-stack.exe"))
         else:
             args.append("focus-stack")
         args.append("--threads={}".format(str(threads)))
         for image in images:
             args.append(os.path.join(folderPath, image))
-        args.append("--output={}".format(
-            os.path.join(folderPath, outputPath)))
+        args.append("--output={}".format(os.path.join(folderPath, outputPath)))
         subprocess.check_call(args)
+
     images = findImagePairs(folderPath)
     images.sort()
-    callFocusStackExecutable(list(map(lambda x: x[0], images)), "focusStack-L.jpg")
-    callFocusStackExecutable(list(map(lambda x: x[1], images)), "focusStack-R.jpg")
+    callFocusStackExecutable(list(map(lambda x: x[0], images)),
+                             "focusStack-L.jpg")
+    callFocusStackExecutable(list(map(lambda x: x[1], images)),
+                             "focusStack-R.jpg")
     generateStereoscopicImage(os.path.join(folderPath, "focusStack-L.jpg"),
-                                  os.path.join(folderPath, "focusStack-R.jpg"),
-                                  os.path.join(folderPath, "focusStack-S.jpg"))
+                              os.path.join(folderPath, "focusStack-R.jpg"),
+                              os.path.join(folderPath, "focusStack-S.jpg"))
+
+
+def generateStereoscopicVideo(folderPath: str):
+    images = findImagePairs(folderPath)
+    image = generateStereoscopicImage(os.path.join(folderPath, images[0][0]),
+                                      os.path.join(folderPath, images[0][1]),
+                                      "temp.jpg")
+    video = cv2.VideoWriter(os.path.join(folderPath, "stereoVideo.mp4"),
+                            cv2.VideoWriter_fourcc(*'mp4v'), 1,
+                            (image.shape[1], image.shape[0]))
+    for pair in images:
+        pathLeft = os.path.join(folderPath, pair[0])
+        pathRight = os.path.join(folderPath, pair[1])
+        frame = generateStereoscopicImage(pathLeft, pathRight, "temp.jpg")
+        frame = cv2.imread("temp.jpg")
+        video.write(frame)
+    video.release()
+    os.remove("temp.jpg")
 
 
 def displayImage(UMat):
@@ -126,3 +148,9 @@ def displayImage(UMat):
         cv2.imshow('', UMat)
         if cv2.waitKey(10) & 0xFF == 27:
             break
+
+
+if __name__ == "__main__":
+    generateStereoscopicVideo(
+        "/home/uwu/Github_Repos/University/M.O.S.I.S/M.O.S.I.S_Host_Software/App/static/Media/18-TIMELAPSE-2023-11-3T12-27-58.968618-NONE-15.0-100-0.016666666666666666-3500"
+    )
