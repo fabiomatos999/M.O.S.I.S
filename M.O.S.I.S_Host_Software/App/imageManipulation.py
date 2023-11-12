@@ -16,7 +16,7 @@ import subprocess
 
 @staticmethod
 def findImagePairs(folder: str) -> [(str, str)]:
-    files = os.listdir(os.path.join(folder))
+    files = os.listdir(folder)
     files = list(filter(lambda x: not re.match(r"^.*\.json$", x), files))
     leftImages = list(filter(lambda x: re.match(r".*-L\..*$", x), files))
     rightImages = list(filter(lambda x: re.match(r".*-R\..*$", x), files))
@@ -152,5 +152,5 @@ def displayImage(UMat):
 
 if __name__ == "__main__":
     generateStereoscopicVideo(
-        "/home/uwu/Github_Repos/University/M.O.S.I.S/M.O.S.I.S_Host_Software/App/static/Media/18-TIMELAPSE-2023-11-3T12-27-58.968618-NONE-15.0-100-0.016666666666666666-3500"
+       r"C:\Users\FABIOJMATOS-NIEVES\M.O.S.I.S\M.O.S.I.S_Host_Software\App\static\Media\18-TIMELAPSE-2023-11-3T12-27-58.968618-NONE-15.0-100-0.016666666666666666-3500" 
     )
