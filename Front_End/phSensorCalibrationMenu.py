@@ -249,7 +249,7 @@ class Ui_phSensorCalibrationMenu(object):
                          QtGui.QPalette.ColorRole.PlaceholderText, brush)
         self.pHSensorText.setPalette(palette)
         font = QtGui.QFont()
-        font.setPointSize(60)
+        font.setPointSize(56)
         self.pHSensorText.setFont(font)
         self.pHSensorText.setStyleSheet("label{\n"
                                         "    color: rgb(255, 149, 1);\n"

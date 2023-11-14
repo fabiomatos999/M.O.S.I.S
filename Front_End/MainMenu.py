@@ -11,7 +11,7 @@ from PyQt6.QtGui import QKeyEvent
 from PyQt6.QtCore import QEvent
 import PreviewScreen
 import StudyProfileSelectionMenu
-import ShutterSpeedConfigurationMenu
+import ShutterSpeedConfigMenu
 import SaturationConfigurationMenu
 import GainConfigurationMenu
 import WhiteBalanceCalibrationMenu
@@ -278,7 +278,7 @@ class MainMenu(object):
         self.studyProfileSelectionMenu.setupUi(
             self.studyProfileSelectionMenuForm)
         self.stackedLayout.addWidget(self.studyProfileSelectionMenuForm)
-        self.shutterSpeedSelectionMenu = ShutterSpeedConfigurationMenu.Ui_Form(
+        self.shutterSpeedSelectionMenu = ShutterSpeedConfigMenu.Ui_Form(
         )
         self.shutterSpeedSelectionMenuForm = BaseMenuWidget()
         self.shutterSpeedSelectionMenu.setupUi(
@@ -459,7 +459,7 @@ class MainMenu(object):
         if currentIndex == 1:
             self.studyProfileSelectionMenu.listWidget.setFocus()
         elif currentIndex == 2:
-            self.shutterSpeedSelectionMenu.SS1250Button.setFocus()
+            self.shutterSpeedSelectionMenu.listWidget.setFocus()
 
     def executeStudyProfile(self):
         """Execute currently selected study profile.
@@ -491,10 +491,10 @@ class MainMenu(object):
         dq = databaseQuery.DatabaseQuery()
         entry_id = dq.insertMediaEntry(
             studyProfile["shotType"], MainMenu.getCurrentTime(),
-            studyProfile["illuminationType"], float(studyProfile["gain"]),
-            int(studyProfile["saturation"]),
-            MainMenu.decodeShutterSpeed(studyProfile["shutterSpeed"]),
-            int(studyProfile["whiteBalance"]))
+            studyProfile["illuminationType"], self.getCurrentGain(),
+           self.getCurrentSaturation(),
+            self.getCurrentShutterSpeed(),
+            self.getCurrentWhiteBalance())
         media_entry = dq.getMediaEntrybyId(entry_id)
         fsg = FolderStructureGenerator.FolderStructureGenerator()
         path = os.path.join(fsg.root_path, str(media_entry))

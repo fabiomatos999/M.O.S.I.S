@@ -3,7 +3,7 @@ from DataClass import MediaEntry, MediaMetadata
 from RandomEntryGenerator import RandomEntry
 
 class CreateNewEntry():
-    conn = sqlite3.connect('testing3.db')
+    conn = sqlite3.connect('testing6.db')
     # Create a cursor object to interact with the database.
     cursor = conn.cursor()
     # Create new media entry
