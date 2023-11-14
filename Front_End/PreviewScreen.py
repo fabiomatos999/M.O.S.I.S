@@ -241,6 +241,8 @@ class Ui_Form(object):
         Form.setPalette(palette)
         self.cameraControl = CameraControl.CameraControl()
         self.cameraHandles = self.cameraControl.setUpCamera(2)
+        global cameraHandles
+        cameraHandles = self.cameraHandles
         self.layoutWidget = QtWidgets.QWidget(parent=Form)
         self.layoutWidget.setGeometry(QtCore.QRect(0, 440, 801, 57))
         self.layoutWidget.setObjectName("layoutWidget")

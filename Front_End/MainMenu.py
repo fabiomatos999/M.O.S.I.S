@@ -27,6 +27,7 @@ import os
 import HallEffectSensor
 import RPi.GPIO as GPIO
 import subprocess
+import time
 
 
 class BaseMenuWidget(QtWidgets.QWidget):
@@ -337,6 +338,8 @@ class MainMenu(object):
         self.hallEffectSensors.append(
             HallEffectSensor.HallEffectSensor(25, self.decodeGPIOtoKeyPress))
         self.lastGPIOPressed = int()
+        self.focusPoint1 = None
+        self.focusPoint2 = None
 
     def decodeGPIOtoKeyPress(self, pin: int):
         """Decode Raspberry Pi GPIO interrupt into a QKeyEvent.
@@ -354,11 +357,12 @@ class MainMenu(object):
         sensors.
         """
         key_event = None
-        if (pin == 17 and self.lastGPIOPressed
-                == 6) or (pin == 6 and self.lastGPIOPressed == 17):
-            subprocess.call(["sudo", "shutdown", "now"])
-        self.lastGPIOPressed = pin
-
+        if GPIO.input(17) and GPIO.input(6):
+            now = time.time()
+            while GPIO.input(17) and GPIO.input(6):
+                if time.time() - now > 3:
+                    subprocess.call(["sudo", "shutdown", "now"])
+            return
         if pin == 17:
             key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_Up,
                                   Qt.KeyboardModifier(0), "Up")
@@ -442,6 +446,11 @@ class MainMenu(object):
         elif event.key(
         ) == Qt.Key.Key_Return and self.stackedLayout.currentIndex() == 0:
             self.executeStudyProfile()
+        elif event.key() == Qt.Key.Key_Q:
+            if self.focusPoint1 is None:
+                pass
+            elif self.focusPoint2 is None:
+                pass
 
         # When the menu cycles to the corresponding menu it sets the keyboard
         # focus to the widget
@@ -510,7 +519,25 @@ class MainMenu(object):
                 self.previewScreen.cameraHandles, time, photoCount, entry_id,
                 path)
         elif studyProfile["shotType"] == "TELESCOPIC":
-            pass
+            steps = int(studyProfile["zoomOutCount"])
+            if self.focusPoint1 < self.focusPoint2:
+                temp = self.focusPoint1
+                self.focusPoint1 = self.focusPoint2
+                self.focusPoint2 = temp
+            for focus in range(self.focusPoint1, self.focusPoint2, steps):
+                self.previewScreen.cameraControl.setExposure(
+                    self.previewScreen.cameraHandles, focus, "")
+
+                media_metadata = dq.insertMediaMetadata(
+                    entry_id, path, "jpg", MainMenu.getCurrentTime(), 95.5,
+                    100, 8, 0.5)
+                media_metadata = dq.getMediaMetadatabyId(media_metadata)
+                self.cameraPictureControl.get_snapshot(
+                    self.previewScreen.cameraHandles[0],
+                    media_metadata.left_Camera_Media)
+                self.cameraPictureControl.get_snapshot(
+                    self.previewScreen.cameraHandles[1],
+                    media_metadata.right_Camera_Media)
         elif studyProfile["shotType"] == "VIDEO":
             videoLength = int(float(studyProfile["videoLength"]) * 60.0)
             self.cameraPictureControl.getVideo(
@@ -526,7 +553,7 @@ class MainMenu(object):
         return date.strftime('%Y-%m-%-dT%H-%M-%S.%f')
 
     @staticmethod
-    def decodeShutterSpeed(shutterSpeed: str):
+    def decodeShutterSpeed(shutterSpeed: str) -> float:
         """Convert either fractional or floating point string into float.
 
         :param shutterSpeed The string representation of a fraction
