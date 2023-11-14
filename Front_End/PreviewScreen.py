@@ -343,6 +343,7 @@ class Ui_Form(object):
         self.cameraPreviewRefreshTimer.start()
         self.sensorTimer = QTimer(Form)
         self.sensorTimer.timeout.connect(self.randomSensorValue)
+        self.sensorTimer.timeout.connect(self.validateSensors)
         self.sensorTimer.start(2000)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
