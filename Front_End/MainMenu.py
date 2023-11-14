@@ -337,9 +337,11 @@ class MainMenu(object):
             HallEffectSensor.HallEffectSensor(24, self.decodeGPIOtoKeyPress))
         self.hallEffectSensors.append(
             HallEffectSensor.HallEffectSensor(25, self.decodeGPIOtoKeyPress))
-        self.lastGPIOPressed = int()
         self.focusPoint1 = None
         self.focusPoint2 = None
+        self.whiteLED = GPIO.setup(2, GPIO.OUT)
+        self.redLED = GPIO.setup(3, GPIO.OUT)
+        self.uvLED = GPIO.setup(4, GPIO.OUT)
 
     def decodeGPIOtoKeyPress(self, pin: int):
         """Decode Raspberry Pi GPIO interrupt into a QKeyEvent.
@@ -476,6 +478,16 @@ class MainMenu(object):
         self.previewScreen.cameraControl.setWhiteBalance(
             self.previewScreen.cameraHandles,
             int(studyProfile["whiteBalance"]))
+        illuminationType = studyProfile["illuminationType"]
+        GPIO.output(2, GPIO.LOW)
+        GPIO.output(3, GPIO.LOW)
+        GPIO.output(4, GPIO.LOW)
+        if illuminationType == "WHITE":
+            GPIO.output(2, GPIO.HIGH)
+        elif illuminationType == "RED":
+            GPIO.output(3, GPIO.HIGH)
+        elif illuminationType == "ULTRAVIOLET":
+            GPIO.output(4, GPIO.HIGH)
         dq = databaseQuery.DatabaseQuery()
         entry_id = dq.insertMediaEntry(
             studyProfile["shotType"], MainMenu.getCurrentTime(),
@@ -545,6 +557,9 @@ class MainMenu(object):
 
         self.previewScreen.setStatusLabel(False)
         fsg.exportMetadata(entry_id)
+        GPIO.output(2, GPIO.LOW)
+        GPIO.output(3, GPIO.LOW)
+        GPIO.output(4, GPIO.LOW)
 
     @staticmethod
     def getCurrentTime() -> str:
