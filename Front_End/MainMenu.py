@@ -587,7 +587,7 @@ class MainMenu(object):
 
     def getCurrentShutterSpeed(self) -> str:
         """Return current shutterspeed from the shutterspeed config menu."""
-        string = self.shutterSpeedSelectionMenu.CurrentShutterSpeedLabel.text()
+        string = self.shutterSpeedSelectionMenu.label.text()
         string = string.replace(" ", "")
         strings = string.split(":")
         shutterspeed = strings[1]
