@@ -343,6 +343,8 @@ class Ui_Form(object):
         self.active = True
         self.cameraPreviewRefreshTimer.start()
         self.sensorHub = sensor.sensorHub()
+        global sensorHub
+        sensorHub = self.sensorHub
         self.sensorTimer = QTimer(Form)
         self.sensorTimer.timeout.connect(self.getSensorHubData)
         self.sensorTimer.start(2000)
