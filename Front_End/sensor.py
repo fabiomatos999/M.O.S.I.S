@@ -311,7 +311,7 @@ class sensorHub:
             return received
         except (serial.SerialException, UnicodeDecodeError) as e:
             raise Exception(
-                "Error calibrating tempe sensor with specific temp value: " +
+                "Error calibrating temp sensor with specific temp value: " +
                 str(e))
 
     def calibrateAll(self):
