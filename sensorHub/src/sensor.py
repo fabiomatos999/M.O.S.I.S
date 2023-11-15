@@ -4,13 +4,13 @@ from time import sleep
 
 class ReadResult:
     """
-    class for handling readings from sensorHub.Read()
+    class for handling readings from sensorHub.readline()
     parses the incoming message string
     """
 
     def __init__(self, incomingMessage: str):
         """
-        Handles return result from sensorHub.Read()
+        Handles return result from sensorHub.readline()
         Args:
             incomingMessage (str): incoming decoded string message from sensor hub
         Attributes:
@@ -19,7 +19,7 @@ class ReadResult:
             DOreading (float): Dissolved Oxygen reading from sensor hub
             baroReading (float): Baro reading from sensor hub
         Methods:
-            Get methodss for all attributes of the reading and __repr__ to facilitate tesing
+            Get methods for all attributes of the reading and __repr__ to facilitate tesing
         """
         parsedSensorHubResponse = incomingMessage.split(sep="&")
         print(f" incoming message: {parsedSensorHubResponse}")
@@ -82,13 +82,15 @@ class sensorHub:
     """
 
     # reference attribute
-    _UARTPort = "/dev/ttyAMA0"
+    _UARTPort = "/dev/ttyS0"
     uart = None
     encoding = "ascii"
+    decoding = "ascii"
 
     def __init__(self):
         try:
-            self.uart = serial.Serial(self._UARTPort, baudrate=115200, timeout=8)
+            self.uart = serial.Serial(self._UARTPort, baudrate=9600, timeout=8)
+            print(self.uart)
         except serial.SerialException as e:
             raise Exception("Error opening serial port: " + str(e))
 
@@ -111,7 +113,7 @@ class sensorHub:
         # sends command to MCU through UART port to fetch all sensor readings
         try:
             # sends command to MCU through UART port to fetch all sensor readings
-            command = "\rRead".encode(encoding=self.encoding)
+            command = "read".encode(encoding=self.encoding)
             self.uart.write(command)
 
             # read result from command
@@ -119,7 +121,7 @@ class sensorHub:
             data_left = self.uart.inWaiting()  # check for remaining bytes
             received += self.uart.read(data_left)
 
-            received = received.decode(encoding=self.encoding)
+            received = received.decode(encoding=self.decoding)
             result = ReadResult(received)
             print(result)
             return result
@@ -133,47 +135,46 @@ class sensorHub:
         """
 
         try:
-            command = "\rPhCal".encode(encoding=self.encoding)
+            command = "PhCal".encode(encoding=self.encoding)
             self.uart.write(command)
 
-            received = self.uart.read(size=8).decode(encoding=self.encoding)
+            received = self.uart.read(size=8).decode(encoding=self.decoding)
             print(f"Ph readings: {received}")
             return float(received)
 
         except (serial.SerialException, UnicodeDecodeError) as e:
             raise Exception("Error obtaining ph reading from sensor: " + str(e))
 
-    def PhLowCal(self):
+    def PhLowCal(self) -> float:
         """
         Performs low point callibration of ph sensor
         TODO: determine return value type
         """
 
         try:
-            command = "\rPhLowCal".encode(encoding=self.encoding)
+            command = "PhLowCal".encode(encoding=self.encoding)
             self.uart.write(command)
 
-            received = self.uart.read(size=8).decode(encoding=self.encoding)
+            received = self.uart.read(size=8).decode(encoding=self.decoding)
             print(f" PhLowCal : {received}")
-            return received
+            return float(received)
         except (serial.SerialException, UnicodeDecodeError) as e:
             raise Exception("Error performing Ph lowpoint calibration: " + str(e))
 
-    def PhMidCal(self):
+    def PhMidCal(self) -> float:
         """
         Performs mid point calibration of Ph sensor
-        TODO: determine return value type
         """
         try:
-            command = "\rPhMidCal".encode(encoding=self.encoding)
+            command = "PhMidCal".encode(encoding=self.encoding)
             self.uart.write(command)
 
             # read result from command
             received = self.uart.read(size=8)
             # debug this value
-            received = received.decode(encoding=self.encoding)
+            received = received.decode(encoding=self.decoding)
             print(f" PhMidCal : {received}")
-            return received
+            return float(received)
 
         except (serial.SerialException, UnicodeDecodeError) as e:
             raise Exception("Error performing Ph MidPoint calibration: " + str(e))
@@ -181,16 +182,15 @@ class sensorHub:
     def PhHighCal(self):
         """
         Performs high point callibration of ph sensor
-        TODO: determine return value type
         """
         try:
-            command = "\rPhHighCal".encode(encoding=self.encoding)
+            command = "PhHighCal".encode(encoding=self.encoding)
             self.uart.write(command)
 
             # read result from command
             received = self.uart.read(size=8)
             # debug this value
-            received = received.decode(encoding=self.encoding)
+            received = received.decode(encoding=self.decoding)
             print(f" PhHighCal:  {received}")
             return received
         except (serial.SerialException, UnicodeDecodeError) as e:
@@ -204,13 +204,13 @@ class sensorHub:
 
         """
         try:
-            command = "\rDoCal".encode(encoding=self.encoding)
+            command = "DoCal".encode(encoding=self.encoding)
             self.uart.write(command)
 
             # read result from command
             received = self.uart.read(size=8)
             # debug this value
-            received = received.decode(encoding=self.encoding)
+            received = received.decode(encoding=self.decoding)
             print(f" Dissolved Oxygen: {received}")
 
             return float(received)
@@ -219,17 +219,22 @@ class sensorHub:
 
     def DoAtmoCal(self):
         """
-        Calibrate Dissolved Oxygen Sensor to atmospheric oxygen content
+        Calibrate # The `Dissolved Oxygen` function in the `sensorHub` class is used to obtain the
+        # dissolved oxygen reading from the sensor hub. It sends a command to the MCU to get
+        # the dissolved oxygen readings, and then returns the first response received. The
+        # MCU will continue to transmit readings every second, but this function only
+        # returns the first reading.
+        Dissolved Oxygen Sensor to atmospheric oxygen content
         TODO: determine return value type
         """
         try:
-            command = "\rDoAtmoCal".encode(encoding=self.encoding)
+            command = "DoAtmoCal".encode(encoding=self.encoding)
             self.uart.write(command)
 
             # read result from command
             received = self.uart.read(size=8)
             # debug this value
-            received = received.decode(encoding=self.encoding)
+            received = received.decode(encoding=self.decoding)
             print(f"DoAtmoCal: {received}")
         except (serial.SerialException, UnicodeDecodeError) as e:
             raise Exception(
@@ -243,13 +248,13 @@ class sensorHub:
         TODO: determine return value type
         """
         try:
-            command = "\rDoZeroCal".encode(encoding=self.encoding)
+            command = "DoZeroCal".encode(encoding=self.encoding)
             self.uart.write(command)
 
             # read result from command
             received = self.uart.read(size=8)
             # debug this value
-            received = received.decode(encoding=self.encoding)
+            received = received.decode(encoding=self.decoding)
             print(f"DoZeroCal: {received}")
             return received
         except (serial.SerialException, UnicodeDecodeError) as e:
@@ -258,22 +263,37 @@ class sensorHub:
                 + str(e)
             )
 
+    def DoCalClear(self):
+        """
+
+        Clears calibration values from Dissolved Oxygen Sensor
+
+        Raises:
+            Exception: catches serial exception error from UART port
+        """
+        try:
+            command = "clear".encode(encoding=self.encoding)
+            self.uart.write(command)
+
+        except serial.SerialException as e:
+            raise Exception("Error clearing DO calibration: " + str(e))
+
     def getTemp(self) -> float:
         """
         Fetches temperature reading every second
         Returns only first reading but MCU will continue to transmit
         """
         try:
-            command = "\rTempCal".encode(encoding=self.encoding)
+            command = "TempCal".encode(encoding=self.encoding)
             self.uart.write(command)
 
             # read result from command
             received = self.uart.read(size=8)
             # debug this value
-            received = received.decode(encoding=self.encoding)
+            received = received.decode(encoding=self.decoding)
             print(f"TempCal: {received}")
 
-            return received
+            return float(received)
         except (serial.SerialException, UnicodeDecodeError) as e:
             raise Exception("Error getting Temperature Reading: " + str(e))
 
@@ -283,13 +303,13 @@ class sensorHub:
         TODO: determine return value type
         """
         try:
-            command = "\rDoAtmoCal".encode(encoding=self.encoding)
+            command = "DoAtmoCal".encode(encoding=self.encoding)
             self.uart.write(command)
 
             # read result from command
             received = self.uart.read(size=8)
             # debug this value
-            received = received.decode(encoding=self.encoding)
+            received = received.decode(encoding=self.decoding)
             print(f"TempNewCal: {received}")
 
             return received
@@ -317,7 +337,7 @@ class sensorHub:
         """
 
         try:
-            command = "\rexit".encode(encoding=self.encoding)
+            command = "exit".encode(encoding=self.encoding)
             self.uart.write(command)
         except serial.SerialException as e:
-            raise Exception("Error exiting callibration: " + str(e))
+            raise Exception("Error exiting calibration: " + str(e))
