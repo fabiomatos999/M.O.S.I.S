@@ -13,6 +13,7 @@ import CameraControl
 import CameraPreview
 from pixelinkWrapper import PxLApi
 import random
+import sensor
 
 
 class Ui_Form(object):
@@ -341,9 +342,9 @@ class Ui_Form(object):
         self.capturing = False
         self.active = True
         self.cameraPreviewRefreshTimer.start()
+        self.sensorHub = sensor.sensorHub()
         self.sensorTimer = QTimer(Form)
-        self.sensorTimer.timeout.connect(self.randomSensorValue)
-        self.sensorTimer.timeout.connect(self.validateSensors)
+        self.sensorTimer.timeout.connect(self.getSensorHubData)
         self.sensorTimer.start(2000)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
@@ -450,13 +451,25 @@ class Ui_Form(object):
         self.ph_label.setText("pH: " + str(ph_sensor))
         self.temperature_label.setText("Temp: " + str(temp_sensor))
         self.ip_label.setText("IP: " + random_ip)
-        
+
+    def getSensorHubData(self):
+        """Get sensor data from sensor hub and update labels."""
+        sensorData = self.sensorHub.Read()
+        self.setTemperatureLabel(sensorData.tempReading)
+        self.setDissolvedOxygenLabel(sensorData.DOreading)
+        self.setPressureLabel(sensorData.baroReading)
+        self.setpHLabel(sensorData.phReading)
+        self.validateSensors()
+
     def validateSensors(self):
-        """Verify if Sensors are within parameters.
+        """
+        Verify if Sensors are within parameters.
+
         Checks if ph is between 0 and 14.
         Checks if pressure is between 0 and 10,400.00.
         Checks if temperature is between -2 and 32.
-        Checks if dissolved oxygen is between 100 and 400."""
+        Checks if dissolved oxygen is between 100 and 400.
+        """
         string = self.ph_label.text()
         string = string.replace(" ", "")
         strings = string.split(":")
@@ -479,27 +492,27 @@ class Ui_Form(object):
         string = string.replace("mg/L", "")
         strings = string.split(":")
         dissolved_oxygen_value = float(strings[1])
-
         """Checks if ph is between 0 and 14."""
-        if(ph_value < 0 or ph_value > 14):
+        if (ph_value < 0 or ph_value > 14):
             self.status_label.setText("pH Sens. Error")
-            print("pH is out of range: " + str(ph_value) + ". Acceptable Range is between 0 and 14.")
-
+            print("pH is out of range: " + str(ph_value) +
+                  ". Acceptable Range is between 0 and 14.")
         """Checks if pressure is between 0 and 10,400.00."""
-        if(pressure_value < 0 or pressure_value > 10400.00):
+        if (pressure_value < 0 or pressure_value > 10400.00):
             self.status_label.setText("Pres. Sens. Error")
-            print("Pressure is out of range: " + str(pressure_value) + ". Acceptable Range is between 0 and 10,00.00.")
-
+            print("Pressure is out of range: " + str(pressure_value) +
+                  ". Acceptable Range is between 0 and 10,00.00.")
         """Checks if temperature is between -2 and 32."""
-        if(temperature_value < -2 or temperature_value > 32):
+        if (temperature_value < -2 or temperature_value > 32):
             self.status_label.setText("Temp. Sens. Error")
-            print("Temp is out of range: " + str(temperature_value) + ". Acceptable Range is between -2 and 32.")
-
+            print("Temp is out of range: " + str(temperature_value) +
+                  ". Acceptable Range is between -2 and 32.")
         """Checks if dissolved oxygen is between 100 and 400."""
-        if(dissolved_oxygen_value < 100 or dissolved_oxygen_value > 400):
+        if (dissolved_oxygen_value < 100 or dissolved_oxygen_value > 400):
             self.status_label.setText("D.O. Sens. Error")
-            print("Dissolved Oxygen is out of range: " + str(dissolved_oxygen_value) + ". Acceptable Range is between 100 and 400.")  
-
+            print("Dissolved Oxygen is out of range: " +
+                  str(dissolved_oxygen_value) +
+                  ". Acceptable Range is between 100 and 400.")
 
     def startPreviewImageCapture(self):
         """Generate preview if preview window is active."""
@@ -517,7 +530,7 @@ class Ui_Form(object):
     def cameraDefaults(self):
         """Set default camera setting upon boot."""
         self.cameraControl.autoWhiteBalance(self.cameraHandles)
-        self.cameraControl.setExposure(self.cameraHandles, 1 / 15, mode="")
+        self.cameraControl.setExposure(self.cameraHandles, 1 / 60, mode="")
         self.cameraControl.setFocus(self.cameraHandles)
         self.cameraControl.setGain(self.cameraHandles)
         self.cameraControl.setRegionOfInterest(self.cameraHandles)
