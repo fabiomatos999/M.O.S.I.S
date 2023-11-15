@@ -270,7 +270,7 @@ class Ui_Form(object):
         shutter = selected_items[0].text().split(' ')[1]
         shutter = self.decodeShutterSpeed(shutter)
         cc.setExposure(cameraHandles, shutter, "")
-    
+
     def decodeShutterSpeed(shutterSpeed: str) -> float:
         """Convert either fractional or floating point string into float.
 
