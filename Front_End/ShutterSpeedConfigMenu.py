@@ -10,7 +10,7 @@ import CameraControl
 import re
 
 
-class Ui_Form(object):
+class Ui_ShutterSpeedConfigMenu(object):
     """ShutterSpeedConfigMenu widget wrapper class."""
 
     def setupUi(self, Form):
@@ -266,9 +266,10 @@ class Ui_Form(object):
             selected_speed = selected_items[0].text()
             self.label.setText(selected_speed)
         cc = CameraControl.CameraControl()
-        shutter = selected_items[0].text().split(' ')[1]
-        shutter = self.decodeShutterSpeed(shutter)
-        cc.setExposure([1,2], shutter, "")
+        shutter = selected_items[0].text().split(' ')
+        shutter = shutter[2]
+        shutter = Ui_ShutterSpeedConfigMenu.decodeShutterSpeed(shutter)
+        cameraControl.setExposure([1,2], shutter, "")
 
     def decodeShutterSpeed(shutterSpeed: str) -> float:
         """Convert either fractional or floating point string into float.

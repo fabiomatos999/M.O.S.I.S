@@ -272,9 +272,7 @@ class CameraControl():
             for camera in hCamera:
                 ret = PxLApi.setFeature(camera, PxLApi.FeatureId.WHITE_BALANCE,
                                         PxLApi.FeatureFlags.MANUAL, [temp])
-                if (PxLApi.apiSuccess(ret[0])):
-                    print("UwU")
-                else:
+                if not (PxLApi.apiSuccess(ret[0])):
                     raise ValueError("Invalid Temperature Inputted.")
 
     def autoWhiteBalance(self, hCamera: [int]):

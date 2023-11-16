@@ -11,8 +11,6 @@ from PyQt6.QtGui import QKeyEvent
 from PyQt6.QtCore import QEvent
 import PreviewScreen
 import StudyProfileSelectionMenu
-import ShutterSpeedConfigMenu
-import SaturationConfigurationMenu
 import WhiteBalanceCalibrationMenu
 import DissolvedOxygenCalibrationMenu
 import phSensorCalibrationMenu
@@ -277,20 +275,20 @@ class MainMenu(object):
         self.studyProfileSelectionMenu.setupUi(
             self.studyProfileSelectionMenuForm)
         self.stackedLayout.addWidget(self.studyProfileSelectionMenuForm)
-        self.shutterSpeedSelectionMenu = ShutterSpeedConfigMenu.Ui_Form(
+        self.shutterSpeedSelectionMenu = PreviewScreen.Ui_ShutterSpeedConfigMenu(
         )
         self.shutterSpeedSelectionMenuForm = BaseMenuWidget()
         self.shutterSpeedSelectionMenu.setupUi(
             self.shutterSpeedSelectionMenuForm)
         self.stackedLayout.addWidget(self.shutterSpeedSelectionMenuForm)
         self.saturationConfigurationMenu = \
-            SaturationConfigurationMenu.Ui_SaturationConfigurationMenu()
+            PreviewScreen.Ui_SaturationConfigurationMenu()
         self.saturationConfigurationMenuForm = BaseMenuWidget()
         self.saturationConfigurationMenu.setupUi(
             self.saturationConfigurationMenuForm)
         self.stackedLayout.addWidget(self.saturationConfigurationMenuForm)
         self.gainConfigurationMenu = \
-            PreviewScreen.GainConfigurationMenu.Ui_GainConfigurationMenu()
+            PreviewScreen.Ui_GainConfigurationMenu()
         self.gainConfigurationMenuForm = BaseMenuWidget()
         self.gainConfigurationMenu.setupUi(self.gainConfigurationMenuForm)
         self.stackedLayout.addWidget(self.gainConfigurationMenuForm)
@@ -423,7 +421,7 @@ class MainMenu(object):
             "Saturation: " + studyProfile["saturation"])
         self.saturationConfigurationMenu.horizontalSlider.setValue(
             int(studyProfile["saturation"]))
-        self.shutterSpeedSelectionMenu.CurrentShutterSpeedLabel.setText(
+        self.shutterSpeedSelectionMenu.label.setText(
             "ShutterSpeed: " + studyProfile["shutterSpeed"])
 
     def keyPressEvent(self, event):
@@ -624,3 +622,6 @@ if __name__ == "__main__":
     ui = MainMenu(form)
     form.showFullScreen()
     sys.exit(app.exec())
+
+
+
