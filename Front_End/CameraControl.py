@@ -307,6 +307,8 @@ class CameraControl():
         will use newFocusValue
         :return
         """
+        if newfocusValue < 1 or newfocusValue > 46000:
+            return
         params = []
         print(self.maxFocusValue, self.minFocusValue)
         if mode == "auto":

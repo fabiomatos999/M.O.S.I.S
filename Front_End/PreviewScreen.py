@@ -336,7 +336,7 @@ class Ui_Form(object):
         self.ipAddressRefreshTimer.setInterval(1000)
         # self.ipAddressRefreshTimer.timeout.connect(self.setIPAddressLabel)
         self.cameraPreviewRefreshTimer = QTimer(Form)
-        self.cameraPreviewRefreshTimer.setInterval(int((1 / 1) * 1000))
+        self.cameraPreviewRefreshTimer.setInterval(int((1 / 5) * 1000))
         self.cameraPreviewRefreshTimer.timeout.connect(
             self.startPreviewImageCapture)
         self.ipAddressRefreshTimer.start()
@@ -535,7 +535,7 @@ class Ui_Form(object):
         """Set default camera setting upon boot."""
         self.cameraControl.autoWhiteBalance(self.cameraHandles)
         self.cameraControl.setExposure(self.cameraHandles, 1 / 60, mode="")
-        self.cameraControl.setFocus(self.cameraHandles)
+        self.cameraControl.setFocus(self.cameraHandles, 1, "")
         self.cameraControl.setGain(self.cameraHandles)
         self.cameraControl.setRegionOfInterest(self.cameraHandles)
         self.cameraControl.setWhiteBalance(self.cameraHandles)

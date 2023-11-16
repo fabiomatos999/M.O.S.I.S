@@ -430,7 +430,13 @@ class MainMenu(object):
         Pressing F1 and F2 cycles through the menus.
         """
         currentIndex = self.stackedLayout.currentIndex()
-        if event.key() == Qt.Key.Key_F1:
+        if event.key() == Qt.Key.Key_Up and currentIndex == 0:
+            self.previewScreen.cameraControl.setFocus(self.previewScreen.cameraHandles, self.previewScreen.cameraControl.customFocus[0]+10, "")            
+            print(self.previewScreen.cameraControl.customFocus[0])
+        elif event.key() == Qt.Key.Key_Down and currentIndex == 0:
+            self.previewScreen.cameraControl.setFocus(self.previewScreen.cameraHandles, self.previewScreen.cameraControl.customFocus[0]-10, "")
+            print(self.previewScreen.cameraControl.customFocus[0])
+        elif event.key() == Qt.Key.Key_F1:
             if currentIndex == 7:
                 self.stackedLayout.setCurrentIndex(0)
 
@@ -447,9 +453,9 @@ class MainMenu(object):
             self.executeStudyProfile()
         elif event.key() == Qt.Key.Key_Q:
             if self.focusPoint1 is None:
-                pass
+                self.previewScreen.cameraControl.customFocus[0]
             elif self.focusPoint2 is None:
-                pass
+                self.previewScreen.cameraControl.customFocus[0]
 
         # When the menu cycles to the corresponding menu it sets the keyboard
         # focus to the widget
