@@ -1,97 +1,4 @@
 @startuml
-abstract class "UI" {
-	 # layout: layout
-	 + void hide()
-	 + void show()
-	 # addWidget()
-}
-class "Application" {
-      - resolutionX: int
-      - resolutionY: int
-      - layouts: layout[]
-      + runApplication()
-      + runDiagnostics()
-}
-class "Layout" {
-      # widgets: widget[]
-      + getLayout()
-}
-class mainMenuUI {
-      - leftCameraWidget: widget
-      - rightCameraWidget: widget
-      - temperature: widget
-      - ph: widget
-      - absolutePressure: widget
-      - dissolvedOxygen: widget
-      - ipAddress: widget
-      - studyStatus: widget
-      - sensorData: SensorData
-      + executeStudy()
-      + getStudyStatus()
-      + shutdownMicroscope()
-}
-class studyProfileUI {
-      - studyProfiles: studyProfiles[]
-      - selected: studyProfile
-      + getSelected()
-}
-class isoUI {
-      - iso: int
-      + getISO()
-      + setISO()
-}
-class apertureSizeUI {
-      - apertureSize: float
-      + getApertureSize()
-      + setApertureSize()
-}
-class shutterSpeedUI {
-      - shutterSpeed: float
-      + getShutterSpeed()
-      + setShutterSpeed()
-}
-class whiteBalanceUI {
-      - whiteBalance: int
-      + getWhiteBalance()
-      + setWhiteBalance()
-}
-class phCalibrationUI {
-	- ph: Ph
-        + getpHHighRange()	
-        + getpHMidRange()	
-        + getpHLowRange()	
-}
-class doCalibrationUI {
-	- do: DissolvedOxygen
-}
-Class studyProfile {
-     - shotType: shotType
-     - illuminationType: shotType
-     - iso: int
-     - shutterSpeed: float
-     - whiteBalance: int
-     - apertureSize: float
-     + getStudyProfile()
-     - setCameraParameters()
-}
-abstract class Sensor {
-     # callCommand: String
-     + call()
-     + exit()
-}
-class SensorData {
-     + getSensorsData()
-}
-class Ph {
-      + phCalHigh()
-      + phCalMid()
-      + phCalLow()
-}
-class DissolvedOxygen {
-      + doZeroCal()
-      + doAtmoCal()
-      + doCalClear()
-}
 enum shotType {
      SINGLE
      BURST
@@ -105,17 +12,158 @@ enum illuminationType {
      INFRARED
      ULTRAVIOLET
 }
-Application *-- Layout
-Layout <|-- UI
-UI "1" <|-- mainMenuUI
-UI "1" <|-- isoUI
-UI "1" <|-- whiteBalanceUI
-UI "1" <|-- studyProfileUI
-UI "1" <|-- apertureSizeUI
-UI "1" <|-- shutterSpeedUI
-UI "1" <|-- phCalibrationUI
-UI "1" <|-- doCalibrationUI
-Sensor <|-- SensorData
-Sensor <|-- DissolvedOxygen
-Sensor <|-- pH
+class MainMenu {
+	+ QStackLayout[QWidget]: QLayout
+	+ LayoutForms: QWidget
+	+ decodeGPIO(RPI.GPIO)
+	+ QKeyEventHandler(QKeyEvent)
+}
+class PreviewScreen {
+	+ LeftCameraPreview: QLabel
+	+ RightCameraPreview: QLabel
+	+ TemperatureLabel: QLabel
+	+ PressureLabel: QLabel
+	+ DissolvedOxygenLabel: QLabel
+	+ pHLabel: QLabel
+	+ IPAddressLabel: QLabel
+	+ StatusLabel: QLabel
+	+ CameraPreviewTimer: QTimer
+	+ SensorDataTimer: QTimer
+	+ IPAddressTimer: QTimer
+	+ CameraHandles: [int]
+	+ HallEffectSensors: [HallEffectSensor]
+	+ UpdateSensorDataLabels()
+	+ UpdateCameraPreview()
+	+ UpdateIPAddressLabel()
+	+ UpdateStatusLabel()
+}
+class StudyProfileSelectionMenu {
+	+ StudyProfile: JSON
+	+ StudyProfilesListWidget: QListWidget
+	+ SummaryLabel: QLabel
+	- SetActiveStudyProfile()
+}
+class CameraControl {
+	+ minFocusValue : float
+	+ maxFocusValue : float
+	+ minExposureValue : float
+	+ maxExposureValue : float
+	+ minSaturationValue: int
+	+ maxSaturationValue: int
+	+ saturationValue: int
+	+ minGainValue: float
+	+ maxGainValue: float
+	+ gainValue: float
+	+ setUpMaxMinFeatureValues()
+	+ setUpCamera()
+	+ cleanUpCameras()
+	+ setRegionOfInterest()
+	+ setWhiteBalance()
+	+ autoWhiteBalance()
+	+ setFocus()
+	+ setExposure()
+	+ setSaturation()
+	+ setGain()
+}
+class CameraPictureControl {
+	+ get_snapshot()
+	+ getBurstSnapshot()
+	+ getIntervalSnapshot()
+	+ determine_raw_image_size()
+	+ get_raw_image()
+	+ save_image_to_file()
+	+ getVideo()
+}
+class MediaEntry {
+        + entry_Id: int
+        + shot_Type: str
+        + time: str
+        + illumination_Type: str
+        + gain: int
+        + saturation: float
+        + shutter_Speed: float
+        + white_Balance: int
+}
+class MediaMetadata {
+        + media_Id: int
+        + entry_Id: int
+        + left_Camera_Media: str
+        + right_Camera_Media: str
+        + time: str
+        + temperature: float
+        + pressure: float
+        + ph: float
+        + dissolved_Oxygen: float
+}
+class DatabaseQuery {
+	+ conn: sqlite3Connection
+	+ cursor: sqlite3Cursor
+	+ getMediaEntrybyId()
+	+ getMediaMetadatabyId()
+	+ insertMediaEntry()
+	+ insertMediaMetadata()
+	+ getALlMediaEntry()
+	+ getCountbyMediaEntry()
+}
+class FolderStructureGenerator {
+	+ root_path: str
+	+ databaseQuery: DatabaseQuery
+	+ create_folder_structure()
+	+ exportMetadata()
+	+ create_folder_structure_for_all()
+}
+class DissolvedOxygenCalibrationMenu {
+	+ doAtmoCalLabel: QLabel
+	+ doAtmoCalButton: QPushButton
+	+ doZeroCalLabel: QLabel
+	+ doZeroCalButton: QPushButton
+}
+class GainConfigurationMenu {
+	+ SliderValueLabel: QLabel
+	+ GainSlider: QSlider
+}
+class HallEffectSensor {
+	+ pin: int
+	+ callback: Callback
+}
+class SaturationConfigurationMenu {
+	+ SliderValueLabel: QLabel
+	+ SaturationSlider: QSlider
+}
+class ShutterSpeedConfigurationMenu {
+	+ ShutterSpeeds: QListWidget
+	+ SelectedShutterSpeedWidget: QLabel
+}
+class WhiteBalanceCalibrationMenu {
+	+ SliderValueLabel: QLabel
+	+ WhiteBalanceSlider: QSlider
+}
+class ReadResult {
+	+ phReading: float
+	+ tempReading: float
+	+ DOreading: float
+	+ baroReading: float
+	+ getPh()
+	+ getTemp()
+	+ getDO()
+	+ getPressure()
+}
+class sensorHub {
+	+ __UARTPort: str
+	+ uart: UART
+	+ encoding: str
+	+ decoding: str
+	+ getPh()
+	+ PhLowCal()
+	+ PhMidCal()
+	+ PhHighCal()
+	+ getDO()
+	+ DOAtmoCal()
+	+ DOZeroCal()	
+	+ DoCalClear()
+	+ getTemp()
+	+ TempNewCal()
+	+ callibrateAll()
+	+ exit()
+}
 @enduml
