@@ -13,7 +13,7 @@ import PreviewScreen
 import StudyProfileSelectionMenu
 import ShutterSpeedConfigMenu
 import SaturationConfigurationMenu
-import GainConfigurationMenu
+from PreviewScreen import GainConfigurationMenu
 import WhiteBalanceCalibrationMenu
 import DissolvedOxygenCalibrationMenu
 import phSensorCalibrationMenu
