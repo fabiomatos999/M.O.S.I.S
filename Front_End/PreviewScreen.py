@@ -241,6 +241,8 @@ class Ui_Form(object):
                          QtGui.QPalette.ColorRole.PlaceholderText, brush)
         Form.setPalette(palette)
         self.cameraControl = CameraControl.CameraControl()
+        global cameraControl
+        cameraControl = self.cameraControl
         self.cameraHandles = self.cameraControl.setUpCamera(2)
         global cameraHandles
         cameraHandles = self.cameraHandles
@@ -794,8 +796,7 @@ class Ui_GainConfigurationMenu(object):
         """Set gain label text."""
         value = self.horizontalSlider.value()
         self.CurrentGainLabel.setText("Gain: " + str(value / 10))
-        cc = CameraControl.CameraControl()
-        cc.setGain([1, 2], (value / 10), "")
+        cameraControl.setGain([1, 2], (value / 10), "")
 
 
 if __name__ == "__main__":

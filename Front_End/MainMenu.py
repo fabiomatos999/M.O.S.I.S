@@ -13,7 +13,6 @@ import PreviewScreen
 import StudyProfileSelectionMenu
 import ShutterSpeedConfigMenu
 import SaturationConfigurationMenu
-from PreviewScreen import GainConfigurationMenu
 import WhiteBalanceCalibrationMenu
 import DissolvedOxygenCalibrationMenu
 import phSensorCalibrationMenu
@@ -291,7 +290,7 @@ class MainMenu(object):
             self.saturationConfigurationMenuForm)
         self.stackedLayout.addWidget(self.saturationConfigurationMenuForm)
         self.gainConfigurationMenu = \
-            GainConfigurationMenu.Ui_GainConfigurationMenu()
+            PreviewScreen.GainConfigurationMenu.Ui_GainConfigurationMenu()
         self.gainConfigurationMenuForm = BaseMenuWidget()
         self.gainConfigurationMenu.setupUi(self.gainConfigurationMenuForm)
         self.stackedLayout.addWidget(self.gainConfigurationMenuForm)
