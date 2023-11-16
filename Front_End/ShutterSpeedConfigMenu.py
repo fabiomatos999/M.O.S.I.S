@@ -7,7 +7,6 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 import CameraControl
-from PreviewScreen import cameraHandles
 import re
 
 
@@ -269,7 +268,7 @@ class Ui_Form(object):
         cc = CameraControl.CameraControl()
         shutter = selected_items[0].text().split(' ')[1]
         shutter = self.decodeShutterSpeed(shutter)
-        cc.setExposure(cameraHandles, shutter, "")
+        cc.setExposure([1,2], shutter, "")
 
     def decodeShutterSpeed(shutterSpeed: str) -> float:
         """Convert either fractional or floating point string into float.

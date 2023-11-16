@@ -89,7 +89,7 @@ class sensorHub:
     """
 
     # reference attribute
-    _UARTPort = "/dev/serial0"
+    _UARTPort = "/dev/serial1"
     uart = None
     encoding = "ascii"
 
