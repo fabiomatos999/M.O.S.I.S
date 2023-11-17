@@ -11,33 +11,33 @@ rectangle "User Interface" {
 	  usecase "View pH" as VPh
 	  usecase "View Gauge Pressure" as VAP
 	  usecase "View Dissolved Oxygen" as VDO
-	  usecase "View Camera ISO" as VCI
-	  usecase "View Aperture Size" as VAS
 	  usecase "View Shutter Speed" as VSS
+	  usecase "View Gain" as VG
+	  usecase "View Saturation" as VS
 	  usecase "View White balance" as VWB
 	  usecase "View IP Address" as VIA
-	  usecase "Change Camera ISO" as CCI
-	  usecase "Change Aperture Size" as CAS
 	  usecase "Change Shutter Speed" as CSS
+	  usecase "Change Gain" as CG
+	  usecase "Change Saturation" as CCS
 	  usecase "Change White balance" as CWB
 	  usecase "Calibrate Sensors" as CS
 }
 A --> RD
-RD <|-- DF
+RD <|-- DF : <<Extends>>
 R --> PLCF
 R --> PRCF
 R --> VT
 R --> VPh
 R --> VAP
 R --> VDO
-R --> VCI
-R --> VAS
 R --> VSS
 R --> VWB
 R --> VIA
 R --> CS
-VCI <|-- CCI
-VAS <|-- CAS
-VSS <|-- CSS
-VWB <|-- CWB
+R --> VG
+R --> VS
+VSS <|-- CSS : <<Extends>>
+VWB <|-- CWB : <<Extends>>
+VG <|-- CG : <<Extends>>
+VS <|-- CCS : <<Extends>>
 @enduml
