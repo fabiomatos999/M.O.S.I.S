@@ -470,7 +470,7 @@ class Ui_Form(object):
         Verify if Sensors are within parameters.
 
         Checks if ph is between 0 and 14.
-        Checks if pressure is between 0 and 10,400.00.
+        Checks if pressure is between 0 and 9,026.85.
         Checks if temperature is between -2 and 32.
         Checks if dissolved oxygen is between 100 and 400.
         """
@@ -496,27 +496,40 @@ class Ui_Form(object):
         string = string.replace("mg/L", "")
         strings = string.split(":")
         dissolved_oxygen_value = float(strings[1])
+        ph_error = False
+        pressure_error = False
+        temperature_error = False
+        dissolved_oxygen_error = False
+        error_string = ("SE")
+
         """Checks if ph is between 0 and 14."""
         if (ph_value < 0 or ph_value > 14):
-            self.status_label.setText("pH Sens. Error")
+            ph_error = True
+            error_string = ("pH.") + error_string
             print("pH is out of range: " + str(ph_value) +
                   ". Acceptable Range is between 0 and 14.")
         """Checks if pressure is between 0 and 10,400.00."""
-        if (pressure_value < 0 or pressure_value > 10400.00):
-            self.status_label.setText("Pres. Sens. Error")
+        if (pressure_value < 0 or pressure_value > 9026.85):
+            pressure_error = True
+            error_string = ("P.") + error_string
             print("Pressure is out of range: " + str(pressure_value) +
-                  ". Acceptable Range is between 0 and 10,00.00.")
+                  ". Acceptable Range is between 0 and 9,026.85.")
         """Checks if temperature is between -2 and 32."""
         if (temperature_value < -2 or temperature_value > 32):
-            self.status_label.setText("Temp. Sens. Error")
+            temperature_error = True
+            error_string = ("T.") + error_string
             print("Temp is out of range: " + str(temperature_value) +
                   ". Acceptable Range is between -2 and 32.")
         """Checks if dissolved oxygen is between 100 and 400."""
         if (dissolved_oxygen_value < 100 or dissolved_oxygen_value > 400):
-            self.status_label.setText("D.O. Sens. Error")
+            dissolved_oxygen_error = True
+            error_string = ("D.O.") + error_string
             print("Dissolved Oxygen is out of range: " +
                   str(dissolved_oxygen_value) +
                   ". Acceptable Range is between 100 and 400.")
+            
+        if (pressure_error or temperature_error or dissolved_oxygen_error or ph_error):
+            self.status_label.setText(error_string)
 
     def startPreviewImageCapture(self):
         """Generate preview if preview window is active."""
