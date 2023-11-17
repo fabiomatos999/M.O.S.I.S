@@ -12,37 +12,6 @@ enum illuminationType {
      INFRARED
      ULTRAVIOLET
 }
-class MainMenu {
-	+ QStackLayout[QWidget]: QLayout
-	+ LayoutForms: QWidget
-	+ decodeGPIO(RPI.GPIO)
-	+ QKeyEventHandler(QKeyEvent)
-}
-class PreviewScreen {
-	+ LeftCameraPreview: QLabel
-	+ RightCameraPreview: QLabel
-	+ TemperatureLabel: QLabel
-	+ PressureLabel: QLabel
-	+ DissolvedOxygenLabel: QLabel
-	+ pHLabel: QLabel
-	+ IPAddressLabel: QLabel
-	+ StatusLabel: QLabel
-	+ CameraPreviewTimer: QTimer
-	+ SensorDataTimer: QTimer
-	+ IPAddressTimer: QTimer
-	+ CameraHandles: [int]
-	+ HallEffectSensors: [HallEffectSensor]
-	+ UpdateSensorDataLabels()
-	+ UpdateCameraPreview()
-	+ UpdateIPAddressLabel()
-	+ UpdateStatusLabel()
-}
-class StudyProfileSelectionMenu {
-	+ StudyProfile: JSON
-	+ StudyProfilesListWidget: QListWidget
-	+ SummaryLabel: QLabel
-	- SetActiveStudyProfile()
-}
 class CameraControl {
 	+ minFocusValue : float
 	+ maxFocusValue : float
@@ -112,32 +81,6 @@ class FolderStructureGenerator {
 	+ exportMetadata()
 	+ create_folder_structure_for_all()
 }
-class DissolvedOxygenCalibrationMenu {
-	+ doAtmoCalLabel: QLabel
-	+ doAtmoCalButton: QPushButton
-	+ doZeroCalLabel: QLabel
-	+ doZeroCalButton: QPushButton
-}
-class GainConfigurationMenu {
-	+ SliderValueLabel: QLabel
-	+ GainSlider: QSlider
-}
-class HallEffectSensor {
-	+ pin: int
-	+ callback: Callback
-}
-class SaturationConfigurationMenu {
-	+ SliderValueLabel: QLabel
-	+ SaturationSlider: QSlider
-}
-class ShutterSpeedConfigurationMenu {
-	+ ShutterSpeeds: QListWidget
-	+ SelectedShutterSpeedWidget: QLabel
-}
-class WhiteBalanceCalibrationMenu {
-	+ SliderValueLabel: QLabel
-	+ WhiteBalanceSlider: QSlider
-}
 class ReadResult {
 	+ phReading: float
 	+ tempReading: float
@@ -165,5 +108,9 @@ class sensorHub {
 	+ TempNewCal()
 	+ callibrateAll()
 	+ exit()
+}
+class HallEffectSensor {
+	+ pin: int
+	+ callback: Callback
 }
 @enduml

@@ -1,0 +1,87 @@
+@startuml
+class MainMenu {
+	+ QStackLayout[QWidget]: QLayout
+	+ LayoutForms: QWidget
+	+ FolderStructureGenerator: FolderStructureGenerator
+	+ decodeGPIO(RPI.GPIO)
+	+ QKeyEventHandler(QKeyEvent)
+	+ executeStudyProfile()
+	+ createFolderStructure()
+}
+class PreviewScreen {
+	+ LeftCameraPreview: QLabel
+	+ RightCameraPreview: QLabel
+	+ TemperatureLabel: QLabel
+	+ PressureLabel: QLabel
+	+ DissolvedOxygenLabel: QLabel
+	+ pHLabel: QLabel
+	+ IPAddressLabel: QLabel
+	+ StatusLabel: QLabel
+	+ CameraPreviewTimer: QTimer
+	+ SensorDataTimer: QTimer
+	+ IPAddressTimer: QTimer
+	+ CameraHandles: [int]
+	+ cameraControl: CameraControl
+	+ cameraPictureControl: CameraPictureControl
+	+ HallEffectSensors: [HallEffectSensor]
+	+ sensorHub: sensorHub
+	+ UpdateSensorDataLabels()
+	+ UpdateCameraPreview()
+	+ UpdateIPAddressLabel()
+	+ UpdateStatusLabel()
+}
+class StudyProfileSelectionMenu {
+	+ StudyProfile: JSON
+	+ StudyProfilesListWidget: QListWidget
+	+ SummaryLabel: QLabel
+	- SetActiveStudyProfile()
+}
+class DissolvedOxygenCalibrationMenu {
+	+ doAtmoCalLabel: QLabel
+	+ doAtmoCalButton: QPushButton
+	+ doZeroCalLabel: QLabel
+	+ doZeroCalButton: QPushButton
+	+ SensorHub: sensorHub
+}
+class phSensorCalibrationMenu {
+	+ LowPointtext: QLabel
+	+ LowPointCal: QPushButton
+	+ MidPointtext: QLabel
+	+ MidPointCal: QPushButton
+	+ HighPointtext: QLabel
+	+ HighPointCal: QPushButton
+	+ SensorHub: sensorHub
+}
+class GainConfigurationMenu {
+	+ SliderValueLabel: QLabel
+	+ GainSlider: QSlider
+	+ cameraControl: CameraControl
+}
+class SaturationConfigurationMenu {
+	+ SliderValueLabel: QLabel
+	+ SaturationSlider: QSlider
+	+ cameraControl: CameraControl
+}
+class ShutterSpeedConfigurationMenu {
+	+ ShutterSpeeds: QListWidget
+	+ SelectedShutterSpeedWidget: QLabel
+	+ cameraControl: CameraControl
+}
+class WhiteBalanceCalibrationMenu {
+	+ SliderValueLabel: QLabel
+	+ WhiteBalanceSlider: QSlider
+	+ cameraControl: CameraControl
+}
+class QApplication {
+	+ exec()
+}
+QApplication "1" *-- MainMenu
+MainMenu "1" *-- PreviewScreen
+MainMenu "1" *-- StudyProfileSelectionMenu
+MainMenu "1" *-- DissolvedOxygenCalibrationMenu
+MainMenu "1" *-- GainConfigurationMenu
+MainMenu "1" *-- SaturationConfigurationMenu
+MainMenu "1" *-- ShutterSpeedConfigurationMenu
+MainMenu "1" *-- WhiteBalanceCalibrationMenu
+MainMenu "1" *-- phSensorCalibrationMenu
+@enduml
