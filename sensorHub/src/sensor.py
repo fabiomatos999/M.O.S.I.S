@@ -93,7 +93,7 @@ class SensorHubStatus:
     """
 
     def __init__(self, incomingBin: bytes) -> None:
-        self.statusCode = int(incomingBin.decode("ascii").strip())
+        self.statusCode = int(incomingBin.decode("ascii").strip(), 2)
 
     def isPhWorking(self) -> bool:
         """
