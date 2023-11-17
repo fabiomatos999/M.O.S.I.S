@@ -5,8 +5,8 @@ package "User Interface" {
 	[Preview Screen]
 	[Study Select Menu]
 	frame "Camera Control" {
-		        [ISO Control Menu]
-		        [Aperture Size Control Menu]
+		        [Gain Control Menu]
+		        [Saturation Control Menu]
 		        [Shutter Speed Control Menu]
 		        [White Balance Control Menu]
 		}
