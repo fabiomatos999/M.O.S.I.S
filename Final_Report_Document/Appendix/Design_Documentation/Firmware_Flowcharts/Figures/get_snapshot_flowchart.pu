@@ -4,7 +4,6 @@ start
 :Create Image Bufffer;
 while (camera_index < 2) is (true)
 	:Get Raw Image;
-	:Adjust white balance;
 	:Format raw image to JPEG;
 	:Get sensor data, camera\n settings and datestamp;
 	:Create Study Entry Directory;
