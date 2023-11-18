@@ -1,6 +1,10 @@
 \documentclass[12pt]{article}
 
 \usepackage{graphicx}
+\usepackage[subpreambles=true]{standalone}
+\usepackage{import}
+\usepackage{float}
+
 
 \begin{document}
 \include{Title_Page/Title_Page}
@@ -97,7 +101,17 @@ Given that we are making a graphical user interface application, this now begs t
 \end{enumerate}
 Web based applications utilize the web browser to serve as the basis for the application. These kinds of applications have a client-server relationship where the client is the web browser that displays the user interface and the server is the software the handles the back end logic and processes and stores data and runs on native hardware and not in the web browser. On the other hand native applications have a monolithic architecture wherein a singular unit of software displays the user interface and handles the back end logic. ``Web-Native'' applications are a hybrid approach to native and web based applications where the application it self runs on native hardware but leverages web technologies such as electron and React-Native to utilize the client server relationship to more easily port applications to various platforms.\\
 On the surface all 3 architectures are viable for the host software, but there are additional considerations outside of the user requirements and design criteria, namely portability and maintainability. Since the M.O.S.I.S microscope, at it's core is a Raspberry Pi 4 micro-controller, it utilizes the official Raspberry Pi OS which is based off of Debian Linux which is a free and open source UNIX operating system. Given how well UNIX operating systems work together, the initial goal was to make the host software exclusive to Ubuntu/Debian. However, the client wanted the host software to be on Microsoft Windows, so as a compromise, making the host software portable between Linux and Windows was a major design consideration from the start. Second is maintainability, given that the M.O.S.I.S project's software functions are multi semester collaborative effort between various undergraduate engineering students, the existing code base for the M.O.S.I.S microscope are written in Python for the microscope functions and C for the sensor hub. Given that C is a compiled, lower level programming language than Python and that Python itself the most popular programming language in the world, it was decided that Python would the programming language of choice for the host software. Python has a readily available interpreter on almost every operating system and architecture, thus making it portable. Python is, as mentioned previously, the most popular programming language in the world, where finding people that can maintain, update and fix the host application is easier, thus making it maintainable. However, Python on its own does not answer the fundamental question of which graphical user interface paradigm to use for our design, to answer that we have to analyze each paradigm on its own with the design criterion.\\
-Web based applications, as the name implies, are applications that run in a web browser such as Chromium or Firefox. These kinds of applications are extremely portable since all popular operating systems and CPU architectures have a web browser written for them. They are also very since the client-server relationship and routing allows for segments of an application to be sand-boxed from each other. Native applications are typically more efficient with system resources than web based applications but typically more difficult to maintain due to the monolithic architecture of a native application and how every GUI library works. Native applications have to also be ported to either be ported to other platforms or use a GUI library that is cross platform, thus making it not as portable. ``Web-Native'', in this use case, suffer from the disadvantages of both native and Web based applications, where since they are developed for a specific architecture they are not as portable and since they use more specialized frameworks such as electron or React-Native finding people to maintain this software would prove to be much more difficult, making it less maintainable. This leads use to choose Web based, GUI, Python application for the host software.
+Web based applications, as the name implies, are applications that run in a web browser such as Chromium or Firefox. These kinds of applications are extremely portable since all popular operating systems and CPU architectures have a web browser written for them. They are also very since the client-server relationship and routing allows for segments of an application to be sand-boxed from each other. Native applications are typically more efficient with system resources than web based applications but typically more difficult to maintain due to the monolithic architecture of a native application and how every GUI library works. Native applications have to also be ported to either be ported to other platforms or use a GUI library that is cross platform, thus making it not as portable. ``Web-Native'', in this use case, suffer from the disadvantages of both native and Web based applications, where since they are developed for a specific architecture they are not as portable and since they use more specialized frameworks such as electron or React-Native finding people to maintain this software would prove to be much more difficult, making it less maintainable. This leads use to choose Web based, GUI, Python application for the host software.\\
+\subsection{System Architecture}
+\begin{figure}[H]
+	\resizebox{\textwidth}{!}{
+		\import{Figures}{system_architecture.tex}
+	}
+	\caption{Host Software System Architecture}
+\end{figure}
+\subsection{Description of Design Process}
+\subsection{Description of Implementation}
+\subsection{Description of Testing}
 \section{Methods and approach to the solution}
 \section{Results, and impact of the project}
 \section{Conclusions and Future Work}

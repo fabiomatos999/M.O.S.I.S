@@ -1,0 +1,18 @@
+@startuml
+() SSH
+package "Raspberry Pi" {
+	frame "Captured Media"
+	frame "Study Profile"
+}
+package "Host Computer" {
+	frame "Hard Disk"
+	frame "Host Software Server"
+	frame "Host Software Client"
+	() HTTP
+}
+"Captured Media" ..> SSH
+SSH <--> "Hard Disk"
+SSH ..> "Study Profile"
+"Host Software Server" <..> HTTP
+HTTP <..> "Host Software Client"
+@enduml
