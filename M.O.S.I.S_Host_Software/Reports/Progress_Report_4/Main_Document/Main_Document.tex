@@ -110,8 +110,11 @@ Web based applications, as the name implies, are applications that run in a web 
 	\caption{Host Software System Architecture}
 \end{figure}
 \subsection{Description of Design Process}
+The design process started by first converting the requirements given by the client into a set of features. From this set of features, the first features to be designed were the ones that were the backbone or prerequisites of other features. So for example, the database schema, the ``/'' route, the markup of the home screen, media entry markup, the navigation bar and the test data generator were designed first since the image manipulation, database reconstruct, study profile generation and report export all require some or all of the prerequisites. As for the design of each individual module, each one was designed by first looking at the domain and interface requirements and creating mock up or a proof of concept to the client and stakeholder. Once feedback is received from the client and stakeholder, the design for that module is finalized.
 \subsection{Description of Implementation}
+Once a module design is approved, first the back end logic for that module is implemented in to a working state. Then the markup needed for that module is written in a HTML template, that uses Jinja2 syntax to insert Python code to programatically generate the markup for that particular page. Then, both the back end logic and front end markup are integrated inside of a route. Finally, if necessary, the feature is added to markup of the navigation bar or the index page.
 \subsection{Description of Testing}
+To test an individual module, it is first unit tested inside of the Python console, checking various edge cases and normal cases and fixing bugs if a test fails. Then once the module is integrated, integration testing is done to see if there are new edge cases in the markup that are not possible in the beck end. Finally, the module is both unit and integration tested on Windows to see if the change in operating system introduced new regressions.
 \section{Methods and approach to the solution}
 \section{Results, and impact of the project}
 \section{Conclusions and Future Work}
