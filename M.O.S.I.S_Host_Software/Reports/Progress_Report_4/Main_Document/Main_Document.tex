@@ -253,6 +253,25 @@ Now we have our programming language of choice and broad system architecture set
 \end{figure}
 \section{Design Documentation}
 \subsection{Module Description}
+The host software can be divided into the following Modules:
+\begin{itemize}
+\item Application/Routes
+  \begin{itemize}
+    \item Encompasses the web server and routes for the web server. The routes themselves are URLs that execute Python functions that return rendered jinja2 templates.
+  \end{itemize}
+\item Database Query
+  \begin{itemize}
+  \item Initializing a database query object creates the database tables if they do not already exists. It also provides an interface to store and read various kinds of data from either MediaEntry and MediaMetadata tables.
+  \end{itemize}
+\item Representations
+  \begin{itemize}
+    \item Internal Representations of database tables. Used to internally to present database objects to the user.
+  \end{itemize}
+\item Database Reconstruct (DBReconstruct)
+  \begin{itemize}
+    \item Class that rebuild the database before the web server starts. It uses the folder structure from the user interface to insert media entries and media metadata.
+  \end{itemize}
+\end{itemize}
 \subsection{User Interface}
 \begin{figure}[H]
 	\includegraphics[width=\textwidth]{Figures/index_view.png}
