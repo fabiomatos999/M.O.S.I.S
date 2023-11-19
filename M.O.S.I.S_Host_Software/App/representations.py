@@ -7,7 +7,7 @@ class MediaEntryInternalRepresentation():
     def __init__(self, entryId: int, shotType: shotType, time: str,
                  illuminationType: illuminationType, saturation: int,
                  gain: float, shutterSpeed: float, whiteBalance: int):
-        """Construct w."""
+        """Construct MediaEntryInternalRepresentation."""
         self.entryId = entryId
         self.shotType = shotType
         self.time = time
