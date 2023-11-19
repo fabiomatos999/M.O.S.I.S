@@ -86,7 +86,7 @@ These design criteria are in part due to the target users of the M.O.S.I.S micro
 	\item Friendly and modern user interface design.
 	\item Automate the process of data analysis.
 	\item Streamline the process of data export.
-	\item Seamless integration between the host machine and the Raspberry Pi.
+a	\item Seamless integration between the host machine and the Raspberry Pi.
 \end{enumerate}
 \subsection{Analysis of alternatives}
 Given that the term ``host software'' and the design criteria are rather broad, this gives us a lot of possible and viable alternatives for a design. To start we need to first identify what are the possible ways of creating a user interface for this piece of software. There are 3 main approaches used in modern software design for making user interfaces:
@@ -190,7 +190,9 @@ The main lesson learned from developing the host software for the M.O.S.I.S micr
 \bibliographystyle{IEEEtranN}
 \addcontentsline{toc}{section}{Bibliographic References}
 \bibliography{../../../../References_Library/ICOM5047}
+\pagenumbering{gobble}
 \appendix
+\pagenumbering{arabic}
 \section{Glossary}
 \section{User Requirements}
 \subsubsection{Domain Requirements}
@@ -289,6 +291,12 @@ Now we have our programming language of choice and broad system architecture set
 	\caption{M.O.S.I.S Host Software: List View}
 \end{figure}
 \subsection{Use Case Diagram}
+\begin{figure}[H]
+	\resizebox{\textwidth}{!}{
+		\import{Figures}{use_case_diagram.tex}
+	}
+	\caption{Host Software: Use Case Diagram}
+\end{figure}
 \subsection{Class Diagram}
 \subsection{Sequence Diagram}
 \subsection{Activity Diagram}
