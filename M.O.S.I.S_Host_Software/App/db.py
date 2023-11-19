@@ -250,8 +250,5 @@ class DatabaseQuery:
                     filter(lambda x: x >= dbMin and x <= dbMax, entries))
                 entries.sort()
             entryIds = self.getAllMediaEntryIDs()
-            entries = list(filter(lambda x: entryIds.__contains__(x) , entries))
+            entries = list(filter(lambda x: entryIds.__contains__(x), entries))
             return entries
-    
-
-        
