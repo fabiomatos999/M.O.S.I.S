@@ -115,6 +115,50 @@ The design process started by first converting the requirements given by the cli
 Once a module design is approved, first the back end logic for that module is implemented in to a working state. Then the markup needed for that module is written in a HTML template, that uses Jinja2 syntax to insert Python code to programatically generate the markup for that particular page. Then, both the back end logic and front end markup are integrated inside of a route. Finally, if necessary, the feature is added to markup of the navigation bar or the index page.
 \subsection{Description of Testing}
 To test an individual module, it is first unit tested inside of the Python console, checking various edge cases and normal cases and fixing bugs if a test fails. Then once the module is integrated, integration testing is done to see if there are new edge cases in the markup that are not possible in the beck end. Finally, the module is both unit and integration tested on Windows to see if the change in operating system introduced new regressions.
+\subsection{Analysis of Constraints and Limitations}
+The following were the main constraints and limitations associated with the creation of the host software and how they were solved:
+\begin{enumerate}
+	\item That it was developed along side the new user interface, thus a lot of the design decisions were done in parallel on an expedited timeline.
+	      \begin{itemize}
+		      \item This was solved by either formalizing specifications of the user interface on the host software first and porting them to the user interface or by formalizing specifications of host software on the user interface and then porting them to the host software.
+	      \end{itemize}
+	\item That there is a single person developing the host software.
+	      \begin{itemize}
+		      \item On day a week the sole developer dedicates their time 8 to 12 hours to develop the host software.
+	      \end{itemize}
+	\item That the project timeline is only a semester long.
+	      \begin{itemize}
+		      \item Keep feature set of the host software within project specifications.
+	      \end{itemize}
+	\item That this is the developer's first formal experience creating a full stack web application.
+	      \begin{itemize}
+		      \item Use established tools such as flask and sqlite3 so that resources and documentation are readily available instead of using tools that are more experimental and less established.
+	      \end{itemize}
+	\item That the target user base are not engineers, and thus the host software has to be simplified substantially.
+	      \begin{itemize}
+		      \item Constant feedback with the client and stakeholder to ensure a smoother user experience.
+	      \end{itemize}
+	\item Slow progress in the creation of the shot types on the user interface side in turn slowed down progress in integrating all of the features on the host software.
+	      \begin{itemize}
+		      \item Focus on polishing other aspects of the host software while the shot types are created.
+	      \end{itemize}
+\end{enumerate}
+\subsection{Analysis of Difficulties}
+During the course of developing the host software, there are 3 main sources of difficulty that arose and how they were solved:
+\begin{itemize}
+	\item The initial choice of using an ORM for the database instead of using sqlite3
+	      \begin{itemize}
+		      \item Migrate from using an ORM to using base sqlite3
+	      \end{itemize}
+	\item Lack of experience using opencv
+	      \begin{itemize}
+		      \item Take an opencv course on Udemy
+	      \end{itemize}
+	\item Finding open source Windows alternatives to Linux tooling
+	      \begin{itemize}
+		      \item Find windows ports of the Linux tools and learn Powershell to integrate them
+	      \end{itemize}
+\end{itemize}
 \section{Methods and approach to the solution}
 \section{Results, and impact of the project}
 \section{Conclusions and Future Work}
