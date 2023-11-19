@@ -7,9 +7,12 @@
 
 
 \begin{document}
+\pagenumbering{gobble}
 \include{Title_Page/Title_Page}
 \section*{Executive Summary}
+\pagenumbering{roman}
 \tableofcontents
+\pagenumbering{arabic}
 \section{Introduction}
 The Marine Operated Stereoscopic Imaging System (M.O.S.I.S) is a device created by David M. Repollet Otero along with Manuel A. Jimenez Cedeno in order to study marine life \textit{in situ} in stereoscopic vision while capturing environmental conditions such as temperature, pH, pressure and dissolved oxygen. As of November 27, 2023, the microscope itself has a fully completed user interface capable of capturing various kinds of still photography and videos. However, at its core, the M.O.S.I.S microscope is an embedded system running a Raspberry Pi 4b, meaning that processing speed and memory are both severely limited. But not only is processing power limited, but the device itself will be deployed in an extremely hostile environment, where the microscope can be destroyed at a moments notice. Even more so, the microscope does not provide the means to recover the captured data nor does it provide the means to analyses and present the data to the user. The host software for the M.O.S.I.S microscope aims to backup the data captured by the M.O.S.I.S microscope, analyses the data captured by the microscope and generate reports based on the captured data.\\
 \subsection{System Requirements}
@@ -160,8 +163,29 @@ During the course of developing the host software, there are 3 main sources of d
 	      \end{itemize}
 \end{itemize}
 \section{Methods and approach to the solution}
+The specifications of the system where validated by having client approval of a feature in the weekly meetings. The features were tested by utilizing unit and integration tests for each feature. As for changes in schedule the mains ones where the slower than anticipated progress in getting real data from the microscope from the new user interface, thus the integration of those features that had incomplete dependent components were moved back to the backlog and instead focused either drafting reports or polishing up other aspects of the user interface.
 \section{Results, and impact of the project}
+By the end of this semester the host software can:
+\begin{itemize}
+	\item Backup the Raspberry Pi only using an IP address
+	\item Create compressed images of the microscope operating system
+	\item Reconstruct a transient database only given a set files and folders from the user interface on the microscope.
+	\item Create stereoscopic, thresholds and tagged media from the files within the database.
+	\item Present all captured media in a home page in either picture view or a list view.
+	\item View a media entry and have a page tailored to that media entry based on shot type.
+	\item Search media entries by either shot type, illumination type, ID or date.
+	\item Create validated study profile entries.
+	\item Seamlessly upload study profile to the Raspberry Pi.
+	\item Automatically generate reports from the entire database or filtered entries.
+	\item Automatically generates video and focus stack images for video and telescopic shot types respectively.
+	\item Automatically creates GIFs for time lapse and burst shot types.
+\end{itemize}
+\subsection{Societal Impact Analysis}
+The host software being integrated with the new user interface completes the software necessary for the M.O.S.I.S microscope to be deployed. With it being completed the microscope can now be used by researchers to capture data about bleaching corals and other damage to aquatic ecosystems. This can inform the public about how dire the climate crisis really is and lead to further civil action as a consequence.
 \section{Conclusions and Future Work}
+In conclusion, the development of the host software was one that bought many unique challenges, mainly due to how the host software and the microscope's user interface were developed in parallel. Constant validation from the client quickly formalized requirements but also caused requirements to change. Difficulties of using the cameras on the microscope caused changing requirements on host software as well. Given the unique circumstances of development, there is doubt if the way the host software was developed could be improved in any substantial way besides having a more experienced developer that knows how to use opencv and knows full stack development from the start. However, the most substantial way of improving development would be to have a quality assurance partner on hand to make sure integration and testing is more thorough in the future.\\
+As for future work, the host software can be improved to search by shutter speed, temperature, pressure, dissolved oxygen or even by camera gain, saturation or color temperature. As for improvements in image manipulation, smarter threshold analysis using machine learning or color analysis using edge detection algorithms could be added to further automate the research process. Of course the aesthetics of the host software can always be improved since its using CSS for styling.\\
+The main lesson learned from developing the host software for the M.O.S.I.S microscope is the importance of having a grander vision of both the host software and the microscope's user interface in order to smooth out integration. Another lesson learned was the importance being able to communicate effectively with stakeholders and the client. Not being able to communicate with individuals of differing technical proficiency leads to horrid failures in communication and thus can lead to project failure.
 \bibliographystyle{IEEEtranN}
 \addcontentsline{toc}{section}{Bibliographic References}
 \bibliography{../../../../References_Library/ICOM5047}
