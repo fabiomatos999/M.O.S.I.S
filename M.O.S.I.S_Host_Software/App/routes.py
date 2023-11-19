@@ -204,7 +204,6 @@ def search(category: str):
 
     form = return_search_form(category)
     if form.is_submitted():
-        print(form)
         ret = request.form
         searchBy = category
         searchQuery = ret["search"]
