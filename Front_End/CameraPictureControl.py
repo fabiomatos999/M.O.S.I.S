@@ -24,6 +24,7 @@ class CameraPictureControl():
         :param picFormat Image format enum from PxLApi ImageFormat.
         """
         self.imageFormat = picFormat
+        self.stopStudy = False
 
     def get_snapshot(self, cameraHandle: int, fileName: str):
         """Get a snapshot from the camera, and save to a file.
@@ -120,6 +121,8 @@ class CameraPictureControl():
 
         sensorHub = sensor.sensorHub()
         while counter < amountOfPictures:
+            if self.stopStudy:
+                return
             if time.time() > stepTime or counter == 0:
                 sensorData = sensorHub.Read()
                 media_metadata = dq.insertMediaMetadata(
@@ -137,7 +140,8 @@ class CameraPictureControl():
                 time.sleep(0.1)
 
     def getTelescopicSnapshot(self, cameraHandles: [int], minFocus: float,
-                              maxFocus: float, numShots: int):
+                              maxFocus: float, numShots: int, entry_id: int,
+                              path: str):
         """Take a telescopic image given shots and min and max focus values.
 
         :param cameraHandles list of camera handles from the
@@ -146,21 +150,31 @@ class CameraPictureControl():
         capture will start
         :param maxFocus The maximum focus value where the telescopic image
         capture will stop
+        :param numShots The number of images to be taken in a telescopic image.
+        :param entry_id MediaEntry entry_id associated with this image
+        :param path Directory where media will be written to.
         NOTE: Min and Max focus values have to be between 1 and 46,000.
         """
-        if not (1 < minFocus < 46, 000 and 1 < minFocus < 46000):
-            raise ValueError(
-                "Min and Max Focus Have to be between 1 and 46,000")
+        dq = databaseQuery.DatabaseQuery()
+        sensorHub = sensor.sensorHub()
         if minFocus > maxFocus:
             temp = minFocus
             minFocus = maxFocus
             maxFocus = temp
-        step = (maxFocus - minFocus) / numShots
-        for focusValue in range(minFocus, maxFocus + step, step):
-            for camera in cameraHandles:
-                PxLApi.setFeature(camera, PxLApi.FeatureId.FOCUS,
-                                  PxLApi.FeatureFlags.ONEPUSH, focusValue)
-                self.get_snapshot(camera, "formatted-filename")
+        for focus in range(minFocus, maxFocus, numShots):
+            self.setExposure(cameraHandles, focus, "")
+            sensorData = sensorHub.Read()
+            media_metadata = dq.insertMediaMetadata(entry_id, path, "jpg",
+                                                    MainMenu.getCurrentTime(),
+                                                    sensorData.tempReading,
+                                                    sensorData.baroReading,
+                                                    sensorData.phReading,
+                                                    sensorData.DOreading)
+            media_metadata = dq.getMediaMetadatabyId(media_metadata)
+            self.get_snapshot(self.previewScreen.cameraHandles[0],
+                              media_metadata.left_Camera_Media)
+            self.get_snapshot(self.previewScreen.cameraHandles[1],
+                              media_metadata.right_Camera_Media)
 
     def getVideo(self,
                  cameraHandles: [int],
@@ -182,6 +196,8 @@ class CameraPictureControl():
         now = time.time()
         sensorHub = sensor.sensorHub()
         while time.time() < now + recordTime:
+            if self.stopStudy:
+                return
             sensorData = sensorHub.Read()
             metadata = dq.insertMediaMetadata(entryId, path, "jpg",
                                               MainMenu.getCurrentTime(),

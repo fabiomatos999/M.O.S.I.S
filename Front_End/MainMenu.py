@@ -456,6 +456,11 @@ class MainMenu(object):
         elif event.key(
         ) == Qt.Key.Key_Return and self.stackedLayout.currentIndex() == 0:
             self.executeStudyProfile()
+
+        elif event.key() == Qt.Key.Key_Q and currentIndex != 0:
+            self.cameraPictureControl.stopStudy = True
+            time.sleep(4)
+            self.cameraPictureControl.stopStudy = False
         elif event.key() == Qt.Key.Key_Q:
             if self.focusPoint1 is None:
                 self.previewScreen.cameraControl.customFocus[0]
@@ -548,22 +553,9 @@ class MainMenu(object):
                 temp = self.focusPoint1
                 self.focusPoint1 = self.focusPoint2
                 self.focusPoint2 = temp
-            for focus in range(self.focusPoint1, self.focusPoint2, steps):
-                self.previewScreen.cameraControl.setExposure(
-                    self.previewScreen.cameraHandles, focus, "")
-
-                media_metadata = dq.insertMediaMetadata(
-                    entry_id, path, "jpg", MainMenu.getCurrentTime(),
-                    self.previewScreen.tempReading,
-                    self.previewScreen.baroReading,
-                    self.previewScreen.phReading, self.previewScreen.DOreading)
-                media_metadata = dq.getMediaMetadatabyId(media_metadata)
-                self.cameraPictureControl.get_snapshot(
-                    self.previewScreen.cameraHandles[0],
-                    media_metadata.left_Camera_Media)
-                self.cameraPictureControl.get_snapshot(
-                    self.previewScreen.cameraHandles[1],
-                    media_metadata.right_Camera_Media)
+            self.cameraPictureControl.getTelescopicSnapshot(
+                self.previewScreen.cameraHandles, self.focusPoint1,
+                self.focusPoint2, steps, entry_id, path)
         elif studyProfile["shotType"] == "VIDEO":
             videoLength = int(float(studyProfile["videoLength"]) * 60.0)
             self.cameraPictureControl.getVideo(
