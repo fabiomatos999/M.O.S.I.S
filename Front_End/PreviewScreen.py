@@ -376,6 +376,7 @@ class Ui_Form(object):
         self.right_camera.setStyleSheet("")
         self.left_camera.setPixmap(QtGui.QPixmap("thumbnail.jpeg"))
         self.right_camera.setPixmap(QtGui.QPixmap("thumbnail.jpeg"))
+        self.setStatusLabel(False)
 
     def setIPAddressLabel(self, ipAddress: str = getIpAddress("wlan0")):
         """Set IP address label.
