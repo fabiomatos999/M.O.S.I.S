@@ -335,7 +335,7 @@ class Ui_Form(object):
         self.retranslateUi(Form)
         self.ipAddressRefreshTimer = QTimer(Form)
         self.ipAddressRefreshTimer.setInterval(1000)
-        # self.ipAddressRefreshTimer.timeout.connect(self.setIPAddressLabel)
+        self.ipAddressRefreshTimer.timeout.connect(self.setIPAddressLabel)
         self.cameraPreviewRefreshTimer = QTimer(Form)
         self.cameraPreviewRefreshTimer.setInterval(int((1 / 5) * 1000))
         self.cameraPreviewRefreshTimer.timeout.connect(
