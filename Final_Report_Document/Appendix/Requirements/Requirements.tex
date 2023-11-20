@@ -6,8 +6,8 @@
 	\item The system-to-be must have the means to switch between different study profiles
 	\item The system-to-be must control the lighting on the microscope cameras according to the study profile.
 	\item The system-to-be must control the shot type on the microscope cameras according to the study profile.
-	\item The system-to-be must control the ISO of the microscope cameras.
-	\item The system-to-be must control the aperture size of the microscope cameras.
+	\item The system-to-be must control the gain of the microscope cameras.
+	\item The system-to-be must control the saturation of the microscope cameras.
 	\item The system-to-be must control the shutter speed of the microscope cameras.
 	\item The system-to-be must control the white balance of the microscope cameras.
 	\item The system-to-be must call the calibration functions of the microscope sensors.
@@ -16,14 +16,14 @@
 		      \item Left Camera Media
 		      \item Right Camera Media
 		      \item Shot type
-		      \item ISO 8601 Date Stamp (yyyy-MM-ddTHH:mm:ss.zzz)
+		      \item Modified ISO 8601 Date Stamp (yyyy-MM-ddTHHmm:ss.zzz)
 		      \item Temperature
 		      \item pH
 		      \item Pressure
 		      \item Dissolved Oxygen
 		      \item Illumination Type
-		      \item ISO
-		      \item Aperture Size
+		      \item Gain
+		      \item Saturation
 		      \item Shutter Speed
 		      \item White Balance
 	      \end{itemize}
@@ -32,15 +32,15 @@
 \end{itemize}
 \subsection{Interface Requirements}
 \begin{itemize}
-	\item The system-to-be must present the feed from left and right cameras, each at 24FPS and a downscaled 400x400 resolution.
+	\item The system-to-be must present the feed from left and right cameras at downscaled 400x400 resolution.
 	\item The system-to-be must present: temperature, pH, pressure, dissolved oxygen, study status, ISO, aperture size and shutter speed, white balance and IP address.
 	\item The system-to-be must update temperature, pH, pressure, dissolved oxygen and local IP address, study status, every two seconds due to the existing UART implementation.
 	\item The system-to-be lighting enumeration contains:
 	      \begin{itemize}
 		      \item None
-		      \item Infrared
+		      \item White
 		      \item Ultraviolet
-		      \item Visible Spectrum
+		      \item Red
 	      \end{itemize}
 	\item The system-to-be shot type enumeration contains:
 	      \begin{itemize}
@@ -51,17 +51,17 @@
 		      \item Video
 	      \end{itemize}
 	\item The system-to-be must initiate a capture with a single button.
-	\item The system-to-be must shutdown the operating system safely with a single button.
+	\item The system-to-be must shutdown the operating system safely using 2 buttons.
 	\item The system-to-be must stop capture with a single button.
 	\item The system-to-be must be able to navigate through the study profiles using only two buttons.
 	\item The system-to-be must show the currently loaded study profiles using a single button.
 	\item The system-to-be must store all files related to a single study entry in a single directory.
 	\item The system-to-be must store a JSON file with all data and metadata from the study entry along in the same directory as the study entry.
-	\item The system-to-be must control the focus of the cameras one stepper motor step at a time using two buttons.
-	\item The system-to-be must control the ISO of the cameras using two buttons.
-	\item The system-to-be must show all available camera ISO using a single button.
-	\item The system-to-be must control the aperture size of the cameras using two buttons.
-	\item The system-to-be must show all available aperture sizes using a single button.
+	\item The system-to-be must control the focus of the cameras x points at a time using two buttons.
+	\item The system-to-be must control the gain of the cameras using two buttons.
+	\item The system-to-be must show all available camera gain values using a single button.
+	\item The system-to-be must control the saturation of the cameras using two buttons.
+	\item The system-to-be must show all available saturation values using a single button.
 	\item The system-to-be must control the shutter speed of the cameras using two buttons.
 	\item The system-to-be must show all available shutter speeds using a single button.
 	\item The system-to-be must control the white balance of the cameras using two buttons.
