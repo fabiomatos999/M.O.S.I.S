@@ -166,7 +166,7 @@ class sensorHub:
         """Set up UART communication channel."""
         try:
             self.channel = serial.Serial(self._UARTPort,
-                                         baudrate=9600,
+                                         baudrate=115200,
                                          timeout=8)
             print(self.channel)
         except serial.SerialException as e:
