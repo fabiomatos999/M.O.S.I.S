@@ -275,8 +275,8 @@ class MainMenu(object):
         self.studyProfileSelectionMenu.setupUi(
             self.studyProfileSelectionMenuForm)
         self.stackedLayout.addWidget(self.studyProfileSelectionMenuForm)
-        self.shutterSpeedSelectionMenu = PreviewScreen.Ui_ShutterSpeedConfigMenu(
-        )
+        self.shutterSpeedSelectionMenu = \
+            PreviewScreen.Ui_ShutterSpeedConfigMenu()
         self.shutterSpeedSelectionMenuForm = BaseMenuWidget()
         self.shutterSpeedSelectionMenu.setupUi(
             self.shutterSpeedSelectionMenuForm)
@@ -356,9 +356,9 @@ class MainMenu(object):
         sensors.
         """
         key_event = None
-        if GPIO.input(17) and GPIO.input(6):
+        if GPIO.input(17) == GPIO.HIGH and GPIO.input(6) == GPIO.HIGH:
             now = time.time()
-            while GPIO.input(17) and GPIO.input(6):
+            while GPIO.input(17) == GPIO.HIGH and GPIO.input(6) == GPIO.HIGH:
                 if time.time() - now > 3:
                     subprocess.call(["sudo", "shutdown", "now"])
             return
@@ -431,10 +431,14 @@ class MainMenu(object):
         """
         currentIndex = self.stackedLayout.currentIndex()
         if event.key() == Qt.Key.Key_Up and currentIndex == 0:
-            self.previewScreen.cameraControl.setFocus(self.previewScreen.cameraHandles, self.previewScreen.cameraControl.customFocus[0]+10, "")            
+            self.previewScreen.cameraControl.setFocus(
+                self.previewScreen.cameraHandles,
+                self.previewScreen.cameraControl.customFocus[0] + 10, "")
             print(self.previewScreen.cameraControl.customFocus[0])
         elif event.key() == Qt.Key.Key_Down and currentIndex == 0:
-            self.previewScreen.cameraControl.setFocus(self.previewScreen.cameraHandles, self.previewScreen.cameraControl.customFocus[0]-10, "")
+            self.previewScreen.cameraControl.setFocus(
+                self.previewScreen.cameraHandles,
+                self.previewScreen.cameraControl.customFocus[0] - 10, "")
             print(self.previewScreen.cameraControl.customFocus[0])
         elif event.key() == Qt.Key.Key_F1:
             if currentIndex == 7:
@@ -492,21 +496,23 @@ class MainMenu(object):
         elif illuminationType == "ULTRAVIOLET":
             GPIO.output(4, GPIO.HIGH)
         dq = databaseQuery.DatabaseQuery()
-        entry_id = dq.insertMediaEntry(
-            studyProfile["shotType"], MainMenu.getCurrentTime(),
-            studyProfile["illuminationType"], self.getCurrentGain(),
-           self.getCurrentSaturation(),
-            self.getCurrentShutterSpeed(),
-            self.getCurrentWhiteBalance())
+        entry_id = dq.insertMediaEntry(studyProfile["shotType"],
+                                       MainMenu.getCurrentTime(),
+                                       studyProfile["illuminationType"],
+                                       self.getCurrentGain(),
+                                       self.getCurrentSaturation(),
+                                       self.getCurrentShutterSpeed(),
+                                       self.getCurrentWhiteBalance())
         media_entry = dq.getMediaEntrybyId(entry_id)
         fsg = FolderStructureGenerator.FolderStructureGenerator()
         path = os.path.join(fsg.root_path, str(media_entry))
         fsg.create_folder_structure(entry_id)
 
         if studyProfile["shotType"] == "SINGLE":
-            media_metadata = dq.insertMediaMetadata(entry_id, path, "jpg",
-                                                    MainMenu.getCurrentTime(),
-                                                    95.5, 100, 8, 0.5)
+            media_metadata = dq.insertMediaMetadata(
+                entry_id, path, "jpg", MainMenu.getCurrentTime(),
+                self.previewScreen.tempReading, self.previewScreen.baroReading,
+                self.previewScreen.phReading, self.previewScreen.DOreading)
             media_metadata = dq.getMediaMetadatabyId(media_metadata)
             self.cameraPictureControl.get_snapshot(
                 self.previewScreen.cameraHandles[0],
@@ -518,8 +524,10 @@ class MainMenu(object):
         elif studyProfile["shotType"] == "BURST":
             for _ in range(int(studyProfile["shotCount"])):
                 media_metadata = dq.insertMediaMetadata(
-                    entry_id, path, "jpg", MainMenu.getCurrentTime(), 95.5,
-                    100, 8, 0.5)
+                    entry_id, path, "jpg", MainMenu.getCurrentTime(),
+                    self.previewScreen.tempReading,
+                    self.previewScreen.baroReading,
+                    self.previewScreen.phReading, self.previewScreen.DOreading)
                 media_metadata = dq.getMediaMetadatabyId(media_metadata)
                 self.cameraPictureControl.get_snapshot(
                     self.previewScreen.cameraHandles[0],
@@ -544,8 +552,10 @@ class MainMenu(object):
                     self.previewScreen.cameraHandles, focus, "")
 
                 media_metadata = dq.insertMediaMetadata(
-                    entry_id, path, "jpg", MainMenu.getCurrentTime(), 95.5,
-                    100, 8, 0.5)
+                    entry_id, path, "jpg", MainMenu.getCurrentTime(),
+                    self.previewScreen.tempReading,
+                    self.previewScreen.baroReading,
+                    self.previewScreen.phReading, self.previewScreen.DOreading)
                 media_metadata = dq.getMediaMetadatabyId(media_metadata)
                 self.cameraPictureControl.get_snapshot(
                     self.previewScreen.cameraHandles[0],
@@ -621,6 +631,12 @@ class MainMenu(object):
         saturation = float(strings[1])
         return saturation
 
+    def closeEvent(self):
+        """Run when Main Menu closes. Clean up resources."""
+        self.previewScreen.cameraControl.cleanUpCameras(
+            self.previewScreen.cameraHandles)
+        GPIO.cleanup()
+
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
@@ -628,6 +644,3 @@ if __name__ == "__main__":
     ui = MainMenu(form)
     form.showFullScreen()
     sys.exit(app.exec())
-
-
-

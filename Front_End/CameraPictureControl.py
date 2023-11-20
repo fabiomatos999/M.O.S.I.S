@@ -4,6 +4,7 @@ from ctypes import create_string_buffer
 import time
 import databaseQuery
 from MainMenu import MainMenu
+import sensor
 
 SUCCESS = 0
 FAILURE = 1
@@ -117,11 +118,14 @@ class CameraPictureControl():
         stepInterval = (total_interval_min * 60) / amountOfPictures
         stepTime = time.time() + stepInterval
 
+        sensorHub = sensor.sensorHub()
         while counter < amountOfPictures:
             if time.time() > stepTime or counter == 0:
+                sensorData = sensorHub.Read()
                 media_metadata = dq.insertMediaMetadata(
-                    entryId, path, "jpg", MainMenu.getCurrentTime(), 95.5, 100,
-                    8, 0.5)
+                    entryId, path, "jpg", MainMenu.getCurrentTime(),
+                    sensorData.tempReading, sensorData.baroReading,
+                    sensorData.phReading, sensorData.DOreading)
                 media_metadata = dq.getMediaMetadatabyId(media_metadata)
                 self.get_snapshot(cameraHandles[0],
                                   media_metadata.left_Camera_Media)
@@ -176,10 +180,15 @@ class CameraPictureControl():
         """
         dq = databaseQuery.DatabaseQuery()
         now = time.time()
+        sensorHub = sensor.sensorHub()
         while time.time() < now + recordTime:
+            sensorData = sensorHub.Read()
             metadata = dq.insertMediaMetadata(entryId, path, "jpg",
-                                              MainMenu.getCurrentTime(), 24.5,
-                                              1000, 7.45, 300.56)
+                                              MainMenu.getCurrentTime(),
+                                              sensorData.tempReading,
+                                              sensorData.baroReading,
+                                              sensorData.phReading,
+                                              sensorData.DOreading)
             metadata = dq.getMediaMetadatabyId(metadata)
             self.get_snapshot(cameraHandles[0], metadata.left_Camera_Media)
             self.get_snapshot(cameraHandles[1], metadata.right_Camera_Media)
