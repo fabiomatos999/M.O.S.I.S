@@ -25,6 +25,7 @@ import HallEffectSensor
 import RPi.GPIO as GPIO
 import subprocess
 import time
+import sensor
 
 
 class BaseMenuWidget(QtWidgets.QWidget):
@@ -639,8 +640,21 @@ class MainMenu(object):
 
 
 if __name__ == "__main__":
-    app = QtWidgets.QApplication(sys.argv)
-    form = QtWidgets.QWidget()
-    ui = MainMenu(form)
-    form.showFullScreen()
-    sys.exit(app.exec())
+    sensorHub = sensor.sensorHub()
+    sensorStatus = sensorHub.SysCheck()
+    if sensorStatus.isWorking():
+        app = QtWidgets.QApplication(sys.argv)
+        form = QtWidgets.QWidget()
+        ui = MainMenu(form)
+        form.showFullScreen()
+        sys.exit(app.exec())
+    else:
+        tempSensorStatus = sensorStatus.isTempWorking()
+        phSensorStatus = sensorStatus.isPhWorking()
+        pressureSensorStatus = sensorStatus.isBaroWorking()
+        dissolvedOxygenStatus = sensorStatus.isDOWorking()
+        print(f"Temperature Sensor Working: {str(tempSensorStatus)}")
+        print(f"pH Sensor Working: {str(phSensorStatus)}")
+        print(f"Pressure Sensor Working: {str(pressureSensorStatus)}")
+        print(f"Dissolved Oxygen Sensor Working: {str(dissolvedOxygenStatus)}")
+        sys.exit(1)
