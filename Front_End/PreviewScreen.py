@@ -478,7 +478,7 @@ class Ui_Form(object):
         Checks if ph is between 0 and 14.
         Checks if pressure is between 0 and 9,026.85.
         Checks if temperature is between -2 and 32.
-        Checks if dissolved oxygen is between 100 and 400.
+        Checks if dissolved oxygen is between 0 and 400.
         """
         string = self.ph_label.text()
         string = string.replace(" ", "")
@@ -525,13 +525,13 @@ class Ui_Form(object):
             error_string = ("T.") + error_string
             print("Temp is out of range: " + str(temperature_value) +
                   ". Acceptable Range is between -2 and 32.")
-        """Checks if dissolved oxygen is between 100 and 400."""
-        if (dissolved_oxygen_value < 100 or dissolved_oxygen_value > 400):
+        """Checks if dissolved oxygen is between 0 and 400."""
+        if (dissolved_oxygen_value < 0 or dissolved_oxygen_value > 400):
             dissolved_oxygen_error = True
             error_string = ("D.O.") + error_string
             print("Dissolved Oxygen is out of range: " +
                   str(dissolved_oxygen_value) +
-                  ". Acceptable Range is between 100 and 400.")
+                  ". Acceptable Range is between 0 and 400.")
 
         if (pressure_error or temperature_error or dissolved_oxygen_error
                 or ph_error):
