@@ -457,15 +457,17 @@ class MainMenu(object):
         ) == Qt.Key.Key_Return and self.stackedLayout.currentIndex() == 0:
             self.executeStudyProfile()
 
-        elif event.key() == Qt.Key.Key_Enter and currentIndex == 0:
+        elif event.key() == Qt.Key.Key_Q and currentIndex != 0:
             self.cameraPictureControl.stopStudy = True
             time.sleep(4)
             self.cameraPictureControl.stopStudy = False
         elif event.key() == Qt.Key.Key_Q:
             if self.focusPoint1 is None:
-                self.previewScreen.cameraControl.customFocus[0]
+                self.focusPoint1 = self.previewScreen.cameraControl.customFocus[0]
+                self.previewScreen.status_label.setText("FP1 Set")
             elif self.focusPoint2 is None:
-                self.previewScreen.cameraControl.customFocus[0]
+                self.focusPoint2 = self.previewScreen.cameraControl.customFocus[0]
+                self.previewScreen.status_label.setText("FP2 Set")
 
         # When the menu cycles to the corresponding menu it sets the keyboard
         # focus to the widget
@@ -550,15 +552,17 @@ class MainMenu(object):
                 path)
         elif studyProfile["shotType"] == "TELESCOPIC":
             steps = int(studyProfile["zoomOutCount"])
-            if self.focusPoint1 < self.focusPoint2:
-                temp = self.focusPoint1
-                self.focusPoint1 = self.focusPoint2
-                self.focusPoint2 = temp
-            self.cameraPictureControl.getTelescopicSnapshot(
-                self.previewScreen.cameraHandles, self.focusPoint1,
-                self.focusPoint2, steps, entry_id, path)
+            if self.focusPoint1 and self.focusPoint2:
+
+                if self.focusPoint1 < self.focusPoint2:
+                    temp = self.focusPoint1
+                    self.focusPoint1 = self.focusPoint2
+                    self.focusPoint2 = temp
+                self.cameraPictureControl.getTelescopicSnapshot(
+                    self.previewScreen.cameraHandles, self.focusPoint1,
+                    self.focusPoint2, steps, entry_id, path, self.previewScreen.cameraControl)
         elif studyProfile["shotType"] == "VIDEO":
-            videoLength = int(float(studyProfile["videoLength"]) * 60.0)
+            videoLength = int(float(studyProfile["videoLength"]))
             self.cameraPictureControl.getVideo(
                 self.previewScreen.cameraHandles, entry_id, path, videoLength)
 

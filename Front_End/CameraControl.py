@@ -325,9 +325,6 @@ class CameraControl():
                     return
 
         else:
-            if not self.minFocusValue < newfocusValue < self.maxFocusValue:
-                print("focus value not in acceptable range")
-                return
 
             # self.params.insert(0, newfocusValue)
             self.customFocus[0] = newfocusValue
@@ -337,10 +334,6 @@ class CameraControl():
                                         PxLApi.FeatureId.FOCUS,
                                         PxLApi.FeatureFlags.MANUAL,
                                         self.customFocus)
-                if not PxLApi.apiSuccess(ret[0]):
-                    print("  Could not set Focus Feature, ret: %d!" % ret[0])
-                    PxLApi.uninitialize(hCamera[handle])
-                    return
             self.focusValue = newfocusValue
 
     def setExposure(self,

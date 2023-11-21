@@ -4,6 +4,7 @@ from ctypes import create_string_buffer
 import time
 import databaseQuery
 from MainMenu import MainMenu
+import CameraControl
 import sensor
 
 SUCCESS = 0
@@ -141,7 +142,7 @@ class CameraPictureControl():
 
     def getTelescopicSnapshot(self, cameraHandles: [int], minFocus: float,
                               maxFocus: float, numShots: int, entry_id: int,
-                              path: str):
+                              path: str, cc: CameraControl):
         """Take a telescopic image given shots and min and max focus values.
 
         :param cameraHandles list of camera handles from the
@@ -161,8 +162,9 @@ class CameraPictureControl():
             temp = minFocus
             minFocus = maxFocus
             maxFocus = temp
-        for focus in range(minFocus, maxFocus, numShots):
-            self.setExposure(cameraHandles, focus, "")
+        for shot in range(numShots):
+            focus = minFocus + ((maxFocus-minFocus)/numShots)*shot
+            cc.setExposure(cameraHandles, focus, "")
             sensorData = sensorHub.Read()
             media_metadata = dq.insertMediaMetadata(entry_id, path, "jpg",
                                                     MainMenu.getCurrentTime(),
@@ -171,9 +173,9 @@ class CameraPictureControl():
                                                     sensorData.phReading,
                                                     sensorData.DOreading)
             media_metadata = dq.getMediaMetadatabyId(media_metadata)
-            self.get_snapshot(self.previewScreen.cameraHandles[0],
+            self.get_snapshot(cameraHandles[0],
                               media_metadata.left_Camera_Media)
-            self.get_snapshot(self.previewScreen.cameraHandles[1],
+            self.get_snapshot(cameraHandles[1],
                               media_metadata.right_Camera_Media)
 
     def getVideo(self,

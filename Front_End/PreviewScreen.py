@@ -425,6 +425,7 @@ class Ui_Form(object):
             self.capturing = True
         else:
             self.status_label.setText("No Capture")
+            self.capturing = False
 
     def randomSensorValue(self):
         """Create random label values. Used for demo purposes."""
@@ -564,8 +565,8 @@ class Ui_Form(object):
     def cameraDefaults(self):
         """Set default camera setting upon boot."""
         self.cameraControl.autoWhiteBalance(self.cameraHandles)
-        self.cameraControl.setExposure(self.cameraHandles, 1 / 60, mode="")
-        self.cameraControl.setFocus(self.cameraHandles, 1, "")
+        self.cameraControl.setExposure(self.cameraHandles, 2, mode="auto")
+        self.cameraControl.setFocus(self.cameraHandles, 1, "auto")
         self.cameraControl.setGain(self.cameraHandles)
         self.cameraControl.setRegionOfInterest(self.cameraHandles)
         self.cameraControl.setWhiteBalance(self.cameraHandles)
