@@ -422,6 +422,7 @@ class Ui_Form(object):
         """
         if inProgress:
             self.status_label.setText("In Progress")
+            self.capturing = True
         else:
             self.status_label.setText("No Capture")
 
