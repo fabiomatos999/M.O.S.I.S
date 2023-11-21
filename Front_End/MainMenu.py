@@ -594,9 +594,9 @@ class MainMenu(object):
     def getCurrentShutterSpeed(self) -> str:
         """Return current shutterspeed from the shutterspeed config menu."""
         string = self.shutterSpeedSelectionMenu.label.text()
-        string = string.replace(" ", "")
-        strings = string.split(":")
-        shutterspeed = strings[1]
+        strings = string.split(" ")
+        fraction = strings[2]
+        shutterspeed = fraction.replace("/", "_")
         return shutterspeed
 
     def getCurrentGain(self) -> float:
