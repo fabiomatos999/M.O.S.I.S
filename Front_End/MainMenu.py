@@ -380,10 +380,9 @@ class MainMenu(object):
             key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_F1,
                                   Qt.KeyboardModifier(0), "F1")
         elif pin == 23:
-            key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_Enter,
-                                  Qt.KeyboardModifier(0), "Enter")
+            key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_Return,
+                                  Qt.KeyboardModifier(0), "Return")
         elif pin == 24:
-            self.form.keyPressEvent.emit(Qt.Key.Key_Q)
             key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_Q,
                                   Qt.KeyboardModifier(0), "Q")
         elif pin == 25:
@@ -465,7 +464,7 @@ class MainMenu(object):
             if self.focusPoint1 is None:
                 self.focusPoint1 = self.previewScreen.cameraControl.customFocus[0]
                 self.previewScreen.status_label.setText("FP1 Set")
-            elif self.focusPoint2 is None:
+            elif self.focusPoint2 is None and self.previewScreen.cameraControl.customFocus[0] == self.focusPoint1:
                 self.focusPoint2 = self.previewScreen.cameraControl.customFocus[0]
                 self.previewScreen.status_label.setText("FP2 Set")
 
@@ -561,6 +560,8 @@ class MainMenu(object):
                 self.cameraPictureControl.getTelescopicSnapshot(
                     self.previewScreen.cameraHandles, self.focusPoint1,
                     self.focusPoint2, steps, entry_id, path, self.previewScreen.cameraControl)
+                self.focusPoint1 = None
+                self.focusPoint2 = None
         elif studyProfile["shotType"] == "VIDEO":
             videoLength = int(float(studyProfile["videoLength"]))
             self.cameraPictureControl.getVideo(
@@ -635,6 +636,12 @@ class MainMenu(object):
         self.previewScreen.cameraControl.cleanUpCameras(
             self.previewScreen.cameraHandles)
         GPIO.cleanup()
+
+    def __del__(self):
+        self.previewScreen.cameraControl.cleanUpCameras(
+            self.previewScreen.cameraHandles)
+        GPIO.cleanup()
+
 
 
 if __name__ == "__main__":
