@@ -485,6 +485,7 @@ class MainMenu(object):
         studyProfile = self.studyProfileSelectionMenu.studyProfileContents[
             self.studyProfileSelectionMenu.currentStudyProfileIndex]
         self.previewScreen.setStatusLabel(True)
+        self.previewScreen.capturing = True
         self.previewScreen.cameraControl.setExposure(
             self.previewScreen.cameraHandles,
             MainMenu.decodeShutterSpeed(studyProfile["shutterSpeed"]))
@@ -594,8 +595,9 @@ class MainMenu(object):
     def getCurrentShutterSpeed(self) -> str:
         """Return current shutterspeed from the shutterspeed config menu."""
         string = self.shutterSpeedSelectionMenu.label.text()
-        strings = string.split(" ")
-        fraction = strings[2]
+        string = string.replace(" ", "")
+        strings = string.split(":")
+        fraction = strings[1]
         shutterspeed = fraction.replace("/", "_")
         return shutterspeed
 
