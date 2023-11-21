@@ -457,7 +457,7 @@ class MainMenu(object):
         ) == Qt.Key.Key_Return and self.stackedLayout.currentIndex() == 0:
             self.executeStudyProfile()
 
-        elif event.key() == Qt.Key.Key_Q and currentIndex != 0:
+        elif event.key() == Qt.Key.Key_Enter and currentIndex == 0:
             self.cameraPictureControl.stopStudy = True
             time.sleep(4)
             self.cameraPictureControl.stopStudy = False

@@ -526,7 +526,7 @@ class Ui_Form(object):
         self.CalibrateAtmoCal.setFont(font)
         self.CalibrateAtmoCal.setObjectName("CalibrateAtmoCal")
         self.Clear = QtWidgets.QPushButton(parent=Form)
-        self.clear.clicked.connect(sensorHub.DOoCalClear)
+        self.Clear.clicked.connect(sensorHub.DoCalClear)
         self.Clear.setGeometry(QtCore.QRect(410, 330, 374, 48))
         self.Clear.setBaseSize(QtCore.QSize(171, 48))
         self.Clear.setStyleSheet("QPushButton {\n"
