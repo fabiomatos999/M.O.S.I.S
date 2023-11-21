@@ -536,7 +536,17 @@ class Ui_Form(object):
         if (pressure_error or temperature_error or dissolved_oxygen_error
                 or ph_error):
             self.status_label.setText(error_string)
+        
+        if not((pressure_error) or temperature_error or dissolved_oxygen_error
+                or ph_error):
+                if self.capturing == False:
+                     self.status_label.setText("No Capture")
+                else:
+                     self.status_label.setText("In Progress")
 
+
+            
+            
     def startPreviewImageCapture(self):
         """Generate preview if preview window is active."""
         if self.active:
