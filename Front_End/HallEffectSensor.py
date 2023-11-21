@@ -24,7 +24,7 @@ class HallEffectSensor:
         self.pin = pin
         self.callback = callback
 
-        GPIO.setup(self.pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        GPIO.setup(self.pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
         GPIO.add_event_detect(self.pin,
                               GPIO.FALLING,
                               callback=self.callback,
