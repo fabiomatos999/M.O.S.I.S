@@ -422,10 +422,8 @@ class Ui_Form(object):
         """
         if inProgress:
             self.status_label.setText("In Progress")
-            self.capturing = True
         else:
             self.status_label.setText("No Capture")
-            self.capturing = False
 
     def randomSensorValue(self):
         """Create random label values. Used for demo purposes."""
@@ -539,12 +537,7 @@ class Ui_Form(object):
                 or ph_error):
             self.status_label.setText(error_string)
         
-        if not((pressure_error) or temperature_error or dissolved_oxygen_error
-                or ph_error):
-                if self.capturing == False:
-                     self.status_label.setText("No Capture")
-                else:
-                     self.status_label.setText("In Progress")
+        
 
 
             
