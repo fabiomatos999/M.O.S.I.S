@@ -7,10 +7,39 @@ import DataClass
 class DatabaseQuery:
     """Create database and corrects to it."""
 
-    def __init__(self, db: str = "testing6.db"):
+    def __init__(self, db: str = "testing7.db"):
         """Given a database string, return a database cursor."""
         self.conn = sqlite3.connect(db)
         self.cursor = self.conn.cursor()
+        self.cursor.execute('''
+            CREATE TABLE IF NOT EXISTS media_entry (
+                entryId INTEGER PRIMARY KEY,
+                shotType TEXT NOT NULL,
+                time TEXT NOT NULL ,
+                illuminationType TEXT NOT NULL,
+                gain REAL NOT NULL,
+                saturation INTEGER NOT NULL,
+                shutterSpeed TEXT NOT NULL,
+                whiteBalance INTEGER NOT NULL
+            )
+        ''')
+
+        # Create the media_metadata table
+        self.cursor.execute('''
+            CREATE TABLE IF NOT EXISTS media_metadata (
+                metadataId INTEGER PRIMARY KEY,
+                entryId INTEGER,
+                leftCameraMedia TEXT NOT NULL,
+                rightCameraMedia TEXT NOT NULL,
+                time TEXT NOT NULL,
+                temperature REAL NOT NULL,
+                pressure REAL NOT NULL,
+                ph REAL NOT NULL,
+                dissolvedOxygen REAL NOT NULL,
+                FOREIGN KEY (entryId) REFERENCES media_entry(entryId)
+            )
+        ''')
+        self.conn.commit()
 
     def __del__(self):
         """Destructor for DatabaseQuery class."""
