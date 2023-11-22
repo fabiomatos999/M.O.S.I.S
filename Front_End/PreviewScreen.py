@@ -337,7 +337,7 @@ class Ui_Form(object):
         self.ipAddressRefreshTimer.setInterval(1000)
         self.ipAddressRefreshTimer.timeout.connect(self.setIPAddressLabel)
         self.cameraPreviewRefreshTimer = QTimer(Form)
-        self.cameraPreviewRefreshTimer.setInterval(int((1 / 5) * 1000))
+        self.cameraPreviewRefreshTimer.setInterval(1500)
         self.cameraPreviewRefreshTimer.timeout.connect(
             self.startPreviewImageCapture)
         self.ipAddressRefreshTimer.start()
@@ -545,15 +545,14 @@ class Ui_Form(object):
     def startPreviewImageCapture(self):
         """Generate preview if preview window is active."""
         if self.active:
-            CameraPreview.getPreviewImage(self.cameraHandles, "Preview")
-            self.setCameraPreviewLabels()
+            pixmaps = CameraPreview.getPreviewImage(self.cameraHandles)
+            self.left_camera.setPixmap(QtGui.QPixmap(pixmaps[0]))
+            self.right_camera.setPixmap(QtGui.QPixmap(pixmaps[1]))
 
     def setCameraPreviewLabels(self):
         """Set camera preview labels with generated preview images."""
         left_image = "Preview2.jpeg"
         right_image = "Preview1.jpeg"
-        self.left_camera.setPixmap(QtGui.QPixmap(left_image))
-        self.right_camera.setPixmap(QtGui.QPixmap(right_image))
 
     def cameraDefaults(self):
         """Set default camera setting upon boot."""

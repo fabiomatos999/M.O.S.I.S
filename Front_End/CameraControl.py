@@ -153,17 +153,19 @@ class CameraControl():
                     ret = PxLApi.initialize(serialNumber)
                     if PxLApi.apiSuccess(ret[0]):
                         hCamera = ret[1]
-                        main_hCameras.append(hCamera)
                         if serialNumber == 775002722:
                             params = [1, 1]
                             ret2 = PxLApi.setFeature(
                                 hCamera, PxLApi.FeatureId.FLIP,
                                 PxLApi.FeatureFlags.MANUAL, params)
+                            main_hCameras.insert(1, hCamera)
                             if not PxLApi.apiSuccess(ret2[0]):
                                 print(
                                     "  Could not flip camera image, ret: %d!" %
                                     ret2[0])
                                 return
+                        else:
+                            main_hCameras.insert(0, hCamera)
 
                         # And get the info
                         ret = PxLApi.getCameraInfo(hCamera)

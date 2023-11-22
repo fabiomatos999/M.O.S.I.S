@@ -78,7 +78,6 @@ class CameraPictureControl():
 
                     if self.save_image_to_file(name, formatedImage) != SUCCESS:
                         return FAILURE
-            ret = PxLApi.setStreamState(cameraHandle, PxLApi.StreamState.STOP)
             return SUCCESS
 
     def getBurstSnapshot(self,
@@ -293,6 +292,7 @@ class CameraPictureControl():
             ret = PxLApi.getNextFrame(hCamera, rawImage)
             if PxLApi.apiSuccess(ret[0]):
                 break
+        PxLApi.setStreamState(hCamera, PxLApi.StreamState.STOP)
 
         return ret
 
