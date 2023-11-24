@@ -1361,8 +1361,8 @@ class Ui_ShutterSpeedConfigMenu(object):
         shutter = shutter[2]
         shutter = Ui_ShutterSpeedConfigMenu.decodeShutterSpeed(shutter)
         cameraControl.setExposure(cameraHandles, shutter, "")
-        selected_index = self.listWidget.row(selected_items)
-        self.currentShutterSpeedIndex = selected_index
+        selected_index = self.listWidget.row(selected_items[0])
+        self.currentShutterSpeedIndex = self.listWidget.currentIndex().row()
 
     def decodeShutterSpeed(shutterSpeed: str) -> float:
         """Convert either fractional or floating point string into float.

@@ -452,14 +452,14 @@ class MainMenu(object):
                 self.previewScreen.cameraControl.customFocus[0] - 20, "")
             print(self.previewScreen.cameraControl.customFocus[0])
         
-        # if event.key() == Qt.Key.Key_W and currentIndex == 2:
-        #     if (self.shutterSpeedSelectionMenu.isValidIndex(self.shutterSpeedSelectionMenu.currentShutterSpeedIndex-1)):
-        #         self.shutterSpeedSelectionMenu.listWidget.setCurrentItem(self.shutterSpeedSelectionMenu.listWidget.item(self.shutterSpeedSelectionMenu.currentShutterSpeedIndex-1))
-        #         return
-        # elif event.key() == Qt.Key.Key_S and currentIndex == 2:
-        #     if (self.shutterSpeedSelectionMenu.isValidIndex(self.shutterSpeedSelectionMenu.currentShutterSpeedIndex)):
-        #         self.shutterSpeedSelectionMenu.listWidget.setCurrentItem(self.shutterSpeedSelectionMenu.listWidget.item(self.shutterSpeedSelectionMenu.currentShutterSpeedIndex+1))
-        #         return
+        if event.key() == Qt.Key.Key_W and currentIndex == 2:
+            if (self.shutterSpeedSelectionMenu.isValidIndex(self.shutterSpeedSelectionMenu.currentShutterSpeedIndex-1)):
+                self.shutterSpeedSelectionMenu.listWidget.setCurrentItem(self.shutterSpeedSelectionMenu.listWidget.item(self.shutterSpeedSelectionMenu.currentShutterSpeedIndex-1))
+                return
+        elif event.key() == Qt.Key.Key_S and currentIndex == 2:
+            if (self.shutterSpeedSelectionMenu.isValidIndex(self.shutterSpeedSelectionMenu.currentShutterSpeedIndex+1)):
+                self.shutterSpeedSelectionMenu.listWidget.setCurrentItem(self.shutterSpeedSelectionMenu.listWidget.item(self.shutterSpeedSelectionMenu.currentShutterSpeedIndex+1))
+                return
 
         elif event.key() == Qt.Key.Key_F1:
             if currentIndex == 7:
