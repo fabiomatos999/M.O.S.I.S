@@ -1341,7 +1341,7 @@ class Ui_ShutterSpeedConfigMenu(object):
             "Shutter Speed: 1/500", "Shutter Speed: 1/250",
             "Shutter Speed: 1/125", "Shutter Speed: 1/60",
             "Shutter Speed: 1/30", "Shutter Speed: 1/15", "Shutter Speed: 1/8",
-            "Shutter Speed: 1/4", "Shutter Speed: 1/2", "Shutter Speed: 1/2",
+            "Shutter Speed: 1/4", "Shutter Speed: 1/2",
             "Shutter Speed: 1", "Shutter Speed: 2"
         ]
 

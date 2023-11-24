@@ -52,6 +52,8 @@ class MainMenu(object):
         """
         form.resize(800, 480)
         self.form = form
+        global mainMenuForm
+        mainMenuForm = self.form
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(255, 149, 1))
         brush.setStyle(QtCore.Qt.BrushStyle.SolidPattern)
@@ -470,35 +472,49 @@ class MainMenu(object):
 
         # When the menu cycles to the corresponding menu it sets the keyboard
         # focus to the widget
+        self.unfocus_widgets()
         if currentIndex == 1:
             self.studyProfileSelectionMenu.listWidget.setFocus()
+            
+            
         elif currentIndex == 2:
             self.shutterSpeedSelectionMenu.listWidget.setFocus()
-            self.studyProfileSelectionMenu.listWidget.clearFocus()
+
 
         elif currentIndex == 3:
             self.saturationConfigurationMenu.horizontalSlider.setFocus()
-            self.studyProfileSelectionMenu.listWidget.clearFocus()
+
 
         elif currentIndex == 4:
             self.gainConfigurationMenu.horizontalSlider.setFocus()
-            self.studyProfileSelectionMenu.listWidget.clearFocus()
+
 
         elif currentIndex == 5:
-            self.whiteBalanceCalibrationMenu.WBSlider.setFocus()
             self.studyProfileSelectionMenu.listWidget.clearFocus()
+            self.whiteBalanceCalibrationMenu.WBSlider.setFocus()
 
         elif currentIndex == 6:
             self.dissolvedOxygenCalibrationMenu.doZeroCal.setFocus()
-            self.studyProfileSelectionMenu.listWidget.clearFocus()
 
         elif currentIndex == 7:
             self.phSensorCalibrationMenu.LowPointCal.setFocus()
-            self.studyProfileSelectionMenu.listWidget.clearFocus()
 
         elif currentIndex == 0:
-            self.studyProfileSelectionMenu.listWidget.clearFocus()
+            mainMenuForm.showFullScreen()
 
+    def unfocus_widgets(self):
+        """Clears focus of all widgets."""
+        self.studyProfileSelectionMenu.listWidget.clearFocus()
+        self.shutterSpeedSelectionMenu.listWidget.clearFocus()
+        self.saturationConfigurationMenu.horizontalSlider.clearFocus()
+        self.gainConfigurationMenu.horizontalSlider.clearFocus()
+        self.whiteBalanceCalibrationMenu.WBSlider.clearFocus()
+        self.dissolvedOxygenCalibrationMenu.doAtmoCal.clearFocus()
+        self.dissolvedOxygenCalibrationMenu.doZeroCal.clearFocus()
+        self.dissolvedOxygenCalibrationMenu.doZeroCal_2.clearFocus()
+        self.phSensorCalibrationMenu.HighPointCal.clearFocus()
+        self.phSensorCalibrationMenu.MidPointCal.clearFocus()
+        self.phSensorCalibrationMenu.LowPointCal.clearFocus()
 
     def executeStudyProfile(self):
         """Execute currently selected study profile.
