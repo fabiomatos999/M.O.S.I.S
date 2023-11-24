@@ -459,6 +459,9 @@ class Ui_Form(object):
         for value in self.studyProfileContents[index].values():
             summaryString = summaryString + "{}-".format(str(value))
         self.label.setText(summaryString[:-1])
+    
+    def isValidIndex(self, index: int):
+        return index >= 0 and index < len(self.studyProfileContents)
 
     def retranslateUi(self, Form):
         """Set default labels.

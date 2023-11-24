@@ -367,17 +367,16 @@ class MainMenu(object):
             return
         if pin == 17:
             key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_Up,
-                                  Qt.KeyboardModifier(0), "Up")
+                                  Qt.KeyboardModifier(0), "Key_Up")
         elif pin == 27:
             key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_Left,
-                                  Qt.KeyboardModifier(0), "Left")
+                                  Qt.KeyboardModifier(0), "Key_Left")
         elif pin == 5:
             key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_Right,
-                                  Qt.KeyboardModifier(0), "Right")
+                                  Qt.KeyboardModifier(0), "Key_Right")
         elif pin == 6:
             key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_Down,
-                                  Qt.KeyboardModifier(0), "Down")
-            print("It entered")
+                                  Qt.KeyboardModifier(0), "Key_Down")
         elif pin == 26:
             key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_F1,
                                   Qt.KeyboardModifier(0), "F1")
@@ -432,16 +431,29 @@ class MainMenu(object):
         Pressing F1 and F2 cycles through the menus.
         """
         currentIndex = self.stackedLayout.currentIndex()
+        if event.key() == Qt.Key.Key_Up:
+            print("It entered")
         if event.key() == Qt.Key.Key_Up and currentIndex == 0:
             self.previewScreen.cameraControl.setFocus(
                 self.previewScreen.cameraHandles,
-                self.previewScreen.cameraControl.customFocus[0] + 100, "")
+                self.previewScreen.cameraControl.customFocus[0] + 20, "")
             print(self.previewScreen.cameraControl.customFocus[0])
+        if event.key() == Qt.Key.Key_W and currentIndex == 1:
+            if (self.studyProfileSelectionMenu.isValidIndex(self.studyProfileSelectionMenu.currentStudyProfileIndex-1)):
+                self.studyProfileSelectionMenu.listWidget.setCurrentItem(self.studyProfileSelectionMenu.listWidget.item(self.studyProfileSelectionMenu.currentStudyProfileIndex-1))
+                return
+
         elif event.key() == Qt.Key.Key_Down and currentIndex == 0:
             self.previewScreen.cameraControl.setFocus(
                 self.previewScreen.cameraHandles,
-                self.previewScreen.cameraControl.customFocus[0] - 100, "")
+                self.previewScreen.cameraControl.customFocus[0] - 20, "")
             print(self.previewScreen.cameraControl.customFocus[0])
+        
+        elif event.key() == Qt.Key.Key_S and currentIndex == 1:
+            if (self.studyProfileSelectionMenu.isValidIndex(self.studyProfileSelectionMenu.currentStudyProfileIndex+1)):
+                self.studyProfileSelectionMenu.listWidget.setCurrentItem(self.studyProfileSelectionMenu.listWidget.item(self.studyProfileSelectionMenu.currentStudyProfileIndex+1))
+                return
+
         elif event.key() == Qt.Key.Key_F1:
             if currentIndex == 7:
                 self.stackedLayout.setCurrentIndex(0)
@@ -472,37 +484,37 @@ class MainMenu(object):
 
         # When the menu cycles to the corresponding menu it sets the keyboard
         # focus to the widget
-        self.unfocus_widgets()
+        # self.unfocus_widgets()
         if currentIndex == 1:
-            self.studyProfileSelectionMenuForm.setEnabled()
+            self.studyProfileSelectionMenuForm.setEnabled(True)
             self.studyProfileSelectionMenu.listWidget.setFocus()
             
             
         elif currentIndex == 2:
-            self.shutterSpeedSelectionMenuForm.setEnabled()
+            self.shutterSpeedSelectionMenuForm.setEnabled(True)
             self.shutterSpeedSelectionMenu.listWidget.setFocus()
 
 
         elif currentIndex == 3:
-            self.saturationConfigurationMenuForm.setEnabled()
+            self.saturationConfigurationMenuForm.setEnabled(True)
             self.saturationConfigurationMenu.horizontalSlider.setFocus()
 
 
         elif currentIndex == 4:
-            self.gainConfigurationMenuForm.setEnabled()
+            self.gainConfigurationMenuForm.setEnabled(True)
             self.gainConfigurationMenu.horizontalSlider.setFocus()
 
 
         elif currentIndex == 5:
-            self.whiteBalanceCalibrationMenuForm.setEnabled()
+            self.whiteBalanceCalibrationMenuForm.setEnabled(True)
             self.whiteBalanceCalibrationMenu.WBSlider.setFocus()
 
         elif currentIndex == 6:
-            self.dissolvedOxygenCalibrationMenuForm.setEnabled
+            self.dissolvedOxygenCalibrationMenuForm.setEnabled(True)
             self.dissolvedOxygenCalibrationMenu.doZeroCal.setFocus()
 
         elif currentIndex == 7:
-            self.phSensorCalibrationMenuForm.setEnabled()
+            self.phSensorCalibrationMenuForm.setEnabled(True)
             self.phSensorCalibrationMenu.LowPointCal.setFocus()
 
         elif currentIndex == 0:
@@ -523,12 +535,12 @@ class MainMenu(object):
         self.phSensorCalibrationMenu.MidPointCal.setDisabled()
         self.phSensorCalibrationMenu.LowPointCal.setDisabled()
         """
-        self.studyProfileSelectionMenuForm.setDisabled()
-        self.shutterSpeedSelectionMenuForm.setDisabled()
-        self.saturationConfigurationMenuForm.setDisabled()
-        self.gainConfigurationMenuForm.setDisabled()
-        self.dissolvedOxygenCalibrationMenuForm.setDisabled()
-        self.phSensorCalibrationMenuForm.setDisabled()
+        self.studyProfileSelectionMenuForm.setDisabled(True)
+        self.shutterSpeedSelectionMenuForm.setDisabled(True)
+        self.saturationConfigurationMenuForm.setDisabled(True)
+        self.gainConfigurationMenuForm.setDisabled(True)
+        self.dissolvedOxygenCalibrationMenuForm.setDisabled(True)
+        self.phSensorCalibrationMenuForm.setDisabled(True)
 
     def executeStudyProfile(self):
         """Execute currently selected study profile.
@@ -603,7 +615,7 @@ class MainMenu(object):
             photoCount = int(studyProfile["photoCount"])
             self.cameraPictureControl.getIntervalSnapshot(
                 self.previewScreen.cameraHandles, time, photoCount, entry_id,
-                path)
+                path, illuminationType)
         elif studyProfile["shotType"] == "TELESCOPIC":
             steps = int(studyProfile["zoomOutCount"])
             if self.focusPoint1 and self.focusPoint2:
@@ -696,7 +708,6 @@ class MainMenu(object):
         self.previewScreen.cameraControl.cleanUpCameras(
             self.previewScreen.cameraHandles)
         GPIO.cleanup()
-
 
 
 if __name__ == "__main__":

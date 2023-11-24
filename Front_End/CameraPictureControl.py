@@ -6,6 +6,7 @@ import databaseQuery
 from MainMenu import MainMenu
 import CameraControl
 import sensor
+import RPi.GPIO as GPIO
 
 SUCCESS = 0
 FAILURE = 1
@@ -101,7 +102,7 @@ class CameraPictureControl():
 
     def getIntervalSnapshot(self, cameraHandles: [int],
                             total_interval_min: float, amountOfPictures: int,
-                            entryId: int, path: str):
+                            entryId: int, path: str, illuminationType: str):
         """Take a (time lapse) snapshot using total time and pictures.
 
         :param cameraHandles list of camera handles from the
@@ -130,10 +131,22 @@ class CameraPictureControl():
                     sensorData.tempReading, sensorData.baroReading,
                     sensorData.phReading, sensorData.DOreading)
                 media_metadata = dq.getMediaMetadatabyId(media_metadata)
+                GPIO.output(2, GPIO.LOW)
+                GPIO.output(3, GPIO.LOW)
+                GPIO.output(4, GPIO.LOW)
+                if illuminationType == "WHITE":
+                    GPIO.output(2, GPIO.HIGH)
+                elif illuminationType == "RED":
+                    GPIO.output(3, GPIO.HIGH)
+                elif illuminationType == "ULTRAVIOLET":
+                    GPIO.output(4, GPIO.HIGH)
                 self.get_snapshot(cameraHandles[0],
                                   media_metadata.left_Camera_Media)
                 self.get_snapshot(cameraHandles[1],
                                   media_metadata.right_Camera_Media)
+                GPIO.output(2, GPIO.LOW)
+                GPIO.output(3, GPIO.LOW)
+                GPIO.output(4, GPIO.LOW)
                 stepTime = time.time() + stepInterval
                 counter += 1
             else:
