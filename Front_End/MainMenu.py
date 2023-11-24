@@ -474,6 +474,31 @@ class MainMenu(object):
             self.studyProfileSelectionMenu.listWidget.setFocus()
         elif currentIndex == 2:
             self.shutterSpeedSelectionMenu.listWidget.setFocus()
+            self.studyProfileSelectionMenu.listWidget.clearFocus()
+
+        elif currentIndex == 3:
+            self.saturationConfigurationMenu.horizontalSlider.setFocus()
+            self.studyProfileSelectionMenu.listWidget.clearFocus()
+
+        elif currentIndex == 4:
+            self.gainConfigurationMenu.horizontalSlider.setFocus()
+            self.studyProfileSelectionMenu.listWidget.clearFocus()
+
+        elif currentIndex == 5:
+            self.whiteBalanceCalibrationMenu.WBSlider.setFocus()
+            self.studyProfileSelectionMenu.listWidget.clearFocus()
+
+        elif currentIndex == 6:
+            self.dissolvedOxygenCalibrationMenu.doZeroCal.setFocus()
+            self.studyProfileSelectionMenu.listWidget.clearFocus()
+
+        elif currentIndex == 7:
+            self.phSensorCalibrationMenu.LowPointCal.setFocus()
+            self.studyProfileSelectionMenu.listWidget.clearFocus()
+
+        elif currentIndex == 0:
+            self.studyProfileSelectionMenu.listWidget.clearFocus()
+
 
     def executeStudyProfile(self):
         """Execute currently selected study profile.
