@@ -28,7 +28,7 @@
     {
         "shotType": "TIMELAPSE",
         "whiteBalance": "3500",
-        "illuminationType": "WHITE",
+        "illuminationType": "ULTRAVIOLET",
         "gain": "0.00",
         "saturation": "100",
         "shutterSpeed": "1/60",

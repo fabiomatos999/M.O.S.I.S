@@ -558,6 +558,7 @@ class Ui_Form(object):
         """Set default camera setting upon boot."""
         self.cameraControl.autoWhiteBalance(self.cameraHandles)
         self.cameraControl.setExposure(self.cameraHandles, 2, mode="auto")
+        self.cameraControl.setFocus(self.cameraHandles, 46000/2, "")
         self.cameraControl.setFocus(self.cameraHandles, 1, "auto")
         self.cameraControl.setGain(self.cameraHandles)
         self.cameraControl.setRegionOfInterest(self.cameraHandles)

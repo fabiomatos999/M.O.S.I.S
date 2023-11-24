@@ -370,12 +370,12 @@ class MainMenu(object):
             key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_Left,
                                   Qt.KeyboardModifier(0), "Left")
         elif pin == 5:
-            self.form.keyPressEvent.emit(Qt.Key.Key_Right)
             key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_Right,
                                   Qt.KeyboardModifier(0), "Right")
         elif pin == 6:
             key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_Down,
                                   Qt.KeyboardModifier(0), "Down")
+            print("It entered")
         elif pin == 26:
             key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_F1,
                                   Qt.KeyboardModifier(0), "F1")
@@ -433,12 +433,12 @@ class MainMenu(object):
         if event.key() == Qt.Key.Key_Up and currentIndex == 0:
             self.previewScreen.cameraControl.setFocus(
                 self.previewScreen.cameraHandles,
-                self.previewScreen.cameraControl.customFocus[0] + 10, "")
+                self.previewScreen.cameraControl.customFocus[0] + 100, "")
             print(self.previewScreen.cameraControl.customFocus[0])
         elif event.key() == Qt.Key.Key_Down and currentIndex == 0:
             self.previewScreen.cameraControl.setFocus(
                 self.previewScreen.cameraHandles,
-                self.previewScreen.cameraControl.customFocus[0] - 10, "")
+                self.previewScreen.cameraControl.customFocus[0] - 100, "")
             print(self.previewScreen.cameraControl.customFocus[0])
         elif event.key() == Qt.Key.Key_F1:
             if currentIndex == 7:
@@ -464,7 +464,7 @@ class MainMenu(object):
             if self.focusPoint1 is None:
                 self.focusPoint1 = self.previewScreen.cameraControl.customFocus[0]
                 self.previewScreen.status_label.setText("FP1 Set")
-            elif self.focusPoint2 is None and self.previewScreen.cameraControl.customFocus[0] == self.focusPoint1:
+            elif self.focusPoint2 is None and self.previewScreen.cameraControl.customFocus[0] != self.focusPoint1:
                 self.focusPoint2 = self.previewScreen.cameraControl.customFocus[0]
                 self.previewScreen.status_label.setText("FP2 Set")
 
