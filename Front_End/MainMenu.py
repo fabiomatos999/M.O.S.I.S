@@ -467,7 +467,15 @@ class MainMenu(object):
         elif event.key() == Qt.Key.Key_S and currentIndex == 3:
             if (self.saturationConfigurationMenu.horizontalSlider.value() > 0):
                 self.saturationConfigurationMenu.horizontalSlider.setValue(self.saturationConfigurationMenu.horizontalSlider.value() - 1)
-                       
+        
+        if event.key() == Qt.Key.Key_W and currentIndex == 4:
+            if (self.gainConfigurationMenu.horizontalSlider.value() < 240):
+                self.gainConfigurationMenu.horizontalSlider.setValue(self.gainConfigurationMenu.horizontalSlider.value() + 1)
+
+        elif event.key() == Qt.Key.Key_S and currentIndex == 4:
+            if (self.gainConfigurationMenu.horizontalSlider.value() > 0):
+                self.gainConfigurationMenu.horizontalSlider.setValue(self.gainConfigurationMenu.horizontalSlider.value() - 1)
+
         elif event.key() == Qt.Key.Key_F1:
             if currentIndex == 7:
                 self.stackedLayout.setCurrentIndex(0)
