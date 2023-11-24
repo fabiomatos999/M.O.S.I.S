@@ -1336,6 +1336,7 @@ class Ui_ShutterSpeedConfigMenu(object):
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
         self.label.setText("Shutter Speed: 1/2000")
+        self.currentShutterSpeedIndex = 0
         shutter_speeds = [
             "Shutter Speed: 1/2000", "Shutter Speed: 1/1000",
             "Shutter Speed: 1/500", "Shutter Speed: 1/250",
@@ -1344,7 +1345,7 @@ class Ui_ShutterSpeedConfigMenu(object):
             "Shutter Speed: 1/4", "Shutter Speed: 1/2",
             "Shutter Speed: 1", "Shutter Speed: 2"
         ]
-
+        self.shutterspeedArraysize = len(shutter_speeds)
         for speed in shutter_speeds:
             self.listWidget.addItem(speed)
 
@@ -1360,6 +1361,8 @@ class Ui_ShutterSpeedConfigMenu(object):
         shutter = shutter[2]
         shutter = Ui_ShutterSpeedConfigMenu.decodeShutterSpeed(shutter)
         cameraControl.setExposure(cameraHandles, shutter, "")
+        selected_index = self.listWidget.row(selected_items)
+        self.currentShutterSpeedIndex = selected_index
 
     def decodeShutterSpeed(shutterSpeed: str) -> float:
         """Convert either fractional or floating point string into float.
@@ -1377,6 +1380,8 @@ class Ui_ShutterSpeedConfigMenu(object):
             return numerator / denominator
         else:
             return float(shutterSpeed)
+    def isValidIndex(self, index: int):
+        return index >= 0 and index < self.shutterspeedArraysize
 
     def retranslateUi(self, Form):
         """Set default labels.
