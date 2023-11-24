@@ -476,6 +476,14 @@ class MainMenu(object):
             if (self.gainConfigurationMenu.horizontalSlider.value() > 0):
                 self.gainConfigurationMenu.horizontalSlider.setValue(self.gainConfigurationMenu.horizontalSlider.value() - 1)
 
+        if event.key() == Qt.Key.Key_W and currentIndex == 5:
+            if (self.whiteBalanceCalibrationMenu.WBSlider.value() < 6500):
+                self.whiteBalanceCalibrationMenu.WBSlider.setValue(self.whiteBalanceCalibrationMenu.WBSlider.value() + 10)
+
+        elif event.key() == Qt.Key.Key_S and currentIndex == 5:
+            if (self.whiteBalanceCalibrationMenu.WBSlider.value() > 3200):
+                self.whiteBalanceCalibrationMenu.WBSlider.setValue(self.whiteBalanceCalibrationMenu.WBSlider.value() - 10)
+
         elif event.key() == Qt.Key.Key_F1:
             if currentIndex == 7:
                 self.stackedLayout.setCurrentIndex(0)
