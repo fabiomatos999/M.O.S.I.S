@@ -256,9 +256,10 @@ class sensorHub:
             received = self.channel.read(size=8).decode(encoding=self.decoding)
             print(f" PhLowCal : {received}")
             return float(received)
-        except (serial.SerialException, UnicodeDecodeError) as e:
-            raise Exception("Error performing Ph lowpoint calibration: " +
-                            str(e))
+        except Exception as e:
+            # raise Exception("Error performing Ph lowpoint calibration: " +
+            #                 str(e))
+            print(e)
 
     def PhMidCal(self) -> float:
         """Perform mid point calibration of Ph sensor."""
@@ -273,9 +274,10 @@ class sensorHub:
             print(f" PhMidCal : {received}")
             return float(received)
 
-        except (serial.SerialException, UnicodeDecodeError) as e:
-            raise Exception("Error performing Ph MidPoint calibration: " +
-                            str(e))
+        except Exception as e:
+            # raise Exception("Error performing Ph MidPoint calibration: " +
+            #                 str(e))
+            print(e)
 
     def PhHighCal(self):
         """Perform high point calibration of ph sensor."""
@@ -289,9 +291,10 @@ class sensorHub:
             received = received.decode(encoding=self.decoding)
             print(f" PhHighCal:  {received}")
             return received
-        except (serial.SerialException, UnicodeDecodeError) as e:
-            raise Exception("Error performing Ph Highpoint calibration: " +
-                            str(e))
+        except Exception as e:
+            # raise Exception("Error performing Ph Highpoint calibration: " +
+            #                 str(e))
+            print(e)
 
     def getDO(self) -> float:
         """

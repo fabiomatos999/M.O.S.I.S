@@ -493,6 +493,15 @@ class MainMenu(object):
         elif event.key() == Qt.Key.Key_D and currentIndex == 6:
             self.dissolvedOxygenCalibrationMenu.Clear.clicked.emit()
 
+        elif event.key() == Qt.Key.Key_W and currentIndex == 7:
+            self.phSensorCalibrationMenu.LowPointCal.clicked.emit()
+
+        elif event.key() == Qt.Key.Key_A and currentIndex == 7:
+            self.phSensorCalibrationMenu.MidPointCal.clicked.emit()
+
+        elif event.key() == Qt.Key.Key_D and currentIndex == 7:
+            self.phSensorCalibrationMenu.HighPointCal.clicked.emit()
+
         elif event.key() == Qt.Key.Key_F1:
             if currentIndex == 7:
                 self.stackedLayout.setCurrentIndex(0)
@@ -555,6 +564,8 @@ class MainMenu(object):
         elif currentIndex == 7:
             self.phSensorCalibrationMenuForm.setEnabled(True)
             self.phSensorCalibrationMenu.LowPointCal.setFocus()
+        
+        mainMenuForm.showFullScreen()
 
 
     def unfocus_widgets(self):
@@ -754,7 +765,7 @@ if __name__ == "__main__":
         app = QtWidgets.QApplication(sys.argv)
         form = QtWidgets.QWidget()
         ui = MainMenu(form)
-        form.show()
+        form.showFullScreen()
         sys.exit(app.exec())
     else:
         tempSensorStatus = sensorStatus.isTempWorking()
