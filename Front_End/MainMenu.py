@@ -474,29 +474,35 @@ class MainMenu(object):
         # focus to the widget
         self.unfocus_widgets()
         if currentIndex == 1:
+            self.studyProfileSelectionMenuForm.setEnabled()
             self.studyProfileSelectionMenu.listWidget.setFocus()
             
             
         elif currentIndex == 2:
+            self.shutterSpeedSelectionMenuForm.setEnabled()
             self.shutterSpeedSelectionMenu.listWidget.setFocus()
 
 
         elif currentIndex == 3:
+            self.saturationConfigurationMenuForm.setEnabled()
             self.saturationConfigurationMenu.horizontalSlider.setFocus()
 
 
         elif currentIndex == 4:
+            self.gainConfigurationMenuForm.setEnabled()
             self.gainConfigurationMenu.horizontalSlider.setFocus()
 
 
         elif currentIndex == 5:
-            self.studyProfileSelectionMenu.listWidget.clearFocus()
+            self.whiteBalanceCalibrationMenuForm.setEnabled()
             self.whiteBalanceCalibrationMenu.WBSlider.setFocus()
 
         elif currentIndex == 6:
+            self.dissolvedOxygenCalibrationMenuForm.setEnabled
             self.dissolvedOxygenCalibrationMenu.doZeroCal.setFocus()
 
         elif currentIndex == 7:
+            self.phSensorCalibrationMenuForm.setEnabled()
             self.phSensorCalibrationMenu.LowPointCal.setFocus()
 
         elif currentIndex == 0:
@@ -504,17 +510,25 @@ class MainMenu(object):
 
     def unfocus_widgets(self):
         """Clears focus of all widgets."""
-        self.studyProfileSelectionMenu.listWidget.clearFocus()
-        self.shutterSpeedSelectionMenu.listWidget.clearFocus()
-        self.saturationConfigurationMenu.horizontalSlider.clearFocus()
-        self.gainConfigurationMenu.horizontalSlider.clearFocus()
-        self.whiteBalanceCalibrationMenu.WBSlider.clearFocus()
-        self.dissolvedOxygenCalibrationMenu.doAtmoCal.clearFocus()
-        self.dissolvedOxygenCalibrationMenu.doZeroCal.clearFocus()
-        self.dissolvedOxygenCalibrationMenu.doZeroCal_2.clearFocus()
-        self.phSensorCalibrationMenu.HighPointCal.clearFocus()
-        self.phSensorCalibrationMenu.MidPointCal.clearFocus()
-        self.phSensorCalibrationMenu.LowPointCal.clearFocus()
+        """
+        self.studyProfileSelectionMenu.listWidget.setDisabled()
+        self.shutterSpeedSelectionMenu.listWidget.setDisabled
+        self.saturationConfigurationMenu.horizontalSlider.setDisabled()
+        self.gainConfigurationMenu.horizontalSlider.setDisabled()
+        self.whiteBalanceCalibrationMenu.WBSlider.setDisabled()
+        self.dissolvedOxygenCalibrationMenu.doAtmoCal.setDisabled()
+        self.dissolvedOxygenCalibrationMenu.doZeroCal.setDisabled()
+        self.dissolvedOxygenCalibrationMenu.doZeroCal_2.setDisabled()
+        self.phSensorCalibrationMenu.HighPointCal.setDisabled()
+        self.phSensorCalibrationMenu.MidPointCal.setDisabled()
+        self.phSensorCalibrationMenu.LowPointCal.setDisabled()
+        """
+        self.studyProfileSelectionMenuForm.setDisabled()
+        self.shutterSpeedSelectionMenuForm.setDisabled()
+        self.saturationConfigurationMenuForm.setDisabled()
+        self.gainConfigurationMenuForm.setDisabled()
+        self.dissolvedOxygenCalibrationMenuForm.setDisabled()
+        self.phSensorCalibrationMenuForm.setDisabled()
 
     def executeStudyProfile(self):
         """Execute currently selected study profile.
