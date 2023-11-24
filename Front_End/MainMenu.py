@@ -460,7 +460,14 @@ class MainMenu(object):
             if (self.shutterSpeedSelectionMenu.isValidIndex(self.shutterSpeedSelectionMenu.currentShutterSpeedIndex+1)):
                 self.shutterSpeedSelectionMenu.listWidget.setCurrentItem(self.shutterSpeedSelectionMenu.listWidget.item(self.shutterSpeedSelectionMenu.currentShutterSpeedIndex+1))
                 return
+        if event.key() == Qt.Key.Key_W and currentIndex == 3:
+            if (self.saturationConfigurationMenu.horizontalSlider.value() < 200):
+                self.saturationConfigurationMenu.horizontalSlider.setValue(self.saturationConfigurationMenu.horizontalSlider.value() + 1)
 
+        elif event.key() == Qt.Key.Key_S and currentIndex == 3:
+            if (self.saturationConfigurationMenu.horizontalSlider.value() > 0):
+                self.saturationConfigurationMenu.horizontalSlider.setValue(self.saturationConfigurationMenu.horizontalSlider.value() - 1)
+                       
         elif event.key() == Qt.Key.Key_F1:
             if currentIndex == 7:
                 self.stackedLayout.setCurrentIndex(0)
