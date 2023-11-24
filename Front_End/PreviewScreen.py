@@ -460,16 +460,19 @@ class Ui_Form(object):
 
     def getSensorHubData(self):
         """Get sensor data from sensor hub and update labels."""
-        sensorData = self.sensorHub.Read()
-        self.tempReading = sensorData.tempReading
-        self.DOreading = sensorData.DOreading
-        self.baroReading = sensorData.baroReading
-        self.phReading = sensorData.phReading
-        self.setTemperatureLabel(sensorData.tempReading)
-        self.setDissolvedOxygenLabel(sensorData.DOreading)
-        self.setPressureLabel(sensorData.baroReading)
-        self.setpHLabel(sensorData.phReading)
-        self.validateSensors()
+        try:
+            sensorData = self.sensorHub.Read()
+            self.tempReading = sensorData.tempReading
+            self.DOreading = sensorData.DOreading
+            self.baroReading = sensorData.baroReading
+            self.phReading = sensorData.phReading
+            self.setTemperatureLabel(sensorData.tempReading)
+            self.setDissolvedOxygenLabel(sensorData.DOreading)
+            self.setPressureLabel(sensorData.baroReading)
+            self.setpHLabel(sensorData.phReading)
+            self.validateSensors()
+        except Exception as e:
+            print(e)
 
     def validateSensors(self):
         """

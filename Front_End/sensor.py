@@ -376,6 +376,7 @@ class sensorHub:
         try:
             command = "clear".encode(encoding=self.encoding)
             self.channel.write(command)
+            print("DoClearCal")
 
         except serial.SerialException as e:
             raise Exception("Error clearing DO calibration: " + str(e))

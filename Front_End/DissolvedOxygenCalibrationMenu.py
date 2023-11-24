@@ -23,6 +23,7 @@ class Ui_Form(object):
         Form.setObjectName("Form")
         Form.resize(878, 576)
         Form.setBaseSize(QtCore.QSize(800, 480))
+        self.form = Form
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
         brush.setStyle(QtCore.Qt.BrushStyle.SolidPattern)
@@ -541,6 +542,22 @@ class Ui_Form(object):
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
+        self.buttonIndex = 0
+    
+    def setButtonFocus(self, index: int):
+        print(index)
+        if index < 0 or index > 2:
+            return
+        self.CalibrateZeroCal.setAutoDefault(False)
+        self.CalibrateAtmoCal.setAutoDefault(False)
+        self.Clear.setAutoDefault(False)
+        if index == 0:
+            self.CalibrateZeroCal.setAutoDefault(True)
+        elif index == 1:
+            self.CalibrateAtmoCal.setAutoDefault(True)
+        elif index == 2:
+            self.Clear.setAutoDefault(True)
+        self.buttonIndex = index
 
     def retranslateUi(self, Form):
         """Set default labels.

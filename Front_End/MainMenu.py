@@ -367,16 +367,16 @@ class MainMenu(object):
             return
         if pin == 17:
             key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_W,
-                                  Qt.KeyboardModifier(0), "Key_Up")
+                                  Qt.KeyboardModifier(0), "W")
         elif pin == 27:
-            key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_Left,
-                                  Qt.KeyboardModifier(0), "Key_Left")
+            key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_A,
+                                  Qt.KeyboardModifier(0), "A")
         elif pin == 5:
-            key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_Right,
-                                  Qt.KeyboardModifier(0), "Key_Right")
+            key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_D,
+                                  Qt.KeyboardModifier(0), "D")
         elif pin == 6:
             key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_S,
-                                  Qt.KeyboardModifier(0), "Key_Down")
+                                  Qt.KeyboardModifier(0), "S")
         elif pin == 26:
             key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_F1,
                                   Qt.KeyboardModifier(0), "F1")
@@ -483,6 +483,15 @@ class MainMenu(object):
         elif event.key() == Qt.Key.Key_S and currentIndex == 5:
             if (self.whiteBalanceCalibrationMenu.WBSlider.value() > 3200):
                 self.whiteBalanceCalibrationMenu.WBSlider.setValue(self.whiteBalanceCalibrationMenu.WBSlider.value() - 10)
+        
+        elif event.key() == Qt.Key.Key_W and currentIndex == 6:
+            self.dissolvedOxygenCalibrationMenu.CalibrateZeroCal.clicked.emit()
+
+        elif event.key() == Qt.Key.Key_A and currentIndex == 6:
+            self.dissolvedOxygenCalibrationMenu.CalibrateAtmoCal.clicked.emit()
+
+        elif event.key() == Qt.Key.Key_D and currentIndex == 6:
+            self.dissolvedOxygenCalibrationMenu.Clear.clicked.emit()
 
         elif event.key() == Qt.Key.Key_F1:
             if currentIndex == 7:
