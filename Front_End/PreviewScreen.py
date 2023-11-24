@@ -548,9 +548,12 @@ class Ui_Form(object):
     def startPreviewImageCapture(self):
         """Generate preview if preview window is active."""
         if self.active:
-            pixmaps = CameraPreview.getPreviewImage(self.cameraHandles)
-            self.left_camera.setPixmap(QtGui.QPixmap(pixmaps[0]))
-            self.right_camera.setPixmap(QtGui.QPixmap(pixmaps[1]))
+            try:
+                pixmaps = CameraPreview.getPreviewImage(self.cameraHandles)
+                self.left_camera.setPixmap(QtGui.QPixmap(pixmaps[0]))
+                self.right_camera.setPixmap(QtGui.QPixmap(pixmaps[1]))
+            except Exception:
+                pass
 
     def setCameraPreviewLabels(self):
         """Set camera preview labels with generated preview images."""

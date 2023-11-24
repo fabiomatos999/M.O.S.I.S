@@ -26,6 +26,7 @@ import RPi.GPIO as GPIO
 import subprocess
 import time
 import sensor
+import time as timer
 
 
 class BaseMenuWidget(QtWidgets.QWidget):
@@ -433,7 +434,7 @@ class MainMenu(object):
         currentIndex = self.stackedLayout.currentIndex()
         if event.key() == Qt.Key.Key_Up:
             print("It entered")
-        if event.key() == Qt.Key.Key_Up and currentIndex == 0:
+        if event.key() == Qt.Key.Key_W and currentIndex == 0:
             self.previewScreen.cameraControl.setFocus(
                 self.previewScreen.cameraHandles,
                 self.previewScreen.cameraControl.customFocus[0] + 20, "")
@@ -446,7 +447,7 @@ class MainMenu(object):
             if (self.studyProfileSelectionMenu.isValidIndex(self.studyProfileSelectionMenu.currentStudyProfileIndex+1)):
                 self.studyProfileSelectionMenu.listWidget.setCurrentItem(self.studyProfileSelectionMenu.listWidget.item(self.studyProfileSelectionMenu.currentStudyProfileIndex+1))
             return
-        elif event.key() == Qt.Key.Key_Down and currentIndex == 0:
+        elif event.key() == Qt.Key.Key_S and currentIndex == 0:
             self.previewScreen.cameraControl.setFocus(
                 self.previewScreen.cameraHandles,
                 self.previewScreen.cameraControl.customFocus[0] - 20, "")
@@ -601,6 +602,7 @@ class MainMenu(object):
         studyProfile = self.studyProfileSelectionMenu.studyProfileContents[
             self.studyProfileSelectionMenu.currentStudyProfileIndex]
         self.previewScreen.setStatusLabel(True)
+        self.previewScreen.active = False
         self.previewScreen.capturing = True
         self.previewScreen.cameraControl.setExposure(
             self.previewScreen.cameraHandles,
@@ -661,28 +663,83 @@ class MainMenu(object):
         elif studyProfile["shotType"] == "TIMELAPSE":
             time = float(studyProfile["time"])
             photoCount = int(studyProfile["photoCount"])
-            self.cameraPictureControl.getIntervalSnapshot(
-                self.previewScreen.cameraHandles, time, photoCount, entry_id,
-                path, illuminationType)
+            counter = 0
+            stepInterval = (time * 60) / photoCount
+            stepTime = timer.time() + stepInterval
+
+            while counter < photoCount:
+                if timer.time() > stepTime or counter == 0:
+                    media_metadata = dq.insertMediaMetadata(
+                        entry_id, path, "jpg", MainMenu.getCurrentTime(),
+                        self.previewScreen.tempReading,
+                    self.previewScreen.baroReading,
+                    self.previewScreen.phReading, self.previewScreen.DOreading)
+                    media_metadata = dq.getMediaMetadatabyId(media_metadata)
+                    GPIO.output(2, GPIO.LOW)
+                    GPIO.output(3, GPIO.LOW)
+                    GPIO.output(4, GPIO.LOW)
+                    if illuminationType == "WHITE":
+                        GPIO.output(2, GPIO.HIGH)
+                    elif illuminationType == "RED":
+                        GPIO.output(3, GPIO.HIGH)
+                    elif illuminationType == "ULTRAVIOLET":
+                        GPIO.output(4, GPIO.HIGH)
+                    self.cameraPictureControl.get_snapshot(self.previewScreen.cameraHandles[0],
+                                      media_metadata.left_Camera_Media)
+                    self.cameraPictureControl.get_snapshot(self.previewScreen.cameraHandles[1],
+                                      media_metadata.right_Camera_Media)
+                    GPIO.output(2, GPIO.LOW)
+                    GPIO.output(3, GPIO.LOW)
+                    GPIO.output(4, GPIO.LOW)
+                    stepTime = timer.time() + stepInterval
+                    counter += 1
+
         elif studyProfile["shotType"] == "TELESCOPIC":
             steps = int(studyProfile["zoomOutCount"])
-            if self.focusPoint1 and self.focusPoint2:
+            if self.focusPoint1 is not None and self.focusPoint2 is not None:
 
-                if self.focusPoint1 < self.focusPoint2:
-                    temp = self.focusPoint1
-                    self.focusPoint1 = self.focusPoint2
-                    self.focusPoint2 = temp
-                self.cameraPictureControl.getTelescopicSnapshot(
-                    self.previewScreen.cameraHandles, self.focusPoint1,
-                    self.focusPoint2, steps, entry_id, path, self.previewScreen.cameraControl)
-                self.focusPoint1 = None
-                self.focusPoint2 = None
+                temp = self.focusPoint1
+                self.focusPoint1 = self.focusPoint2
+                self.focusPoint2 = temp
+                minFocus = self.focusPoint1
+                maxFocus = self.focusPoint2
+                self.focuPoint2 = maxFocus
+                if minFocus > maxFocus:
+                    temp = minFocus
+                    minFocus = maxFocus
+                    maxFocus = temp
+                for shot in range(steps):
+                    focus = minFocus + ((maxFocus-minFocus)/steps)*shot
+                    self.previewScreen.cameraControl.setExposure(self.previewScreen.cameraHandles, focus, "")
+                    media_metadata = dq.insertMediaMetadata(entry_id, path, "jpg",
+                                                            MainMenu.getCurrentTime(),
+                                                            self.previewScreen.tempReading,
+                self.previewScreen.baroReading,
+                self.previewScreen.phReading, self.previewScreen.DOreading)
+                    media_metadata = dq.getMediaMetadatabyId(media_metadata)
+                    self.cameraPictureControl.get_snapshot(self.previewScreen.cameraHandles[0],
+                                      media_metadata.left_Camera_Media)
+                    self.cameraPictureControl.get_snapshot(self.previewScreen.cameraHandles[1],
+                                      media_metadata.right_Camera_Media)
+                        
+            self.focusPoint1 = None
+            self.focusPoint2 = None
         elif studyProfile["shotType"] == "VIDEO":
             videoLength = int(float(studyProfile["videoLength"]))
-            self.cameraPictureControl.getVideo(
-                self.previewScreen.cameraHandles, entry_id, path, videoLength)
+
+            now = timer.time()
+            while timer.time() < now + videoLength:
+                metadata = dq.insertMediaMetadata(entry_id, path, "jpg",
+                                                  MainMenu.getCurrentTime(),
+                                                  self.previewScreen.tempReading,
+                self.previewScreen.baroReading,
+                self.previewScreen.phReading, self.previewScreen.DOreading)
+                metadata = dq.getMediaMetadatabyId(metadata)
+                self.cameraPictureControl.get_snapshot(self.previewScreen.cameraHandles[0], metadata.left_Camera_Media)
+                self.cameraPictureControl.get_snapshot(self.previewScreen.cameraHandles[1], metadata.right_Camera_Media)
 
         self.previewScreen.setStatusLabel(False)
+        self.previewScreen.active = True
         fsg.exportMetadata(entry_id)
         GPIO.output(2, GPIO.LOW)
         GPIO.output(3, GPIO.LOW)

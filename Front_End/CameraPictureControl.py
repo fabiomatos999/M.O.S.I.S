@@ -115,43 +115,7 @@ class CameraPictureControl():
         This is associated with the MediaMetadata table as a foreign key.
         :param path Directory where the MediaMetadata will the stored.
         """
-        dq = databaseQuery.DatabaseQuery()
-        counter = 0
-        stepInterval = (total_interval_min * 60) / amountOfPictures
-        stepTime = time.time() + stepInterval
-
-        sensorHub = sensor.sensorHub()
-        while counter < amountOfPictures:
-            if self.stopStudy:
-                return
-            if time.time() > stepTime or counter == 0:
-                sensorData = sensorHub.Read()
-                media_metadata = dq.insertMediaMetadata(
-                    entryId, path, "jpg", MainMenu.getCurrentTime(),
-                    sensorData.tempReading, sensorData.baroReading,
-                    sensorData.phReading, sensorData.DOreading)
-                media_metadata = dq.getMediaMetadatabyId(media_metadata)
-                GPIO.output(2, GPIO.LOW)
-                GPIO.output(3, GPIO.LOW)
-                GPIO.output(4, GPIO.LOW)
-                if illuminationType == "WHITE":
-                    GPIO.output(2, GPIO.HIGH)
-                elif illuminationType == "RED":
-                    GPIO.output(3, GPIO.HIGH)
-                elif illuminationType == "ULTRAVIOLET":
-                    GPIO.output(4, GPIO.HIGH)
-                self.get_snapshot(cameraHandles[0],
-                                  media_metadata.left_Camera_Media)
-                self.get_snapshot(cameraHandles[1],
-                                  media_metadata.right_Camera_Media)
-                GPIO.output(2, GPIO.LOW)
-                GPIO.output(3, GPIO.LOW)
-                GPIO.output(4, GPIO.LOW)
-                stepTime = time.time() + stepInterval
-                counter += 1
-            else:
-                time.sleep(0.1)
-
+        pass
     def getTelescopicSnapshot(self, cameraHandles: [int], minFocus: float,
                               maxFocus: float, numShots: int, entry_id: int,
                               path: str, cc: CameraControl):
@@ -168,28 +132,6 @@ class CameraPictureControl():
         :param path Directory where media will be written to.
         NOTE: Min and Max focus values have to be between 1 and 46,000.
         """
-        dq = databaseQuery.DatabaseQuery()
-        sensorHub = sensor.sensorHub()
-        if minFocus > maxFocus:
-            temp = minFocus
-            minFocus = maxFocus
-            maxFocus = temp
-        for shot in range(numShots):
-            focus = minFocus + ((maxFocus-minFocus)/numShots)*shot
-            cc.setExposure(cameraHandles, focus, "")
-            sensorData = sensorHub.Read()
-            media_metadata = dq.insertMediaMetadata(entry_id, path, "jpg",
-                                                    MainMenu.getCurrentTime(),
-                                                    sensorData.tempReading,
-                                                    sensorData.baroReading,
-                                                    sensorData.phReading,
-                                                    sensorData.DOreading)
-            media_metadata = dq.getMediaMetadatabyId(media_metadata)
-            self.get_snapshot(cameraHandles[0],
-                              media_metadata.left_Camera_Media)
-            self.get_snapshot(cameraHandles[1],
-                              media_metadata.right_Camera_Media)
-
     def getVideo(self,
                  cameraHandles: [int],
                  entryId: int,
@@ -206,22 +148,6 @@ class CameraPictureControl():
 
         The images will be converted into a video file by the host software.
         """
-        dq = databaseQuery.DatabaseQuery()
-        now = time.time()
-        sensorHub = sensor.sensorHub()
-        while time.time() < now + recordTime:
-            if self.stopStudy:
-                return
-            sensorData = sensorHub.Read()
-            metadata = dq.insertMediaMetadata(entryId, path, "jpg",
-                                              MainMenu.getCurrentTime(),
-                                              sensorData.tempReading,
-                                              sensorData.baroReading,
-                                              sensorData.phReading,
-                                              sensorData.DOreading)
-            metadata = dq.getMediaMetadatabyId(metadata)
-            self.get_snapshot(cameraHandles[0], metadata.left_Camera_Media)
-            self.get_snapshot(cameraHandles[1], metadata.right_Camera_Media)
 
     def determine_raw_image_size(self, hCamera):
         """

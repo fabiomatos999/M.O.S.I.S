@@ -158,14 +158,14 @@ class CameraControl():
                             ret2 = PxLApi.setFeature(
                                 hCamera, PxLApi.FeatureId.FLIP,
                                 PxLApi.FeatureFlags.MANUAL, params)
-                            main_hCameras.insert(1, hCamera)
+                            main_hCameras.insert(0, hCamera)
                             if not PxLApi.apiSuccess(ret2[0]):
                                 print(
                                     "  Could not flip camera image, ret: %d!" %
                                     ret2[0])
                                 return
                         else:
-                            main_hCameras.insert(0, hCamera)
+                            main_hCameras.insert(1, hCamera)
 
                         # And get the info
                         ret = PxLApi.getCameraInfo(hCamera)
