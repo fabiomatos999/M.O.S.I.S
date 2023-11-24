@@ -366,7 +366,7 @@ class MainMenu(object):
                     subprocess.call(["sudo", "shutdown", "now"])
             return
         if pin == 17:
-            key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_Up,
+            key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_W,
                                   Qt.KeyboardModifier(0), "Key_Up")
         elif pin == 27:
             key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_Left,
@@ -375,7 +375,7 @@ class MainMenu(object):
             key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_Right,
                                   Qt.KeyboardModifier(0), "Key_Right")
         elif pin == 6:
-            key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_Down,
+            key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_S,
                                   Qt.KeyboardModifier(0), "Key_Down")
         elif pin == 26:
             key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_F1,
@@ -441,26 +441,25 @@ class MainMenu(object):
         if event.key() == Qt.Key.Key_W and currentIndex == 1:
             if (self.studyProfileSelectionMenu.isValidIndex(self.studyProfileSelectionMenu.currentStudyProfileIndex-1)):
                 self.studyProfileSelectionMenu.listWidget.setCurrentItem(self.studyProfileSelectionMenu.listWidget.item(self.studyProfileSelectionMenu.currentStudyProfileIndex-1))
-                return
-
+            return
+        elif event.key() == Qt.Key.Key_S and currentIndex == 1:
+            if (self.studyProfileSelectionMenu.isValidIndex(self.studyProfileSelectionMenu.currentStudyProfileIndex+1)):
+                self.studyProfileSelectionMenu.listWidget.setCurrentItem(self.studyProfileSelectionMenu.listWidget.item(self.studyProfileSelectionMenu.currentStudyProfileIndex+1))
+            return
         elif event.key() == Qt.Key.Key_Down and currentIndex == 0:
             self.previewScreen.cameraControl.setFocus(
                 self.previewScreen.cameraHandles,
                 self.previewScreen.cameraControl.customFocus[0] - 20, "")
             print(self.previewScreen.cameraControl.customFocus[0])
         
-        elif event.key() == Qt.Key.Key_S and currentIndex == 1:
-            if (self.studyProfileSelectionMenu.isValidIndex(self.studyProfileSelectionMenu.currentStudyProfileIndex+1)):
-                self.studyProfileSelectionMenu.listWidget.setCurrentItem(self.studyProfileSelectionMenu.listWidget.item(self.shutterSpeedSelectionMenu.currentShutterSpeedIndex+1))
-                return
-        if event.key() == Qt.Key.Key_W and currentIndex == 2:
-            if (self.shutterSpeedSelectionMenu.isValidIndex(self.shutterSpeedSelectionMenu.currentShutterSpeedIndex-1)):
-                self.studyProfileSelectionMenu.listWidget.setCurrentItem(self.studyProfileSelectionMenu.listWidget.item(self.shutterSpeedSelectionMenu.currentShutterSpeedIndex-1))
-                return
-        elif event.key() == Qt.Key.Key_S and currentIndex == 2:
-            if (self.shutterSpeedSelectionMenu.isValidIndex(self.shutterSpeedSelectionMenu.currentShutterSpeedIndex)):
-                self.studyProfileSelectionMenu.listWidget.setCurrentItem(self.shutterSpeedSelectionMenu.listWidget.item(self.shutterSpeedSelectionMenu.currentShutterSpeedIndex+1))
-                return
+        # if event.key() == Qt.Key.Key_W and currentIndex == 2:
+        #     if (self.shutterSpeedSelectionMenu.isValidIndex(self.shutterSpeedSelectionMenu.currentShutterSpeedIndex-1)):
+        #         self.shutterSpeedSelectionMenu.listWidget.setCurrentItem(self.shutterSpeedSelectionMenu.listWidget.item(self.shutterSpeedSelectionMenu.currentShutterSpeedIndex-1))
+        #         return
+        # elif event.key() == Qt.Key.Key_S and currentIndex == 2:
+        #     if (self.shutterSpeedSelectionMenu.isValidIndex(self.shutterSpeedSelectionMenu.currentShutterSpeedIndex)):
+        #         self.shutterSpeedSelectionMenu.listWidget.setCurrentItem(self.shutterSpeedSelectionMenu.listWidget.item(self.shutterSpeedSelectionMenu.currentShutterSpeedIndex+1))
+        #         return
 
         elif event.key() == Qt.Key.Key_F1:
             if currentIndex == 7:
@@ -525,8 +524,6 @@ class MainMenu(object):
             self.phSensorCalibrationMenuForm.setEnabled(True)
             self.phSensorCalibrationMenu.LowPointCal.setFocus()
 
-        elif currentIndex == 0:
-            mainMenuForm.showFullScreen()
 
     def unfocus_widgets(self):
         """Clears focus of all widgets."""
@@ -725,7 +722,7 @@ if __name__ == "__main__":
         app = QtWidgets.QApplication(sys.argv)
         form = QtWidgets.QWidget()
         ui = MainMenu(form)
-        form.showFullScreen()
+        form.show()
         sys.exit(app.exec())
     else:
         tempSensorStatus = sensorStatus.isTempWorking()
