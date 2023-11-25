@@ -17,7 +17,7 @@ void loop() {
     dtostrf(randTemp, 0, 3, tempBuffer);
     String temp = tempBuffer;
     char dissolvedOxygenBuffer[8];
-    float randDissolvedOxygen = rand() % 401 + (float)(rand()%100)/100;
+    float randDissolvedOxygen = rand() % 400 + (float)(rand()%100)/100;
     dtostrf(randDissolvedOxygen, 0, 3, dissolvedOxygenBuffer);
     String dissolvedOxygen = dissolvedOxygenBuffer;
     String pressure = String(rand() % 9026);
