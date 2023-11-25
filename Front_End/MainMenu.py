@@ -360,10 +360,10 @@ class MainMenu(object):
         sensors.
         """
         key_event = None
-        if GPIO.input(17) == GPIO.HIGH and GPIO.input(6) == GPIO.HIGH:
+        if GPIO.input(27) == GPIO.LOW:
             now = time.time()
-            while GPIO.input(17) == GPIO.HIGH and GPIO.input(6) == GPIO.HIGH:
-                if time.time() - now > 3:
+            while GPIO.input(27) == GPIO.LOW:
+                if time.time() - now > 5:
                     subprocess.call(["sudo", "shutdown", "now"])
             return
         if pin == 17:
