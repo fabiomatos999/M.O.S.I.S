@@ -10,6 +10,13 @@
     
     <div class="container">
     {% for MediaEntry in MediaEntries %}
+    {% if MediaEntry.shotType == "TELESCOPIC" %}
+    <div class="row">
+      <div class="col">
+          <img src={{url_for('static', filename=("Media" + "/" + getAllMediaMetadataId(MediaEntry.entryId)[0].leftCameraMedia.split("/")[0] + "/" +"focusStack-S.jpg"))}} alt="" class="img-fluid mx-auto d-block">
+      </div>
+  </div>
+    {% endif %}
     {% for md in getAllMediaMetadataId(MediaEntry.entryId) %}
     <hr>
     <div class="row d-flex justify-content-center">
@@ -21,6 +28,7 @@
         </div>
       </div>
     </div>
+
     <div class="row">
       <div class="col-6 d-flex justify-content-center mt-3 mb-3">
         <img src={{ url_for('static', filename=("Media" + "/" + md.leftCameraMedia)) }} alt="" class="img-fluid">
