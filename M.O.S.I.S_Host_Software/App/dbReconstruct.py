@@ -17,12 +17,7 @@ class DBReconstruct:
         self.query.__del__()
 
     def insertMediaEntryFromFolderName(self, folder: str):
-        def decodeShutterSpeed(shutterSpeed: str) -> str:
-            fraction = shutterSpeed.split("_")
-            if len(fraction) == 2:
-                return "{}/{}".format(fraction[0], fraction[1])
-            else:
-                return fraction[0]
+
         fields = folder.split("-")
         entryId = fields[0]
         shottype = shotType[fields[1]]
@@ -31,7 +26,7 @@ class DBReconstruct:
         illuminationtype = illuminationType[fields[7]]
         gain = fields[8]
         saturation = fields[9]
-        shutterSpeed = decodeShutterSpeed(fields[10])
+        shutterSpeed = fields[10]
         whiteBalance = fields[11]
         self.query.insertMediaEntry(entryId, shottype, time, illuminationtype,
                                     gain, saturation, shutterSpeed,
@@ -121,7 +116,7 @@ class DBReconstruct:
             focusStackPathL = os.path.join(os.path.join(self.rootPath, folder), "focusStack-L.jpg")
             focusStackPathR = os.path.join(os.path.join(self.rootPath, folder), "focusStack-R.jpg")
             focusStackPathS = os.path.join(os.path.join(self.rootPath, folder), "focusStack-S.jpg")
-            if not os.path.exists(focusStackPathL) and os.path.exists(focusStackPathR) and os.path.exists(focusStackPathS):
+            if not os.path.exists(focusStackPathL) and not os.path.exists(focusStackPathR) and not os.path.exists(focusStackPathS):
                 imageManipulation.generateFocusStackImage(os.path.join(self.rootPath, folder))
         elif shottype == "VIDEO":
             videoPath = os.path.join(os.path.join(self.rootPath, folder), "stereoVideo.mp4")

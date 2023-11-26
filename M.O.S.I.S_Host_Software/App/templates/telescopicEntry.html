@@ -1,0 +1,17 @@
+{% extends 'entry.html' %}
+{% block shotTypeCustom %}
+<div class="row">
+    <div class="col-6">
+        <img src={{url_for('static', filename=(folder + "/" +"focusStack-L.jpg"))}} alt="" class="img-fluid mx-auto d-block">
+    </div>
+    <div class="col-6">
+        <img src={{url_for('static', filename=(folder + "/" +"focusStack-R.jpg"))}} alt="" class="img-fluid mx-auto d-block">
+    </div>
+</div>
+<hr>
+<div class="row">
+    <div class="col">
+        <img src={{url_for('static', filename=(folder + "/" +"focusStack-S.jpg"))}} alt="" class="img-fluid mx-auto d-block">
+    </div>
+</div>
+{% endblock %}
