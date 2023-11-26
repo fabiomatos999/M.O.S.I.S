@@ -98,7 +98,7 @@ def generateGif(path: str, imagePairs: [(str, str)]):
                                   os.path.join(path, "stereoFrame.jpg"))
         frame = imageio.imread(os.path.join(path, "stereoFrame.jpg"))
         frames.append(frame)
-    imageio.mimsave(os.path.join(path, 'stereo.gif'), frames, duration=0.5, loop=1)
+    imageio.mimsave(os.path.join(path, 'stereo.gif'), frames, duration=0.2*len(frames), loop=0)
     os.remove(os.path.join(path, "stereoFrame.jpg"))
 
 
