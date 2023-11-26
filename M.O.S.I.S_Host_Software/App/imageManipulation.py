@@ -30,7 +30,8 @@ def generateStereoscopicImage(leftImage: str, rightImage: str, path: str):
     left_image = cv2.imread(leftImage)
     right_image = cv2.imread(rightImage)
 
-    right_image = cv2.resize(right_image, (left_image.shape[1], left_image.shape[0]))
+    right_image = cv2.resize(right_image,
+                             (left_image.shape[1], left_image.shape[0]))
     composite = numpy.concatenate((left_image, right_image), axis=1)
     cv2.imwrite(path, composite)
     return composite
@@ -49,24 +50,37 @@ def addMetadataBar(path: str, output: str, time: str, temperature: float,
                             text="{}".format(text),
                             org=(int(xOffSet), int(yOffSet) - 100),
                             fontFace=cv2.FONT_HERSHEY_SIMPLEX,
-                            fontScale=7,
+                            fontScale=3.5,
                             color=(255, 255, 255),
                             thickness=3,
                             lineType=cv2.LINE_AA)
         return image
 
     infoImage = insertText(composite, 0, 0.9 * composite.shape[0], time)
-    infoImage = insertText(infoImage, 0.72 * composite.shape[1],
+    infoImage = insertText(infoImage, 0.37 * composite.shape[1],
                            0.9 * composite.shape[0],
-                           "T:{}C".format(round(temperature, 3)))
+                           "T:{} C".format(round(temperature, 3)))
     infoImage = insertText(infoImage, 0.0 * composite.shape[1],
                            composite.shape[0],
-                           "P:{}mbar".format(round(pressure, 3)))
-    infoImage = insertText(infoImage, 0.4 * composite.shape[1],
+                           "P:{} mbar".format(round(pressure, 3)))
+    infoImage = insertText(infoImage, 0.18 * composite.shape[1],
                            composite.shape[0], "pH:{}".format(round(ph, 3)))
-    infoImage = insertText(infoImage, 0.63 * composite.shape[1],
+    infoImage = insertText(infoImage, 0.28 * composite.shape[1],
                            composite.shape[0],
-                           "DO:{}mg/L".format(round(dissolvedOxygen, 3)))
+                           "DO:{} mg/L".format(round(dissolvedOxygen, 3)))
+    infoImage = insertText(infoImage, 0.5 * composite.shape[1],
+                           0.9 * composite.shape[0], time)
+    infoImage = insertText(infoImage, 0.87 * composite.shape[1],
+                           0.9 * composite.shape[0],
+                           "T:{} C".format(round(temperature, 3)))
+    infoImage = insertText(infoImage, 0.50 * composite.shape[1],
+                           composite.shape[0],
+                           "P:{} mbar".format(round(pressure, 3)))
+    infoImage = insertText(infoImage, 0.68 * composite.shape[1],
+                           composite.shape[0], "pH:{}".format(round(ph, 3)))
+    infoImage = insertText(infoImage, 0.78 * composite.shape[1],
+                           composite.shape[0],
+                           "DO:{} mg/L".format(round(dissolvedOxygen, 3)))
     cv2.imwrite(output, infoImage)
 
     return infoImage
@@ -151,3 +165,8 @@ def displayImage(UMat):
         if cv2.waitKey(10) & 0xFF == 27:
             break
 
+
+if __name__ == "__main__":
+    taggedMedia = addMetadataBar(
+        "static/Media/1-TELESCOPIC-2023-11-22T12-15-56.689737-WHITE-0.0-100-2-3200/1-4-2023-11-22T12-16-11.824323-4.59-7586.0-1.58-151.73-S.jpg",
+        "test.jpg", "2023-11-22T12-16-11.824323", 4.59, 7586.0, 1.58, 151.73)
