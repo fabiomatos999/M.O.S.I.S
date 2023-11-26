@@ -197,8 +197,7 @@ class DatabaseQuery:
     )) -> MediaMetadataInternalRepresentation:
         return MediaMetadataInternalRepresentation(
             dbQuery[0], dbQuery[1], dbQuery[2], dbQuery[3], dbQuery[4],
-            dbQuery[5], dbQuery[6], dbQuery[7], dbQuery[8], dbQuery[9],
-            dbQuery[10], dbQuery[11], dbQuery[12])
+            dbQuery[5], dbQuery[7], dbQuery[8], dbQuery[6], dbQuery[9], dbQuery[10], dbQuery[11], dbQuery[12])
 
     def parseIdRange(self, searchQuery: str) -> [int]:
         dualEndedRangeRegex = r'^\d+-\d+$'
