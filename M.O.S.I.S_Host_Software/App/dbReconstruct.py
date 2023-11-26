@@ -55,8 +55,8 @@ class DBReconstruct:
             leftCameraMedia = (folder + "/" + pair[0])
             rightCameraMedia = (folder + "/" + pair[1])
             stereoMediaPath = \
-                "static/Media/{}/{}-{}-{}-{}-{}-{}-{}-S.jpg".format(
-                    folder, entryId, metadataId, time, temperature, pressure,
+                "{}/{}/{}-{}-{}-{}-{}-{}-{}-S.jpg".format(
+                    self.rootPath,folder, entryId, metadataId, time, temperature, pressure,
                     ph, dissolvedOxygen)
             if not os.path.exists(stereoMediaPath):
                 imageManipulation.generateStereoscopicImage(
@@ -64,12 +64,12 @@ class DBReconstruct:
                     os.path.join(self.rootPath, rightCameraMedia),
                     stereoMediaPath)
             thresholdLeftImagePath = \
-                "static/Media/{}/{}-{}-{}-{}-{}-{}-{}-GL.jpg".format(
-                    folder, entryId, metadataId, time, temperature, pressure,
+                "{}/{}/{}-{}-{}-{}-{}-{}-{}-GL.jpg".format(
+                    self.rootPath,folder, entryId, metadataId, time, temperature, pressure,
                     ph, dissolvedOxygen)
             thresholdRightImagePath = \
-                "static/Media/{}/{}-{}-{}-{}-{}-{}-{}-GR.jpg".format(
-                    folder, entryId, metadataId, time, temperature, pressure,
+                "{}/{}/{}-{}-{}-{}-{}-{}-{}-GR.jpg".format(
+                self.rootPath,folder, entryId, metadataId, time, temperature, pressure,
                     ph, dissolvedOxygen)
             if not os.path.exists(thresholdLeftImagePath):
                 imageManipulation.generateWhiteScaleImage(
@@ -80,8 +80,8 @@ class DBReconstruct:
                     os.path.join(self.rootPath, rightCameraMedia),
                     thresholdRightImagePath)
             taggedStereoMediaPath = \
-                "static/Media/{}/{}-{}-{}-{}-{}-{}-{}-T.jpg".format(
-                    folder, entryId, metadataId, time, temperature, pressure,
+                "{}/{}/{}-{}-{}-{}-{}-{}-{}-T.jpg".format(
+                    self.rootPath,folder, entryId, metadataId, time, temperature, pressure,
                     ph, dissolvedOxygen)
             if not os.path.exists(taggedStereoMediaPath):
                 imageManipulation.addMetadataBar(stereoMediaPath,
