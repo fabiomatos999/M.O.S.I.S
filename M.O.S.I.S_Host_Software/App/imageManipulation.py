@@ -12,6 +12,7 @@ import os
 from PIL import Image
 import re
 import subprocess
+import imageio
 
 
 @staticmethod
@@ -95,14 +96,9 @@ def generateGif(path: str, imagePairs: [(str, str)]):
         rightImage = os.path.join(path, pair[1])
         generateStereoscopicImage(leftImage, rightImage,
                                   os.path.join(path, "stereoFrame.jpg"))
-        frame = Image.open(os.path.join(path, "stereoFrame.jpg"))
+        frame = imageio.imread(os.path.join(path, "stereoFrame.jpg"))
         frames.append(frame)
-    frames[0].save(os.path.join(path, 'stereo.gif'),
-                   save_all=True,
-                   append_images=frames[1:],
-                   optimize=False,
-                   duration=3,
-                   loop=0)
+    imageio.mimsave(os.path.join(path, 'stereo.gif'), frames, duration=0.5, loop=1)
     os.remove(os.path.join(path, "stereoFrame.jpg"))
 
 
