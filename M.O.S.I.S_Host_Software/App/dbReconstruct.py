@@ -9,6 +9,7 @@ class DBReconstruct:
     def __init__(self, rootPath: str):
         self.rootPath = rootPath
         self.folders = os.listdir(self.rootPath)
+        self.folders = list(filter(lambda x: x != "lost+found", self.folders))
         self.query = db.DatabaseQuery()
         for folder in self.folders:
             self.insertMediaEntryFromFolderName(folder)
@@ -16,6 +17,12 @@ class DBReconstruct:
         self.query.__del__()
 
     def insertMediaEntryFromFolderName(self, folder: str):
+        def decodeShutterSpeed(shutterSpeed: str) -> str:
+            fraction = shutterSpeed.split("_")
+            if len(fraction) == 2:
+                return "{}/{}".format(fraction[0], fraction[1])
+            else:
+                return fraction[0]
         fields = folder.split("-")
         entryId = fields[0]
         shottype = shotType[fields[1]]
@@ -24,7 +31,7 @@ class DBReconstruct:
         illuminationtype = illuminationType[fields[7]]
         gain = fields[8]
         saturation = fields[9]
-        shutterSpeed = fields[10]
+        shutterSpeed = decodeShutterSpeed(fields[10])
         whiteBalance = fields[11]
         self.query.insertMediaEntry(entryId, shottype, time, illuminationtype,
                                     gain, saturation, shutterSpeed,
@@ -34,6 +41,7 @@ class DBReconstruct:
 
         imagePairs = imageManipulation.findImagePairs(
             os.path.join(self.rootPath, folder))
+        entryId = None
         for pair in imagePairs:
             fields = pair[0].split('-')
             entryId = fields[0]
@@ -102,6 +110,7 @@ class DBReconstruct:
                 thresholdLeftImagePath, thresholdRightImagePath,
                 stereoMediaPath, taggedStereoMediaPath)
 
+
         shottype = self.query.getMediaEntry(entryId).shotType
         if shottype == "BURST" or shottype == "TIMELAPSE":
             imageManipulation.generateGif(
@@ -109,5 +118,4 @@ class DBReconstruct:
 
 
 if __name__ == "__main__":
-    os.remove("test.db")
     dbr = DBReconstruct("static/Media")
