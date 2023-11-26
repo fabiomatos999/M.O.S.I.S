@@ -113,8 +113,20 @@ class DBReconstruct:
 
         shottype = self.query.getMediaEntry(entryId).shotType
         if shottype == "BURST" or shottype == "TIMELAPSE":
-            imageManipulation.generateGif(
+            gifPath = os.path.join(os.path.join(self.rootPath, folder), "stereo.gif")
+            if not os.path.exists(gifPath):
+                imageManipulation.generateGif(
                 "{}/{}".format(self.rootPath, folder), imagePairs)
+        elif shottype == "TELESCOPIC":
+            focusStackPathL = os.path.join(os.path.join(self.rootPath, folder), "focusStack-L.jpg")
+            focusStackPathR = os.path.join(os.path.join(self.rootPath, folder), "focusStack-R.jpg")
+            focusStackPathS = os.path.join(os.path.join(self.rootPath, folder), "focusStack-S.jpg")
+            if not os.path.exists(focusStackPathL) and os.path.exists(focusStackPathR) and os.path.exists(focusStackPathS):
+                imageManipulation.generateFocusStackImage(os.path.join(self.rootPath, folder))
+        elif shottype == "VIDEO":
+            videoPath = os.path.join(os.path.join(self.rootPath, folder), "stereoVideo.mp4")
+            if not os.path.exists(videoPath):
+                imageManipulation.generateStereoscopicVideo(os.path.join(self.rootPath, folder))
 
 
 if __name__ == "__main__":

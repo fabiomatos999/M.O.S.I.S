@@ -18,6 +18,7 @@ import subprocess
 def findImagePairs(folder: str) -> [(str, str)]:
     files = os.listdir(folder)
     files = list(filter(lambda x: not re.match(r"^.*\.json$", x), files))
+    files = list(filter(lambda x: not re.match(r"focusStack", x), files))
     leftImages = list(filter(lambda x: re.match(r".*-L\..*$", x), files))
     rightImages = list(filter(lambda x: re.match(r".*-R\..*$", x), files))
     leftImages.sort()
@@ -29,6 +30,7 @@ def generateStereoscopicImage(leftImage: str, rightImage: str, path: str):
     left_image = cv2.imread(leftImage)
     right_image = cv2.imread(rightImage)
 
+    right_image = cv2.resize(right_image, (left_image.shape[1], left_image.shape[0]))
     composite = numpy.concatenate((left_image, right_image), axis=1)
     cv2.imwrite(path, composite)
     return composite
@@ -149,8 +151,3 @@ def displayImage(UMat):
         if cv2.waitKey(10) & 0xFF == 27:
             break
 
-
-if __name__ == "__main__":
-    generateStereoscopicVideo(
-       r"C:\Users\FABIOJMATOS-NIEVES\M.O.S.I.S\M.O.S.I.S_Host_Software\App\static\Media\18-TIMELAPSE-2023-11-3T12-27-58.968618-NONE-15.0-100-0.016666666666666666-3500" 
-    )
