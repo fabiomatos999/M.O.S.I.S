@@ -216,7 +216,7 @@ class Ui_Form(object):
         self.CurrentWB = QtWidgets.QLabel(parent=Form)
         self.CurrentWB.setGeometry(QtCore.QRect(60, 10, 691, 91))
         font = QtGui.QFont()
-        font.setPointSize(60)
+        font.setPointSize(48)
         self.CurrentWB.setFont(font)
         self.CurrentWB.setStyleSheet("color: rgb(255, 149, 1);")
         self.CurrentWB.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
