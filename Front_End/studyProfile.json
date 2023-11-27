@@ -2,46 +2,46 @@
     {
         "shotType": "SINGLE",
         "whiteBalance": "3200",
-        "illuminationType": "NONE",
+        "illuminationType": "WHITE",
         "gain": "0.00",
         "saturation": "100",
-        "shutterSpeed": "1/60"
+        "shutterSpeed": "1/8"
     },
     {
         "shotType": "BURST",
-        "whiteBalance": "5500",
-        "illuminationType": "NONE",
-        "gain": "1.00",
-        "saturation": "100",
-        "shutterSpeed": "1/60",
+        "whiteBalance": "3500",
+        "illuminationType": "WHITE",
+        "gain": "0.00",
+        "saturation": "0",
+        "shutterSpeed": "1/8",
         "shotCount": "5"
     },
     {
         "shotType": "TELESCOPIC",
-        "whiteBalance": "4700",
-        "illuminationType": "NONE",
-        "gain": "11.00",
+        "whiteBalance": "3300",
+        "illuminationType": "RED",
+        "gain": "2",
         "saturation": "100",
         "shutterSpeed": "1/60",
         "zoomOutCount": "5"
     },
     {
         "shotType": "TIMELAPSE",
-        "whiteBalance": "3500",
-        "illuminationType": "NONE",
-        "gain": "15.00",
+        "whiteBalance": "3200",
+        "illuminationType": "ULTRAVIOLET",
+        "gain": "0.00",
         "saturation": "100",
-        "shutterSpeed": "1/60",
+        "shutterSpeed": "1/8",
         "time": "1",
-        "photoCount": "5"
+        "photoCount": "10"
     },
     {
         "shotType": "VIDEO",
-        "whiteBalance": "6400",
+        "whiteBalance": "3200",
         "illuminationType": "NONE",
-        "gain": "13.00",
+        "gain": "0.00",
         "saturation": "100",
-        "shutterSpeed": "1/60",
+        "shutterSpeed": "1/8",
         "videoLength": "60"
     }
 ]

@@ -1,12 +1,12 @@
 """Camera Picture Control Module for M.O.S.I.S microscope."""
 from pixelinkWrapper import PxLApi
-import os
 from ctypes import create_string_buffer
-from datetime import datetime
 import time
 import databaseQuery
 from MainMenu import MainMenu
-import databaseQuery
+import CameraControl
+import sensor
+import RPi.GPIO as GPIO
 
 SUCCESS = 0
 FAILURE = 1
@@ -16,20 +16,30 @@ class CameraPictureControl():
     """Camera Picture Control for M.O.S.I.S microscope.
 
     Allows to get snapshots in JPEG and raw format, do single, burst
-    and interval (time lapse).
+    and interval (time lapse), telescopic and video.
     """
 
-    def __init__(self, picFormat=PxLApi.ImageFormat.JPEG):
-        """Initialize with a default image format of JPEG."""
-        self.imageFormat = picFormat
+    def __init__(self,
+                 picFormat: PxLApi.ImageFormat = PxLApi.ImageFormat.JPEG):
+        """Initialize with a default image format of JPEG.
 
-    def get_snapshot(self, hCamera: int, fileName: str):
-        """Get a snapshot from the camera, and save to a file."""
-        assert 0 != hCamera
+        :param picFormat Image format enum from PxLApi ImageFormat.
+        """
+        self.imageFormat = picFormat
+        self.stopStudy = False
+
+    def get_snapshot(self, cameraHandle: int, fileName: str):
+        """Get a snapshot from the camera, and save to a file.
+
+        :param cameraHandle camera handle from the
+         PxLApi initialize function
+        :param fileName complete file path to saved image file.
+        """
+        assert 0 != cameraHandle
         assert fileName
 
         # Determine the size of buffer needed to hold an image from the camera
-        rawImageSize = self.determine_raw_image_size(hCamera)
+        rawImageSize = self.determine_raw_image_size(cameraHandle)
         if 0 == rawImageSize:
             return FAILURE
 
@@ -40,7 +50,7 @@ class CameraPictureControl():
 
             # Capture a raw image.
             # The raw image buffer will contain image data on success.
-            ret = self.get_raw_image(hCamera, rawImage)
+            ret = self.get_raw_image(cameraHandle, rawImage)
             print("Captured Image")
             if PxLApi.apiSuccess(ret[0]):
                 frameDescriptor = ret[1]
@@ -69,7 +79,6 @@ class CameraPictureControl():
 
                     if self.save_image_to_file(name, formatedImage) != SUCCESS:
                         return FAILURE
-            ret = PxLApi.setStreamState(hCamera, PxLApi.StreamState.STOP)
             return SUCCESS
 
     def getBurstSnapshot(self,
@@ -91,53 +100,54 @@ class CameraPictureControl():
         except Exception:
             return FAILURE
 
-    def getIntervalSnapshot(self, hCamera: [int], total_interval_min: float,
-                            steps: int, entryId: int, path: str):
-        """Take a (time lapse) snapshot using total time and pictures."""
-        dq = databaseQuery.DatabaseQuery()
-        counter = 0
-        stepInterval = (total_interval_min * 60) / steps
-        stepTime = time.time() + stepInterval
+    def getIntervalSnapshot(self, cameraHandles: [int],
+                            total_interval_min: float, amountOfPictures: int,
+                            entryId: int, path: str, illuminationType: str):
+        """Take a (time lapse) snapshot using total time and pictures.
 
-        while counter < steps:
-            if time.time() > stepTime or counter == 0:
-                media_metadata = dq.insertMediaMetadata(
-                    entryId, path, "jpg", MainMenu.getCurrentTime(), 95.5, 100,
-                    8, 0.5)
-                media_metadata = dq.getMediaMetadatabyId(media_metadata)
-                self.get_snapshot(hCamera[0], media_metadata.left_Camera_Media)
-                self.get_snapshot(hCamera[1],
-                                  media_metadata.right_Camera_Media)
-                stepTime = time.time() + stepInterval
-                counter += 1
-            else:
-                time.sleep(0.1)
-
-    def getTelescopicSnapshot(self, hCamera: [int], minFocus: float,
-                              maxFocus: float, numShots: int):
+        :param cameraHandles list of camera handles from the
+         PxLApi initialize function
+        :param total_interval_min Total amount time for
+        the time lapse capture in  minutes.
+        :param amountOfPictures Total amount of pictures
+        to be taken in the time lapse.
+        :param entryId The id for the MediaEntry table entry.
+        This is associated with the MediaMetadata table as a foreign key.
+        :param path Directory where the MediaMetadata will the stored.
+        """
+        pass
+    def getTelescopicSnapshot(self, cameraHandles: [int], minFocus: float,
+                              maxFocus: float, numShots: int, entry_id: int,
+                              path: str, cc: CameraControl):
         """Take a telescopic image given shots and min and max focus values.
 
-        :param hcamera list of camera handlers from the
+        :param cameraHandles list of camera handles from the
          PxLApi initialize function
         :param minFocus The minimum focus value where the telescopic image
         capture will start
         :param maxFocus The maximum focus value where the telescopic image
         capture will stop
+        :param numShots The number of images to be taken in a telescopic image.
+        :param entry_id MediaEntry entry_id associated with this image
+        :param path Directory where media will be written to.
         NOTE: Min and Max focus values have to be between 1 and 46,000.
         """
-        if not (1 < minFocus < 46, 000 and 1 < minFocus < 46000):
-            raise ValueError(
-                "Min and Max Focus Have to be between 1 and 46,000")
-        if minFocus > maxFocus:
-            temp = minFocus
-            minFocus = maxFocus
-            maxFocus = temp
-        step = (maxFocus - minFocus) / numShots
-        for focusValue in range(minFocus, maxFocus + step, step):
-            for camera in hCamera:
-                PxLApi.setFeature(camera, PxLApi.FeatureId.FOCUS,
-                                  PxLApi.FeatureFlags.ONEPUSH, focusValue)
-                self.get_snapshot(camera, "formatted-filename")
+    def getVideo(self,
+                 cameraHandles: [int],
+                 entryId: int,
+                 path: str,
+                 recordTime: int = 60):
+        """Capture sterioscopic images as fast as the camera sensors allows.
+
+        :param cameraHandles list of camera handles from the
+         PxLApi initialize function
+        :param entryId The id for the MediaEntry table entry.
+        This is associated with the MediaMetadata table as a foreign key.
+        :param path Directory where the MediaMetadata will the stored.
+        :param recordTime Recording time for the video in seconds.
+
+        The images will be converted into a video file by the host software.
+        """
 
     def determine_raw_image_size(self, hCamera):
         """
@@ -221,6 +231,7 @@ class CameraPictureControl():
             ret = PxLApi.getNextFrame(hCamera, rawImage)
             if PxLApi.apiSuccess(ret[0]):
                 break
+        PxLApi.setStreamState(hCamera, PxLApi.StreamState.STOP)
 
         return ret
 
@@ -249,17 +260,6 @@ class CameraPictureControl():
             return SUCCESS
 
         return FAILURE
-
-    def getVideo(self,
-                 cameraHandles: [int],
-                 recordTime: int = 60,
-                 videoFPS: int = 24,
-                 decimation: int = PxLApi.ClipPlaybackDefaults.DECIMATION_NONE,
-                 bitrate: int = PxLApi.ClipPlaybackDefaults.BITRATE_DEFAULT,
-                 encoding: int = PxLApi.ClipEncodingFormat.H264,
-                 filePath: str = str(),
-                 fileName: str = str()):
-        pass
 
 
 def main():
