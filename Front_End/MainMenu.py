@@ -364,7 +364,7 @@ class MainMenu(object):
             now = time.time()
             while GPIO.input(27) == GPIO.LOW:
                 if time.time() - now > 5:
-                    subprocess.call(["sudo", "shutdown", "now"])
+                    subprocess.call(["sudo", "shutdown","-h" ,"now"])
             return
         if pin == 17:
             key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_W,
