@@ -7,7 +7,7 @@ import DataClass
 class DatabaseQuery:
     """Create database and corrects to it."""
 
-    def __init__(self, db: str = "testing7.db"):
+    def __init__(self, db: str = "M.O.S.I.S.db"):
         """Given a database string, return a database cursor."""
         self.conn = sqlite3.connect(db)
         self.cursor = self.conn.cursor()
