@@ -14,6 +14,9 @@ There are various improvements that can be done to improve the M.O.S.I.S UI 2.0,
             \item The current implementation of the buttons are based on interrupts. Meaning that an input is only registered once when an input even when an input is held. This can be implemented within the GPIO decoder where while an input is detected, keep emitting the key press signal.
           \end{itemize}
 	\item Implement PWM for on-board lighting.
+          \begin{itemize}
+            \item Since the Raspberry Pi only has 1 PWM, software PWM has to be implemented using operating system threads as to avoid blocking the main thread.
+          \end{itemize}
 	\item Implement focus step manipulation using the on-board buttons.
 	\item Implement auto focus for the cameras.
 	\item Focus point visualizer.
