@@ -5,9 +5,9 @@ entity MediaEntry {
    shotType: TEXT <<NOT NULLABLE>>	
    time: TEXT <<NOT NULLABLE>>	
    illuminationType: TEXT <<NOT NULLABLE>>	
-   iso: INTEGER <<NOT NULLABLE>>	
-   apertureSize: REAL <<NOT NULLABLE>>
-   shutterSpeed: REAL <<NOT NULLABLE>>
+   gain: REAL <<NOT NULLABLE>>	
+   saturation: INTEGER <<NOT NULLABLE>>
+   shutterSpeed: TEXT <<NOT NULLABLE>>
    whiteBalance: INTEGER <<NOT NULLABLE>>	
    __
    entryId <<PK>>
