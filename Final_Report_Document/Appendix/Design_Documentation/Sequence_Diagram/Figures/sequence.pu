@@ -7,6 +7,7 @@ participant "Sensors" as sensors
 participant "Study Menu" as software
 participant "Display" as screen
 participant "Database" as db
+participant "File System" as fs
 User -> buttons: Press Power Button
 activate buttons
 buttons -> microscope: Power On
@@ -31,8 +32,15 @@ software ->sensors: Request Sensor Data and Meta Data
 sensors -->software: Sensor Data and Meta Data
 User -> buttons: Stop Study
 buttons -> software: Stop Study Command
-software -> db: Backup Study Data and Metadata
+software -> db: Backup media entry data
 activate db
+db -> software: Read media entry
+software -> fs: Create folder for media entry
+activate fs
+software -> db: Backup media metadata						
+db -> software: Read media metadata
+software -> fs: Write media metadata and images							
+deactivate fs
 User -> screen: Change Study
 screen -> software: Change Study
 software -> camera: Change Study Settings

@@ -1,0 +1,37 @@
+@startuml
+!pragma useVerticalIf on
+start
+:Start-up;
+if(Diagnostic Routine) then (No Errors)
+:Continue with Application;
+else (Errors)
+:Shutdown application and throw error;
+stop
+endif
+:U.I loads Preview Screen;
+repeat
+:Show Preview Screen;
+if(Study Button pressed) then (yes)
+ :U.I shows Study Profile Selection Screen;
+ :Select Study Profile;
+ 
+(no) elseif (Menu List Screen button pressed) then (yes)
+if(Change Gain) then (Yes)
+ :U.I shows gain adjusting screen;
+ (no) elseif(Change Saturation) then (Yes)
+ :U.I shows Saturation adjusting screen;
+ (no) elseif(Change Shutter Speed) then (Yes)
+ :U.I shows Shutter Speed adjusting screen;
+ (no) elseif(Change White Balance) then (Yes)
+ :U.I shows White Balance adjusting screen;
+(no) elseif (Calibrate sensors) then (yes)
+:U.I shows sensors calibration screens;
+else (no)
+ endif
+(no) elseif(Capture button pressed) is (yes)
+:Start Study Capture;
+ :Data is backed up into Database;
+else (no)
+endif
+repeat while (Button not pressed) is (yes)
+@endum
