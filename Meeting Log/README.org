@@ -18,6 +18,8 @@
   - [[#2oct2023][2/Oct/2023]]
   - [[#11nov2023][11/Nov/2023]]
   - [[#17nov2023][17/Nov/2023]]
+  - [[#24nov2023][24/Nov/2023]]
+  - [[#27nov2024][27/Nov/2024]]
 
 ** 30/Aug/2023
 1. Discussed how to setup LaTeX environment on Eduardo's computer.
@@ -125,3 +127,18 @@
 ** 17/Nov/2023
 1. Update user interface diagrams
 2. Fix bug in validate sensor data.
+
+
+** 24/Nov/2023
+1. Connect left bank of hall effect sensors with the Raspberry Pi
+2. Create a custom control scheme for each menu for hall effect sensors.
+3. Integrate dummy sensor hub for all shot types
+4. Fix A LOT of bugs
+
+** 27/Nov/2024
+1. Fix shutdown bug where the Pi would restart instead of shutdown.
+2. Created a demo study profile.
+3. Fix bug where the dummy sensor hub would send values with only 2 decimal points.
+4. Switched to production database.
+5. Fix regressions after branch merge.
+6. Update Gantt chart to completion.
