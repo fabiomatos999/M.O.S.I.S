@@ -15,13 +15,34 @@ There are various improvements that can be done to improve the M.O.S.I.S UI 2.0,
           \end{itemize}
 	\item Implement PWM for on-board lighting.
           \begin{itemize}
-            \item Since the Raspberry Pi only has 1 PWM, software PWM has to be implemented using operating system threads as to avoid blocking the main thread.
+            \item Since the Raspberry Pi only has 1 PWM, software PWM has to be implemented using operating system threads as to avoid blocking the main thread. Another way to accomplish this is to use a low power micro controller like an MSP430 to use the available PWM peripherals to control brightness and to communicate with the Raspberry Pi, use either the SPI or $i^2$ interface on the Pi to control with type of lighting to be used and at what brightness.
           \end{itemize}
 	\item Implement focus step manipulation using the on-board buttons.
+          \begin{itemize}
+            \item The current implementation has a step size of 5 focus steps each time the change focus buttons are pressed. This has a high level of granularity but the ability to quickly move between the entire focus range is hampered substantially. Therefore using a button to cycle between various different focus step increments not only provides the ability to select a focus step that allows to quickly go through the entire focus range but can also be used to increase the granularity to focus steps like 1 or 0.5.
+          \end{itemize}
 	\item Implement auto focus for the cameras.
+          \begin{itemize}
+           \item  The previous implementation of the user interface has a working auto focus. However, due to a combination of poor documentation of the camera SDK and poor documentation of the first user interface auto focus was not able to be implemented in time for the final demonstration. Having this feature implemented into the new user interface would greatly decrease the need to manual focus as is necessary with the current implementation. Note however, as far as was discovered during the implementation of the user interface, the Pixelink SDK does not return the current focus value when it is auto focus mode, thus implementation a relative manual focus feature is as we know, impossible unless it is manually implemented using the sharpness score of the cameras.
+          \end{itemize}
 	\item Focus point visualizer.
+          \begin{itemize}
+            \item The current implementation allows the user to use the entire focus range of the camera from 1 to 46,000. However there is no way for the user to know at what point in this range is the focus currently at. Having a visualization of the focus point would increase the usability of the M.O.S.I.S microscope.
+          \end{itemize}
 	\item Visible preview when adjusting camera settings.
+          \begin{itemize}
+            \item The current implementation has controls for all of the common manipulable values of the cameras. In spite of this, the user has to return to the preview screen to the see how the camera settings have changed. Restructuring the user interface to see at the very lease one of the camera previews would drastically decrease the time to set up a good image on the camera, in turn increase usability.
+          \end{itemize}
 	\item Standardize gain to use ISO measurements.
+          \begin{itemize}
+            \item Standardizing the gain to use ISO measurements would help in setting the correct exposure when using a light meter.
+          \end{itemize}
 	\item Swap left and right camera to reflect stereoscopic capture.
+          \begin{itemize}
+            \item The initial thought during implementation was that the camera previews be relative to how the operator sees the cameras. However, to achieve stereoscopic vision, the left and right cameras have to be swapped due to how they are mounted inside the chassis. Changing this behavior is simply to swap the order of the camera handles when the cameras are initialized.
+          \end{itemize}
 	\item Lighting toggle on preview screen.
+          \begin{itemize}
+            \item Having the ability to cycle through the onboard lighting would allow the operator to see which lighting would the subject look best using and thus increase usability of the device. This can be done relatively easily since there is an unused button on the preview screen.
+          \end{itemize}
 \end{enumerate}
