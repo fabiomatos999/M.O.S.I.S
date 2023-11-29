@@ -48,6 +48,12 @@ def serializeEntryIds(mediaEntries: [MediaEntryInternalRepresentation]) -> str:
     ret = ret[:-1]
     return ret
 
+def decodeShutterSpeed(shutterSpeed: str) -> str:
+    fraction = shutterSpeed.split("_")
+    if len(fraction) == 2:
+        return "{}/{}".format(fraction[0], fraction[1])
+    else:
+        return fraction[0]
 
 @app.route("/list")
 def listView():
@@ -55,7 +61,8 @@ def listView():
                            MediaEntries=dbQuery.getAllMediaEntry(),
                            str=str,
                            round=round,
-                           sei=serializeEntryIds)
+                           sei=serializeEntryIds,
+                           decodeShutterSpeed=decodeShutterSpeed)
 
 
 @app.route("/entry/<id>")
@@ -91,6 +98,15 @@ def returnTemplateByEntryId(entryId: int):
                                url_for=url_for,
                                os=os,
                                folder=("Media" + "/" + str(dbQuery.getMediaEntry(entryId))))
+    elif MediaEntry.shotType == "TELESCOPIC":
+        return render_template("telescopicEntry.html",
+                               MediaMetadata=dbQuery.getAllMediaMetadataId(entryId),
+                               enumerate=enumerate,
+                               str=str,
+                               round=round,
+                               url_for=url_for,
+                               os=os,
+                               folder=("Media" + "/" + str(dbQuery.getMediaEntry(entryId))))
     elif MediaEntry.shotType == "VIDEO":
         return render_template("videoEntry.html",
                                MediaMetadata=dbQuery.getAllMediaMetadataId(entryId),
@@ -98,7 +114,8 @@ def returnTemplateByEntryId(entryId: int):
                                str=str,
                                round=round,
                                url_for=url_for,
-                               os=os)
+                               os=os,
+                               folder=("Media" + "/" + str(dbQuery.getMediaEntry(entryId))))
     else:
         return render_template("entry.html",
                                MediaEntry=dbQuery.getMediaEntry(entryId),
@@ -204,7 +221,6 @@ def search(category: str):
 
     form = return_search_form(category)
     if form.is_submitted():
-        print(form)
         ret = request.form
         searchBy = category
         searchQuery = ret["search"]

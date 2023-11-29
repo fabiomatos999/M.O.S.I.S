@@ -1,25 +1,28 @@
+"""Sensor Hub Interface Class for M.O.S.I.S microscope."""
 import serial
-from time import sleep
 
 
 class ReadResult:
     """
-    class for handling readings from sensorHub.readline()
+    class for handling readings from sensorHub.readline().
+
     parses the incoming message string
     """
 
     def __init__(self, incomingMessage: str):
         """
-        Handles return result from sensorHub.readline()
+        Handle return result from sensorHub.readline().
+
         Args:
-            incomingMessage (str): incoming decoded string message from sensor hub
+            incomingMessage (str): incoming decoded string from sensor hub
         Attributes:
             phReading (float): ph Reading from sensor hub
             tempReading (float): temp reading from sensor hub
             DOreading (float): Dissolved Oxygen reading from sensor hub
             baroReading (float): Baro reading from sensor hub
         Methods:
-            Get methods for all attributes of the reading and __repr__ to facilitate tesing
+            Get methods for all attributes of the reading and __repr__ to
+            facilitate testing
         """
         incomingMessage = incomingMessage.strip()
         parsedSensorHubResponse = incomingMessage.split(sep="&")
@@ -30,17 +33,18 @@ class ReadResult:
         self.baroReading = float(parsedSensorHubResponse[3])
 
     def __repr__(self) -> str:
+        """Developer representation for ReadResult class."""
         return f"""
         Reading Result:
-        
-        Ph: {self.phReading} 
+
+        Ph: {self.phReading}
         Temperature : {self.tempReading} celcius
         Dissolved Oxygen: {self.DOreading}
         Pressure (barometric sensor): {self.baroReading} mbar"""
 
     def getPh(self) -> float:
         """
-        Get Ph reading from sensor result message
+        Get Ph reading from sensor result message.
 
         Returns:
             float: Ph level measured by hub
@@ -49,7 +53,7 @@ class ReadResult:
 
     def getTemp(self) -> float:
         """
-        Get temperature reading from sensor hub message
+        Get temperature reading from sensor hub message.
 
         Returns:
             float: temperature reading in Celcius from sensor hub
@@ -58,7 +62,7 @@ class ReadResult:
 
     def getDO(self) -> float:
         """
-        Get Dissolved Oxygen reading from sensor hub message
+        Get Dissolved Oxygen reading from sensor hub message.
 
         Returns:
             float: Dissolved Oxygen (0-100)
@@ -67,7 +71,7 @@ class ReadResult:
 
     def getPressure(self) -> float:
         """
-        Get Barometric Reading from sensor hub message
+        Get Barometric Reading from sensor hub message.
 
         Returns:
             float: barometric reading in mbars
@@ -93,11 +97,12 @@ class SensorHubStatus:
     """
 
     def __init__(self, incomingBin: bytes) -> None:
-        self.statusCode = int(incomingBin.decode("ascii").strip())
+        """Decode status code into binary integer."""
+        self.statusCode = int(incomingBin.decode("ascii").strip(), 2)
 
     def isPhWorking(self) -> bool:
         """
-        Checks if Ph sensor is returning valid values
+        Check if Ph sensor is returning valid values.
 
         Returns:
             bool: True if working False if not working
@@ -106,7 +111,7 @@ class SensorHubStatus:
 
     def isTempWorking(self) -> bool:
         """
-        Checks if Thermotmeter is returning valid values
+        Check if Thermotmeter is returning valid values.
 
         Returns:
             bool: True if working False if not working
@@ -115,7 +120,7 @@ class SensorHubStatus:
 
     def isDOWorking(self) -> bool:
         """
-        Checks if Dissolved Oxygen Sensor is returning valid values
+        Check if Dissolved Oxygen Sensor is returning valid values.
 
         Returns:
             bool: True if working False if not working
@@ -124,53 +129,69 @@ class SensorHubStatus:
 
     def isBaroWorking(self) -> bool:
         """
-        Checks if Barometer is returning valid values
+        Check if Barometer is returning valid values.
 
         Returns:
             bool: True if working False if not working
         """
         return (self.statusCode & 0b0001) == 0b0001
 
+    def isWorking(self) -> bool:
+        """Check if all sensors are working.
+
+        Returns:
+           bool: True if all sensors are working, False if one or more is not
+                 working.
+        """
+        return self.isTempWorking() and self.isPhWorking(
+        ) and self.isBaroWorking() and self.isDOWorking()
+
 
 class sensorHub:
-    """This class is an abstraction of the TIs MCU TM4C1294XL
+    """Abstraction class for M.O.S.I.S sensor hub.
+
+    This class is an abstraction of the TIs MCU TM4C1294XL
     that is connected to the raspberry pi. This class serves as
     an interface. The methods implemented in this class will trigger
     the functions programmed in the MCU.
     """
 
     # reference attribute
-    _UARTPort = "/dev/ttyS0"
+    _UARTPort = "/dev/serial1"
     channel = None
     encoding = "ascii"
     decoding = "ascii"
 
     def __init__(self):
+        """Set up UART communication channel."""
         try:
-            self.channel = serial.Serial(self._UARTPort, baudrate=9600, timeout=8)
+            self.channel = serial.Serial(self._UARTPort,
+                                         baudrate=9600,
+                                         timeout=8)
             print(self.channel)
         except serial.SerialException as e:
             raise Exception("Error opening serial port: " + str(e))
 
     def Read(self) -> ReadResult:
         """
-        Reads all sensor data from hub
+        Read all sensor data from hub.
 
         Raises:
             Exception: if error obtaining sensor data
 
         Returns:
-            result (ReadResult): ReadResult object with sensor data as attributes
+            result (ReadResult): ReadResult object with sensor data attributes
 
         TODO:
             -determine units of all readings
             -determine length of incoming byte read after encode
-            -include timeout of function if no result is returned or throw error
+            -include timeout of function if no result is returned or throw
+             error
         """
-
         # sends command to MCU through UART port to fetch all sensor readings
         try:
-            # sends command to MCU through UART port to fetch all sensor readings
+            # sends command to MCU through UART port to fetch all sensor
+            # readings
             command = "read".encode(encoding=self.encoding)
             self.channel.write(command)
 
@@ -187,6 +208,11 @@ class sensorHub:
             raise Exception("Error reading sensor data: " + str(e))
 
     def SysCheck(self) -> SensorHubStatus:
+        """Send SysCheck command to sensor hub.
+
+        Returns:
+            SensorHubStatus: SensorHubStatus object
+        """
         try:
             command = "SysCheck".encode(encoding=self.encoding)
             self.channel.write(command)
@@ -196,14 +222,15 @@ class sensorHub:
             return result
 
         except (serial.SerialException, UnicodeDecodeError) as e:
-            raise Exception("Error obtaining information  from sensor: " + str(e))
+            raise Exception("Error obtaining information  from sensor: " +
+                            str(e))
 
     def getPh(self) -> float:
         """
-        sends command to MCU to get Ph readings readings every second
-        returns the first response but the MCU will continue to transmit
-        """
+        Send command to MCU to get Ph readings readings every second.
 
+        Returns the first response but the MCU will continue to transmit
+        """
         try:
             command = "PhCal".encode(encoding=self.encoding)
             self.channel.write(command)
@@ -213,14 +240,15 @@ class sensorHub:
             return float(received)
 
         except (serial.SerialException, UnicodeDecodeError) as e:
-            raise Exception("Error obtaining ph reading from sensor: " + str(e))
+            raise Exception("Error obtaining ph reading from sensor: " +
+                            str(e))
 
     def PhLowCal(self) -> float:
         """
-        Performs low point callibration of ph sensor
+        Perform low point calibration of ph sensor.
+
         TODO: determine return value type
         """
-
         try:
             command = "PhLowCal".encode(encoding=self.encoding)
             self.channel.write(command)
@@ -229,12 +257,11 @@ class sensorHub:
             print(f" PhLowCal : {received}")
             return float(received)
         except (serial.SerialException, UnicodeDecodeError) as e:
-            raise Exception("Error performing Ph lowpoint calibration: " + str(e))
+            raise Exception("Error performing Ph lowpoint calibration: " +
+                            str(e))
 
     def PhMidCal(self) -> float:
-        """
-        Performs mid point calibration of Ph sensor
-        """
+        """Perform mid point calibration of Ph sensor."""
         try:
             command = "PhMidCal".encode(encoding=self.encoding)
             self.channel.write(command)
@@ -247,12 +274,11 @@ class sensorHub:
             return float(received)
 
         except (serial.SerialException, UnicodeDecodeError) as e:
-            raise Exception("Error performing Ph MidPoint calibration: " + str(e))
+            raise Exception("Error performing Ph MidPoint calibration: " +
+                            str(e))
 
     def PhHighCal(self):
-        """
-        Performs high point callibration of ph sensor
-        """
+        """Perform high point calibration of ph sensor."""
         try:
             command = "PhHighCal".encode(encoding=self.encoding)
             self.channel.write(command)
@@ -264,13 +290,15 @@ class sensorHub:
             print(f" PhHighCal:  {received}")
             return received
         except (serial.SerialException, UnicodeDecodeError) as e:
-            raise Exception("Error performing Ph Highpoint calibration: " + str(e))
+            raise Exception("Error performing Ph Highpoint calibration: " +
+                            str(e))
 
     def getDO(self) -> float:
         """
-        Get D.O readings every second
-        returns first DO reading but the MCU will continue to transmit readings
-        every second
+        Get D.O readings every second.
+
+        Returns first DO reading but the MCU will continue to transmit readings
+        every second.
 
         """
         try:
@@ -285,15 +313,21 @@ class sensorHub:
 
             return float(received)
         except (serial.SerialException, UnicodeDecodeError) as e:
-            raise Exception("Error getting Dissolved Oxygen Reading: " + str(e))
+            raise Exception("Error getting Dissolved Oxygen Reading: " +
+                            str(e))
 
     def DoAtmoCal(self):
         """
-        Calibrate # The `Dissolved Oxygen` function in the `sensorHub` class is used to obtain the
-        # dissolved oxygen reading from the sensor hub. It sends a command to the MCU to get
-        # the dissolved oxygen readings, and then returns the first response received. The
-        # MCU will continue to transmit readings every second, but this function only
-        # returns the first reading.
+        Calibrate Dissolved Oxygen to atmospheric point.
+
+        Calibrate # The `Dissolved Oxygen` function in the `sensorHub` class is
+        used to obtain the
+        dissolved oxygen reading from the sensor hub. It sends a command to the
+        MCU to get
+        the dissolved oxygen readings, and then returns the first response
+        received. The
+        MCU will continue to transmit readings every second, but this function
+        only returns the first reading.
         Dissolved Oxygen Sensor to atmospheric oxygen content
         TODO: determine return value type
         """
@@ -308,13 +342,13 @@ class sensorHub:
             print(f"DoAtmoCal: {received}")
         except (serial.SerialException, UnicodeDecodeError) as e:
             raise Exception(
-                "Error performing Dissolved Oxygen to atmespheric oxygen calibration: "
-                + str(e)
-            )
+                "Error performing Dissolved Oxygen atmospheric calibration: " +
+                str(e))
 
     def DoZeroCal(self):
         """
-        Calibrate Dissolved Oxygen to zero oxygen content
+        Calibrate Dissolved Oxygen to zero point.
+
         TODO: determine return value type
         """
         try:
@@ -329,14 +363,12 @@ class sensorHub:
             return received
         except (serial.SerialException, UnicodeDecodeError) as e:
             raise Exception(
-                "Error performing Dissolved Oxygen sensor to zero oxygen content calibration: "
-                + str(e)
-            )
+                "Error performing Dissolved Oxygen sensor zero calibration: " +
+                str(e))
 
     def DoCalClear(self):
         """
-
-        Clears calibration values from Dissolved Oxygen Sensor
+        Clear calibration values from Dissolved Oxygen Sensor.
 
         Raises:
             Exception: catches serial exception error from UART port
@@ -350,7 +382,8 @@ class sensorHub:
 
     def getTemp(self) -> float:
         """
-        Fetches temperature reading every second
+        Fetch temperature reading every second.
+
         Returns only first reading but MCU will continue to transmit
         """
         try:
@@ -369,7 +402,8 @@ class sensorHub:
 
     def TempNewCal(self):
         """
-        Calibrates sensor using a specific temp value
+        Calibrate sensor using a specific temp value.
+
         TODO: determine return value type
         """
         try:
@@ -385,14 +419,14 @@ class sensorHub:
             return received
         except (serial.SerialException, UnicodeDecodeError) as e:
             raise Exception(
-                "Error callibrating temperature sensor with specific temp value: "
-                + str(e)
-            )
+                "Error calibrating temperature sensor with temp value: " +
+                str(e))
 
     def calibrateAll(self):
         """
-        Calibrate all of the sensors
-        to be used in the constructor if functions all work properly
+        Calibrate all of the sensors.
+
+        To be used in the constructor if functions all work properly
         """
         self.PhHighCal()
         self.PhMidCal()
@@ -402,10 +436,7 @@ class sensorHub:
         self.DoZeroCal()
 
     def exit(self):
-        """
-        Manually exit from calibration process
-        """
-
+        """Manually exit from calibration process."""
         try:
             command = "exit".encode(encoding=self.encoding)
             self.channel.write(command)

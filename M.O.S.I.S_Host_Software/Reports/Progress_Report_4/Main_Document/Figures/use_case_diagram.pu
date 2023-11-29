@@ -1,0 +1,47 @@
+@startuml
+left to right direction
+rectangle "Host Software" {
+	usecase "Backup Raspberry Pi"
+	usecase "No Backup Raspberry Pi"
+	usecase "Set Report Output Directory"
+	usecase "View all backed up media"
+	usecase "View all already stored media"
+	usecase "View all backed up media in a list view"
+	usecase "View all already stored media in a list view"
+	usecase "View media entry"
+	usecase "View stereoscopic media"
+	usecase "View tagged stereoscopic media"
+	usecase "View threshold stereoscopic media"
+	usecase "Create study profile"
+	usecase "Upload study profile"
+	usecase "Delete Raspberry Pi media"
+	usecase "Search media entries"
+	usecase "Search media entries by ID"
+	usecase "Search media entries by shot type"
+	usecase "Search media entries by illumination type"
+	usecase "Search media entries by date"
+	usecase "Export selected media entries to report"
+	usecase "Export all media entries to report"
+}
+:Researcher: --> "Backup Raspberry Pi"
+:Researcher: --> "No Backup Raspberry Pi"
+:Researcher: --> "Set Report Output Directory"
+:Researcher: --> "View all backed up media"
+:Researcher: --> "View media entry"
+:Researcher: --> "Create study profile"
+:Researcher: --> "Upload study profile"
+:Researcher: --> "Delete Raspberry Pi media"
+:Researcher: --> "Search media entries"
+:Researcher: --> "Export selected media entries to report"
+"View all backed up media" --> "View all already stored media" : <<include>>
+"View all backed up media" --> "View all already stored media in a list view" : <<include>>
+"View all backed up media" --> "View all backed up media in a list view" : <<include>>
+"View media entry" --> "View stereoscopic media" : <<include>>
+"View media entry" --> "View tagged stereoscopic media" : <<include>>
+"View media entry" --> "View threshold stereoscopic media" : <<include>>
+"Search media entries" --> "Search media entries by ID" : <<include>>
+"Search media entries" --> "Search media entries by shot type" : <<include>>
+"Search media entries" --> "Search media entries by illumination type" : <<include>>
+"Search media entries" --> "Search media entries by date" : <<include>>
+"Export selected media entries to report" --> "Export all media entries to report" : <<include>>
+@enduml

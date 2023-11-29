@@ -1,0 +1,96 @@
+@startuml
+class Application {
+	+ routes: [Flask.route]
+	+ address: str
+	+ port: int
+	+ main()
+}
+class Routes {
+	+ blueprint: Flask.Blueprint
+	+ index()
+	+ listView()
+	+ entry()
+        + single()
+        + save()
+        + delete()
+        + search()
+        + export()
+        + exportPrompt()	
+}
+class MediaEntryJSONRepresentation {
+	+ MediaEntry: JSON
+	+ MediaMetadata: [JSON]
+}
+class MediaEntryInternalRepresentation {
+        + entryId: int
+        + shotType: ShotType
+        + time: str
+        + illuminationType: IlluminationType
+	+ saturation: int
+	+ gain: float
+	+ shutterSpeed: str
+	+ whitebalance: int
+}
+class MediaMetadataInternalRepresentation {
+	+ metdataId: int
+	+ entryId: int
+	+ leftCameraMedia: str
+	+ rightCameraMedia: str
+	+ time: str
+	+ temperature: float
+	+ ph: float
+	+ dissolvedOxygen: float
+	+ pressure: float
+	+ grayscleLeftMedia: str
+	+ grayscleRightMedia: str
+	+ stereoMedia: str
+	+ taggedMedia: str
+}
+class DatabaseQuery {
+	+ db: str
+	+ conn: sqlite3.connection
+	+ cursor: sqlite.cursor
+	+ inserMediaEntry()
+	+ getMediaEntry()
+	+ getAllMediaEntryIDs()
+	+ getMediaEntriesById()
+	+ getAllMediaEntry()
+	+ insertMediaMetadata()
+	+ getMediaMetadataId()
+	+ getAllMediaMetadataId()
+	+ getAllMediaMetadata()
+	+ getFirstMediaEntry()
+	+ getLastMediaEntry()
+	+ getFirstMediaMetadata()
+	+ getLastMediaMetadata()
+	+ getMediaEntriesByShotType()
+	+ getMediaEntriesByTime()
+	+ getMediaEntriesByIlluminationType()
+}
+class DBReconstruct {
+	+ rootPath: str
+	+ query: DatabaseQuery
+	+ folders: [str]
+	+ insertMediaEntryFromFolderName()
+	+ insertMediaMetadataFromFolderName()
+}
+enum ShotType {
+	SINGLE
+	BURST
+	TIMELAPSE
+	TELESCOPIC
+	VIDEO
+}
+enum IlluminationType {
+	NONE
+	WHITE
+	RED
+	ULTRAVIOLET
+}
+Application "1" *-- Routes
+Application *-- DatabaseQuery
+DatabaseQuery "1" *-- DBReconstruct
+DatabaseQuery "0.." *-- MediaEntryInternalRepresentation
+DatabaseQuery "0.." *-- MediaMetadataInternalRepresentation
+Routes *-- MediaEntryJSONRepresentation
+@enduml

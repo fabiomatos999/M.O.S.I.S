@@ -1,0 +1,29 @@
+@startuml
+entity MediaEntry {
+entryId INTEGER PRIMARY KEY UNIQUE
+shotType TEXT NOT NULL
+time TEXT NOT NULL
+illuminationType TEXT NOT NULL
+gain REAL NOT NULL
+saturation INTEGER NOT NULL
+shutterSpeed TEXT NOT NULL
+whiteBalance INTEGER NOT NULL
+}
+entity MediaMetadata {
+        metadataId INTEGER PRIMARY KEY UNIQUE,
+        entryId INTEGER,
+        leftCameraMedia TEXT NOT NULL,
+        rightCameraMedia TEXT NOT NULL,
+        time TEXT NOT NULL,
+        temperature REAL NOT NULL,
+        pressure REAL NOT NULL,
+        ph REAL NOT NULL,
+        dissolvedOxygen REAL NOT NULL,
+        grayscaleLeftMedia TEXT NOT NULL,
+        grayscaleRightMedia TEXT NOT NULL,
+        stereoMedia TEXT NOT NULL,
+        taggedMedia TEXT NOT NULL,
+        FOREIGN KEY (entryId) REFERENCES media_entry(entryId)
+}
+MediaEntry ||--|{ MediaMetadata
+@enduml
