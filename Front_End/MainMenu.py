@@ -343,6 +343,21 @@ class MainMenu(object):
         self.whiteLED = GPIO.setup(2, GPIO.OUT)
         self.redLED = GPIO.setup(3, GPIO.OUT)
         self.uvLED = GPIO.setup(4, GPIO.OUT)
+        self.lightingIndex = 0
+
+    def cycleLighting(self):
+        """Cycle through lighting when function is called."""
+        GPIO.output(2, GPIO.LOW)
+        GPIO.output(3, GPIO.LOW)
+        GPIO.output(4, GPIO.LOW)
+        self.lightingIndex += 1
+        self.lightingIndex %= 4
+        if self.lightingIndex == 1:
+            GPIO.output(2, GPIO.HIGH)
+        elif self.lightingIndex == 2:
+            GPIO.output(3, GPIO.HIGH)
+        elif self.lightingIndex == 3:
+            GPIO.output(4, GPIO.HIGH)
 
     def decodeGPIOtoKeyPress(self, pin: int):
         """Decode Raspberry Pi GPIO interrupt into a QKeyEvent.
@@ -364,11 +379,15 @@ class MainMenu(object):
             now = time.time()
             while GPIO.input(27) == GPIO.LOW:
                 if time.time() - now > 5:
-                    subprocess.call(["sudo", "shutdown","-h" ,"now"])
+                    subprocess.call(["sudo", "shutdown", "-h", "now"])
             return
         if pin == 17:
             key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_W,
                                   Qt.KeyboardModifier(0), "W")
+            time.sleep(0.5)
+            while GPIO.input(27) == GPIO.LOW:
+                QtWidgets.QApplication.sendEvent(self.form, key_event)
+                time.sleep(0.01)
         elif pin == 27:
             key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_A,
                                   Qt.KeyboardModifier(0), "A")
@@ -378,6 +397,9 @@ class MainMenu(object):
         elif pin == 6:
             key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_S,
                                   Qt.KeyboardModifier(0), "S")
+            while GPIO.input(6) == GPIO.LOW:
+                QtWidgets.QApplication.sendEvent(self.form, key_event)
+                time.sleep(0.01)
         elif pin == 26:
             key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_F1,
                                   Qt.KeyboardModifier(0), "F1")
@@ -432,59 +454,88 @@ class MainMenu(object):
         Pressing F1 and F2 cycles through the menus.
         """
         currentIndex = self.stackedLayout.currentIndex()
-        if event.key() == Qt.Key.Key_Up:
-            print("It entered")
         if event.key() == Qt.Key.Key_W and currentIndex == 0:
             self.previewScreen.cameraControl.setFocus(
                 self.previewScreen.cameraHandles,
                 self.previewScreen.cameraControl.customFocus[0] + 20, "")
             print(self.previewScreen.cameraControl.customFocus[0])
-        if event.key() == Qt.Key.Key_W and currentIndex == 1:
-            if (self.studyProfileSelectionMenu.isValidIndex(self.studyProfileSelectionMenu.currentStudyProfileIndex-1)):
-                self.studyProfileSelectionMenu.listWidget.setCurrentItem(self.studyProfileSelectionMenu.listWidget.item(self.studyProfileSelectionMenu.currentStudyProfileIndex-1))
+        elif event.key() == Qt.Key.Key_W and currentIndex == 1:
+            if (self.studyProfileSelectionMenu.isValidIndex(
+                    self.studyProfileSelectionMenu.currentStudyProfileIndex -
+                    1)):
+                self.studyProfileSelectionMenu.listWidget.setCurrentItem(
+                    self.studyProfileSelectionMenu.listWidget.item(
+                        self.studyProfileSelectionMenu.currentStudyProfileIndex
+                        - 1))
             return
+        elif event.key() == Qt.Key.Key_D and currentIndex == 0:
+            self.cycleLighting()
         elif event.key() == Qt.Key.Key_S and currentIndex == 1:
-            if (self.studyProfileSelectionMenu.isValidIndex(self.studyProfileSelectionMenu.currentStudyProfileIndex+1)):
-                self.studyProfileSelectionMenu.listWidget.setCurrentItem(self.studyProfileSelectionMenu.listWidget.item(self.studyProfileSelectionMenu.currentStudyProfileIndex+1))
+            if (self.studyProfileSelectionMenu.isValidIndex(
+                    self.studyProfileSelectionMenu.currentStudyProfileIndex +
+                    1)):
+                self.studyProfileSelectionMenu.listWidget.setCurrentItem(
+                    self.studyProfileSelectionMenu.listWidget.item(
+                        self.studyProfileSelectionMenu.currentStudyProfileIndex
+                        + 1))
             return
         elif event.key() == Qt.Key.Key_S and currentIndex == 0:
             self.previewScreen.cameraControl.setFocus(
                 self.previewScreen.cameraHandles,
                 self.previewScreen.cameraControl.customFocus[0] - 20, "")
             print(self.previewScreen.cameraControl.customFocus[0])
-        
+
         if event.key() == Qt.Key.Key_W and currentIndex == 2:
-            if (self.shutterSpeedSelectionMenu.isValidIndex(self.shutterSpeedSelectionMenu.currentShutterSpeedIndex-1)):
-                self.shutterSpeedSelectionMenu.listWidget.setCurrentItem(self.shutterSpeedSelectionMenu.listWidget.item(self.shutterSpeedSelectionMenu.currentShutterSpeedIndex-1))
+            if (self.shutterSpeedSelectionMenu.isValidIndex(
+                    self.shutterSpeedSelectionMenu.currentShutterSpeedIndex -
+                    1)):
+                self.shutterSpeedSelectionMenu.listWidget.setCurrentItem(
+                    self.shutterSpeedSelectionMenu.listWidget.item(
+                        self.shutterSpeedSelectionMenu.currentShutterSpeedIndex
+                        - 1))
                 return
         elif event.key() == Qt.Key.Key_S and currentIndex == 2:
-            if (self.shutterSpeedSelectionMenu.isValidIndex(self.shutterSpeedSelectionMenu.currentShutterSpeedIndex+1)):
-                self.shutterSpeedSelectionMenu.listWidget.setCurrentItem(self.shutterSpeedSelectionMenu.listWidget.item(self.shutterSpeedSelectionMenu.currentShutterSpeedIndex+1))
+            if (self.shutterSpeedSelectionMenu.isValidIndex(
+                    self.shutterSpeedSelectionMenu.currentShutterSpeedIndex +
+                    1)):
+                self.shutterSpeedSelectionMenu.listWidget.setCurrentItem(
+                    self.shutterSpeedSelectionMenu.listWidget.item(
+                        self.shutterSpeedSelectionMenu.currentShutterSpeedIndex
+                        + 1))
                 return
         if event.key() == Qt.Key.Key_W and currentIndex == 3:
-            if (self.saturationConfigurationMenu.horizontalSlider.value() < 200):
-                self.saturationConfigurationMenu.horizontalSlider.setValue(self.saturationConfigurationMenu.horizontalSlider.value() + 1)
+            if (self.saturationConfigurationMenu.horizontalSlider.value()
+                    < 200):
+                self.saturationConfigurationMenu.horizontalSlider.setValue(
+                    self.saturationConfigurationMenu.horizontalSlider.value() +
+                    1)
 
         elif event.key() == Qt.Key.Key_S and currentIndex == 3:
             if (self.saturationConfigurationMenu.horizontalSlider.value() > 0):
-                self.saturationConfigurationMenu.horizontalSlider.setValue(self.saturationConfigurationMenu.horizontalSlider.value() - 1)
-        
+                self.saturationConfigurationMenu.horizontalSlider.setValue(
+                    self.saturationConfigurationMenu.horizontalSlider.value() -
+                    1)
+
         if event.key() == Qt.Key.Key_W and currentIndex == 4:
             if (self.gainConfigurationMenu.horizontalSlider.value() < 240):
-                self.gainConfigurationMenu.horizontalSlider.setValue(self.gainConfigurationMenu.horizontalSlider.value() + 1)
+                self.gainConfigurationMenu.horizontalSlider.setValue(
+                    self.gainConfigurationMenu.horizontalSlider.value() + 1)
 
         elif event.key() == Qt.Key.Key_S and currentIndex == 4:
             if (self.gainConfigurationMenu.horizontalSlider.value() > 0):
-                self.gainConfigurationMenu.horizontalSlider.setValue(self.gainConfigurationMenu.horizontalSlider.value() - 1)
+                self.gainConfigurationMenu.horizontalSlider.setValue(
+                    self.gainConfigurationMenu.horizontalSlider.value() - 1)
 
         if event.key() == Qt.Key.Key_W and currentIndex == 5:
             if (self.whiteBalanceCalibrationMenu.WBSlider.value() < 6500):
-                self.whiteBalanceCalibrationMenu.WBSlider.setValue(self.whiteBalanceCalibrationMenu.WBSlider.value() + 10)
+                self.whiteBalanceCalibrationMenu.WBSlider.setValue(
+                    self.whiteBalanceCalibrationMenu.WBSlider.value() + 10)
 
         elif event.key() == Qt.Key.Key_S and currentIndex == 5:
             if (self.whiteBalanceCalibrationMenu.WBSlider.value() > 3200):
-                self.whiteBalanceCalibrationMenu.WBSlider.setValue(self.whiteBalanceCalibrationMenu.WBSlider.value() - 10)
-        
+                self.whiteBalanceCalibrationMenu.WBSlider.setValue(
+                    self.whiteBalanceCalibrationMenu.WBSlider.value() - 10)
+
         elif event.key() == Qt.Key.Key_W and currentIndex == 6:
             self.dissolvedOxygenCalibrationMenu.CalibrateZeroCal.clicked.emit()
 
@@ -525,10 +576,13 @@ class MainMenu(object):
             self.cameraPictureControl.stopStudy = False
         elif event.key() == Qt.Key.Key_Q:
             if self.focusPoint1 is None:
-                self.focusPoint1 = self.previewScreen.cameraControl.customFocus[0]
+                self.focusPoint1 = \
+                    self.previewScreen.cameraControl.customFocus[0]
                 self.previewScreen.status_label.setText("FP1 Set")
-            elif self.focusPoint2 is None and self.previewScreen.cameraControl.customFocus[0] != self.focusPoint1:
-                self.focusPoint2 = self.previewScreen.cameraControl.customFocus[0]
+            elif self.focusPoint2 is None and self.previewScreen.cameraControl.customFocus[
+                    0] != self.focusPoint1:
+                self.focusPoint2 = \
+                    self.previewScreen.cameraControl.customFocus[0]
                 self.previewScreen.status_label.setText("FP2 Set")
 
         # When the menu cycles to the corresponding menu it sets the keyboard
@@ -537,22 +591,18 @@ class MainMenu(object):
         if currentIndex == 1:
             self.studyProfileSelectionMenuForm.setEnabled(True)
             self.studyProfileSelectionMenu.listWidget.setFocus()
-            
-            
+
         elif currentIndex == 2:
             self.shutterSpeedSelectionMenuForm.setEnabled(True)
             self.shutterSpeedSelectionMenu.listWidget.setFocus()
-
 
         elif currentIndex == 3:
             self.saturationConfigurationMenuForm.setEnabled(True)
             self.saturationConfigurationMenu.horizontalSlider.setFocus()
 
-
         elif currentIndex == 4:
             self.gainConfigurationMenuForm.setEnabled(True)
             self.gainConfigurationMenu.horizontalSlider.setFocus()
-
 
         elif currentIndex == 5:
             self.whiteBalanceCalibrationMenuForm.setEnabled(True)
@@ -565,12 +615,11 @@ class MainMenu(object):
         elif currentIndex == 7:
             self.phSensorCalibrationMenuForm.setEnabled(True)
             self.phSensorCalibrationMenu.LowPointCal.setFocus()
-        
+
         mainMenuForm.showFullScreen()
 
-
     def unfocus_widgets(self):
-        """Clears focus of all widgets."""
+        """Clear focus of all widgets."""
         """
         self.studyProfileSelectionMenu.listWidget.setDisabled()
         self.shutterSpeedSelectionMenu.listWidget.setDisabled
@@ -672,8 +721,9 @@ class MainMenu(object):
                     media_metadata = dq.insertMediaMetadata(
                         entry_id, path, "jpg", MainMenu.getCurrentTime(),
                         self.previewScreen.tempReading,
-                    self.previewScreen.baroReading,
-                    self.previewScreen.phReading, self.previewScreen.DOreading)
+                        self.previewScreen.baroReading,
+                        self.previewScreen.phReading,
+                        self.previewScreen.DOreading)
                     media_metadata = dq.getMediaMetadatabyId(media_metadata)
                     GPIO.output(2, GPIO.LOW)
                     GPIO.output(3, GPIO.LOW)
@@ -684,10 +734,12 @@ class MainMenu(object):
                         GPIO.output(3, GPIO.HIGH)
                     elif illuminationType == "ULTRAVIOLET":
                         GPIO.output(4, GPIO.HIGH)
-                    self.cameraPictureControl.get_snapshot(self.previewScreen.cameraHandles[0],
-                                      media_metadata.left_Camera_Media)
-                    self.cameraPictureControl.get_snapshot(self.previewScreen.cameraHandles[1],
-                                      media_metadata.right_Camera_Media)
+                    self.cameraPictureControl.get_snapshot(
+                        self.previewScreen.cameraHandles[0],
+                        media_metadata.left_Camera_Media)
+                    self.cameraPictureControl.get_snapshot(
+                        self.previewScreen.cameraHandles[1],
+                        media_metadata.right_Camera_Media)
                     GPIO.output(2, GPIO.LOW)
                     GPIO.output(3, GPIO.LOW)
                     GPIO.output(4, GPIO.LOW)
@@ -709,19 +761,23 @@ class MainMenu(object):
                     minFocus = maxFocus
                     maxFocus = temp
                 for shot in range(steps):
-                    focus = minFocus + ((maxFocus-minFocus)/steps)*shot
-                    self.previewScreen.cameraControl.setExposure(self.previewScreen.cameraHandles, focus, "")
-                    media_metadata = dq.insertMediaMetadata(entry_id, path, "jpg",
-                                                            MainMenu.getCurrentTime(),
-                                                            self.previewScreen.tempReading,
-                self.previewScreen.baroReading,
-                self.previewScreen.phReading, self.previewScreen.DOreading)
+                    focus = minFocus + ((maxFocus - minFocus) / steps) * shot
+                    self.previewScreen.cameraControl.setExposure(
+                        self.previewScreen.cameraHandles, focus, "")
+                    media_metadata = dq.insertMediaMetadata(
+                        entry_id, path, "jpg", MainMenu.getCurrentTime(),
+                        self.previewScreen.tempReading,
+                        self.previewScreen.baroReading,
+                        self.previewScreen.phReading,
+                        self.previewScreen.DOreading)
                     media_metadata = dq.getMediaMetadatabyId(media_metadata)
-                    self.cameraPictureControl.get_snapshot(self.previewScreen.cameraHandles[0],
-                                      media_metadata.left_Camera_Media)
-                    self.cameraPictureControl.get_snapshot(self.previewScreen.cameraHandles[1],
-                                      media_metadata.right_Camera_Media)
-                        
+                    self.cameraPictureControl.get_snapshot(
+                        self.previewScreen.cameraHandles[0],
+                        media_metadata.left_Camera_Media)
+                    self.cameraPictureControl.get_snapshot(
+                        self.previewScreen.cameraHandles[1],
+                        media_metadata.right_Camera_Media)
+
             self.focusPoint1 = None
             self.focusPoint2 = None
         elif studyProfile["shotType"] == "VIDEO":
@@ -729,14 +785,18 @@ class MainMenu(object):
 
             now = timer.time()
             while timer.time() < now + videoLength:
-                metadata = dq.insertMediaMetadata(entry_id, path, "jpg",
-                                                  MainMenu.getCurrentTime(),
-                                                  self.previewScreen.tempReading,
-                self.previewScreen.baroReading,
-                self.previewScreen.phReading, self.previewScreen.DOreading)
+                metadata = dq.insertMediaMetadata(
+                    entry_id, path, "jpg", MainMenu.getCurrentTime(),
+                    self.previewScreen.tempReading,
+                    self.previewScreen.baroReading,
+                    self.previewScreen.phReading, self.previewScreen.DOreading)
                 metadata = dq.getMediaMetadatabyId(metadata)
-                self.cameraPictureControl.get_snapshot(self.previewScreen.cameraHandles[0], metadata.left_Camera_Media)
-                self.cameraPictureControl.get_snapshot(self.previewScreen.cameraHandles[1], metadata.right_Camera_Media)
+                self.cameraPictureControl.get_snapshot(
+                    self.previewScreen.cameraHandles[0],
+                    metadata.left_Camera_Media)
+                self.cameraPictureControl.get_snapshot(
+                    self.previewScreen.cameraHandles[1],
+                    metadata.right_Camera_Media)
 
         self.previewScreen.setStatusLabel(False)
         self.previewScreen.active = True
@@ -810,6 +870,7 @@ class MainMenu(object):
         GPIO.cleanup()
 
     def __del__(self):
+        """Run when Main Menu closes. Clean up resources."""
         self.previewScreen.cameraControl.cleanUpCameras(
             self.previewScreen.cameraHandles)
         GPIO.cleanup()
