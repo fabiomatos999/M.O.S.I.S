@@ -385,9 +385,9 @@ class MainMenu(object):
             key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_W,
                                   Qt.KeyboardModifier(0), "W")
             time.sleep(0.5)
-            while GPIO.input(27) == GPIO.LOW:
+            while GPIO.input(17) == GPIO.LOW:
                 QtWidgets.QApplication.sendEvent(self.form, key_event)
-                time.sleep(0.01)
+                time.sleep(0.1)
         elif pin == 27:
             key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_A,
                                   Qt.KeyboardModifier(0), "A")
@@ -399,7 +399,7 @@ class MainMenu(object):
                                   Qt.KeyboardModifier(0), "S")
             while GPIO.input(6) == GPIO.LOW:
                 QtWidgets.QApplication.sendEvent(self.form, key_event)
-                time.sleep(0.01)
+                time.sleep(0.1)
         elif pin == 26:
             key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_F1,
                                   Qt.KeyboardModifier(0), "F1")
