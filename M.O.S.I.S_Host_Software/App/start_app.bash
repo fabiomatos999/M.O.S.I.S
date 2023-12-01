@@ -13,12 +13,14 @@ if [ "$(apt -qq list python3-venv 2> /dev/null | awk '/installed/')" == "" ]; th
 fi
 if ! command -v focus-stack &> /dev/null; then
     sudo apt install git libopencv-dev build-essential -y
+    mkdir temp
+    cd temp
     git clone https://github.com/PetteriAimonen/focus-stack.git
     cd focus-stack
     make
     sudo make install
-    cd ..
-    rm -rf focus-stack
+    cd ../..
+    rm -rf temp
 fi
 if [ ! -d $(pwd)"/venv" ]; then
     python3 -m venv $(pwd)"/venv"
