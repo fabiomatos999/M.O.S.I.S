@@ -139,19 +139,13 @@ def generateFocusStackImage(folderPath: str):
 
 def generateStereoscopicVideo(folderPath: str):
     images = findImagePairs(folderPath)
-    image = generateStereoscopicImage(os.path.join(folderPath, images[0][0]),
-                                      os.path.join(folderPath, images[0][1]),
-                                      "temp.jpg")
-    video = cv2.VideoWriter(os.path.join(folderPath, "stereoVideo.mp4"),
-                            cv2.VideoWriter_fourcc(*'mp4v'), 1,
-                            (image.shape[1], image.shape[0]))
+    frames = []
     for pair in images:
         pathLeft = os.path.join(folderPath, pair[0])
         pathRight = os.path.join(folderPath, pair[1])
-        frame = generateStereoscopicImage(pathLeft, pathRight, "temp.jpg")
-        frame = cv2.imread("temp.jpg")
-        video.write(frame)
-    video.release()
+        generateStereoscopicImage(pathLeft, pathRight, "temp.jpg")
+        frames.append(imageio.imread("temp.jpg"))
+    imageio.mimsave(os.path.join(folderPath, "stereoVideo.mp4"), frames, fps=1)
     os.remove("temp.jpg")
 
 
