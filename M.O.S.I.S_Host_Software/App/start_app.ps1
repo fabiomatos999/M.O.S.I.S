@@ -1,14 +1,12 @@
 if (!(Test-Path -Path 'C:\Program Files\wkhtmltopdf\*')) {
-    Write-Error "wkhtmltopdf is not installed: Please install it from here: https://wkhtmltopdf.org/downloads.html"
-    exit
+    .\redist\wkhtmltox-0.12.6-1.msvc2015-win64.exe
 }
 if (!(Test-Path -Path 'C:\Program Files\gs\*')) {
-    Write-Error "GhostScript is not installed: Please install it from here: https://www.ghostscript.com/releases/gsdnld.html"
-    exit
+    .\redist\gs10021w32.exe
 }
 if (!(Get-Command python)) {
     Write-Error "Python is not installed: Please install it from here: https://www.python.org/downloads/"
-    exit
+    .\redist\python-3.12.0-amd64.exe
 }
 if (!(Test-Path -Path '.\venv')) {
     mkdir .\venv
