@@ -1,12 +1,11 @@
 if (!(Test-Path -Path 'C:\Program Files\wkhtmltopdf\*')) {
-    .\redist\wkhtmltox-0.12.6-1.msvc2015-win64.exe
+    Start-Process .\redist\wkhtmltox-0.12.6-1.msvc2015-win64.exe -Wait
 }
 if (!(Test-Path -Path 'C:\Program Files\gs\*')) {
-    .\redist\gs10021w32.exe
+    Start-Process .\redist\gs10021w64.exe -Wait
 }
-if (!(Get-Command python)) {
-    Write-Error "Python is not installed: Please install it from here: https://www.python.org/downloads/"
-    .\redist\python-3.12.0-amd64.exe
+if (!(Test-Path C:\Users\*\AppData\Local\Programs\Python\Python312\python.exe)) {
+    Start-Process .\redist\python-3.12.0-amd64.exe -Wait
 }
 if (!(Test-Path -Path '.\venv')) {
     mkdir .\venv
