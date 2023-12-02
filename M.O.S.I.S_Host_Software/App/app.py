@@ -25,5 +25,5 @@ if __name__ == "__main__":
         'port': 5000,  # Specify the port to listen on
         'threads': 8  # Set the number of threads
     }
-    # serve(app, **waitress_config)
-    app.run(debug=True)
+    serve(app, **waitress_config)
+    # app.run(debug=True)
