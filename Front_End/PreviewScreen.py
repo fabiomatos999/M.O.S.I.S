@@ -348,6 +348,10 @@ class Ui_Form(object):
         self.sensorHub = sensor.sensorHub()
         global sensorHub
         sensorHub = self.sensorHub
+        self.tempReading = float()
+        self.DOreading = float()
+        self.baroReading = float()
+        self.phReading = float()
         self.sensorTimer = QTimer(Form)
         self.sensorTimer.timeout.connect(self.getSensorHubData)
         self.sensorTimer.start(2000)
