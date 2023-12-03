@@ -1,0 +1,64 @@
+@startuml
+actor "User" as user
+participant "Host Software" as hs
+participant "Raspberry Pi" as pi
+participant "Hard Disk" as hdd
+database "Database" as db
+user -> hs : Turn on host software
+alt Back up
+	hs -> pi : Request captured media
+	pi --> hdd : Upload captured media
+	pi --> hs : Uploaded captured media
+	hs -> hdd: Read backed up media
+	activate hdd
+	hdd -> hs : Send backed up media
+	deactivate hdd
+else No back up
+	hs -> hdd : Read previously backed up media
+	activate hdd
+	hdd --> hs : Send previously backed up media
+	deactivate hdd
+	end
+	hs -> hdd : Generate media based on shot type
+	activate hdd
+	hdd --> hs : Media generated
+	deactivate hdd
+	hs -> db : Insert Media entries generated files
+	activate db
+	db --> hs : Receive Media entry ID
+	hs -> db : Insert media metadata from files
+	db --> hs : Receive metadata ID
+	deactivate db
+	hs --> user : Dispaly home page
+	user -> user : View all entries inside database
+	user -> hs : Click Media Entry
+	hs -> db : Request media entry
+	activate db
+	db --> hs : Receive media entry
+	deactivate db
+	hs -> hdd : Request captured media
+	activate hdd
+	hdd --> hs : Send captured media
+	deactivate hdd
+	hs -> user : Present media entry
+	user -> hs : Search media entries
+	hs -> db : Request entries that meet criteria
+	activate db
+	db --> hs : Receive selected entries
+	deactivate db
+	hs --> user : Present filtered entries
+	user -> user : View filtered entries
+	user -> hs : Delete Raspberry Pi Media
+	alt Back Up
+	hs -> user : Confirm media deletion
+	alt Confirmed
+	hs -> pi : Delete M.O.S.I.S\nmicroscope captured media
+	pi --> hs : Deletion completed
+	hs -> user : Present home screen
+	else No confirm
+	hs -> user : Present home screen
+	end
+	else No backup
+	hs -> user :Disable deletion functionality
+	end
+@enduml
