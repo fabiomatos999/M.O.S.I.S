@@ -148,7 +148,7 @@ def return_study_profile_form(class_string: str) -> Type[BaseShotTypeForm]:
 
 class baseSearchForm(FlaskForm):
     listView = BooleanField("List View")
-    submit = SubmitField('Submit Study')
+    submit = SubmitField('Search')
 
 
 class idSearchForm(baseSearchForm):
