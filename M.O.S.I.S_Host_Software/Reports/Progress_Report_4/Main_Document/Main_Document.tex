@@ -86,7 +86,7 @@ These design criteria are in part due to the target users of the M.O.S.I.S micro
 	\item Friendly and modern user interface design.
 	\item Automate the process of data analysis.
 	\item Streamline the process of data export.
-a	\item Seamless integration between the host machine and the Raspberry Pi.
+	      a	\item Seamless integration between the host machine and the Raspberry Pi.
 \end{enumerate}
 \subsection{Analysis of alternatives}
 Given that the term ``host software'' and the design criteria are rather broad, this gives us a lot of possible and viable alternatives for a design. To start we need to first identify what are the possible ways of creating a user interface for this piece of software. There are 3 main approaches used in modern software design for making user interfaces:
@@ -255,22 +255,22 @@ Now we have our programming language of choice and broad system architecture set
 \subsection{Module Description}
 The host software can be divided into the following Modules:
 \begin{itemize}
-\item Application/Routes
-  \begin{itemize}
-    \item Encompasses the web server and routes for the web server. The routes themselves are URLs that execute Python functions that return rendered jinja2 templates.
-  \end{itemize}
-\item Database Query
-  \begin{itemize}
-  \item Initializing a database query object creates the database tables if they do not already exists. It also provides an interface to store and read various kinds of data from either MediaEntry and MediaMetadata tables.
-  \end{itemize}
-\item Representations
-  \begin{itemize}
-    \item Internal Representations of database tables. Used to internally to present database objects to the user.
-  \end{itemize}
-\item Database Reconstruct (DBReconstruct)
-  \begin{itemize}
-    \item Class that rebuild the database before the web server starts. It uses the folder structure from the user interface to insert media entries and media metadata.
-  \end{itemize}
+	\item Application/Routes
+	      \begin{itemize}
+		      \item Encompasses the web server and routes for the web server. The routes themselves are URLs that execute Python functions that return rendered jinja2 templates.
+	      \end{itemize}
+	\item Database Query
+	      \begin{itemize}
+		      \item Initializing a database query object creates the database tables if they do not already exists. It also provides an interface to store and read various kinds of data from either MediaEntry and MediaMetadata tables.
+	      \end{itemize}
+	\item Representations
+	      \begin{itemize}
+		      \item Internal Representations of database tables. Used to internally to present database objects to the user.
+	      \end{itemize}
+	\item Database Reconstruct (DBReconstruct)
+	      \begin{itemize}
+		      \item Class that rebuild the database before the web server starts. It uses the folder structure from the user interface to insert media entries and media metadata.
+	      \end{itemize}
 \end{itemize}
 \subsection{User Interface}
 \begin{figure}[H]
@@ -325,6 +325,12 @@ The host software can be divided into the following Modules:
 \end{figure}
 \subsection{Sequence Diagram}
 \subsection{Activity Diagram}
+\begin{figure}[H]
+	\resizebox{\textwidth}{!}{
+		\import{Figures}{activity_diagram.tex}
+	}
+	\caption{Host Software: Activity Diagram}
+\end{figure}
 \subsection{ER Diagram}
 \begin{figure}[H]
 	\resizebox{\textwidth}{!}{

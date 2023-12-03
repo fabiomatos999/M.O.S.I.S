@@ -1,0 +1,71 @@
+@startuml
+start
+if (IP Address Flag?) then (yes)
+	if (IP address valid) then (yes)
+	:Backup M.O.S.I.S Raspberry Pi;
+	else (no)
+	:Print invalid IP address error message;
+	end
+	endif
+else if (No backup flag?) then (yes)
+:Disable remote media deletion\nand study profile upload;	
+else (no)
+	:Print help menu;
+	end
+endif
+if (Media Present?) then (yes)
+	:Generate manipulated images;
+	:Recontruct transient database;
+else (no)
+endif
+:Start Web Server;
+:Present home screen;
+if (Media Present?) then (yes)
+	:Show preview of each entry in database;
+else (no)
+	:Display "No results found message";
+endif
+repeat :Show home screen;
+if (Media entry clicked?) then (yes)
+	if (Media Entry Shot Type == SINGLE) then (yes)
+	:Present page with a single set of\nstereo images and other generated images;
+	else if (Media Entry Shot Type == BURST\nMedia Entry Shot Type == TIMELAPSE) then (yes)
+	:Present a page with a generated GIF,\nthe stereo images and other generated images;
+	else if (Media Entry Shot Type == TELESCOPIC) then (yes)
+	:Present page with stereo focus stack image,\nstereo images and other generated images;
+	else if (Media Entry Shot Type == VIDEO) then (yes)
+	:Present page with stereo video,\nstereo images and other generated media;
+	else (no)
+	endif
+(no) else if (Study Profile Creation dropdown clicked?) then (yes)
+	if (Shot Type clicked?) then (yes)
+	:Present form based on which\nshot type was selected;
+	else (no)
+	endif
+(no) else if (Study Profile upload clicked?) then (yes)
+	:Present study profile summary and upload button;
+	if (Upload button pressed?) then (yes)
+	:Save to local disk;
+	else (no)
+	if (IP Address flag?) then (yes)
+	:Upload study profile to Raspberry Pi;
+	else (no)
+	endif
+	endif
+	(no) else if (Delete button pressed?) then (yes)
+	if (IP Address Flag?) then (yes)
+	:Present confirm boxes and delete buttons;
+	if (Confirm and delete are pressed?) then (yes)
+	:Delete Raspberry Pi Media;
+	endif
+	endif
+	(no) else if (Search Button Pressed?) then (yes)
+	:Present form where the user can search by\nshot type, illumination type, date or ID;
+	if (Submit button pressed?) then (yes)
+	:Present filtered media entries;
+	else (no)
+	endif
+endif
+repeat while (Host software not shutdown)
+end
+@enduml
