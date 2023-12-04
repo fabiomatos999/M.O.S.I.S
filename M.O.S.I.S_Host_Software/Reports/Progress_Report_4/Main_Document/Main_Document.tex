@@ -9,14 +9,21 @@
 	filecolor=black,
 	linkcolor=black,
 	urlcolor=blue,
-	pdftitle={M.O.S.I.S Final Report},
-	pdfpagemode=UseThumbs,
+	pdftitle={M.O.S.I.S Host Software Final Report},
+	pdfpagemode=w,
 }
+\usepackage{pdfpages}
+\usepackage{setspace}
 
 \begin{document}
 \pagenumbering{gobble}
 \include{Title_Page/Title_Page}
+\begin{spacing}{1.5}
+  
 \section*{Executive Summary}
+The M.O.S.I.S host software is the data analysis tool for the M.O.S.I.S microscope that backs up the captured media, analyzes the captured media, configures the M.O.S.I.S microscope and automatically generates reports from the analyzed data. In this semester, a tool was created that can: automatically backup the M.O.S.I.S Raspberry Pi, generate stereoscopic media for five distinct shot types, configure the M.O.S.I.S microscope, remotely delete captured media, export analyzed media into a report and search a database by ID, shot type, date and illumination type. The main source of difficulty of this project stem from the parallel development of the new user interface on the M.O.S.I.S microscope, leading to defining system specifications in parallel as well. These sources of difficulty were ameliorated by defining the core dependent specifications first and then branching off the known interface. The main sources of delay from the host software project was the slow implementation of the shot types on the new user interface which meant a slow pace at which test data was gathered. These delays were dealt with by shifting priorities into documentation while the shot types were finalized.
+\end{spacing}
+\newpage
 \pagenumbering{roman}
 \tableofcontents
 \pagenumbering{arabic}
@@ -358,4 +365,5 @@ The host software can be divided into the following Modules:
 \section{Testing Plan}
 Here is the link for the testing plan spread sheet file: \href{https://github.com/fabiomatos999/M.O.S.I.S/blob/cbc7f93a3c61a5a1f555a680c11ccd9943d468a7/M.O.S.I.S_Host_Software/Reports/Progress_Report_4/Main_Document/Figures/M.O.S.I.S\%20Host\%20Software\%20Testing\%20Plan.ods}{Link}
 \section{Task Progress and Gantt Chart}
+\includepdf[pages=-]{./Figures/Gantt_Chart.pdf}
 \end{document}
