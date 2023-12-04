@@ -10,14 +10,14 @@ import os
 app.register_blueprint(website)
 
 if __name__ == "__main__":
-    dbr = dbReconstruct.DBReconstruct("static/Media")
     if not args.nobackup:
         try:
             sshUtils.scp_recursive_copy(
-                "pi@{}:/home/pi/Documents".format(args.ipaddress),
+                "pi@{}:/home/pi/Media_Storage/*".format(args.ipaddress),
                 os.path.join("static", "Media"))
         except Exception:
             raise ValueError("Invalid IP Address or Hostname was inputted.")
+    dbr = dbReconstruct.DBReconstruct("static/Media")
     from waitress import serve
     webbrowser.open("http://127.0.0.1:5000", new=2, autoraise=True)
     waitress_config = {
