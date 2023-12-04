@@ -10,7 +10,7 @@ group.add_argument("-i",
                    "--ipaddress",
                    type=str,
                    help="IP address of the Raspberry Pi",
-                   default="raspberrypi")
+                   default="raspberrypi.local")
 parser.add_argument('-o', '--output', type=str, default=os.getcwd(), help='Output Folder for the Generated Report')
 
 args = parser.parse_args()

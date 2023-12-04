@@ -190,7 +190,7 @@ def delete():
     if form.is_submitted():
         ret = request.form
         if ret.get("confirmation") and ret.get("delete"):
-            sshUtils.ssh_delete("pi@10.0.0.73", "~/Videos")
+            sshUtils.ssh_delete("pi@{}".format(args.ipaddress), "~/Media_Storage/*")
             mediaDeleted = True
         else:
             return redirect("/")
