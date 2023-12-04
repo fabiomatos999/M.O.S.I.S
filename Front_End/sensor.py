@@ -204,7 +204,7 @@ class sensorHub:
             result = ReadResult(received)
             print(result)
             return result
-        except (serial.SerialException, UnicodeDecodeError) as e:
+        except Exception as e:
             raise Exception("Error reading sensor data: " + str(e))
 
     def SysCheck(self) -> SensorHubStatus:
