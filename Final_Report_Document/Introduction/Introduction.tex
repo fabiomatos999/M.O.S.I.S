@@ -1,25 +1,25 @@
 \section{Introduction (Fabio)}
-The Marine Operated Stereoscopic Imaging System (M.O.S.I.S) is an underwater microscope created by David M. Repollet Otero along side his principal investigator Manuel A. Jimenez Cedeno. This microscope captures stereoscopic media of its subject and records environmental conditions such as temperature, pH, pressure and dissolved oxygen. This device will help marine biologist researchers on studying how climate change is affecting aquatic ecosystems. The M.O.S.I.S microscope already has a user interface previously made for the device, but it lacks design cohesion, is slow, crashes constantly, lacks most of the required features and cannot be operated using the on board buttons. This is why for our capstone project we have decided to create a new user interface that:
+The Marine Operated Stereoscopic Imaging System (M.O.S.I.S) is an underwater microscope created by David M. Repollet Otero along side his principal investigator Manuel A. Jimenez Cedeno. This microscope captures stereoscopic media of its subject and records environmental conditions such as temperature, pH, pressure and dissolved oxygen. This device will help marine biologist researchers on studying how climate change is affecting aquatic ecosystems. The M.O.S.I.S microscope already had a user interface previously made for the device, but it lacked design cohesion, was slow, crashed constantly, lacked most of the required features and could not be operated using the on board buttons. This is why for our capstone project we had decided to create a new user interface that:
 \begin{itemize}
-	\item Can be utilized under water using the on board buttons.
-	\item Can capture media en five different shot types: single, burst, time lapse, telescopic and video.
-	\item Control gain, saturation, shutter speed and white balance for both of the cameras.
-	\item Can calibrate both pH and dissolved oxygen sensors.
-	\item Record environmental conditions along side of the captured media.
-	\item Utilize either White, Red or Ultraviolet light to capture images.
+	\item Could be utilized under water using the on board buttons.
+	\item Could capture media en five different shot types: single, burst, time lapse, telescopic and video.
+	\item Controls gain, saturation, shutter speed and white balance for both of the cameras.
+	\item Could calibrate both pH and dissolved oxygen sensors.
+	\item Records environmental conditions along side of the captured media.
+	\item Utilized either White, Red or Ultraviolet light to capture images.
 \end{itemize}
 Some of these objectives have changed slightly since the proposal due to newly found limitations to the cameras or a misunderstanding of the existing hardware.\\
 \subsection{Relevant Literature}
 The relevant literature for the user interface portion of the project are:
 \begin{itemize}
-	\item The RPi.GPIO documentation, specifically the input and output sections.\cite{RaspberrygpiopythonWikiExamples} The most important parts in order to create interactive push buttons than can activate by either activating an input once or holding and input are polling and interrupts since polling can detect for how long an input is detected at the cost of unnecessarily wasting computing resources and interrupts since they efficiently can trigger callback functions and have built in denouncing but at the cost of not being able to know how long an input has been pressed.
+	\item The RPi.GPIO documentation, specifically the input and output sections.\cite{RaspberrygpiopythonWikiExamples} The most important parts in order to create interactive push buttons so that they can activate an input once or holding an input are polling and interrupts since polling can detect for how long an input is detected at the cost of unnecessarily wasting computing resources and interrupts since they efficiently can trigger callback functions and have built in denouncing but at the cost of not being able to know how long an input has been pressed.
 	\item The ``Python GUI Development with PyQt6 \& Qt Designer'' Udemy course.\cite{PythonGUIDevelopmenta} This is an introductory course for how to build simple graphical user interface applications using PyQt6. This was mainly used as a introduction of how the Qt framework works, how to read the documentation and explains general terms used in the framework like events, slots, signals, etc.
 	\item The module documentation for PyQt6.\cite{ModulesPyQtDocumentation} The official documentation for PyQt6 was used in later stages of development, especially when integrating or refining the user interface layout.
 	\item The SDK library functions for Pixelink cameras,the sample programs provided by the SDK and the documentation within the pixelink python wrapper.\cite{WhatFunctionsFeatures} This was used to document, complete the existing camera functions and to discover implementation details that are hidden within the official documentation during the integration process.
 \end{itemize}
-The relevant literature for the sensor sensor hub emulator are the Serial module from the Arduino library, specifically the Serial.available, Serial.begin and Serial.readString functions.\cite{SerialAvailableArduino, SerialBeginArduino, SerialReadStringArduino} These functions were used to create a sensor hub emulator for the microscope since the real one was non operational at the time of integration, mainly to establish a 115200 baud UART interface between the Raspberry Pi and the Arduino to receive random valid data as if it was the real sensor hub.
+The relevant literature for the sensor hub emulator are the Serial module from the Arduino library, specifically the Serial.available, Serial.begin and Serial.readString functions.\cite{SerialAvailableArduino, SerialBeginArduino, SerialReadStringArduino} These functions were used to create a sensor hub emulator for the microscope since the real one was non operational at the time of integration, mainly to establish a 115200 baud UART interface between the Raspberry Pi and the Arduino to receive random valid data as if it was the real sensor hub.
 \subsection{Document Organization}
-The report is sectioned into the following parts:
+The report was sectioned into the following parts:
 \begin{enumerate}
 	\item Introduction
 	\item Design Criteria and Specifications
