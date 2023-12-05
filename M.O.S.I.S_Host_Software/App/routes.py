@@ -170,7 +170,7 @@ def save():
         if not args.nobackup:
             sshUtils.scp_recursive_copy(
                 os.path.realpath("studyProfile.json"),
-                "pi@{}:/home/pi/Documents/".format(args.ipaddress))
+                "pi@{}:/home/pi/M.O.S.I.S/Front_End/".format(args.ipaddress))
         studySaved = True
     return render_template("saveStudyProfile.html",
                            studies=remove_submit_and_csrf_toten(studies),
