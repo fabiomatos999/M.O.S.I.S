@@ -1,7 +1,7 @@
 """Classes and functions for study profile configuration forms."""
 from flask_wtf import FlaskForm
 from wtforms import DecimalField, SubmitField, SelectField, StringField, \
-    BooleanField
+    BooleanField, HiddenField
 from wtforms.validators import InputRequired, NumberRange, ValidationError
 import decimal
 from enums import shotType, illuminationType
@@ -65,16 +65,14 @@ class ShotTypeSingleForm(BaseShotTypeForm):
     """Inherits from BaseShotTypeForm, Specifies shot type."""
 
     filename = "shotTypeSingleForm.html"
-    shotType = SelectField('Shot Type',
-                           choices=[(shotType.SINGLE.name, "Single")])
+    shotType = HiddenField(shotType.SINGLE.name, default=shotType.SINGLE.name)
 
 
 class ShotTypeBurstForm(BaseShotTypeForm):
     """Inherits from BaseShotTypeForm, specifies shot type and burst count."""
 
     filename = "shotTypeBurstForm.html"
-    shotType = SelectField('Shot Type',
-                           choices=[(shotType.BURST.name, "Burst")])
+    shotType = HiddenField(shotType.BURST.name, default=shotType.BURST.name)
     shotCount = DecimalField('Shot Count',
                              places=0,
                              default=5,
@@ -86,8 +84,8 @@ class ShotTypeTelescopicForm(BaseShotTypeForm):
     """Inherits from BaseShotTypeForm, specifies shot type and zoomOutCount."""
 
     filename = "shotTypeTelescopicForm.html"
-    shotType = SelectField('Shot Type',
-                           choices=[(shotType.TELESCOPIC.name, "Telescopic")])
+    shotType = HiddenField(shotType.TELESCOPIC.name,
+                           default=shotType.TELESCOPIC.name)
     zoomOutCount = DecimalField('Zoom Out Count',
                                 places=0,
                                 default=5,
@@ -99,8 +97,8 @@ class ShotTypeTimeLapseForm(BaseShotTypeForm):
     """Inherits from BaseShotTypeForm, specifies shot type,time, photoCount."""
 
     filename = "shotTypeTimeLapseForm.html"
-    shotType = SelectField('Shot Type',
-                           choices=[(shotType.TIMELAPSE.name, "Time Lapse")])
+    shotType = HiddenField(shotType.TIMELAPSE.name,
+                           default=shotType.TIMELAPSE.name)
     time = DecimalField('Time (m)',
                         places=0,
                         default=60,
@@ -117,8 +115,7 @@ class ShotTypeVideoForm(BaseShotTypeForm):
     """Inherits from BaseShotTypeForm, specifies shot type and video length."""
 
     filename = "shotTypeVideoForm.html"
-    shotType = SelectField('Shot Type',
-                           choices=[(shotType.VIDEO.name, "Video")])
+    shotType = HiddenField(shotType.VIDEO.name, default=shotType.VIDEO.name)
     videoLength = DecimalField('Video Length (s)',
                                places=0,
                                default=60,
@@ -185,6 +182,7 @@ def return_search_form(searchBy: str) -> baseSearchForm:
         return illuminationTypeSearchForm()
     else:
         raise ValueError("Invalid search category.")
+
 
 class deletionForm(FlaskForm):
     delete = BooleanField("Do you want to delete the Raspberry Pi Media?")
