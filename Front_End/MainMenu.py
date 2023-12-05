@@ -384,10 +384,6 @@ class MainMenu(object):
         if pin == 17:
             key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_W,
                                   Qt.KeyboardModifier(0), "W")
-            time.sleep(0.5)
-            while GPIO.input(17) == GPIO.LOW:
-                QtWidgets.QApplication.sendEvent(self.form, key_event)
-                time.sleep(0.1)
         elif pin == 27:
             key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_A,
                                   Qt.KeyboardModifier(0), "A")
@@ -397,9 +393,6 @@ class MainMenu(object):
         elif pin == 6:
             key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_S,
                                   Qt.KeyboardModifier(0), "S")
-            while GPIO.input(6) == GPIO.LOW:
-                QtWidgets.QApplication.sendEvent(self.form, key_event)
-                time.sleep(0.1)
         elif pin == 26:
             key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_F1,
                                   Qt.KeyboardModifier(0), "F1")
@@ -457,7 +450,7 @@ class MainMenu(object):
         if event.key() == Qt.Key.Key_W and currentIndex == 0:
             self.previewScreen.cameraControl.setFocus(
                 self.previewScreen.cameraHandles,
-                self.previewScreen.cameraControl.customFocus[0] + 20, "")
+                self.previewScreen.cameraControl.customFocus[0] + 5, "")
             print(self.previewScreen.cameraControl.customFocus[0])
         elif event.key() == Qt.Key.Key_W and currentIndex == 1:
             if (self.studyProfileSelectionMenu.isValidIndex(
@@ -482,7 +475,7 @@ class MainMenu(object):
         elif event.key() == Qt.Key.Key_S and currentIndex == 0:
             self.previewScreen.cameraControl.setFocus(
                 self.previewScreen.cameraHandles,
-                self.previewScreen.cameraControl.customFocus[0] - 20, "")
+                self.previewScreen.cameraControl.customFocus[0] - 5, "")
             print(self.previewScreen.cameraControl.customFocus[0])
 
         if event.key() == Qt.Key.Key_W and currentIndex == 2:
@@ -762,7 +755,7 @@ class MainMenu(object):
                     maxFocus = temp
                 for shot in range(steps):
                     focus = minFocus + ((maxFocus - minFocus) / steps) * shot
-                    self.previewScreen.cameraControl.setExposure(
+                    self.previewScreen.cameraControl.setFocus(
                         self.previewScreen.cameraHandles, focus, "")
                     media_metadata = dq.insertMediaMetadata(
                         entry_id, path, "jpg", MainMenu.getCurrentTime(),
