@@ -39,24 +39,15 @@ class BaseShotTypeForm(FlaskForm):
         default=100,
         validators=[InputRequired(), NumberRange(0, 200)])
 
-    shutterSpeed = StringField('Shutter Speed (s)',
-                               default="1/60",
-                               validators=[InputRequired()])
-
-    def validate_shutterSpeed(form, field):
-        shutterSpeed = field.data
-        if re.match(r"^\d+\/\d+$", shutterSpeed):
-            numerator = int(shutterSpeed.split("/")[0])
-            denominator = int(shutterSpeed.split("/")[1])
-            if not (0.00002 < numerator / denominator < 2):
-                raise ValidationError(
-                    "Please input a value between 0.00002 and 2.")
-        elif re.match(r"^\d+$", shutterSpeed):
-            if not (0.00002 < float(shutterSpeed) < 2):
-                raise ValidationError(
-                    "Please input a value between 0.00002 and 2.")
-        else:
-            raise ValidationError("Please Input a Valid Fraction.")
+    shutterSpeed = SelectField('Shutter Speed (s)',
+                               choices=[("1/2000", "1/2000"),
+                                        ("1/1000", "1/1000"),
+                                        ("1/500", "1/500"), ("1/250", "1/250"),
+                                        ("1/125", "1/125"), ("1/60", "1/60"),
+                                        ("1/30", "1/30"), ("1/15", "1/15"),
+                                        ("1/8", "1/8"), ("1/4", "1/4"),
+                                        ("1/2", "1/2"), ("1", "1"),
+                                        ("2", "2")])
 
     submit = SubmitField('Submit Study')
 
