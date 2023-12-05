@@ -43,15 +43,26 @@ class DBReconstruct:
             metadataId = fields[1]
             time = "{}-{}-{}-{}-{}".format(fields[2], fields[3], fields[4],
                                            fields[5], fields[6])
-            temperature = fields[7]
-            pressure = fields[8]
-            ph = fields[9]
-            dissolvedOxygen = fields[10]
+            temperature = float()
+            pressure = float()
+            ph = float()
+            dissolvedOxygen = float()
+            if fields[7] != "":
+                temperature = fields[7]
+                pressure = fields[8]
+                ph = fields[9]
+                dissolvedOxygen = fields[10]
+            else:
+                temperature = float(("-{}".format(fields[8])))
+                pressure = fields[9]
+                ph = fields[10]
+                dissolvedOxygen = fields[11]
             leftCameraMedia = (folder + "/" + pair[0])
             rightCameraMedia = (folder + "/" + pair[1])
             stereoMediaPath = \
                 "{}/{}/{}-{}-{}-{}-{}-{}-{}-S.jpg".format(
-                    self.rootPath,folder, entryId, metadataId, time, temperature, pressure,
+                    self.rootPath, folder,
+                    entryId, metadataId, time, temperature, pressure,
                     ph, dissolvedOxygen)
             if not os.path.exists(stereoMediaPath):
                 imageManipulation.generateStereoscopicImage(
@@ -60,11 +71,13 @@ class DBReconstruct:
                     stereoMediaPath)
             thresholdLeftImagePath = \
                 "{}/{}/{}-{}-{}-{}-{}-{}-{}-GL.jpg".format(
-                    self.rootPath,folder, entryId, metadataId, time, temperature, pressure,
+                    self.rootPath, folder, entryId, metadataId,
+                    time, temperature, pressure,
                     ph, dissolvedOxygen)
             thresholdRightImagePath = \
                 "{}/{}/{}-{}-{}-{}-{}-{}-{}-GR.jpg".format(
-                self.rootPath,folder, entryId, metadataId, time, temperature, pressure,
+                    self.rootPath, folder, entryId,
+                    metadataId, time, temperature, pressure,
                     ph, dissolvedOxygen)
             if not os.path.exists(thresholdLeftImagePath):
                 imageManipulation.generateWhiteScaleImage(
@@ -76,7 +89,8 @@ class DBReconstruct:
                     thresholdRightImagePath)
             taggedStereoMediaPath = \
                 "{}/{}/{}-{}-{}-{}-{}-{}-{}-T.jpg".format(
-                    self.rootPath,folder, entryId, metadataId, time, temperature, pressure,
+                    self.rootPath,
+                    folder, entryId, metadataId, time, temperature, pressure,
                     ph, dissolvedOxygen)
             if not os.path.exists(taggedStereoMediaPath):
                 imageManipulation.addMetadataBar(stereoMediaPath,
@@ -105,23 +119,30 @@ class DBReconstruct:
                 thresholdLeftImagePath, thresholdRightImagePath,
                 stereoMediaPath, taggedStereoMediaPath)
 
-
         shottype = self.query.getMediaEntry(entryId).shotType
         if shottype == "BURST" or shottype == "TIMELAPSE":
-            gifPath = os.path.join(os.path.join(self.rootPath, folder), "stereo.gif")
+            gifPath = os.path.join(os.path.join(self.rootPath, folder),
+                                   "stereo.gif")
             if not os.path.exists(gifPath):
                 imageManipulation.generateGif(
-                "{}/{}".format(self.rootPath, folder), imagePairs)
+                    "{}/{}".format(self.rootPath, folder), imagePairs)
         elif shottype == "TELESCOPIC":
-            focusStackPathL = os.path.join(os.path.join(self.rootPath, folder), "focusStack-L.jpg")
-            focusStackPathR = os.path.join(os.path.join(self.rootPath, folder), "focusStack-R.jpg")
-            focusStackPathS = os.path.join(os.path.join(self.rootPath, folder), "focusStack-S.jpg")
-            if not os.path.exists(focusStackPathL) and not os.path.exists(focusStackPathR) and not os.path.exists(focusStackPathS):
-                imageManipulation.generateFocusStackImage(os.path.join(self.rootPath, folder))
+            focusStackPathL = os.path.join(os.path.join(self.rootPath, folder),
+                                           "focusStack-L.jpg")
+            focusStackPathR = os.path.join(os.path.join(self.rootPath, folder),
+                                           "focusStack-R.jpg")
+            focusStackPathS = os.path.join(os.path.join(self.rootPath, folder),
+                                           "focusStack-S.jpg")
+            if not os.path.exists(focusStackPathL) and not os.path.exists(
+                    focusStackPathR) and not os.path.exists(focusStackPathS):
+                imageManipulation.generateFocusStackImage(
+                    os.path.join(self.rootPath, folder))
         elif shottype == "VIDEO":
-            videoPath = os.path.join(os.path.join(self.rootPath, folder), "stereoVideo.mp4")
+            videoPath = os.path.join(os.path.join(self.rootPath, folder),
+                                     "stereoVideo.mp4")
             if not os.path.exists(videoPath):
-                imageManipulation.generateStereoscopicVideo(os.path.join(self.rootPath, folder))
+                imageManipulation.generateStereoscopicVideo(
+                    os.path.join(self.rootPath, folder))
 
 
 if __name__ == "__main__":
