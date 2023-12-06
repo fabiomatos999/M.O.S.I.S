@@ -39,12 +39,12 @@
 \end{frame}
 \begin{frame}{What is the problem?}
 	\begin{itemize}
-		\item The M.O.S.I.S microscope already has a user interface \textbf{but}:
+		\item The M.O.S.I.S microscope already had a user interface \textbf{but}:
 		      \begin{itemize}
-			      \item lacks design cohesion.
-			      \item has missing and redundant features.
+			      \item lacked design cohesion.
+			      \item had missing and redundant features.
 			      \item constantly crashes.
-			      \item lacks a formal way to store data.
+			      \item lacked a formal way to store data.
 		      \end{itemize}
 	\end{itemize}
 \end{frame}
@@ -65,9 +65,10 @@
 \begin{frame}{System Specifications}
 	\begin{itemize}
 		\item 400$\times$400 preview for left and right cameras
-		\item Displays environmental conditions
-		\item Navigation using on board buttons
+		\item Displays temperature, pressure, dissolved oxygen and pH sensor data
+		\item User interface utilizes on board buttons
 		\item Controls camera parameters and on board lighting
+		\item Calibrates pH and dissolved oxygen sensors
 		\item Written in Python using PyQt6 and SQLite3
 	\end{itemize}
 \end{frame}
@@ -101,13 +102,14 @@
 	\begin{itemize}
 		\item User interface for the M.O.S.I.S microscope that can:
 		      \begin{itemize}
-			      \item display camera live feeds and sensor data.
-			      \item capture various kinds of images.
+			      \item display the live feed for both cameras and sensor data.
+			      \item capture single, burst, time lapse and telescopic images plus video.
 			      \item utilize the on board buttons for navigation.
 			      \item control the on board lighting and camera settings.
-			      \item calibrate external sensors.
+			      \item calibrate pH and dissolved oxygen sensors
 		      \end{itemize}
 	\end{itemize}
+
 \end{frame}
 \begin{frame}{Milestones}
 	\begin{center}
@@ -180,7 +182,7 @@
 			      \item Teamwork and cooperation
 			      \item Prior experience in project management
 			      \item Thorough planning and documentation
-			      \item being able to communicate with people many kinds of people
+			      \item being able to communicate with people in and out of your field of expertise
 		      \end{itemize}
 		\item Contributed in climate research
 		\item Gained experience as a designer and consultant
