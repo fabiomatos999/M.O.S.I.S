@@ -15,7 +15,7 @@ config = None
 if os.name == 'nt':
     path_wkhtmltopdf = 'C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe'
     config = pdfkit.configuration(wkhtmltopdf=path_wkhtmltopdf)
-    
+
 website = Blueprint('website', __name__)
 dbQuery = db.DatabaseQuery()
 
@@ -40,6 +40,7 @@ def index():
                            os=os,
                            sei=serializeEntryIds)
 
+
 def serializeEntryIds(mediaEntries: [MediaEntryInternalRepresentation]) -> str:
     IDs = list(map(lambda x: x.entryId, mediaEntries))
     ret = str()
@@ -48,12 +49,14 @@ def serializeEntryIds(mediaEntries: [MediaEntryInternalRepresentation]) -> str:
     ret = ret[:-1]
     return ret
 
+
 def decodeShutterSpeed(shutterSpeed: str) -> str:
     fraction = shutterSpeed.split("_")
     if len(fraction) == 2:
         return "{}/{}".format(fraction[0], fraction[1])
     else:
         return fraction[0]
+
 
 @app.route("/list")
 def listView():
@@ -69,7 +72,8 @@ def listView():
 def entry(id=0):
     """Return render template for a specific entry."""
     return returnTemplateByEntryId(id)
-    
+
+
 def returnTemplateByEntryId(entryId: int):
     MediaEntry = dbQuery.getMediaEntry(entryId)
     if MediaEntry.shotType == "SINGLE":
@@ -81,50 +85,55 @@ def returnTemplateByEntryId(entryId: int):
             url_for=url_for,
             os=os)
     elif MediaEntry.shotType == "BURST":
-        return render_template("burstEntry.html",
-                               MediaMetadata=dbQuery.getAllMediaMetadataId(entryId),
-                               enumerate=enumerate,
-                               str=str,
-                               round=round,
-                               url_for=url_for,
-                               os=os,
-                               folder=("Media" + "/" + str(dbQuery.getMediaEntry(entryId))))
+        return render_template(
+            "burstEntry.html",
+            MediaMetadata=dbQuery.getAllMediaMetadataId(entryId),
+            enumerate=enumerate,
+            str=str,
+            round=round,
+            url_for=url_for,
+            os=os,
+            folder=("Media" + "/" + str(dbQuery.getMediaEntry(entryId))))
     elif MediaEntry.shotType == "TIMELAPSE":
-        return render_template("timeLapseEntry.html",
-                               MediaMetadata=dbQuery.getAllMediaMetadataId(entryId),
-                               enumerate=enumerate,
-                               str=str,
-                               round=round,
-                               url_for=url_for,
-                               os=os,
-                               folder=("Media" + "/" + str(dbQuery.getMediaEntry(entryId))))
+        return render_template(
+            "timeLapseEntry.html",
+            MediaMetadata=dbQuery.getAllMediaMetadataId(entryId),
+            enumerate=enumerate,
+            str=str,
+            round=round,
+            url_for=url_for,
+            os=os,
+            folder=("Media" + "/" + str(dbQuery.getMediaEntry(entryId))))
     elif MediaEntry.shotType == "TELESCOPIC":
-        return render_template("telescopicEntry.html",
-                               MediaMetadata=dbQuery.getAllMediaMetadataId(entryId),
-                               enumerate=enumerate,
-                               str=str,
-                               round=round,
-                               url_for=url_for,
-                               os=os,
-                               folder=("Media" + "/" + str(dbQuery.getMediaEntry(entryId))))
+        return render_template(
+            "telescopicEntry.html",
+            MediaMetadata=dbQuery.getAllMediaMetadataId(entryId),
+            enumerate=enumerate,
+            str=str,
+            round=round,
+            url_for=url_for,
+            os=os,
+            folder=("Media" + "/" + str(dbQuery.getMediaEntry(entryId))))
     elif MediaEntry.shotType == "VIDEO":
-        return render_template("videoEntry.html",
-                               MediaMetadata=dbQuery.getAllMediaMetadataId(entryId),
-                               enumerate=enumerate,
-                               str=str,
-                               round=round,
-                               url_for=url_for,
-                               os=os,
-                               folder=("Media" + "/" + str(dbQuery.getMediaEntry(entryId))))
+        return render_template(
+            "videoEntry.html",
+            MediaMetadata=dbQuery.getAllMediaMetadataId(entryId),
+            enumerate=enumerate,
+            str=str,
+            round=round,
+            url_for=url_for,
+            os=os,
+            folder=("Media" + "/" + str(dbQuery.getMediaEntry(entryId))))
     else:
-        return render_template("entry.html",
-                               MediaEntry=dbQuery.getMediaEntry(entryId),
-                               MediaMetadata=dbQuery.getAllMediaMetadataId(entryId),
-                               enumerate=enumerate,
-                               str=str,
-                               round=round,
-                               url_for=url_for,
-                               os=os)
+        return render_template(
+            "entry.html",
+            MediaEntry=dbQuery.getMediaEntry(entryId),
+            MediaMetadata=dbQuery.getAllMediaMetadataId(entryId),
+            enumerate=enumerate,
+            str=str,
+            round=round,
+            url_for=url_for,
+            os=os)
 
 
 def remove_submit_and_csrf_toten(studies: list) -> list:
@@ -190,7 +199,8 @@ def delete():
     if form.is_submitted():
         ret = request.form
         if ret.get("confirmation") and ret.get("delete"):
-            sshUtils.ssh_delete("pi@{}".format(args.ipaddress), "~/Media_Storage/*")
+            sshUtils.ssh_delete("pi@{}".format(args.ipaddress),
+                                "~/Media_Storage/*")
             mediaDeleted = True
         else:
             return redirect("/")
@@ -233,7 +243,8 @@ def search(category: str):
                 enumerate=enumerate,
                 str=str,
                 round=round,
-                sei=serializeEntryIds)
+                sei=serializeEntryIds,
+                decodeShutterSpeed=decodeShutterSpeed)
         else:
             return render_template(
                 'index.html',
@@ -260,6 +271,7 @@ def search(category: str):
                            form=form,
                            searchBy=prettyCategory(category))
 
+
 @app.route("/export/<IDs>", methods=["GET"])
 def export(IDs: str):
     IDsList = []
@@ -267,24 +279,34 @@ def export(IDs: str):
         IDsList.append(int(ID))
     mediaEntries = dbQuery.getMediaEntriesById(IDsList)
     return render_template("export.html",
-                               MediaEntries=mediaEntries,
-                               getAllMediaMetadataId=dbQuery.getAllMediaMetadataId,
-                               enumerate=enumerate,
-                               str=str,
-                               round=round,
-                               url_for=url_for,
-                               os=os)
+                           MediaEntries=mediaEntries,
+                           getAllMediaMetadataId=dbQuery.getAllMediaMetadataId,
+                           enumerate=enumerate,
+                           str=str,
+                           round=round,
+                           url_for=url_for,
+                           os=os)
+
 
 @app.route("/exportPrompt/<IDs>", methods=["POST"])
 def exportPrompt(IDs: str):
     path = "test.pdf"
     output = os.path.join(args.output, "report.pdf")
     if os.name == 'nt':
-        pdfkit.from_url("127.0.0.1:5000/export/{}".format(IDs), path, configuration = config)
-        subprocess.Popen(["powershell",os.path.join(os.getcwd(), "compressPDF.ps1"), "-I", path, "-O", output])
+        pdfkit.from_url("127.0.0.1:5000/export/{}".format(IDs),
+                        path,
+                        configuration=config)
+        subprocess.Popen([
+            "powershell",
+            os.path.join(os.getcwd(), "compressPDF.ps1"), "-I", path, "-O",
+            output
+        ])
     else:
         pdfkit.from_url("127.0.0.1:5000/export/{}".format(IDs), path)
-        subprocess.call(["gs", "-sDEVICE=pdfwrite", "-dPDFSETTINGS=/ebook", "-q", "-o", output, path])
+        subprocess.call([
+            "gs", "-sDEVICE=pdfwrite", "-dPDFSETTINGS=/ebook", "-q", "-o",
+            output, path
+        ])
         os.remove(path)
 
     return redirect("/")
