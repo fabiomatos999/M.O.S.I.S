@@ -283,14 +283,100 @@
 	\end{figure}
 	\section{Usage}
 	\subsection{Viewing All Captured Media}
+	In order to view all the media that is currently on the host machine you can either go to ``127.0.0.1:5000'', press the M.O.S.I.S logo on the top left, press the all ``All Images'' button, or click the picture icon in the navigation bar
+	\begin{figure}[H]
+		\includegraphics[width=\textwidth]{Figures/Viewing-All-Captured-Media.png}
+	\end{figure}
 	\subsection{Viewing A Specific Captured Media}
+	In order to view a specific captured entry, click on the blue test below the entry you would like to see.
+	\begin{figure}[H]
+		\includegraphics[width=\textwidth]{Figures/Viewing-Specific-media.png}
+	\end{figure}
+	The blue text provides the following information:
+	\begin{enumerate}
+		\item ID: Used to search entries
+		\item Shot Type: The type of capture done, either SINGLE, BURST, TELESCOPIC, TIMELAPSE or VIDEO
+		\item Date stamp: Year-Month-DayTHour-Minute-Second-Millisecond
+		\item Illumination Type: The type of illumination used during capture, can either be WHITE, RED, ULTRAVIOLET or NONE
+		\item Gain: The camera gain applied in the media capture
+		\item Saturation: The camera saturation applied in the media capture
+		\item Shutter Speed: The camera shutter speed applied in the media capture
+		\item Color Temperature: The camera color temperature speed applied in the media capture
+	\end{enumerate}
+	\subsubsection{Generated Media}
+	For all shot types, all metadata entries have the following information:
+	\begin{enumerate}
+		\item Date stamp: Year-Month-DayTHour-Minute-Second-Millisecond
+		\item Left and Right images
+		\item Temperature in Celsius
+		\item pH
+		\item Pressure in mbar
+		\item Dissolved oxygen in mg/L
+		\item Stereoscopic image
+		\item Tagged stereoscopic image
+		\item Threshold stereoscopic image
+	\end{enumerate}
+	\begin{figure}[H]
+		\includegraphics[width=\textwidth]{Figures/L-R-Image.png}
+	\end{figure}
+	\begin{figure}[H]
+		\includegraphics[width=\textwidth]{Figures/Stereo-Image.png}
+	\end{figure}
+	\begin{figure}[H]
+		\includegraphics[width=\textwidth]{Figures/Tagged-Image.png}
+	\end{figure}
+	\begin{figure}[H]
+		\includegraphics[width=\textwidth]{Figures/Threshold-Imae.png}
+	\end{figure}
+	\subsubsection{Shot Type Specific Media}
+	\subsubsection{Burst or Time lapse}
+	Burst or Time Lapse entries will have an animated GIF of the captured images that will loop infinitely at the top of the page
+	\begin{figure}[H]
+		\includegraphics[width=\textwidth]{Figures/GIF.png}
+	\end{figure}
+	\subsubsection{Telescopic}
+	Telescopic images will have a stereoscopic focus stack image on top and the individual left and right focus stack images below that
+	\begin{figure}[H]
+		\includegraphics[width=\textwidth]{Figures/Stereo-Telescopic-Image.png}
+	\end{figure}
+	\begin{figure}[H]
+		\includegraphics[width=\textwidth]{Figures/L-R-Telescopic-Image.png}
+	\end{figure}
+	\subsubsection{Video}
+	Video entries will have the video at the top while the media metadata are for the individual frames of the video.
+	\begin{figure}[H]
+		\includegraphics[width=\textwidth]{Figures/Video.png}
+	\end{figure}
 	\subsection{Search}
+	You can search for media entries by four categories: ID, shot type, illumination type and date.
 	\subsubsection{ID}
+	When searching by ID, you use 4 different patterns:
+	\begin{itemize}
+		\item Single Values: Looks up an entry if it exists with that specific ID. Example: 1 2 4 5
+		\item Comma separated values: Same as single values but easier to read. Example 1,2,4,5
+		\item Left ended range: Goes from the given ID to the maximum ID value present in the host software. Example: 3-
+		\item Right ended range: Goes from the minimum ID value present in the host software to the given ID. Example -3
+		\item Dual ended range: Goes from the left range to the right range. Example: 3-7
+	\end{itemize}
+	\begin{figure}[H]
+		\includegraphics[width=\textwidth]{Figures/Search-By-Id.png}
+	\end{figure}
 	\subsubsection{Shot Type}
+	You can search by shot type. It can either be SINGLE, BURST, TIMELAPSE, TELESCOPIC or VIDEO
+	\begin{figure}[H]
+		\includegraphics[width=\textwidth]{Figures/Search-By-Shot-Type.png}
+	\end{figure}
 	\subsubsection{Illumination Type}
+	You can search by illumination type. It can either be WHITE, RED, ULTRAVIOLET or NONE.
+	\begin{figure}[H]
+		\includegraphics[width=\textwidth]{Figures/Search-By-Illumination-Type.png}
+	\end{figure}
 	\subsubsection{Date}
+	Searching by date matches any part of the time stamp. For example we have a time stamp ``2023-11-27T16-14-53.109092'', you can thus date by looking up ``2023'', ``2023-11'', ``2023-11-23'', ``27T16'', ``109092'' or any other continuous sub string.
 	\subsection{Study Profile Creation}
 	\subsection{Study Profile Upload}
+	\subsection{Remote Deletion Of Media}
+	\subsection{List View}
 	\section{Backup Raspberry Pi Media}
 	\section{Backup Raspberry Pi SD Card}
 \end{center}
