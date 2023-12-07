@@ -5,6 +5,13 @@
 \usepackage{float}
 \usepackage{pdflscape}
 \usepackage{hyperref}
+\hypersetup{ colorlinks, citecolor=black,
+	filecolor=black,
+	linkcolor=black,
+	urlcolor=blue,
+	pdftitle={M.O.S.I.S Host Software User Guide},
+	pdfpagemode=UseThumbs,
+}
 
 \begin{document}
 \input{../Title_Page/Title Page.tex}
@@ -373,11 +380,62 @@
 	\end{figure}
 	\subsubsection{Date}
 	Searching by date matches any part of the time stamp. For example we have a time stamp ``2023-11-27T16-14-53.109092'', you can thus date by looking up ``2023'', ``2023-11'', ``2023-11-23'', ``27T16'', ``109092'' or any other continuous sub string.
+	\begin{figure}[H]
+		\includegraphics[width=\textwidth]{Figures/Search-By-Date.png}
+	\end{figure}
 	\subsection{Study Profile Creation}
+	You can create a study profile for each of the shot types. These study profiles can be uploaded to the microscope to allow for many kinds of captures to be pre configured. All study profiles configurations have the following settings:
+	\begin{itemize}
+		\item White Balance (K): The color temperature of the image in Kelvin
+		\item Illumination Type: The type of illumination to be used. Can either be WHITE, RED, ULTRAVIOLET or NONE
+		\item Gain: The camera gain applied in the media capture
+		\item Saturation: The camera saturation applied in the media capture
+		\item Shutter Speed: The camera shutter speed applied in the media capture
+	\end{itemize}
+	\begin{figure}[H]
+		\includegraphics[width=\textwidth]{Figures/Study-Profile.png}
+	\end{figure}
+	\subsubsection{Burst}
+	Burst images have a parameter called ``Shot Count'' which are the amount of pictures to be taken in the burst. Can be an integer from 2 onward
+	\subsubsection{Time Lapse}
+	Time lapse images have 2 parameters that can be controlled, time and amount of pictures. Time is the amount on time in minutes that the time lapse will take. Time can either be a floating point number or an integer. The amount of pictures are an integer greater than 1.
+	\subsubsection{Telescopic}
+	Telescopic images have the ``Zoom Out Count'' parameter which controls the amount of pictures to be taken within the study section which will be converted into a focus stack image.
+	\subsubsection{Video}
+	Videos have a ``Video Length'' parameter that control the length of the video to be captures.
 	\subsection{Study Profile Upload}
+	Once a study profile is completed, you can upload it to the microscope by first clicking on the ``Save Study Profile'' button on the navigation bar. Once the page opens you will see a preview of the current study profile and a button to upload the current study profile to the microscope.
+	\begin{figure}[H]
+		\includegraphics[width=\textwidth]{Figures/Save-Study-Profile.png}
+	\end{figure}
+	If the study upload button is clicked, go to the Powershell or terminal and input the microscope's Pi password, ``pi'', and press enter. The page will now say that the study was successfully uploaded.
+	\begin{figure}[H]
+		\includegraphics[width=\textwidth]{Figures/Save-Study-Profile-SSH-Password.png}
+	\end{figure}
 	\subsection{Remote Deletion Of Media}
+	The media captured by the microscope can also be deleted by the host software. This can be done by first clicking on the delete button in the navigation bar. Then you have to confirm twice that you would like to delete all of the media on the microscope.
+	\begin{figure}[H]
+		\includegraphics[width=\textwidth]{Figures/Remote-Delete.png}
+	\end{figure}
+	Once both confirmation boxes are selected, press the ``Delete Raspberry Pi Media'' and go to the Powershell or terminal and input the Raspberry Pi password.
+	\begin{figure}[H]
+		\includegraphics[width=\textwidth]{Figures/Remote-Delete-Confirm.png}
+	\end{figure}
+	\begin{figure}[H]
+		\includegraphics[width=\textwidth]{Figures/Save-Study-Profile-SSH-Password.png}
+	\end{figure}
 	\subsection{List View}
-	\section{Backup Raspberry Pi Media}
-	\section{Backup Raspberry Pi SD Card}
+	The media imported in the host software can also be viewed in a list view instead of the default image preview view. This can be done by either list icon in the navigation bar or by searching specific entries and selecting the list view option.
+	\begin{figure}[H]
+		\includegraphics[width=\textwidth]{Figures/List-View.png}
+	\end{figure}
+	\subsection{Export Report}
+	Reports can be generated from either the all of the entries inside the host software or just the ones from a search. This can be done by clicking the ``Export to File'' button at the bottom of either the picture preview or list views.
+	\begin{figure}[H]
+		\includegraphics[width=\textwidth]{Figures/Viewing-All-Captured-Media.png}
+	\end{figure}
+	\begin{figure}[H]
+		\includegraphics[width=\textwidth]{Figures/List-View.png}
+	\end{figure}
 \end{center}
 \end{document}
