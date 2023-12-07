@@ -216,12 +216,71 @@
 		      \begin{figure}[H]
 			      \includegraphics[width=\textwidth]{Figures/Linux-Host-Software-Install-Finish.png}
 		      \end{figure}
-
-
 	\end{itemize}
 	\section{Start Host Software}
 	\subsection{Windows}
+	\begin{enumerate}
+		\item Open Powershell clicking on the ``open'' button
+		      \begin{figure}[H]
+			      \includegraphics[width=\textwidth]{Figures/Windows-Open-Powershell.png}
+		      \end{figure}
+		\item Now change directory into where you extracted the host software. Assuming you extracted the host software zip in the Downloads folder, type the following command into the Powershell and press enter.
+		      \small\begin{minted}[breaksymbolleft=]{ps1}
+    cd .\Downloads\M.O.S.I.S_Host_Software\M.O.S.I.S_Host_Software\App\
+  \end{minted}
+		      \normalsize
+		      \begin{figure}[H]
+			      \includegraphics[width=\textwidth]{Figures/Windows-cd-Into-Host-Software.png}
+		      \end{figure}
+		\item To start the host software and connect to the microscope, first get the IP address of the device by looking at the field above the status bar of the preview screen of the user interface. Then type the following command into the Powershell, substituting ``IPADDRESS'' with the IP address of the microscope.
+		      \begin{minted}{ps1}
+    .\start_app.ps1 -i IPADDRESS
+  \end{minted}
+		      \begin{figure}[H]
+			      \includegraphics[width=\textwidth]{Figures/Windows-Start-Host-Software-With-IP.png}
+		      \end{figure}
+		\item If prompted to confirm the ssh key of the microscope, type ``yes'' and press enter.
+		      \begin{figure}[H]
+			      \includegraphics[width=\textwidth]{Figures/Windows-ssh-authenticity-prompt.png}
+		      \end{figure}
+		\item You will be prompted to input the password of the M.O.S.I.S microscope Raspberry Pi, type ``pi'' and press enter
+		      \begin{figure}[H]
+			      \includegraphics[width=\textwidth]{Figures/Windows-pi-password-prompt.png}
+		      \end{figure}
+		\item You should see output on the screen indicating which files are being transferred from the microscope to the host computer, wait until a web browser tab opens with the host software.
+	\end{enumerate}
 	\subsection{Linux}
+	\item Open a terminal
+	\begin{figure}[H]
+		\includegraphics[width=\textwidth]{Figures/Linux-Open-terminal.png}
+	\end{figure}
+	\item Change directory to where the host software was extracted
+	\begin{minted}{bash}
+                        cd Downloads/M.O.S.I.S_Host_Software/App
+                      \end{minted}
+	\begin{figure}[H]
+		\includegraphics[width=\textwidth]{Figures/Linux-cd-Host-Software.png}
+	\end{figure}
+	\item To start the host software and connect to the microscope, first get the IP address of the device by looking at the field above the status bar of the preview screen of the user interface. Then type the following command into the Powershell, substituting ``IPADDRESS'' with the IP address of the microscope.
+
+	\begin{minted}{bash}
+                       ./start_app.bash -i IPADDRESS
+                      \end{minted}
+	\begin{figure}[H]
+		\includegraphics[width=\textwidth]{Figures/Linux-Start-Host-Software-With-IP.png}
+	\end{figure}
+	\item If prompted to confirm the ssh key of the microscope, type ``yes'' and press enter.
+	\begin{figure}[H]
+		\includegraphics[width=\textwidth]{Figures/Linux-SSH-Prompt.png}
+	\end{figure}
+	\item You will be prompted to input the password of the M.O.S.I.S microscope Raspberry Pi, type ``pi'' and press enter
+	\begin{figure}[H]
+		\includegraphics[width=\textwidth]{Figures/Linux-Pi-Password.png}
+	\end{figure}
+	\item You should see output on the screen indicating which files are being transferred from the microscope to the host computer, wait until a web browser tab opens with the host software.
+	\begin{figure}[H]
+		\includegraphics[width=\textwidth]{Figures/Linux-Transfer-Files.png}
+	\end{figure}
 	\section{Usage}
 	\subsection{Viewing All Captured Media}
 	\subsection{Viewing A Specific Captured Media}
