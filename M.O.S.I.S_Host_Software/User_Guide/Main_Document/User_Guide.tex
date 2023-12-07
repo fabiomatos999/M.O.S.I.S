@@ -4,44 +4,171 @@
 \usepackage{hyperref}
 \usepackage{float}
 \usepackage{pdflscape}
+\usepackage{hyperref}
 
 \begin{document}
 \input{../Title_Page/Title Page.tex}
 \tableofcontents
 \newpage
-\begin{landscape}
 \section{Installation}
 \subsection{Windows}
+\newpage
 \begin{center}
-  
-\begin{enumerate}
-  \begin{figure}
-    \includegraphics[height=0.80\textheight, angle=90]{Figures/Windows-Open-Web-Browser.png}
-  \end{figure}
-  \item Open a web browser
-\end{enumerate}
-\subsection{Downloading Host Software}
-\subsubsection{Installing wkhtmltopdf}
-\subsubsection{Installing Ghostscript}
-\subsubsection{Installing Python}
-\subsubsection{Additional Setup}
-It will then prompt you for additional input. Type ``Y'' and press enter. Then close Powershell.
-\subsection{Linux}
-\section{Start Host Software}
-\subsection{Windows}
-\subsection{Linux}
-\section{Usage}
-\subsection{Viewing All Captured Media}
-\subsection{Viewing A Specific Captured Media}
-\subsection{Search}
-\subsubsection{ID}
-\subsubsection{Shot Type}
-\subsubsection{Illumination Type}
-\subsubsection{Date}
-\subsection{Study Profile Creation}
-\subsection{Study Profile Upload}
-\section{Backup Raspberry Pi Media}
-\section{Backup Raspberry Pi SD Card}
+
+	\begin{enumerate}
+		\item Open a web browser
+		      \begin{figure}[H]
+			      \includegraphics[width=\textwidth]{Figures/Windows-Open-Web-Browser.png}
+		      \end{figure}
+		\item Go to the repository going to \href{https://github.com/fabiomatos999/M.O.S.I.S}{https://github.com/fabiomatos999/M.O.S.I.S} by clicking here: \href{https://github.com/fabiomatos999/M.O.S.I.S}{link}.
+		      \begin{figure}[H]
+			      \includegraphics[width=\textwidth]{Figures/Windows-Go-To-Repo.png}
+		      \end{figure}
+		\item Go the releases page on the Github repository:
+		      \begin{figure}[H]
+			      \includegraphics[width=\textwidth]{Figures/Windows-Go-To-Releases.png}
+		      \end{figure}
+		\item Get Host Software by clicking on the ``M.O.S.I.S\_Host\_Software.zip'' in the latest release (at the time writing v1.0.0)
+		      \begin{figure}[H]
+			      \includegraphics[width=\textwidth]{Figures/Windows-Get-Host-Software.png}
+		      \end{figure}
+		\item When the ``zip'' file has finished downloading, go to where the file downloaded (in most cases should be the Downloads folder), right click it and select extract all.
+		      \begin{figure}[H]
+			      \includegraphics[width=\textwidth]{Figures/Windows-Extract-Archive.png}
+		      \end{figure}
+		\item A menu should pop up prompting you to chose where you want to extract the file, click next if you want to extract it in the downloads folder
+		      \begin{figure}[H]
+			      \includegraphics[width=\textwidth]{Figures/Windows-Extract-Archive-Menu.png}
+		      \end{figure}
+		\item Once the archive has been extracted, click on the search bar at the bottom of the screen and search ``Powershell''. To the right of the top most search result, a series of options should appear, click on the ``Run as the administrator''
+		      \begin{figure}[H]
+			      \includegraphics[width=\textwidth]{Figures/Windows-Open-Search.png}
+		      \end{figure}
+		      \begin{figure}[H]
+			      \includegraphics[width=\textwidth]{Figures/Windows-Open-Powershell-As-Admin.png}
+		      \end{figure}
+		\item If prompted by the following screen, click yes.
+		      \begin{figure}[H]
+			      \includegraphics[width=\textwidth]{Figures/Windows-UAC-Prompt.png}
+		      \end{figure}
+		\item Once the Powershell has opened, type the following command and then press enter
+		      \begin{minted}{ps1}
+    Set-ExecutionPolicy unrestricted
+  \end{minted}
+		      \begin{figure}[H]
+			      \includegraphics[width=\textwidth]{Figures/Windows-Set-ExecutionPolicy-unrestricted.png}
+		      \end{figure}
+		\item If prompted to confirm the changes, type ``y'' and press enter
+		      \begin{figure}[H]
+			      \includegraphics[width=\textwidth]{Figures/Windows-Set-ExecutionPolicy-Confim.png}
+		      \end{figure}
+		\item Close the Powershell by clicking on the X on the top right corner and open Powershell again, but click on the ``open'' button
+		      \begin{figure}[H]
+			      \includegraphics[width=\textwidth]{Figures/Windows-Open-Powershell.png}
+		      \end{figure}
+		\item Now change directory into where you extracted the host software. Assuming you extracted the host software zip in the Downloads folder, type the following command into the Powershell and press enter.
+		      \small\begin{minted}[breaksymbolleft=]{ps1}
+    cd .\Downloads\M.O.S.I.S_Host_Software\M.O.S.I.S_Host_Software\App\
+  \end{minted}
+		      \normalsize
+		      \begin{figure}[H]
+			      \includegraphics[width=\textwidth]{Figures/Windows-cd-Into-Host-Software.png}
+		      \end{figure}
+		\item Start the host software for the first time by inputting the following command into the Powershell and press enter.
+		      \begin{minted}{ps1}
+    .\start_app.ps1 -n
+  \end{minted}
+		      \begin{figure}[H]
+			      \includegraphics[width=\textwidth]{Figures/Windows-Host-Software-Confim-Run-Once.png}
+		      \end{figure}
+		\item If prompted by the following screen, click ``yes''
+		      \begin{figure}[H]
+			      \includegraphics[width=\textwidth]{Figures/Windows-UAC-Pompt-wkhtmltopdf.png}
+		      \end{figure}
+		\item The following installer should appear on screen. Click on the ``I agree'' button.
+		      \begin{figure}[H]
+			      \includegraphics[width=\textwidth]{Figures/Windows-wkhtmltopdf-Menu-1.png}
+		      \end{figure}
+		\item Click on the ``Install'' button
+		      \begin{figure}[H]
+			      \includegraphics[width=\textwidth]{Figures/Windows-wkhtmltopdf-Menu-2.png}
+		      \end{figure}
+		\item Wait for the installer to finish
+		      \begin{figure}[H]
+			      \includegraphics[width=\textwidth]{Figures/Windows-wkhtmltopdf-Menu-3.png}
+		      \end{figure}
+		\item Once the installer finishes, click on the close button
+		      \begin{figure}[H]
+			      \includegraphics[width=\textwidth]{Figures/Windows-wkhtmltopdf-Menu-3-Close.png}
+		      \end{figure}
+		\item If prompted by the following screen, click ``yes''
+		      \begin{figure}[H]
+			      \includegraphics[width=\textwidth]{Figures/Windows-UAC-Ghostscript.png}
+		      \end{figure}
+		\item Once the following screen appears, click on the ``next'' button.
+		      \begin{figure}[H]
+			      \includegraphics[width=\textwidth]{Figures/Windows-Ghostscript-Menu-1.png}
+		      \end{figure}
+		\item Click on the ``I agree'' button
+		      \begin{figure}[H]
+			      \includegraphics[width=\textwidth]{Figures/Windows-Ghostscript-Menu-2.png}
+		      \end{figure}
+		\item Wait for the installer to complete
+		      \begin{figure}[H]
+			      \includegraphics[width=\textwidth]{Figures/Windows-Ghostscript-Menu-3.png}
+		      \end{figure}
+		\item Click on the ``Finish'' button.
+		      \begin{figure}[H]
+			      \includegraphics[width=\textwidth]{Figures/Windows-Ghostscript-Menu-4.png}
+		      \end{figure}
+		\item Once the following screen appears, click on the ``OK'' button.
+		      \begin{figure}[H]
+			      \includegraphics[width=\textwidth]{Figures/Windows-Ghostscript-Menu-5.png}
+		      \end{figure}
+		\item Once the following installer appears, make sure the ``Use admin privileges when installing py.exe'' and ``Add python.exe to PATH'' and click on the ``Install Now'' button.
+		      \begin{figure}[H]
+			      \includegraphics[width=\textwidth]{Figures/Windows-Python-Menu-1.png}
+		      \end{figure}
+		\item If prompted by the following screen, click ``yes''
+		      \begin{figure}[H]
+			      \includegraphics[width=\textwidth]{Figures/Windows-UAC-Python-1.png}
+		      \end{figure}
+		\item Wait for the installer to complete
+		      \begin{figure}[H]
+			      \includegraphics[width=\textwidth]{Figures/Windows-UAC-Python-2.png}
+		      \end{figure}
+		\item Once this menu appears, click on the ``Disable path length limit''
+		      \begin{figure}[H]
+			      \includegraphics[width=\textwidth]{Figures/Windows-Python-Menu-3.png}
+		      \end{figure}
+		\item If prompted by the following screen, click ``yes''
+		      \begin{figure}[H]
+			      \includegraphics[width=\textwidth]{Figures/Windows-UAC-Python-2.png}
+		      \end{figure}
+		\item Once the Python installer completes, the Powershell should appear frozen for a couple of seconds and then print out a bunch of output
+		      \begin{figure}[H]
+			      \includegraphics[width=\textwidth]{Figures/Windows-Poweshell-venv-install-1.png}
+		      \end{figure}
+		\item Once the host software finishes installing, the following screen may appear, if so click on the ``yes'' button
+		      \begin{figure}[H]
+			      \includegraphics[width=\textwidth]{Figures/Windows-Allow-Python.png}
+		      \end{figure}
+	\end{enumerate}
+	\subsection{Linux}
+	\section{Start Host Software}
+	\subsection{Windows}
+	\subsection{Linux}
+	\section{Usage}
+	\subsection{Viewing All Captured Media}
+	\subsection{Viewing A Specific Captured Media}
+	\subsection{Search}
+	\subsubsection{ID}
+	\subsubsection{Shot Type}
+	\subsubsection{Illumination Type}
+	\subsubsection{Date}
+	\subsection{Study Profile Creation}
+	\subsection{Study Profile Upload}
+	\section{Backup Raspberry Pi Media}
+	\section{Backup Raspberry Pi SD Card}
 \end{center}
-\end{landscape}
 \end{document}
