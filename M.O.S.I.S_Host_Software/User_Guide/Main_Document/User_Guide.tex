@@ -3,21 +3,28 @@
 \usepackage{minted}
 \usepackage{hyperref}
 \usepackage{float}
+\usepackage{pdflscape}
 
 \begin{document}
 \input{../Title_Page/Title Page.tex}
 \tableofcontents
 \newpage
+\begin{landscape}
 \section{Installation}
 \subsection{Windows}
+\begin{center}
+  
+\begin{enumerate}
+  \begin{figure}
+    \includegraphics[height=0.80\textheight, angle=90]{Figures/Windows-Open-Web-Browser.png}
+  \end{figure}
+  \item Open a web browser
+\end{enumerate}
 \subsection{Downloading Host Software}
 \subsubsection{Installing wkhtmltopdf}
 \subsubsection{Installing Ghostscript}
 \subsubsection{Installing Python}
 \subsubsection{Additional Setup}
-\begin{minted}{ps1}
-  Set-ExecutionPolicy unrestricted
-\end{minted}
 It will then prompt you for additional input. Type ``Y'' and press enter. Then close Powershell.
 \subsection{Linux}
 \section{Start Host Software}
@@ -35,4 +42,6 @@ It will then prompt you for additional input. Type ``Y'' and press enter. Then c
 \subsection{Study Profile Upload}
 \section{Backup Raspberry Pi Media}
 \section{Backup Raspberry Pi SD Card}
+\end{center}
+\end{landscape}
 \end{document}
