@@ -5,19 +5,25 @@ database "SQLite" {
 }
 }
 package "User Interface" {
-	[Preview Screen] #Yellow
-	[Study Menu] #Orange
-	frame "Camera Control" #Pink {
+	[Preview Screen] 
+	frame "Camera Control" {
 		}
-		frame "Sensor Calibration" #SkyBlue {
+		frame "Sensor Calibration" {
 		}
+	[Study Config]
 }
 package "Cameras" {
 	[Left Camera]
 	[Right Camera]	
 }
+		package "Back End" {
+			frame "Hardware Interfaces" #Aqua {
+				
+			}
+}							
 [Sensor Hub]
-"User Interface" <--up-> "Solid State Drive"
-"User Interface" <--up-> "Cameras"
-"User Interface" <-left-> "Sensor Hub"
+"User Interface" <---> "Back End"
+"Cameras" <-left-> "Back End"
+"Solid State Drive" <---> "Back End"
+"Sensor Hub" <---> "Back End"
 @enduml
