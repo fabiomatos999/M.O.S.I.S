@@ -1,0 +1,8 @@
+@startuml
+frame "Hardware Interfaces" #Aqua {
+["Button Decoder"]
+["Lighting Interface"]
+[Camera Interface]
+["Sensor Hub Interface"]
+}
+@enduml
