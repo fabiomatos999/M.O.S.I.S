@@ -120,9 +120,16 @@
 \end{frame}
 \section{Body}
 \subsection*{System Specifications}
-\begin{frame}{System Specifications}
+\begin{frame}{System Specifications: Hardware}
+	\item 2 PixeLink PL-D755 Cameras
+	\item 8 Hall Effect sensor as buttons
+	\item 800$\times$480 resolution display
+	\item Red, White and Ultraviolet Lighting
+	\item Raspberry Pi
+\end{frame}
+\begin{frame}{System Specifications: Software}
 	\begin{itemize}
-		\item 400$\times$400 preview for left and right cameras
+		\item 400$\times$400 resolution preview for left and right cameras
 		\item Displays temperature, pressure, dissolved oxygen and pH sensor data
 		\item User interface utilizes on board buttons
 		\item Controls camera parameters and on board lighting
@@ -156,7 +163,15 @@
 	\end{itemize}
 \end{frame}
 \begin{frame}{Software Alternatives}
-
+	\begin{itemize}
+		\item Main programming Language: Python
+		\item Desire for free and open source software
+		      \begin{itemize}
+			      \item User interface library from scratch
+			      \item PyQt6
+			      \item PyGTK
+		      \end{itemize}
+	\end{itemize}
 \end{frame}
 \subsection*{Diagrams}
 \begin{frame}{M.O.S.I.S UI 2.0: System Architecture}
