@@ -1,8 +1,8 @@
 \section{System Specifications (Fabio \& Eduardo)}
 Front End (Fabio \& Eduardo):
 \begin{itemize}
-	\item 400$times$400 resolution, preview of each camera (left and right).
-	\item Left and right camera preview on preview screen.
+	\item 400$\times$400 resolution, preview of each camera (left and right).
+	\item Left and right camera preview on preview screen at 1/3 frames per second.
 	\item Display Temperature (Celsius), pH, Gauge Pressure (mbar) and Dissolved Oxygen (mg/L), current IP address and study status at the bottom of the preview screen.
 	\item Study status indicates if a study is in progress.
 	\item List to select study profile.
@@ -14,17 +14,17 @@ Front End (Fabio \& Eduardo):
 	\item Stop currently executing study using a single button.
 	\item View study list menu using one button.
 	\item Cycle through saturation control, shutter speed control, gain control, white balance control, pH sensor calibration and dissolved oxygen sensor calibration menus with 2 buttons.
-	\item Gain control menu allows to select values from 0 to 24 in steps of
+	\item Gain control menu allows to select values from 0 to 24 in steps of 0.1.
 	\item Saturation control menu allows to select values from 0 to 200 in steps of 1.
-	\item Shutter speed control menu 1/2000, 1/1000, 1/500, 1/250, 1/125, 1/60, 1/30, 1/15, 1/8, 1/4, 1/2, 1.0, 2.0.
+	\item Shutter speed control menu has the values: 1/2000, 1/1000, 1/500, 1/250, 1/125, 1/60, 1/30, 1/15, 1/8, 1/4, 1/2, 1.0, 2.0.
 	\item White balance control allows values from 3,200 to 6,500.
 	\item pH sensor calibration allows to low, mid and high point settings
 	\item Dissolved oxygen calibration menu allows to calibrate single point and double point settings and allows to clear calibration settings
 \end{itemize}
 Back End (Eduardo):
 \begin{itemize}
-	\item Store shot id, shot type, gain,shutter speed, saturation, white balance and white balance in one table
-	\item Store media id, shot id, left media path, right media path,modified ISO 8601 date stamp, illumination type, temperature, dissolved oxygen, pH and pressure in one table
+	\item Store shot id, shot type, gain, shutter speed, saturation and white balance in one table
+	\item Store media id, shot id, left media path, right media path, modified ISO 8601 date stamp, illumination type, temperature, dissolved oxygen, pH and pressure in one table
 	\item Relate shot id to all media with that specific shot id
 	\item Select all table related to a study using shot id
 \end{itemize}

@@ -1,19 +1,24 @@
 \section{Design Critera and Specifications (Eduardo)}
-We chose PyQt6 for the front end of the user interface since the official language supported by the Raspberry Pi is python and PyQt6 is python wrapper of the Qt library. Which allowed us to quickly create a user interface and allowed for integration with the on boards buttons and LEDS. For the database we chose SQlite for the back end since it is a single threaded database that can be backed up locally in a file system. Those design decisions were based on reducing power consumption for the microscope since it was going to be in on site and the client wanted to maximize battery life and use open source technologies. The architecture for this project contains 5 main modules: the user interface module, cameras module, solid state drive, sensor hub and SQlite database. The user interface contains the camera control module, sensor calibration module, study select menu and preview screen. This connects to the cameras using the camera SDK, the SQlite database and solid state drive interconnect using using the ext4 file system, and the sensor hub connects using the UART port. 
-\\ Originally we were using ISO and aperture size to configure the camera but the camera's SDK did not support it. We had to change those specifcations to saturation and gain. The SDK also did not support embedding the camera threads on Linux, to work around it we captured a photo, processed it and used that as a set of images on the preview screen. That affected our system specifcations since the frame rate on the cameras suffered and had to be lowered from 15 to 1/3 frame per second. \\
+We chose PyQt6 for the front end of the user interface since the official language supported by the Raspberry Pi is Python and PyQt6 is a Python wrapper for the Qt library. This allowed us to quickly create a user interface and permitted integration with the on boards buttons and LEDs. For the database we chose SQlite for the back end since it is a single threaded database that can be backed up locally in a file system. These design decisions were based on reducing power consumption for the microscope since it was going to be in on site and the client wanted to maximize battery life and use open source technologies. The architecture for this project contains 5 main modules: the user interface module, cameras module, solid state drive, sensor hub and SQlite database. The user interface contains the camera control module, sensor calibration module, study select menu and preview screen. This connects to the cameras using the camera SDK, the SQlite database and solid state drive interconnects using the ext4 file system, and the sensor hub connects using the UART port. For testing and validation, we divided it into 3 distinct parts:
+\begin{enumerate}
+	\item Module testing: We first checked if a module met the system requirements relevant to that module and then used unit tests to make sure that the module was functioning as expected.
+	\item Integration testing: Then we would attempt to integrate a module and would subsequently do unit testing on the integrated modules to ensure proper functionality.
+	\item End to End testing: Once the modules were integrated, we then would simulate actual usage by capturing, in total, around 300 study captures using different parameters to battle test the system.
+\end{enumerate}
+Originally we were using ISO and aperture size to configure the camera but the camera's SDK did not support it. We had to change those specifications to saturation and gain. The SWAK also did not support embedding the camera threads on Linux, to work around it we captured a photo, processed it and used that set of images on the preview screen. That affected our system specifications since the frame rate of the camera preview suffered and had to be lowered from 15 to 1/3 frame per second. \\
 The recommended software requirements for the system are:
 \begin{enumerate}
-    \item 400$\times$400 resolution, preview of each camera (left and right).
-    \item List to select study profile.
+	\item 400$\times$400 resolution, preview of each camera (left and right).
+	\item List to select study profile.
 	\item Navigation using on board buttons.
 	\item Safe emergency shutdown using one button.
 	\item Initiate study capture using a single button
 	\item View study list menu using one button.
-	\item Store shot ID, shot type, gain,shutter speed, saturation, white balance and white balance in one table
-	\item Store media ID, shot ID, left media path, right media path,modified ISO 8601 date stamp, illumination type, temperature, dissolved oxygen, pH and pressure in one table
+	\item Store shot ID, shot type, gain, shutter speed, saturation and white balance in one table
+	\item Store media ID, shot ID, left media path, right media path, modified ISO 8601 date stamp, illumination type, temperature, dissolved oxygen, pH and pressure in one table
 	\item Relate shot id to all media with that specific shot id
 	\item Create folder based on ID, shot type, modified ISO 8601 date stamp, illumination type and camera settings
 	\item Store all media files within the created folder
 	\item Store JSON file with all data and metadata associated with the study in the same folder as the media files
-	\item Identify media entry using shot ID, modified ISO 8601 date stamp, illumination, ISO, shutter speed, aperture size and white balance
+	\item Identify media entry using shot ID, modified ISO 8601 date stamp, illumination, saturation, shutter speed, gain and white balance
 \end{enumerate}
