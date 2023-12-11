@@ -1,1 +1,90 @@
 \section{Technical Progress (Fabio \& Eduardo)}
+\subsection{Design Alternatives}
+Since we are designing a user interface, three main design platforms arise:
+\begin{enumerate}
+	\item Web-based
+	\item Web-Native
+	\item Native
+\end{enumerate}
+Web-based mean having a client server relationship within the system and having all interacting occurring within the web browser.
+Native is writing a user interface from scratch that executes on the native operating system.
+Web-native is a hybrid approach that uses web technologies in a native platform.
+\subsection{Analysis Criteria}
+Since at its core, the M.O.S.I.S microscope is an embedded system, the following limitations need to be taken into consideration:
+\begin{itemize}
+	\item Single Core
+	\item Low CPU clock frequency
+	\item ARM Architecture
+	\item Limited system memory
+	\item Raspberry Pi official library compatibility
+\end{itemize}
+With these restrictions in mind, the criteria used in our analysis are as follows:
+\begin{itemize}
+	\item Has to utilize Python
+	\item Minimize CPU load
+	\item Minimize Memory Usage
+	\item Easily interfaces with existing hardware API functions
+	\item Easily interfaces with on-board buttons
+	\item Easily interfaces with the file system
+	\item Can easily be backed up and be restored from a backup
+\end{itemize}
+\subsection{Design Justifications}
+Based on the analysis criteria, we have chosen to create a native user interface in Python using PyQt6, a SQLite database and specific folder specific format.\cite{PyQt2023}\cite{SQLite2023} The reason why Python was chosen was simple, the official Raspberry Pi library that is used to access embedded peripherals only officially supports Python. There are bindings for other languages like Rust but they are not officially supported by the Raspberry Pi developers. In addition, the existing camera API functions are already written in Python. Secondly, the reasons why PyQt6 was chosen for our graphical user interface library were:
+\begin{itemize}
+	\item Qt is an established, open source, GUI library used across Linux
+	\item Qt is much easier to modify the look and feel compared to other open source libraries such as GTK
+	\item Qt has a much more stable development cycle compared to GTK
+	\item PyQt6 comprises of open source Python bindings for the Qt6 library that is originally written in C++
+\end{itemize}
+Thirdly, SQLite was chosen as our database engine because:
+\begin{itemize}
+	\item Due to the database being in a file rather than a server, it facilitates the process of backing up the database
+	\item It is much less resource intensive than server based alternatives such as MongoDB and MariaDB
+	\item The reduction in types simplifies and hastens query execution on embedded systems
+	\item The reduction in types allow for the database to the compressed much more efficiently
+\end{itemize}
+\subsection{System Architecture and Interfaces}
+The M.O.S.I.S microscope itself has 5 fundamental parts:
+\begin{enumerate}
+	\item Raspberry Pi
+	\item Cameras
+	\item Sensors
+	\item Display
+	\item Buttons
+\end{enumerate}
+The Raspberry Pi serves as main microcontroller that receives input from the cameras, sensors and buttons and presents it on the display.
+The cameras are connected to the Pi via USB and have basic functionality as webcams but can be further configured in software using the SDK for the cameras. The sensors are configured and utilized by the onboard Tiva microcontroller and the Pi receives the captured data via a UART port. The buttons utilize the GPIO interface on the Pi and are operated via interrupts. The display uses an HDMI interface to present the desktop environment of the Raspberry Pi real time operating system.\\
+As for the UI, it is comprised of:
+\begin{itemize}
+	\item Front End User Interface
+	\item Database
+	\item Hardware API
+	\item Folder Structure Generator
+\end{itemize}
+The front end user interface is presented on the Raspberry Pi display via the Raspberry Pi OS desktop environment. The database is the storage medium for all of the metadata captured by the microscope. All camera media paths, date stamp, shot type, illumination type, sensor data, camera ISO, shutter speed, aperture size and white balance will all be placed in the database and will serve as the permanent record for the microscope. The hardware API will serve as the interface between the sensors, the cameras and the solid state disk on the microscope. This will communicate with the operating system to control the camera functions, interacting with the sensors and writing media files to disk. The sensors will be interacted with via UART. The cameras will be manipulated using the library functions provided by the manufacturer, via the USB interface. The sensor and image data will manipulated in software and written to disk using system calls on the real time operating system.
+\subsection{System Modules}
+M.O.S.I.S UI 2.0 can be divided into 4 modules:
+\begin{itemize}
+	\item Front End
+	\item Database
+	\item Hardware API
+	\item Folder Structure Generator
+\end{itemize}
+The front end consists of all of the UI elements, i.e preview screen, study select, sensor calibration menus and camera control menus.\cite{UnifiedModelingLanguage}
+The database module consists of the SQLite database and all statements to insert and select data.\cite{kelechavaSQLStandardISO2018}\cite{UnifiedModelingLanguage} The hardware API is the camera control and sensor hub communication protocols. Finally, the folder structure generator is comprised of interfaces between the database and file system to generate the browsable folder structure and exporting the metadata from the database to a JSON file.\cite{JPEGJPEG}\cite{JSON}
+\subsection{Technical Diagrams}
+\begin{center}
+	\begin{figure}[H]
+		\centering
+		\resizebox{!}{0.6\textheight}{
+			\import{../Appendix/Design_Documentation/Use_Case_Diagram/Figures/}{use_case}
+		}
+		\caption*{M.O.S.I.S UI 2.0 Use Case Diagram}
+	\end{figure}
+	\begin{figure}[H]
+		\resizebox{\textwidth}{0.4\textheight}{
+			\import{../Appendix/System_Architecture_and_Interfaces/Software_Architecture/Figures}{system_architecture}
+		}
+		\caption*{M.O.S.I.S UI 2.0 Software Architecture}
+	\end{figure}
+\end{center}

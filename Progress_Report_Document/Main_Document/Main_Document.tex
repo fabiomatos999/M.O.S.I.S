@@ -1,5 +1,7 @@
 \documentclass[12pt]{article}
+\usepackage{float}
 \usepackage[table]{xcolor}
+\usepackage{pdflscape}
 \usepackage{graphicx}
 \usepackage[hidelinks]{hyperref}
 \usepackage[numbers]{natbib}
@@ -7,6 +9,8 @@
 \apptocmd{\thebibliography}{\raggedright}{}{}
 \usepackage{setspace}
 \usepackage{pdfpages}
+\usepackage{caption}
+\usepackage{svg}
 \hypersetup{ colorlinks, citecolor=black,
 	filecolor=black,
 	linkcolor=black,
@@ -14,6 +18,8 @@
 	pdftitle={M.O.S.I.S Progress Report},
 	pdfpagemode=FullScreen,
 }
+\usepackage[subpreambles=true]{standalone}
+\usepackage{import}
 
 \begin{document}
 \pagenumbering{gobble}
@@ -23,14 +29,11 @@
 \input{../Table_of_Contents/Table_of_Contents.tex}
 \newpage
 \pagenumbering{arabic}
-\begin{spacing}{1.2}
-	\input{../Introduction/Introduction.tex}
-	\input{../Technical_Progress/Technical_Progress.tex}
-	\input{../Task_Progress/Task_Progress.tex}
-	\input{../Expenditure_Analysis/Expenditure_Analysis.tex}
-	\input{../Next_Steps/Next_Steps.tex}
-	\input{../Future_Work/Future_Work.tex}
-\end{spacing}
+\input{../Introduction/Introduction.tex}
+\input{../Technical_Progress/Technical_Progress.tex}
+\input{../Task_Progress/Task_Progress.tex}
+\input{../Expenditure_Analysis/Expenditure_Analysis.tex}
+\input{../Next_Steps/Next_Steps.tex}
 \input{../Bibliographic_References/Bibliographic_References.tex}
 \input{../Appendix/Appendix.tex}
 \input{../Appendix/Glossary/Glossary.tex}
@@ -44,7 +47,6 @@
 \input{../Appendix/System_Architecture_and_Interfaces/Software_Interfaces/Software_Interfaces.tex}
 \input{../Appendix/Design_Documentation/Design_Documentation.tex}
 \input{../Appendix/Design_Documentation/Design_Justification/Design_Justification.tex}
-\input{../Appendix/Design_Documentation/Power_Requirements/Power_Requirements.tex}
 \input{../Appendix/Design_Documentation/Hardware_Detailed_Schematics/Hardware_Detailed_Schematics.tex}
 \input{../Appendix/Design_Documentation/Firmware_Flowcharts/Firmware_Flowcharts.tex}
 \input{../Appendix/Design_Documentation/Module_Description/Module_Description.tex}
@@ -54,8 +56,8 @@
 \input{../Appendix/Design_Documentation/Sequence_Diagram/Sequence_Diagram.tex}
 \input{../Appendix/Design_Documentation/Activity_Diagram/Activity_Diagram.tex}
 \input{../Appendix/Design_Documentation/ER_Diagram/ER_Diagram.tex}
-\input{../Appendix/Design_Documentation/Other_Documentation/Other_Documentation.tex}
 \input{../Appendix/Testing_Plan/Testing_Plan.tex}
 \input{../Appendix/Economic_Analysis/Econimic_Analysis.tex}
 \input{../Appendix/Task_Progress_and_Gantt_Chart/Task_Progress_and_Gantt_Chart.tex}
+\input{../Appendix/Design_Documentation/Other_Documentation/Other_Documentation.tex}
 \end{document}

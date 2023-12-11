@@ -1,1 +1,20 @@
-\subsection{Module Description}
+\subsection{Module Description (Fabio)}
+M.O.S.I.S UI 2.0 is comprised of four fundamental modules:
+\begin{enumerate}
+	\item Front End
+	\item Back end (database)
+	\item Hardware API
+	\item Folder structure generator
+\end{enumerate}
+The front end consists of the user all facing elements, i.e everything that is in the UI mock-ups without signals or the database interaction layers needed to make it functional. The back end (or database) consists of software components and functions to:
+\begin{itemize}
+	\item Create the database.
+	\item Select existing media entries and their associated metadata.
+	\item Insert new media entries and metadata to the database
+\end{itemize}
+The hardware API is the set of software functions that:
+\begin{itemize}
+	\item Sends commands to the cameras and receives files and preview streams from them.
+	\item Send command to the sensor hub to: calibrate the pH and dissolved oxygen sensors and receive the readings from the sensors in the form of a string.
+\end{itemize}
+Finally, the folder structure generator interacts with the database, file system and the cameras to write the media files to a browsable folder structure along with a exporting a JSON file with all the data from the database for a media entry.

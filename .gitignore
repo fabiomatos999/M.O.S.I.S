@@ -534,4 +534,6 @@ poetry.toml
 pyrightconfig.json
 
 # End of https://www.toptal.com/developers/gitignore/api/latex,emacs,python
-*.gif
+*.gifM.O.S.I.S_Host_Software/*
+*/venv/*
+*/__pycache__/*
