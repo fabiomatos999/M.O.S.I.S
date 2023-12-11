@@ -1,0 +1,8 @@
+@startuml
+frame "Camera Control" #Pink {
+	[ISO Control Menu]
+	[Shutter Speed Control Menu]
+	[Aperture Size Control Menu]
+	[White Balance Control Menu]
+}
+@enduml

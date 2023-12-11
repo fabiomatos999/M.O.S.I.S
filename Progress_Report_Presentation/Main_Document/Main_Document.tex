@@ -1,0 +1,270 @@
+\documentclass[17pt, aspectratio=169]{beamer}
+
+\beamertemplatenavigationsymbolsempty
+
+\usetheme{CambridgeUS}
+\usecolortheme{dolphin}
+\useinnertheme{rectangles}
+\usepackage{svg}
+\usepackage{setspace}
+\usepackage{array}
+\usepackage{multicol}
+\usepackage[subpreambles=true]{standalone}
+\usepackage{import}
+\usepackage{xcolor}
+
+\title{M.O.S.I.S Progress Report Presentation}
+\author[Fabio J. \& Eduardo S.]{Fabio J. Matos Nieves \& Eduardo S. Miranda Figueroa}
+\institute[UPRM]{University of Puerto Rico Mayagüez Campus}
+\date{September 28, 2023}
+
+\begin{document}
+\begin{frame}
+	\maketitle
+\end{frame}
+\begin{frame}{Table of Contents}
+	\begin{multicols}{2}
+		\begin{spacing}{0.8}
+			\tableofcontents
+		\end{spacing}
+	\end{multicols}
+\end{frame}
+\section{Introduction}
+\begin{frame}{What is M.O.S.I.S?}
+	\begin{columns}
+		\column{0.5\textwidth}
+		\centering
+\textbf{M.O.S.I.S}\\
+ Marine Operated Stereoscopic Imaging System
+
+\column{0.5\textwidth}
+		\centering	
+\begin{figure}
+	\includegraphics[height=0.85\textheight]{./Figures/M.O.S.I.S_Model.jpeg}
+\end{figure}
+\end{columns}
+\end{frame}
+\subsection{Problem Statement}
+\begin{frame}
+
+\begin{itemize}
+		\item The M.O.S.I.S microscope already has a user interface \textbf{but}:
+		      \begin{itemize}
+			      \item lacks design cohesion.
+			      \item missing and redundant features.
+			      \item constantly crashes.
+			      \item lacks a formal way to store data.
+		      \end{itemize}
+	\end{itemize}
+\end{frame}
+\subsection*{Original Requirements}
+\begin{frame}{Original Requirements}
+	\begin{itemize}
+		\item No camera control requirement
+		\item Camera frame rate requirement was 15 frames per second
+		\item No formal time stamp format
+	\end{itemize}
+\end{frame}
+\subsection*{Changes and Updates}
+\begin{frame}{Changes and Updates}
+	\begin{itemize}
+		\item Client added camera control requirement to the project
+		\item Client increased camera frame rate requirement to 24 frames per second
+		\item Stakeholder clarified time stamp requirement (yyyy-MM-ddTHH:mm:ss.zzz)
+	\end{itemize}
+\end{frame}
+\section{Body}
+\subsection{Design Alternatives}
+\begin{frame}{Design Alternatives}
+	\begin{itemize}
+		\item Browser Based
+		\item Native
+		\item Native Browser
+	\end{itemize}
+\end{frame}
+\subsection*{Analysis Criteria}
+\begin{frame}{Analysis Criteria}
+	\begin{itemize}
+		\item Minimizes computing resource consumption
+		      \begin{itemize}
+			      \item CPU Cycles
+			      \item System Memory Usage
+			      \item Total System Power Draw
+		      \end{itemize}
+		\item Python Based
+		\item Can easily be backed up and restored from a backup
+	\end{itemize}
+\end{frame}
+\subsection*{Alternative Chosen}
+\begin{frame}{Alternative Chosen}
+	\begin{itemize}
+		\item Native App
+		\item PyQt6 for U.I
+		\item SQLite for Database
+	\end{itemize}
+\end{frame}
+\subsection{System Architecture}
+\subsubsection*{M.O.S.I.S UI 2.0}
+\begin{frame}{M.O.S.I.S UI 2.0: System Architecture}
+	\begin{figure}
+		\resizebox{0.9\textwidth}{!}{
+			\begin{small}
+				\import{./Figures}{system_architecture}
+			\end{small}
+		}
+		\caption{System Architecture}
+	\end{figure}
+\end{frame}
+\begin{frame}{M.O.S.I.S UI 2.0: Camera Control}
+	\begin{figure}
+		\resizebox{0.9\textwidth}{!}{
+			\begin{small}
+				\import{./Figures}{camera_control}
+			\end{small}
+		}
+		\caption{Camera Control Architecture}
+	\end{figure}
+\end{frame}
+\begin{frame}{M.O.S.I.S UI 2.0: Sensor Calibration}
+	\begin{figure}
+		\resizebox{\textwidth}{!}{
+			\begin{small}
+				\import{./Figures}{sensor_calibration}
+			\end{small}
+		}
+		\caption{Sensor Calibration Architecture}
+	\end{figure}
+\end{frame}
+\begin{frame}{M.O.S.I.S UI 2.0: Mock-ups (Preview)}
+	\begin{figure}
+		\includegraphics[page=1,height=0.65\textheight]{../../Progress_Report_Document/Appendix/Design_Documentation/User_Interface/Figures/M.O.S.I.S_UI_Design.pdf}
+		\caption{Camera and Sensor Preview Mock-Up}
+	\end{figure}
+\end{frame}
+\begin{frame}{M.O.S.I.S UI 2.0: Mock-ups (Study Select)}
+	\begin{figure}
+		\includegraphics[page=2,height=0.65\textheight]{../../Progress_Report_Document/Appendix/Design_Documentation/User_Interface/Figures/M.O.S.I.S_UI_Design.pdf}
+		\caption{Study Select Menu Mock-Up}
+	\end{figure}
+\end{frame}
+\begin{frame}{M.O.S.I.S UI 2.0: Mock-ups (Camera)}
+	\begin{figure}
+		\includegraphics[page=3,height=0.65\textheight]{../../Progress_Report_Document/Appendix/Design_Documentation/User_Interface/Figures/M.O.S.I.S_UI_Design.pdf}
+		\caption{Camera Configuration Mock-Up}
+	\end{figure}
+\end{frame}
+\begin{frame}{M.O.S.I.S UI 2.0: Mock-ups (Sensor)}
+	\begin{figure}
+		\includegraphics[page=7,height=0.65\textheight]{../../Progress_Report_Document/Appendix/Design_Documentation/User_Interface/Figures/M.O.S.I.S_UI_Design.pdf}
+		\caption{Sensor Calibration Mock-Up}
+	\end{figure}
+\end{frame}
+\begin{frame}{M.O.S.I.S UI 2.0: Class Diagram}
+	\begin{figure}
+		\resizebox{0.9\textwidth}{!}{
+                  \begin{small}
+			\import{./Figures}{class_diagram}
+                  \end{small}
+		}
+		\caption{Class Diagram}
+	\end{figure}
+\end{frame}
+\begin{frame}{M.O.S.I.S UI 2.0: ER Diagram}
+	\begin{figure}
+		\resizebox{!}{0.5\textheight}{
+                  \begin{small}
+                    
+			\import{./Figures/}{ER_Diagram}
+                  \end{small}
+		}
+		\caption{Entity Relationship Diagram}
+	\end{figure}
+\end{frame}
+\subsection{Project Status}
+\begin{frame}{Project Status}
+	\begin{itemize}
+		\item M.O.S.I.S microscope unavailable from October 15 to October 21.
+		      \begin{itemize}
+			      \item Hardware API was originally going to be implemented from October 15 to October 30.
+			      \item Now have to reassess the milestone timeline:
+		      \end{itemize}
+		      \begin{center}
+			      \begin{tabular}{||c | c||}
+				      \hline
+				      Hardware API & Oct 15, 2023 \\
+				      \hline
+				      Back end API & Oct 15, 2023 \\
+				      \hline
+				      Front end    & Oct 30, 2023 \\
+				      \hline
+			      \end{tabular}
+		      \end{center}
+	\end{itemize}
+\end{frame}
+\subsection*{Deliverables}
+\begin{frame}{Deliverables}
+	\begin{center}
+		\begin{tabular}{||c | c||}
+			\hline
+			Hardware API & Oct 15, 2023 \\
+			\hline
+			Back end API & Oct 15, 2023 \\
+			\hline
+			Front end    & Oct 30, 2023 \\
+			\hline
+			Folder Structure Generator & Nov 7, 2023\\
+			\hline
+			Integrating front end and back end & Nov 13, 2023 \\
+			\hline
+		\end{tabular}
+	\end{center}
+	Before implementing the software we've finished the design mockups and schema for our back end API and front end.
+\end{frame}
+\subsection*{Current Budget}
+\begin{frame}{Current Budget}
+	\begin{center}
+		\begin{tabular}{||m{0.75\textwidth} | m{0.20\textwidth} ||}
+			\hline
+			Eduardo S. Miranda \& Fabio J. Matos's Salary                  & \$6,270.00 \\
+			\hline
+			Facility Cost                                                  & \$470.00   \\
+			\hline
+			Udemy PyQt6 Class & \$28.98    \\
+			\hline
+			Other benefits and overhead & \$2792.42 \\
+			\hline
+			Total Current Budget Cost                                      & \$9,562.40  \\
+			\hline
+		\end{tabular}
+	\end{center}
+\end{frame}
+\section{Conclusion}
+\subsection{Accomplishments}
+\begin{frame}{Accomplishments}
+	\begin{itemize}
+		\item Finished the Udemy course on PyQt6
+		\item Worked on U.I mock-ups
+		\item Designed the Schema for the Database
+	\end{itemize}
+\end{frame}
+\subsection*{Expenditure and Budget Status}
+\begin{frame}{Expenditure and Budget Status}
+	\begin{itemize}
+		\item Estimated Budget Cost = \$41,703.03
+		\item Actual Budget Cost = \$29,804.22
+		\item Difference in Budget Cost = \textcolor{teal}{-\$11,900.81}
+	\end{itemize}
+\end{frame}
+\subsection{Future Work}
+\begin{frame}{Future Work}
+	We will start on the hardware API and backend API as soon as the requirements are approved, before October 15. After finishing those milestones we will begin on the front end.
+\end{frame}
+\subsection*{Questions}
+\begin{frame}
+	\begin{huge}
+		\begin{center}
+			Questions?
+		\end{center}
+	\end{huge}
+\end{frame}
+\end{document}

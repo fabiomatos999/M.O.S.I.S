@@ -1,0 +1,116 @@
+@startuml
+enum shotType {
+     SINGLE
+     BURST
+     TELESCOPIC
+     TIMELAPSE
+     VIDEO
+}
+enum illuminationType {
+     NONE
+     VISIBLESPECTRUM
+     INFRARED
+     ULTRAVIOLET
+}
+class CameraControl {
+	+ minFocusValue : float
+	+ maxFocusValue : float
+	+ minExposureValue : float
+	+ maxExposureValue : float
+	+ minSaturationValue: int
+	+ maxSaturationValue: int
+	+ saturationValue: int
+	+ minGainValue: float
+	+ maxGainValue: float
+	+ gainValue: float
+	+ setUpMaxMinFeatureValues()
+	+ setUpCamera()
+	+ cleanUpCameras()
+	+ setRegionOfInterest()
+	+ setWhiteBalance()
+	+ autoWhiteBalance()
+	+ setFocus()
+	+ setExposure()
+	+ setSaturation()
+	+ setGain()
+}
+class CameraPictureControl {
+	+ get_snapshot()
+	+ getBurstSnapshot()
+	+ getIntervalSnapshot()
+	+ determine_raw_image_size()
+	+ get_raw_image()
+	+ save_image_to_file()
+	+ getVideo()
+}
+class MediaEntry {
+        + entry_Id: int
+        + shot_Type: str
+        + time: str
+        + illumination_Type: str
+        + gain: int
+        + saturation: float
+        + shutter_Speed: float
+        + white_Balance: int
+}
+class MediaMetadata {
+        + media_Id: int
+        + entry_Id: int
+        + left_Camera_Media: str
+        + right_Camera_Media: str
+        + time: str
+        + temperature: float
+        + pressure: float
+        + ph: float
+        + dissolved_Oxygen: float
+}
+class DatabaseQuery {
+	+ conn: sqlite3Connection
+	+ cursor: sqlite3Cursor
+	+ getMediaEntrybyId()
+	+ getMediaMetadatabyId()
+	+ insertMediaEntry()
+	+ insertMediaMetadata()
+	+ getALlMediaEntry()
+	+ getCountbyMediaEntry()
+}
+class FolderStructureGenerator {
+	+ root_path: str
+	+ databaseQuery: DatabaseQuery
+	+ create_folder_structure()
+	+ exportMetadata()
+	+ create_folder_structure_for_all()
+}
+class ReadResult {
+	+ phReading: float
+	+ tempReading: float
+	+ DOreading: float
+	+ baroReading: float
+	+ getPh()
+	+ getTemp()
+	+ getDO()
+	+ getPressure()
+}
+class sensorHub {
+	+ __UARTPort: str
+	+ uart: UART
+	+ encoding: str
+	+ decoding: str
+	+ getPh()
+	+ PhLowCal()
+	+ PhMidCal()
+	+ PhHighCal()
+	+ getDO()
+	+ DOAtmoCal()
+	+ DOZeroCal()	
+	+ DoCalClear()
+	+ getTemp()
+	+ TempNewCal()
+	+ callibrateAll()
+	+ exit()
+}
+class HallEffectSensor {
+	+ pin: int
+	+ callback: Callback
+}
+@enduml

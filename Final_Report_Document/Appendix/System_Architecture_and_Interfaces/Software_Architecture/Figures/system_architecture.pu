@@ -1,0 +1,39 @@
+@startuml
+database "SQLite" {
+}
+package "User Interface" {
+	[Preview Screen]
+	[Study Select Menu]
+	frame "Camera Control" {
+		        [Gain Control Menu]
+		        [Saturation Control Menu]
+		        [Shutter Speed Control Menu]
+		        [White Balance Control Menu]
+		}
+		frame "Sensor Calibration" {
+			[Ph Sensor Calibration Menu]
+			[Dissolved Oxygen Calibration Menu]
+			
+		}
+}
+package "Cameras" {
+	[Left Camera]
+	[Right Camera]	
+}
+[Sensor Hub]
+[Solid State Drive]
+interface "File System"
+interface "Camera SDK"
+interface "UART"
+"Camera Control" -up-> "Camera SDK"
+"Camera SDK" -up-> "Cameras"
+"Preview Screen" <-down-- "UART"
+"Sensor Calibration" --down-> "UART"
+"UART" -down-> "Sensor Hub"
+"Sensor Hub" -down-> "UART"
+"UART" --> "Sensor Calibration"
+"User Interface" --left-> "File System"
+"File System" -down-> "Solid State Drive"
+"File System" -left-> "SQLite"
+"Study Select Menu" -down-> "File System"
+@enduml

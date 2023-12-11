@@ -1,0 +1,29 @@
+@startuml
+skinparam linetype ortho
+package "Solid State Drive" {
+database "SQLite" {
+}
+}
+package "User Interface" {
+	[Preview Screen] 
+	frame "Camera Control" {
+		}
+		frame "Sensor Calibration" {
+		}
+	[Study Config]
+}
+package "Cameras" {
+	[Left Camera]
+	[Right Camera]	
+}
+		package "Back End" {
+			frame "Hardware Interfaces" #Aqua {
+				
+			}
+}							
+[Sensor Hub]
+"User Interface" <---> "Back End"
+"Cameras" <-left-> "Back End"
+"Solid State Drive" <---> "Back End"
+"Sensor Hub" <---> "Back End"
+@enduml

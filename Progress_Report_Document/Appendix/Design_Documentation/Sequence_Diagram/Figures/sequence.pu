@@ -1,0 +1,58 @@
+@startuml
+actor User
+participant "Microscope" as microscope
+participant "Buttons" as buttons
+participant "Camera" as camera
+participant "Sensors" as sensors
+participant "Study Menu" as software
+participant "Display" as screen
+participant "Database" as db
+User -> buttons: Press Power Button
+activate buttons
+buttons -> microscope: Power On
+activate microscope
+User -> screen: View Live Preview
+activate screen
+screen -> camera: Start Live Preview
+activate camera
+camera --> screen: Live Image Feed
+User -> screen: View Sensor Data
+screen -> sensors: Request Sensor Data
+activate sensors
+sensors --> screen: Sensor Data
+User -> screen: Start Study
+screen -> software: Start Study
+activate software
+software -> microscope: Study Start Command
+
+
+microscope --> software: Study Started
+software ->sensors: Request Sensor Data and Meta Data
+sensors -->software: Sensor Data and Meta Data
+User -> buttons: Stop Study
+buttons -> software: Stop Study Command
+software -> db: Backup Study Data and Metadata
+activate db
+User -> screen: Change Study
+screen -> software: Change Study
+software -> camera: Change Study Settings
+deactivate db
+User -> screen: Modify Camera Settings
+screen -> software: Open Camera Settings
+
+
+software -> camera: Configure Camera
+
+camera --> screen: Camera Configuration Acknowledgment
+deactivate camera
+
+deactivate software
+User->buttons: Shutdown
+buttons ->software: Shutdown Command
+software ->camera: Shutdown Command
+software ->microscope: Shutdown Command
+ deactivate screen
+ deactivate buttons
+ deactivate microscope
+ deactivate sensors
+@enduml

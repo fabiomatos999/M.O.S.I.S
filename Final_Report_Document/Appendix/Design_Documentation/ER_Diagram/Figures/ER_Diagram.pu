@@ -1,0 +1,29 @@
+@startuml
+skinparam linetype ortho
+entity MediaEntry {
+   entryId: INTEGER <<generated>>
+   shotType: TEXT <<NOT NULLABLE>>	
+   time: TEXT <<NOT NULLABLE>>	
+   illuminationType: TEXT <<NOT NULLABLE>>	
+   gain: REAL <<NOT NULLABLE>>	
+   saturation: INTEGER <<NOT NULLABLE>>
+   shutterSpeed: TEXT <<NOT NULLABLE>>
+   whiteBalance: INTEGER <<NOT NULLABLE>>	
+   __
+   entryId <<PK>>
+}
+entity MediaMetadata {
+   metadataId: INTEGER <<generated>>
+   entryId: INTEGER	
+   leftCameraMedia: TEXT <<NOT NULLABLE>>
+   rightCameraMedia: TEXT <<NOT NULLABLE>>
+   time: TEXT <<NOT NULLABLE>>
+   temperature: REAL <<NOT NULLABLE>>
+   pressure: REAL <<NOT NULLABLE>>
+   ph: REAL <<NOT NULLABLE>>
+   dissolvedOxygen: REAL <<NOT NULLABLE>>
+   __
+   entryId <<FK>>
+}
+MediaEntry ||--|{ MediaMetadata
+@enduml

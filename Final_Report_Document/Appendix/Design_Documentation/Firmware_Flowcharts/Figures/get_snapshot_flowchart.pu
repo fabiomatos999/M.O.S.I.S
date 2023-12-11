@@ -1,0 +1,15 @@
+@startuml
+start
+:Determine the size of the image buffer;
+:Create Image Bufffer;
+while (camera_index < 2) is (true)
+	:Get Raw Image;
+	:Format raw image to JPEG;
+	:Get sensor data, camera\n settings and datestamp;
+	:Create Study Entry Directory;
+	:Generate image path from study ID,\n camera settings and date stamp;
+	:Write media entry to databse;
+	:Write image to disk using image path;
+endwhile (false)
+end
+@enduml

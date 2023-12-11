@@ -1,0 +1,43 @@
+@startuml
+left to right direction
+:Researcher: as R
+:Application: as A
+rectangle "User Interface" {
+	  usecase "Run Diagnostics" as RD
+	  usecase "Diagnostics Fail" as DF
+	  usecase "Preview Left Camera Feed" as PLCF
+	  usecase "Preview Right Camera Feed" as PRCF
+	  usecase "View Temperature" as VT
+	  usecase "View pH" as VPh
+	  usecase "View Gauge Pressure" as VAP
+	  usecase "View Dissolved Oxygen" as VDO
+	  usecase "View Camera ISO" as VCI
+	  usecase "View Aperture Size" as VAS
+	  usecase "View Shutter Speed" as VSS
+	  usecase "View White balance" as VWB
+	  usecase "View IP Address" as VIA
+	  usecase "Change Camera ISO" as CCI
+	  usecase "Change Aperture Size" as CAS
+	  usecase "Change Shutter Speed" as CSS
+	  usecase "Change White balance" as CWB
+	  usecase "Calibrate Sensors" as CS
+}
+A --> RD
+RD <|-- DF
+R --> PLCF
+R --> PRCF
+R --> VT
+R --> VPh
+R --> VAP
+R --> VDO
+R --> VCI
+R --> VAS
+R --> VSS
+R --> VWB
+R --> VIA
+R --> CS
+VCI <|-- CCI
+VAS <|-- CAS
+VSS <|-- CSS
+VWB <|-- CWB
+@enduml

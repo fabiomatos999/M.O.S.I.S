@@ -1,0 +1,16 @@
+@startuml
+abstract class "UI" {
+}
+class previewUI {
+}
+class studyProfileUI {
+}
+class cameraControlUI {
+}
+class sensorCalibrationUI {
+}
+UI <|-- previewUI
+UI <|-- studyProfileUI
+UI <|-- cameraControlUI
+UI <|-- sensorCalibrationUI
+@enduml

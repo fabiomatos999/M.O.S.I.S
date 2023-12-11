@@ -1,0 +1,23 @@
+@startuml
+skinparam linetype ortho
+package "Solid State Drive" {
+database "SQLite" {
+}
+}
+package "User Interface" {
+	[Preview Screen] #Yellow
+	[Study Menu] #Orange
+	frame "Camera Control" #Pink {
+		}
+		frame "Sensor Calibration" #SkyBlue {
+		}
+}
+package "Cameras" {
+	[Left Camera]
+	[Right Camera]	
+}
+[Sensor Hub]
+"User Interface" <--up-> "Solid State Drive"
+"User Interface" <--up-> "Cameras"
+"User Interface" <-left-> "Sensor Hub"
+@enduml
