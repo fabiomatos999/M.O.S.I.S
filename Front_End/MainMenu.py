@@ -383,7 +383,7 @@ class MainMenu(object):
         6   --> |_____________| <--  25
 
         Note: Will ignore GPIO interrupts that are not bound to the Hall effect
-        sensors.
+        sensors or leak sensor.
         """
         key_event = None
         if GPIO.input(27) == GPIO.LOW:
@@ -395,6 +395,15 @@ class MainMenu(object):
         if pin == 17:
             key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_W,
                                   Qt.KeyboardModifier(0), "W")
+            initalPressTime = time.time()
+            while GPIO.input(17) == GPIO.LOW:
+                while GPIO.input(
+                        17) == GPIO.LOW and time.time() - initalPressTime > 1:
+                    now = time.time()
+                    while time.time() - now < 0.05:
+                        continue
+                    QtWidgets.QApplication.sendEvent(self.form, key_event)
+            return
         elif pin == 27:
             key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_A,
                                   Qt.KeyboardModifier(0), "A")
@@ -404,6 +413,15 @@ class MainMenu(object):
         elif pin == 6:
             key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_S,
                                   Qt.KeyboardModifier(0), "S")
+            initalPressTime = time.time()
+            while GPIO.input(6) == GPIO.LOW:
+                while GPIO.input(
+                        6) == GPIO.LOW and time.time() - initalPressTime > 1:
+                    now = time.time()
+                    while time.time() - now < 0.05:
+                        continue
+                    QtWidgets.QApplication.sendEvent(self.form, key_event)
+            return
         elif pin == 26:
             key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_F1,
                                   Qt.KeyboardModifier(0), "F1")
