@@ -20,7 +20,7 @@ class SensorHub:
         return float(self.temperatureSensor.read_RTD_reading())
 
     def temperatureCal(self, temp: float):
-        self.temperatureSensor.write_calibration_data(temp*1000)
+        self.temperatureSensor.write_calibration_data(temp * 1000)
         return self.temperatureSensor.write_calibration_request(2)
 
     def temperatureClearCal(self):
@@ -57,10 +57,12 @@ class SensorHub:
         self.pressureSensor.read()
         return float(self.pressureSensor.pressure())
 
+
 class SysCheck:
+
     def __init__(self):
         try:
-            output = subprocess.check_output(["./SysCheck.bash"],)
+            output = subprocess.check_output(["./SysCheck.bash"], )
             output = output.decode()
             self.sensorCode = int(output, 2)
         except Exception as e:
@@ -89,3 +91,7 @@ class SysCheck:
             return True
         else:
             return False
+
+    def isWorking(self):
+        return self.ispHWorking() and self.isTemperatureWorking(
+        ) and self.isDissolvedOxygenWorking() and self.isPressureWorking()
