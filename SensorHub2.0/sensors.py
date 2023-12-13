@@ -2,6 +2,7 @@ import AtlasI2C
 import AtlasOEM_RTD
 import AtlasOEM_DO
 import ms5837
+import subprocess
 
 
 class SensorHub:
@@ -55,3 +56,36 @@ class SensorHub:
     def getPressure(self):
         self.pressureSensor.read()
         return float(self.pressureSensor.pressure())
+
+class SysCheck:
+    def __init__(self):
+        try:
+            output = subprocess.check_output(["./SysCheck.bash"],)
+            output = output.decode()
+            self.sensorCode = int(output, 2)
+        except Exception as e:
+            raise e
+
+    def ispHWorking(self) -> bool:
+        if (self.sensorCode & 0b1000):
+            return True
+        else:
+            return False
+
+    def isTemperatureWorking(self):
+        if (self.sensorCode & 0b100):
+            return True
+        else:
+            return False
+
+    def isDissolvedOxygenWorking(self):
+        if (self.sensorCode & 0b10):
+            return True
+        else:
+            return False
+
+    def isPressureWorking(self):
+        if (self.sensorCode & 0b1):
+            return True
+        else:
+            return False
