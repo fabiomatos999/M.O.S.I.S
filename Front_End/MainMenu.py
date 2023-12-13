@@ -340,24 +340,27 @@ class MainMenu(object):
             HallEffectSensor.HallEffectSensor(25, self.decodeGPIOtoKeyPress))
         self.focusPoint1 = None
         self.focusPoint2 = None
-        self.whiteLED = GPIO.setup(2, GPIO.OUT)
-        self.redLED = GPIO.setup(3, GPIO.OUT)
-        self.uvLED = GPIO.setup(4, GPIO.OUT)
+        self.whiteLEDPin = 10
+        self.whiteLED = GPIO.setup(self.whiteLEDPin, GPIO.OUT)
+        self.redLEDPin = 9
+        self.redLED = GPIO.setup(self.redLEDPin, GPIO.OUT)
+        self.uvLEDPin = 11
+        self.uvLED = GPIO.setup(self.uvLEDPin, GPIO.OUT)
         self.lightingIndex = 0
 
     def cycleLighting(self):
         """Cycle through lighting when function is called."""
-        GPIO.output(2, GPIO.LOW)
-        GPIO.output(3, GPIO.LOW)
-        GPIO.output(4, GPIO.LOW)
+        GPIO.output(self.whiteLEDPin, GPIO.LOW)
+        GPIO.output(self.redLED, GPIO.LOW)
+        GPIO.output(self.uvLEDPin, GPIO.LOW)
         self.lightingIndex += 1
         self.lightingIndex %= 4
         if self.lightingIndex == 1:
-            GPIO.output(2, GPIO.HIGH)
+            GPIO.output(self.whiteLEDPin, GPIO.HIGH)
         elif self.lightingIndex == 2:
-            GPIO.output(3, GPIO.HIGH)
+            GPIO.output(self.redLEDPin, GPIO.HIGH)
         elif self.lightingIndex == 3:
-            GPIO.output(4, GPIO.HIGH)
+            GPIO.output(self.uvLED, GPIO.HIGH)
 
     def decodeGPIOtoKeyPress(self, pin: int):
         """Decode Raspberry Pi GPIO interrupt into a QKeyEvent.
@@ -653,15 +656,15 @@ class MainMenu(object):
             self.previewScreen.cameraHandles,
             int(studyProfile["whiteBalance"]))
         illuminationType = studyProfile["illuminationType"]
-        GPIO.output(2, GPIO.LOW)
-        GPIO.output(3, GPIO.LOW)
-        GPIO.output(4, GPIO.LOW)
+        GPIO.output(self.whiteLEDPin, GPIO.LOW)
+        GPIO.output(self.redLEDPin, GPIO.LOW)
+        GPIO.output(self.uvLEDPin, GPIO.LOW)
         if illuminationType == "WHITE":
-            GPIO.output(2, GPIO.HIGH)
+            GPIO.output(self.whiteLEDPin, GPIO.HIGH)
         elif illuminationType == "RED":
-            GPIO.output(3, GPIO.HIGH)
+            GPIO.output(self.redLEDPin, GPIO.HIGH)
         elif illuminationType == "ULTRAVIOLET":
-            GPIO.output(4, GPIO.HIGH)
+            GPIO.output(self.uvLEDPin, GPIO.HIGH)
         dq = databaseQuery.DatabaseQuery()
         entry_id = dq.insertMediaEntry(studyProfile["shotType"],
                                        MainMenu.getCurrentTime(),
@@ -718,24 +721,24 @@ class MainMenu(object):
                         self.previewScreen.phReading,
                         self.previewScreen.DOreading)
                     media_metadata = dq.getMediaMetadatabyId(media_metadata)
-                    GPIO.output(2, GPIO.LOW)
-                    GPIO.output(3, GPIO.LOW)
-                    GPIO.output(4, GPIO.LOW)
+                    GPIO.output(self.whiteLEDPin, GPIO.LOW)
+                    GPIO.output(self.redLEDPin, GPIO.LOW)
+                    GPIO.output(self.uvLEDPin, GPIO.LOW)
                     if illuminationType == "WHITE":
-                        GPIO.output(2, GPIO.HIGH)
+                        GPIO.output(self.whiteLEDPin, GPIO.HIGH)
                     elif illuminationType == "RED":
-                        GPIO.output(3, GPIO.HIGH)
+                        GPIO.output(self.redLEDPin, GPIO.HIGH)
                     elif illuminationType == "ULTRAVIOLET":
-                        GPIO.output(4, GPIO.HIGH)
+                        GPIO.output(self.uvLEDPin, GPIO.HIGH)
                     self.cameraPictureControl.get_snapshot(
                         self.previewScreen.cameraHandles[0],
                         media_metadata.left_Camera_Media)
                     self.cameraPictureControl.get_snapshot(
                         self.previewScreen.cameraHandles[1],
                         media_metadata.right_Camera_Media)
-                    GPIO.output(2, GPIO.LOW)
-                    GPIO.output(3, GPIO.LOW)
-                    GPIO.output(4, GPIO.LOW)
+                    GPIO.output(self.whiteLEDPin, GPIO.LOW)
+                    GPIO.output(self.redLEDPin, GPIO.LOW)
+                    GPIO.output(self.uvLEDPin, GPIO.LOW)
                     stepTime = timer.time() + stepInterval
                     counter += 1
 
@@ -794,9 +797,9 @@ class MainMenu(object):
         self.previewScreen.setStatusLabel(False)
         self.previewScreen.active = True
         fsg.exportMetadata(entry_id)
-        GPIO.output(2, GPIO.LOW)
-        GPIO.output(3, GPIO.LOW)
-        GPIO.output(4, GPIO.LOW)
+        GPIO.output(self.whiteLEDPin, GPIO.LOW)
+        GPIO.output(self.redLEDPin, GPIO.LOW)
+        GPIO.output(self.uvLEDPin, GPIO.LOW)
 
     @staticmethod
     def getCurrentTime() -> str:
