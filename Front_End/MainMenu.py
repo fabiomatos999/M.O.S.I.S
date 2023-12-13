@@ -347,6 +347,14 @@ class MainMenu(object):
         self.uvLEDPin = 11
         self.uvLED = GPIO.setup(self.uvLEDPin, GPIO.OUT)
         self.lightingIndex = 0
+        self.leakSensorPin = 0
+        self.leakSensor = GPIO.setup(self.leakSensorPin,
+                                     GPIO.IN,
+                                     pull_up_down=GPIO.PUD_UP)
+        GPIO.add_event_detect(self.leakSensorPin,
+                              GPIO.RISING,
+                              callback=self.decodeGPIOtoKeyPress,
+                              bouncetime=25)
 
     def cycleLighting(self):
         """Cycle through lighting when function is called."""
@@ -408,6 +416,9 @@ class MainMenu(object):
         elif pin == 25:
             key_event = QKeyEvent(QEvent.Type.KeyPress, Qt.Key.Key_F2,
                                   Qt.KeyboardModifier(0), "F2")
+        elif pin == self.leakSensorPin:
+            subprocess.call(["sudo", "shutdown", "-h", "now"])
+
         else:
             return
         QtWidgets.QApplication.sendEvent(self.form, key_event)
