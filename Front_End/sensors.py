@@ -10,8 +10,10 @@ class SensorHub:
     def __init__(self):
         self.pHSensor = AtlasI2C.AtlasI2C(address=0x63, bus=1)
         self.temperatureSensor = AtlasOEM_RTD.AtlasOEM_RTD(address=0x68, bus=1)
+        self.temperatureSensor.write_active_hibernate(0x1)
         self.dissolvedOxygenSensor = AtlasOEM_DO.AtlasOEM_DO(address=0x67,
                                                              bus=1)
+        self.dissolvedOxygenSensor.write_active_hibernate(0x1)
         self.pressureSensor = ms5837.MS5837(model=ms5837.MODEL_30BA, bus=1)
         self.pressureSensor.init()
         self.pressureSensor.setFluidDensity(ms5837.DENSITY_SALTWATER)

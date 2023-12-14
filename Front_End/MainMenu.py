@@ -359,7 +359,7 @@ class MainMenu(object):
     def cycleLighting(self):
         """Cycle through lighting when function is called."""
         GPIO.output(self.whiteLEDPin, GPIO.LOW)
-        GPIO.output(self.redLED, GPIO.LOW)
+        GPIO.output(self.redLEDPin, GPIO.LOW)
         GPIO.output(self.uvLEDPin, GPIO.LOW)
         self.lightingIndex += 1
         self.lightingIndex %= 4
