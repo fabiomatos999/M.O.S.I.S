@@ -13,7 +13,7 @@ import CameraControl
 import CameraPreview
 from pixelinkWrapper import PxLApi
 import random
-import sensor
+import sensors
 import re
 
 
@@ -345,7 +345,7 @@ class Ui_Form(object):
         self.capturing = False
         self.active = True
         self.cameraPreviewRefreshTimer.start()
-        self.sensorHub = sensor.sensorHub()
+        self.sensorHub = sensors.SensorHub()
         global sensorHub
         sensorHub = self.sensorHub
         self.tempReading = float()
@@ -464,22 +464,15 @@ class Ui_Form(object):
 
     def getSensorHubData(self):
         """Get sensor data from sensor hub and update labels."""
-        sensorData = None
-        try:
-            sensorData = self.sensorHub.Read()
-        except Exception as e:
-            print(e)
-            return
-        if sensorData is not None:
-            self.tempReading = sensorData.tempReading
-            self.DOreading = sensorData.DOreading
-            self.baroReading = sensorData.baroReading
-            self.phReading = sensorData.phReading
-            self.setTemperatureLabel(sensorData.tempReading)
-            self.setDissolvedOxygenLabel(sensorData.DOreading)
-            self.setPressureLabel(sensorData.baroReading)
-            self.setpHLabel(sensorData.phReading)
-            self.validateSensors()
+        self.tempReading = self.sensorHub.getTemperature()
+        self.DOreading = self.sensorHub.getDissolvedOxygen()
+        self.baroReading = self.sensorHub.getPressure()
+        self.phReading = self.sensorHub.getpH()
+        self.setTemperatureLabel(self.tempReading)
+        self.setDissolvedOxygenLabel(self.DOreading)
+        self.setPressureLabel(self.baroReading)
+        self.setpHLabel(self.phReading)
+        self.validateSensors()
 
     def validateSensors(self):
         """

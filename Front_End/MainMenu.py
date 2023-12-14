@@ -25,8 +25,8 @@ import HallEffectSensor
 import RPi.GPIO as GPIO
 import subprocess
 import time
-import sensor
 import time as timer
+import sensors
 
 
 class BaseMenuWidget(QtWidgets.QWidget):
@@ -902,8 +902,7 @@ class MainMenu(object):
 
 
 if __name__ == "__main__":
-    sensorHub = sensor.sensorHub()
-    sensorStatus = sensorHub.SysCheck()
+    sensorStatus = sensors.SysCheck()
     if sensorStatus.isWorking():
         app = QtWidgets.QApplication(sys.argv)
         form = QtWidgets.QWidget()

@@ -92,6 +92,6 @@ class SysCheck:
         else:
             return False
 
-    def isWorking(self):
+    def isWorking(self) -> bool:
         return self.ispHWorking() and self.isTemperatureWorking(
         ) and self.isDissolvedOxygenWorking() and self.isPressureWorking()
