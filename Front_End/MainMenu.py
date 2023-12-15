@@ -368,7 +368,7 @@ class MainMenu(object):
         elif self.lightingIndex == 2:
             GPIO.output(self.redLEDPin, GPIO.HIGH)
         elif self.lightingIndex == 3:
-            GPIO.output(self.uvLED, GPIO.HIGH)
+            GPIO.output(self.uvLEDPin, GPIO.HIGH)
 
     def decodeGPIOtoKeyPress(self, pin: int):
         """Decode Raspberry Pi GPIO interrupt into a QKeyEvent.
